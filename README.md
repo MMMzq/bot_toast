@@ -16,5 +16,8 @@ BotToast 🐷
 - 以flutter的方式实现,不需要任何原生代码,这意味的兼容会得到很好的保证
 
 ### 🐺效果图
+(全损画质😂)
+
+![普通使用](https://raw.githubusercontent.com/MMMzq/bot_toast/master/doc/media/demo1.gif)![结合dio](https://github.com/MMMzq/bot_toast/raw/master/doc/media/demo2.gif)
 
 
