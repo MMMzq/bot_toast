@@ -31,7 +31,7 @@ BotToast 🐷
 #### 1. pubspec.yaml文件里添加依赖
 ```
 dependencies:
-     bot_toast: 0.0.1
+     bot_toast: 0.0.2
 ```
 
 #### 2. 导入BotToast库
