@@ -73,4 +73,43 @@ BotToast.showWidget(
     );
 ```
 
+### 🐹主要Api文档
+
+#### 1. BotToast.showText
+##### 弹出文本框
+
+参数 | 是否必须 | 说明
+---- | --- | ---
+text | 是 | 需要显示的文本
+duration | 否 | 持续时间
+clickClose | 否 | 是否允许用户提前点击页面关闭Toast
+
+<br>
+
+#### 2. BotToast.showLoading
+##### 弹出一个加载动画
+
+参数 | 是否必须 | 说明
+---- | --- | ---
+clickClose | 否 | 是否允许用户提前点击页面关闭Toast
+allowClick | 否 | 使用允许用户可以点击页面,如果为true则用户可以正常触发事件,如果为false则用户的点击事件全都吸收掉
+
+<br>
+
+#### 3. BotToast.closeAllLoading
+##### 关闭所有加载动画
+
+不需要任何参数
+
+<br>
+
+#### 4.BotToast.showWidget
+##### 弹出一个给定的Widget
+
+参数 | 是否必须 | 说明
+---- | --- | ---
+widget | 是 | 需要显示的Widget
+key | 否 | 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget
+groupKey | 否 | 代表分组的key,主要用于[BotToast.removeAll]和[BotToast.remove]
+
 
