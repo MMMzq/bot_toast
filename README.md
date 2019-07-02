@@ -29,18 +29,18 @@ BotToast 🐷
 ### 🐮快速使用
 
 #### 1. pubspec.yaml文件里添加依赖
-```
+``` dart
 dependencies:
      bot_toast: 0.0.2
 ```
 
 #### 2. 导入BotToast库
-```
+``` dart
 import 'package:bot_toast/bot_toast.dart';
 ```
 
 #### 3. 添加BotToastInit
-```
+``` dart
 ///像这样,BotToast将会自动去初始化
 MaterialApp(
       title: 'BotToast Demo',
@@ -53,12 +53,12 @@ MaterialApp(
 
 
 #### 4. 使用BotToast
-```
+``` dart
 BotToast.showText(text:"xxxx")  //弹出一个文本框;
 ```
 
 ```
-fianl cancel=BotToast.showLoading(); //弹出一个加载动画
+final cancel=BotToast.showLoading(); //弹出一个加载动画
 cancel(); //关闭加载动画
 ```
 
