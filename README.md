@@ -104,7 +104,7 @@ allowClick | 否 | 使用允许用户可以点击页面,如果为true则用户�
 <br>
 
 #### 4.BotToast.showWidget
-##### 弹出一个给定的Widget
+##### 弹出一个给定的Widget (BotToast.showText和BotToast.showLoading都是基于此方法编写的)
 
 参数 | 是否必须 | 说明
 ---- | --- | ---
