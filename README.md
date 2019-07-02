@@ -44,10 +44,7 @@ import 'package:bot_toast/bot_toast.dart';
 ///像这样,BotToast将会自动去初始化
 MaterialApp(
       title: 'BotToast Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BotToastInit(child: EnterPage()),
+      home: BotToastInit(child: XxxPage()),
     );
 ```
 
