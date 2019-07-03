@@ -5,7 +5,9 @@ BotToast 🐷
 
 ###  🐶特点
 
-- 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制！ 
+- 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制! (这是他最重要的特点,跟别的Toast库不同的地方)
+
+- 以flutter的方式实现,不需要任何原生代码,这意味的兼容会得到很好的保证
 
 - 支持在弹出各种自定义Toast,或者说你可以弹出任何Widget,只要它符合flutter代码的要求即可
 
@@ -13,7 +15,9 @@ BotToast 🐷
 
 - BotToast弹出的弹窗可以跨越多个页面存在
 
-- 以flutter的方式实现,不需要任何原生代码,这意味的兼容会得到很好的保证
+### 🐼例子
+
+[example](https://github.com/MMMzq/bot_toast/blob/master/example/lib/main.dart)
 
 ### 🐺效果图
 (全损画质😂)
