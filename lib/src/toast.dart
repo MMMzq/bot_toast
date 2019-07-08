@@ -130,13 +130,28 @@ class BotToast {
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
   static CancelFunc showText(
       {@required String text,
+      Color backgroundColor = Colors.transparent,
+      Color contentColor = Colors.black54,
+      BorderRadiusGeometry borderRadius =
+          const BorderRadius.all(Radius.circular(8)),
+      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+      AlignmentGeometry align = Alignment.bottomCenter,
+      EdgeInsetsGeometry contentPadding =
+          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
-      bool clickClose = false,bool onlyOne=false}) {
+      bool clickClose = false,
+      bool onlyOne = false}) {
     return showCustomText(
         duration: duration,
+        backgroundColor: backgroundColor,
         clickClose: clickClose,
         onlyOne: onlyOne,
         textWidget: _TextToast(
+          contentPadding: contentPadding,
+          contentColor: contentColor,
+          borderRadius: borderRadius,
+          textStyle: textStyle,
+          align: align,
           text: text,
         ));
   }
@@ -148,14 +163,15 @@ class BotToast {
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
   static CancelFunc showCustomText(
       {@required Widget textWidget,
+      Color backgroundColor = Colors.transparent,
       Duration duration = const Duration(seconds: 2),
-      bool clickClose = false,bool onlyOne = false}) {
+      bool clickClose = false,
+      bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
     _safeRun(() {
       if (onlyOne) {
-        cacheText
-            .forEach((globalKey) => globalKey.currentState?.hide());
+        cacheText.forEach((globalKey) => globalKey.currentState?.hide());
         cacheText.clear();
       }
       cacheText.add(key);
@@ -167,7 +183,7 @@ class BotToast {
     final cancelFunc = showWidget(
         toastBuilder: (cancelFunc) => NormalAnimation(
               key: key,
-              disposeCallback: (){
+              disposeCallback: () {
                 cacheNotification.remove(key);
               },
               child: IgnorePointer(
@@ -175,7 +191,7 @@ class BotToast {
                   child: GestureDetector(
                     onTap: cancelAnimationFunc,
                     child: Scaffold(
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: backgroundColor,
                       body: textWidget,
                     ),
                   )),

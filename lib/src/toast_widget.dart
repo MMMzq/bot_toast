@@ -112,8 +112,13 @@ class _NotificationState extends State<_NotificationToast> {
 //文本提示的Widget
 class _TextToast extends StatefulWidget {
   final String text;
+  final EdgeInsetsGeometry contentPadding;
+  final Color contentColor;
+  final BorderRadiusGeometry borderRadius;
+  final TextStyle textStyle;
+  final AlignmentGeometry align;
 
-  const _TextToast({Key key, @required this.text}) : super(key: key);
+  const _TextToast({Key key, @required this.text, this.contentPadding, this.contentColor, this.borderRadius, this.textStyle, this.align}) : super(key: key);
 
   @override
   _TextToastState createState() => _TextToastState();
@@ -124,21 +129,20 @@ class _TextToastState extends State<_TextToast> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment(0, 1),
+      alignment: widget.align,
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Container(
               constraints: constraints.copyWith(
                   maxWidth: constraints.biggest.width * 0.6),
-              padding: const EdgeInsets.only(
-                  left: 14, right: 14, top: 5, bottom:  7),
+              padding: widget.contentPadding,
               decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: widget.contentColor,
+                borderRadius: widget.borderRadius,
               ),
               child: Text(
                 widget.text,
-                style: TextStyle(fontSize: 17, color: Colors.white),
+                style: widget.textStyle,
                 textAlign: TextAlign.center,
               ));
         },
