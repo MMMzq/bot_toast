@@ -18,9 +18,13 @@ class NormalAnimation extends StatefulWidget {
 }
 
 class NormalAnimationState extends State<NormalAnimation> with SingleTickerProviderStateMixin{
+  static final Tween<Offset> reverseTweenOffset = Tween<Offset>(
+    begin: Offset(0, -40),
+    end: Offset(0, 0),
+  );
   static final Tween<Offset> tweenOffset = Tween<Offset>(
-    begin: Offset(0, 0),
-    end: Offset(0, -40),
+    begin: Offset(0, 40),
+    end: Offset(0, 0),
   );
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
   AnimationController controller;
@@ -36,7 +40,7 @@ class NormalAnimationState extends State<NormalAnimation> with SingleTickerProvi
     animation =
         CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    animationOffset = (widget.reverse ? ReverseTween(tweenOffset) : tweenOffset)
+    animationOffset = (widget.reverse ? reverseTweenOffset : tweenOffset)
         .animate(animation);
     animationOpacity = tweenOpacity.animate(animation);
 

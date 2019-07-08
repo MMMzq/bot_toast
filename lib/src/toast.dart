@@ -135,7 +135,7 @@ class BotToast {
       BorderRadiusGeometry borderRadius =
           const BorderRadius.all(Radius.circular(8)),
       TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-      AlignmentGeometry align = Alignment.bottomCenter,
+      AlignmentGeometry align =const Alignment(0, 0.8),
       EdgeInsetsGeometry contentPadding =
           const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
@@ -146,7 +146,7 @@ class BotToast {
         backgroundColor: backgroundColor,
         clickClose: clickClose,
         onlyOne: onlyOne,
-        textWidget: _TextToast(
+        toastBuilder: (_)=>_TextToast(
           contentPadding: contentPadding,
           contentColor: contentColor,
           borderRadius: borderRadius,
@@ -162,7 +162,7 @@ class BotToast {
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
   static CancelFunc showCustomText(
-      {@required Widget textWidget,
+      {@required ToastBuilder toastBuilder,
       Color backgroundColor = Colors.transparent,
       Duration duration = const Duration(seconds: 2),
       bool clickClose = false,
@@ -192,7 +192,7 @@ class BotToast {
                     onTap: cancelAnimationFunc,
                     child: Scaffold(
                       backgroundColor: backgroundColor,
-                      body: textWidget,
+                      body: toastBuilder(cancelFunc),
                     ),
                   )),
             ),
