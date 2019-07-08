@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomWidget extends StatefulWidget {
@@ -50,6 +51,7 @@ class CustomNotification extends StatefulWidget {
 class _CustomNotificationState extends State<CustomNotification> {
   bool enableSlideOff = true;
   bool onlyOne = false;
+  int seconds = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class _CustomNotificationState extends State<CustomNotification> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showCustomNotification(
-                    duration: null,
+                    duration: Duration(seconds: seconds),
                     toastBuilder: (cancel) {
                       return CustomWidget(
                         cancelFunc: cancel,
@@ -74,11 +76,12 @@ class _CustomNotificationState extends State<CustomNotification> {
                     },
                     enableSlideOff: enableSlideOff,
                     onlyOne: onlyOne,
+
                   );
                 },
                 child: Text("CustomNotification"),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
                   setState(() {
@@ -87,7 +90,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                 },
                 title: Text("enableSlideOff: "),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: onlyOne,
                 onChanged: (value) {
                   setState(() {
@@ -95,6 +98,19 @@ class _CustomNotificationState extends State<CustomNotification> {
                   });
                 },
                 title: Text("onlyOne: "),
+              ),
+              ListTile(
+                title: Text("duration:   ${seconds}s"),
+                trailing: CupertinoSlider(
+                  min: 1,
+                  max: 20,
+                  value: seconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      seconds = value.toInt();
+                    });
+                  },
+                ),
               ),
               Divider(),
               Text("code"),
@@ -128,18 +144,17 @@ class _CustomNotificationState extends State<CustomNotification> {
 
 String _code = """
 BotToast.showCustomNotification(
-         duration: null,
          toastBuilder: (cancel) {
               return CustomWidget(
                      cancelFunc: cancel,
               );},
          enableSlideOff: enableSlideOff,
          onlyOne: onlyOne,
+         duration: Duration(seconds: seconds)         
 );
 """;
 
-String _custom=
-"""
+String _custom = """
 Card(
       child: Row(
         children: <Widget>[
@@ -165,4 +180,3 @@ Card(
       ),
     );
 """;
-

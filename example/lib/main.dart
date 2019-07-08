@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:example/text/text.dart';
 import 'package:flutter/material.dart' ;
 
 import 'notification/custom_notification.dart';
@@ -39,7 +40,6 @@ class EnterPage extends StatelessWidget {
                 Text("Notification",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),),
                 Divider(),
                 Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Expanded(
                       child: Container(
@@ -65,6 +65,23 @@ class EnterPage extends StatelessWidget {
                   child: RaisedButton(onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_)=>CustomNotification()));
                   },child: Text("CustomNotification"),),
+                ),
+                Container(
+                  height: 40,
+                ),
+                Text("TextToast",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),),
+                Divider(),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=>TextSample()));
+                        },child: Text("TextToast"),),
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

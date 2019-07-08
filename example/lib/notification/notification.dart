@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Notification extends StatefulWidget {
@@ -10,7 +11,7 @@ class _NotificationState extends State<Notification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
   bool onlyOne = false;
-
+  int seconds = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +28,28 @@ class _NotificationState extends State<Notification> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showNotification(
-                      leading: (_) => SizedBox.fromSize(
-                          size: const Size(40, 40),
-                          child: ClipOval(
-                              child: Icon(
-                            Icons.favorite,
-                            color: Colors.redAccent,
-                          ))),
-                      title: (_) => Text('I love u'),
-                      subtitle: (_) => Text("let's be together"),
-                      trailing: (cancel) => IconButton(
-                            icon: Icon(Icons.cancel),
-                            onPressed: cancel,
-                          ),
-                      enableSlideOff: enableSlideOff,
-                      hideCloseButton: hideCloseButton,
-                      onlyOne: onlyOne,
+                    leading: (_) => SizedBox.fromSize(
+                        size: const Size(40, 40),
+                        child: ClipOval(
+                            child: Icon(
+                          Icons.favorite,
+                          color: Colors.redAccent,
+                        ))),
+                    title: (_) => Text('I love u'),
+                    subtitle: (_) => Text("let's be together"),
+                    trailing: (cancel) => IconButton(
+                          icon: Icon(Icons.cancel),
+                          onPressed: cancel,
+                        ),
+                    enableSlideOff: enableSlideOff,
+                    hideCloseButton: hideCloseButton,
+                    onlyOne: onlyOne,
+                    duration: Duration(seconds: seconds)
                   );
                 },
                 child: Text("notification"),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
                   setState(() {
@@ -56,7 +58,7 @@ class _NotificationState extends State<Notification> {
                 },
                 title: Text("enableSlideOff: "),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: hideCloseButton,
                 onChanged: (value) {
                   setState(() {
@@ -65,7 +67,7 @@ class _NotificationState extends State<Notification> {
                 },
                 title: Text("hideCloseButton: "),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: onlyOne,
                 onChanged: (value) {
                   setState(() {
@@ -73,6 +75,19 @@ class _NotificationState extends State<Notification> {
                   });
                 },
                 title: Text("onlyOne: "),
+              ),
+              ListTile(
+                title: Text("duration:   ${seconds}s"),
+                trailing: CupertinoSlider(
+                  min: 1,
+                  max: 20,
+                  value: seconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      seconds = value.toInt();
+                    });
+                  },
+                ),
               ),
               Divider(),
               Text("code"),
@@ -89,8 +104,8 @@ class _NotificationState extends State<Notification> {
     );
   }
 }
-String _code=
-"""
+
+String _code = """
 BotToast.showNotification(
          leading: (_) => SizedBox.fromSize(
                           size: const Size(40, 40),
@@ -113,5 +128,8 @@ BotToast.showNotification(
          hideCloseButton: hideCloseButton,
          
          onlyOne: onlyOne,
+         
+         duration: Duration(seconds: seconds)
+        
 );
 """;

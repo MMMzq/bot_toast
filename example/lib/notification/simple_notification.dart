@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:bot_toast/bot_toast.dart';
 
 class SimpleNotification extends StatefulWidget {
@@ -10,6 +11,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
   bool onlyOne = false;
+  int seconds = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,12 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                       subTitle: "yes!",
                       enableSlideOff: enableSlideOff,
                       hideCloseButton: hideCloseButton,
-                      onlyOne: onlyOne
-                  );
+                      onlyOne: onlyOne,
+                      duration: Duration(seconds: seconds));
                 },
                 child: Text("simpleNotification"),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
                   setState(() {
@@ -44,7 +46,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 },
                 title: Text("enableSlideOff: "),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: hideCloseButton,
                 onChanged: (value) {
                   setState(() {
@@ -53,7 +55,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 },
                 title: Text("hideCloseButton: "),
               ),
-              CheckboxListTile(
+              SwitchListTile(
                 value: onlyOne,
                 onChanged: (value) {
                   setState(() {
@@ -61,6 +63,19 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                   });
                 },
                 title: Text("onlyOne: "),
+              ),
+              ListTile(
+                title: Text("duration:   ${seconds}s"),
+                trailing: CupertinoSlider(
+                  min: 1,
+                  max: 20,
+                  value: seconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      seconds = value.toInt();
+                    });
+                  },
+                ),
               ),
               Divider(),
               Text("code"),
@@ -89,7 +104,9 @@ BotToast.showSimpleNotification(
          
          hideCloseButton: hideCloseButton,
          
-         onlyOne: onlyOne
+         onlyOne: onlyOne,
+         
+         duration: Duration(seconds: seconds)
          
 );
 """;
