@@ -17,7 +17,7 @@ class _CustomTextState extends State<CustomText> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TextToast"),
+        title: Text("CustomText"),
       ),
       body: Container(
         padding: EdgeInsets.only(top: 10),
@@ -34,7 +34,7 @@ class _CustomTextState extends State<CustomText> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             IconButton(icon: Icon(Icons.favorite_border,color: Colors.redAccent,), onPressed: cancel),
-                            Text("yes, I do!")
+                            Text("yes, I do!"),
                           ],
                         ),
                       ),

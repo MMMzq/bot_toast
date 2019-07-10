@@ -1,10 +1,11 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:example/text/text.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 import 'notification/custom_notification.dart';
 import 'notification/simple_notification.dart';
 import 'notification/notification.dart' as notification;
+import 'text/custom_text.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,24 +38,40 @@ class EnterPage extends StatelessWidget {
             margin: EdgeInsets.only(top: 30),
             child: Column(
               children: <Widget>[
-                Text("Notification",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),),
+                Text(
+                  "Notification",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
                 Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_)=>SimpleNotification()));
-                        },child: Text("SimpleNotification"),),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => SimpleNotification()));
+                          },
+                          child: Text("SimpleNotification"),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_)=>notification.Notification()));
-                        },child: Text("Notification"),),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        notification.Notification()));
+                          },
+                          child: Text("Notification"),
+                        ),
                       ),
                     )
                   ],
@@ -62,23 +79,64 @@ class EnterPage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: RaisedButton(onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>CustomNotification()));
-                  },child: Text("CustomNotification"),),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => CustomNotification()));
+                    },
+                    child: Text("CustomNotification"),
+                  ),
                 ),
                 Container(
                   height: 40,
                 ),
-                Text("TextToast",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),),
+                Text(
+                  "TextToast",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
                 Divider(),
+                TextField(),
+                LayoutBuilder(builder: (context, constraints) {
+                  print(constraints);
+                  print(MediaQuery.of(context).viewInsets.bottom);
+                  print(MediaQuery.of(context).padding.bottom);
+                  return RaisedButton(
+                    child: Text("Test"),
+                    onPressed: () {
+
+                    },
+                  );
+                }),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_)=>TextSample()));
-                        },child: Text("TextToast"),),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => TextSample()));
+                          },
+                          child: Text("TextToast"),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => CustomText()));
+                          },
+                          child: Text("CustomText"),
+                        ),
                       ),
                     )
                   ],

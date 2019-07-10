@@ -48,6 +48,7 @@ class _TextSampleState extends State<TextSample> {
                 },
                 child: Text("TextToast"),
               ),
+              TextField(),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
                 trailing: CupertinoSlider(
