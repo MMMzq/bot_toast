@@ -28,17 +28,26 @@ class _CustomTextState extends State<CustomText> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showCustomText(
-                    toastBuilder: (cancel)=>Center(
-                      child: Card(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(icon: Icon(Icons.favorite_border,color: Colors.redAccent,), onPressed: cancel),
-                            Text("yes, I do!"),
-                          ],
+                    toastBuilder: (cancel) => Align(
+                          alignment: Alignment(0, 0.8),
+                          child: Card(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                IconButton(
+                                    icon: Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.redAccent,
+                                    ),
+                                    onPressed: cancel),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text("yes, I do!"),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
                     duration: Duration(seconds: seconds),
                     onlyOne: onlyOne,
                     clickClose: clickClose,
@@ -118,18 +127,30 @@ class _CustomTextState extends State<CustomText> {
 }
 
 String _code = """
-BotToast.showText(
-         text: "I miss you ☺",
-         duration: Duration(seconds: seconds),
-         onlyOne: onlyOne,
-         clickClose: clickClose,
-         align: Alignment(0, align),
-         textStyle: TextStyle(
-             color: Color(fontColor),
-             fontSize: fontSize.toDouble()),
-         borderRadius:
-             BorderRadius.circular(borderRadius.toDouble()),
-         backgroundColor: Color(backgroundColor),
-         contentColor: Color(contentColor)     
+BotToast.showCustomText(
+  toastBuilder: (cancel) => Align(
+        alignment: Alignment(0, 0.8),
+        child: Card(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.favorite_border,
+                    color: Colors.redAccent,
+                  ),
+                  onPressed: cancel),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text("yes, I do!"),
+              ),
+            ],
+          ),
+        ),
+      ),
+  duration: Duration(seconds: seconds),
+  onlyOne: onlyOne,
+  clickClose: clickClose,
+  backgroundColor: Color(backgroundColor),
 );
 """;

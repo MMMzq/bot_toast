@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:example/text/text.dart';
 import 'package:flutter/material.dart';
 
+import 'loading/custom_loading.dart';
+import 'loading/loading.dart';
 import 'notification/custom_notification.dart';
 import 'notification/simple_notification.dart';
 import 'notification/notification.dart' as notification;
@@ -27,17 +29,16 @@ class EnterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("BotToast"),
-        centerTitle: true,
-      ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.only(top: 30),
-            child: Column(
-              children: <Widget>[
+        appBar: AppBar(
+          title: Text("BotToast"),
+          centerTitle: true,
+        ),
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.only(top: 30),
+              child: Column(children: <Widget>[
                 Text(
                   "Notification",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
@@ -97,18 +98,6 @@ class EnterPage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 Divider(),
-                TextField(),
-                LayoutBuilder(builder: (context, constraints) {
-                  print(constraints);
-                  print(MediaQuery.of(context).viewInsets.bottom);
-                  print(MediaQuery.of(context).padding.bottom);
-                  return RaisedButton(
-                    child: Text("Test"),
-                    onPressed: () {
-
-                    },
-                  );
-                }),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -140,13 +129,52 @@ class EnterPage extends StatelessWidget {
                       ),
                     )
                   ],
-                )
-              ],
+                ),
+                Container(
+                  height: 40,
+                ),
+                Text(
+                  "Load",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                Divider(),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => Loading()));
+                          },
+                          child: Text("Loading"),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => CustomLoading()));
+                          },
+                          child: Text("CustomLoading"),
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ]),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
