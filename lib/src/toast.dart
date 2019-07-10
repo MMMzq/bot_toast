@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'key_board_safe_area.dart';
 import 'package:flutter/scheduler.dart';
 
 part 'toast_widget.dart';
@@ -38,13 +39,12 @@ class BotToast {
     });
   }
 
-  static CancelFunc showSimpleNotification(
-      {@required String title,
-      String subTitle,
-      Duration duration = const Duration(seconds: 2),
-      bool enableSlideOff = true,
-      bool hideCloseButton = false,
-      bool onlyOne = false}) {
+  static CancelFunc showSimpleNotification({@required String title,
+    String subTitle,
+    Duration duration = const Duration(seconds: 2),
+    bool enableSlideOff = true,
+    bool hideCloseButton = false,
+    bool onlyOne = false}) {
     return showNotification(
         duration: duration,
         enableSlideOff: enableSlideOff,
@@ -56,16 +56,15 @@ class BotToast {
             IconButton(icon: Icon(Icons.cancel), onPressed: cancel));
   }
 
-  static CancelFunc showNotification(
-      {ToastBuilder leading,
-      ToastBuilder title,
-      ToastBuilder subtitle,
-      ToastBuilder trailing,
-      Duration duration = const Duration(seconds: 2),
-      EdgeInsetsGeometry contentPadding,
-      bool enableSlideOff = true,
-      bool hideCloseButton = false,
-      bool onlyOne = false}) {
+  static CancelFunc showNotification({ToastBuilder leading,
+    ToastBuilder title,
+    ToastBuilder subtitle,
+    ToastBuilder trailing,
+    Duration duration = const Duration(seconds: 2),
+    EdgeInsetsGeometry contentPadding,
+    bool enableSlideOff = true,
+    bool hideCloseButton = false,
+    bool onlyOne = false}) {
     return showCustomNotification(
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
@@ -82,11 +81,10 @@ class BotToast {
         });
   }
 
-  static CancelFunc showCustomNotification(
-      {@required ToastBuilder toastBuilder,
-      Duration duration = const Duration(seconds: 2),
-      bool enableSlideOff = true,
-      bool onlyOne = false}) {
+  static CancelFunc showCustomNotification({@required ToastBuilder toastBuilder,
+    Duration duration = const Duration(seconds: 2),
+    bool enableSlideOff = true,
+    bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
     _safeRun(() {
       if (onlyOne) {
@@ -100,7 +98,8 @@ class BotToast {
     CancelFunc cancelAnimationFunc;
 
     final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) => NormalAnimation(
+        toastBuilder: (cancelFunc) =>
+            NormalAnimation(
               key: key,
               reverse: true,
               disposeCallback: () {
@@ -128,32 +127,32 @@ class BotToast {
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
-  static CancelFunc showText(
-      {@required String text,
-      Color backgroundColor = Colors.transparent,
-      Color contentColor = Colors.black54,
-      BorderRadiusGeometry borderRadius =
-          const BorderRadius.all(Radius.circular(8)),
-      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-      AlignmentGeometry align =const Alignment(0, 0.8),
-      EdgeInsetsGeometry contentPadding =
-          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-      Duration duration = const Duration(seconds: 2),
-      bool clickClose = false,
-      bool onlyOne = false}) {
+  static CancelFunc showText({@required String text,
+    Color backgroundColor = Colors.transparent,
+    Color contentColor = Colors.black54,
+    BorderRadiusGeometry borderRadius =
+    const BorderRadius.all(Radius.circular(8)),
+    TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+    AlignmentGeometry align = const Alignment(0, 0.8),
+    EdgeInsetsGeometry contentPadding =
+    const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+    Duration duration = const Duration(seconds: 2),
+    bool clickClose = false,
+    bool onlyOne = false}) {
     return showCustomText(
         duration: duration,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
         onlyOne: onlyOne,
-        toastBuilder: (_)=>_TextToast(
-          contentPadding: contentPadding,
-          contentColor: contentColor,
-          borderRadius: borderRadius,
-          textStyle: textStyle,
-          align: align,
-          text: text,
-        ));
+        toastBuilder: (_) =>
+            _TextToast(
+              contentPadding: contentPadding,
+              contentColor: contentColor,
+              borderRadius: borderRadius,
+              textStyle: textStyle,
+              align: align,
+              text: text,
+            ));
   }
 
   ///[text] 需要显示的文本
@@ -161,12 +160,11 @@ class BotToast {
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
-  static CancelFunc showCustomText(
-      {@required ToastBuilder toastBuilder,
-      Color backgroundColor = Colors.transparent,
-      Duration duration = const Duration(seconds: 2),
-      bool clickClose = false,
-      bool onlyOne = false}) {
+  static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
+    Color backgroundColor = Colors.transparent,
+    Duration duration = const Duration(seconds: 2),
+    bool clickClose = false,
+    bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
     _safeRun(() {
@@ -179,33 +177,29 @@ class BotToast {
 
     CancelFunc cancelAnimationFunc;
 
-    //使用Scaffold主要是防止键盘挡住文本弹窗
-    final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) => NormalAnimation(
-              key: key,
-              disposeCallback: () {
-                cacheNotification.remove(key);
-              },
-              child: IgnorePointer(
-                  ignoring: !clickClose,
-                  child: GestureDetector(
-                    onTap: cancelAnimationFunc,
-                    child: Scaffold(
-                      backgroundColor: backgroundColor,
-                      body: toastBuilder(cancelFunc),
-                    ),
-                  )),
-            ),
-        groupKey: textKey);
+    final cancelFunc = showEnhancedWidget(
+      groupKey: textKey,
+      closeFunc: () => cancelAnimationFunc(),
+      clickClose: clickClose,
+      allowClick: true,
+      backgroundColor: backgroundColor,
+      duration: duration,
+      toastBuilder: (_) =>
+          NormalAnimation(
+            key: key,
+            disposeCallback: () {
+              cacheNotification.remove(key);
+            },
+            child: toastBuilder(cancelAnimationFunc),
+          ),
+    );
 
     //有动画的方式关闭
     cancelAnimationFunc = () async {
       await key.currentState?.hide();
       cancelFunc();
     };
-    if (duration != null) {
-      Future.delayed(duration, cancelAnimationFunc);
-    }
+
     return cancelAnimationFunc;
   }
 
@@ -221,19 +215,20 @@ class BotToast {
 
     //使用Scaffold主要是防止键盘挡住文本弹窗
     final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) => IgnorePointer(
-            ignoring: allowClick,
-            child: GestureDetector(
-              onTap: clickClose
-                  ? () async {
-                      await key.currentState?.hide();
-                      cancelFunc();
-                    }
-                  : null,
-              child: _LoadingWidget(
-                key: key,
-              ),
-            )),
+        toastBuilder: (cancelFunc) =>
+            IgnorePointer(
+                ignoring: allowClick,
+                child: GestureDetector(
+                  onTap: clickClose
+                      ? () async {
+                    await key.currentState?.hide();
+                    cancelFunc();
+                  }
+                      : null,
+                  child: _LoadingWidget(
+                    key: key,
+                  ),
+                )),
         groupKey: loadKey);
     return () async {
       await key.currentState?.hide();
@@ -241,11 +236,71 @@ class BotToast {
     };
   }
 
+
+
   ///此方法一般使用在dispose里面,防止因为开发人员没有主动去关闭,或者是请求api时的出现异常
   ///导致CancelFunc方法没有执行到等等,导致用户点击不了app
   static void closeAllLoading() {
     //以此方式移除将不会触发关闭动画
     removeAll(loadKey);
+  }
+
+  static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
+    UniqueKey key,
+    String groupKey,
+    bool allowClick = true,
+    bool clickClose = false,
+    bool ignoreContentClick = false,
+    CancelFunc closeFunc,
+    Color backgroundColor=Colors.transparent,
+    Duration duration}) {
+
+    CancelFunc cancelFunc = showWidget(
+        groupKey: groupKey,
+        key: key,
+        toastBuilder: (cancel) {
+          return KeyBoardSafeArea(
+            child: SafeArea(
+                child: GestureDetector(
+                  onTap: clickClose
+                      ? () => (closeFunc ?? cancel)()
+                      : null,
+                  behavior: allowClick
+                      ? HitTestBehavior.translucent
+                      : HitTestBehavior.opaque,
+                  child: SizedBox.expand(
+                    child: Stack(
+                      children: <Widget>[
+                        IgnorePointer(
+                          child: Container(color: backgroundColor),
+                        ),
+                        Builder(
+                            builder: (context) {
+                              return DefaultTextStyle(
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .body1,
+                                  child: IgnorePointer(
+                                    ignoring: ignoreContentClick,
+                                    child: toastBuilder(cancel),
+                                  ));
+                            }
+                        )
+                      ],
+                    ),
+                  ),
+                )),
+          );
+        });
+
+    if (duration != null) {
+      Future.delayed(duration, () {
+        (closeFunc ?? cancelFunc)();
+      });
+    }
+
+    return cancelFunc;
   }
 
   ///[widget] 需要显示的Widget
