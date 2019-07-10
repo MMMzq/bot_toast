@@ -156,18 +156,18 @@ class _TextToastState extends State<_TextToast> {
   }
 }
 
-//加载提示的Widget
-class _LoadingWidget extends StatefulWidget {
-  _LoadingWidget({Key key}) : super(key: key);
+class LoadAnimation extends StatefulWidget {
+  final Widget child;
+
+  const LoadAnimation({Key key, this.child}) : super(key: key);
 
   @override
-  _LoadingWidgetState createState() => _LoadingWidgetState();
+  _LoadAnimationState createState() => _LoadAnimationState();
 }
 
-class _LoadingWidgetState extends State<_LoadingWidget>
-    with SingleTickerProviderStateMixin {
-  static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
+class _LoadAnimationState extends State<LoadAnimation> with  SingleTickerProviderStateMixin {
 
+  static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
   AnimationController controller;
   Animation<double> animation;
   Animation<double> animationOpacity;
@@ -197,20 +197,25 @@ class _LoadingWidgetState extends State<_LoadingWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: animationOpacity,
-      child: Scaffold(
-        backgroundColor: Colors.black26,
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.white,
-            ),
-          ),
+    return FadeTransition(opacity: animationOpacity,child: widget.child,);
+  }
+}
+
+
+//加载提示的Widget
+class _LoadingWidget extends StatelessWidget {
+  _LoadingWidget({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: Colors.black54,
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
         ),
       ),
     );

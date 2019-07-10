@@ -8,6 +8,7 @@ part 'bot_toast_manager.dart';
 
 typedef CancelFunc = void Function();
 typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
+typedef WrapWidget = Widget Function(Widget widget);
 
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -39,12 +40,13 @@ class BotToast {
     });
   }
 
-  static CancelFunc showSimpleNotification({@required String title,
-    String subTitle,
-    Duration duration = const Duration(seconds: 2),
-    bool enableSlideOff = true,
-    bool hideCloseButton = false,
-    bool onlyOne = false}) {
+  static CancelFunc showSimpleNotification(
+      {@required String title,
+      String subTitle,
+      Duration duration = const Duration(seconds: 2),
+      bool enableSlideOff = true,
+      bool hideCloseButton = false,
+      bool onlyOne = false}) {
     return showNotification(
         duration: duration,
         enableSlideOff: enableSlideOff,
@@ -56,15 +58,16 @@ class BotToast {
             IconButton(icon: Icon(Icons.cancel), onPressed: cancel));
   }
 
-  static CancelFunc showNotification({ToastBuilder leading,
-    ToastBuilder title,
-    ToastBuilder subtitle,
-    ToastBuilder trailing,
-    Duration duration = const Duration(seconds: 2),
-    EdgeInsetsGeometry contentPadding,
-    bool enableSlideOff = true,
-    bool hideCloseButton = false,
-    bool onlyOne = false}) {
+  static CancelFunc showNotification(
+      {ToastBuilder leading,
+      ToastBuilder title,
+      ToastBuilder subtitle,
+      ToastBuilder trailing,
+      Duration duration = const Duration(seconds: 2),
+      EdgeInsetsGeometry contentPadding,
+      bool enableSlideOff = true,
+      bool hideCloseButton = false,
+      bool onlyOne = false}) {
     return showCustomNotification(
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
@@ -81,10 +84,11 @@ class BotToast {
         });
   }
 
-  static CancelFunc showCustomNotification({@required ToastBuilder toastBuilder,
-    Duration duration = const Duration(seconds: 2),
-    bool enableSlideOff = true,
-    bool onlyOne = false}) {
+  static CancelFunc showCustomNotification(
+      {@required ToastBuilder toastBuilder,
+      Duration duration = const Duration(seconds: 2),
+      bool enableSlideOff = true,
+      bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
     _safeRun(() {
       if (onlyOne) {
@@ -98,8 +102,7 @@ class BotToast {
     CancelFunc cancelAnimationFunc;
 
     final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) =>
-            NormalAnimation(
+        toastBuilder: (cancelFunc) => NormalAnimation(
               key: key,
               reverse: true,
               disposeCallback: () {
@@ -127,25 +130,25 @@ class BotToast {
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
-  static CancelFunc showText({@required String text,
-    Color backgroundColor = Colors.transparent,
-    Color contentColor = Colors.black54,
-    BorderRadiusGeometry borderRadius =
-    const BorderRadius.all(Radius.circular(8)),
-    TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-    AlignmentGeometry align = const Alignment(0, 0.8),
-    EdgeInsetsGeometry contentPadding =
-    const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-    Duration duration = const Duration(seconds: 2),
-    bool clickClose = false,
-    bool onlyOne = false}) {
+  static CancelFunc showText(
+      {@required String text,
+      Color backgroundColor = Colors.transparent,
+      Color contentColor = Colors.black54,
+      BorderRadiusGeometry borderRadius =
+          const BorderRadius.all(Radius.circular(8)),
+      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+      AlignmentGeometry align = const Alignment(0, 0.8),
+      EdgeInsetsGeometry contentPadding =
+          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+      Duration duration = const Duration(seconds: 2),
+      bool clickClose = false,
+      bool onlyOne = false}) {
     return showCustomText(
         duration: duration,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
         onlyOne: onlyOne,
-        toastBuilder: (_) =>
-            _TextToast(
+        toastBuilder: (_) => _TextToast(
               contentPadding: contentPadding,
               contentColor: contentColor,
               borderRadius: borderRadius,
@@ -160,11 +163,13 @@ class BotToast {
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
-  static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
-    Color backgroundColor = Colors.transparent,
-    Duration duration = const Duration(seconds: 2),
-    bool clickClose = false,
-    bool onlyOne = false}) {
+  static CancelFunc showCustomText(
+      {@required ToastBuilder toastBuilder,
+      Color backgroundColor = Colors.transparent,
+      Duration duration = const Duration(seconds: 2),
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
     _safeRun(() {
@@ -182,10 +187,10 @@ class BotToast {
       closeFunc: () => cancelAnimationFunc(),
       clickClose: clickClose,
       allowClick: true,
+      ignoreContentClick: ignoreContentClick,
       backgroundColor: backgroundColor,
       duration: duration,
-      toastBuilder: (_) =>
-          NormalAnimation(
+      toastBuilder: (_) => NormalAnimation(
             key: key,
             disposeCallback: () {
               cacheNotification.remove(key);
@@ -207,36 +212,55 @@ class BotToast {
   ///[allowClick] 使用允许用户可以点击页面,如果为true则用户可以正常触发事件,如果为false则用户的点击事件全都吸收掉
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
-  //todo 实现只显示一个加载动画,现在主要是动画衔接不上,太唐突,可以使用closeAllLoading代替着先
-  static CancelFunc showLoading(
-      {bool clickClose = false, bool allowClick = false}) {
-    assert(!(clickClose && allowClick), "clickClose和allowClick不能同时为true!");
-    final key = GlobalKey<_LoadingWidgetState>();
+  static CancelFunc showLoading({
+    bool clickClose = false,
+    bool allowClick = false,
+    Duration duration,
+    Color backgroundColor = Colors.black26,
+  }) {
+    return showCustomLoading(
+        loadWidget: (_) => _LoadingWidget(),
+        clickClose: clickClose,
+        allowClick: allowClick,
+        duration: duration,
+        backgroundColor: backgroundColor);
+  }
 
-    //使用Scaffold主要是防止键盘挡住文本弹窗
-    final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) =>
-            IgnorePointer(
-                ignoring: allowClick,
-                child: GestureDetector(
-                  onTap: clickClose
-                      ? () async {
-                    await key.currentState?.hide();
-                    cancelFunc();
-                  }
-                      : null,
-                  child: _LoadingWidget(
-                    key: key,
-                  ),
-                )),
-        groupKey: loadKey);
-    return () async {
+  static CancelFunc showCustomLoading({
+    @required ToastBuilder loadWidget,
+    bool clickClose = false,
+    bool allowClick = false,
+    bool ignoreContentClick = true,
+    Duration duration,
+    Color backgroundColor = Colors.black26,
+  }) {
+    assert(loadWidget != null, "loadWidget not null");
+
+    final key = GlobalKey<_LoadAnimationState>();
+
+    CancelFunc cancelAnimationFunc;
+
+    CancelFunc cancelFunc = showEnhancedWidget(
+        groupKey: loadKey,
+        toastBuilder: (_) => loadWidget(cancelAnimationFunc),
+        warpWidget: (child) => LoadAnimation(
+              key: key,
+              child: child,
+            ),
+        clickClose: clickClose,
+        allowClick: allowClick,
+        duration: duration,
+        closeFunc: () => cancelAnimationFunc(),
+        ignoreContentClick: ignoreContentClick,
+        backgroundColor: backgroundColor);
+
+    cancelAnimationFunc = () async {
       await key.currentState?.hide();
       cancelFunc();
     };
+
+    return cancelAnimationFunc;
   }
-
-
 
   ///此方法一般使用在dispose里面,防止因为开发人员没有主动去关闭,或者是请求api时的出现异常
   ///导致CancelFunc方法没有执行到等等,导致用户点击不了app
@@ -245,52 +269,50 @@ class BotToast {
     removeAll(loadKey);
   }
 
-  static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
-    UniqueKey key,
-    String groupKey,
-    bool allowClick = true,
-    bool clickClose = false,
-    bool ignoreContentClick = false,
-    CancelFunc closeFunc,
-    Color backgroundColor=Colors.transparent,
-    Duration duration}) {
-
+  static CancelFunc showEnhancedWidget(
+      {@required ToastBuilder toastBuilder,
+      UniqueKey key,
+      String groupKey,
+      bool allowClick = true,
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      CancelFunc closeFunc,
+      Color backgroundColor = Colors.transparent,
+      WrapWidget warpWidget,
+      Duration duration}) {
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
         toastBuilder: (cancel) {
           return KeyBoardSafeArea(
-            child: SafeArea(
-                child: GestureDetector(
-                  onTap: clickClose
-                      ? () => (closeFunc ?? cancel)()
-                      : null,
-                  behavior: allowClick
-                      ? HitTestBehavior.translucent
-                      : HitTestBehavior.opaque,
-                  child: SizedBox.expand(
+            child: GestureDetector(
+              onTap: clickClose ? () => (closeFunc ?? cancel)() : null,
+              behavior: allowClick
+              ? HitTestBehavior.translucent
+              : HitTestBehavior.opaque,
+              child: SizedBox.expand(
+            child: Builder(
+              builder: (BuildContext context) {
+                TextStyle textStyle = Theme.of(context).textTheme.body1;
+                Widget child = DefaultTextStyle(
+                    style: textStyle,
                     child: Stack(
                       children: <Widget>[
                         IgnorePointer(
                           child: Container(color: backgroundColor),
                         ),
-                        Builder(
-                            builder: (context) {
-                              return DefaultTextStyle(
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .body1,
-                                  child: IgnorePointer(
-                                    ignoring: ignoreContentClick,
-                                    child: toastBuilder(cancel),
-                                  ));
-                            }
-                        )
+                        SafeArea(
+                            child: IgnorePointer(
+                          ignoring: ignoreContentClick,
+                          child: toastBuilder(cancel),
+                        ))
                       ],
-                    ),
-                  ),
-                )),
+                    ));
+                return warpWidget != null ? warpWidget(child) : child;
+              },
+            ),
+              ),
+            ),
           );
         });
 
@@ -307,6 +329,7 @@ class BotToast {
   ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
   ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
+  ///这是个核心方法
   static CancelFunc showWidget(
       {@required ToastBuilder toastBuilder, UniqueKey key, String groupKey}) {
     assert(toastBuilder != null);
