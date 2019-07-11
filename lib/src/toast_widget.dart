@@ -1,23 +1,48 @@
 part of 'toast.dart';
 
+class ProxyDispose extends StatefulWidget {
+  final Widget child;
+  final VoidCallback disposeCallback;
+
+  const ProxyDispose(
+      {Key key, @required this.disposeCallback,@required this.child, })
+      : assert(child != null),
+        assert(disposeCallback != null),
+        super(key: key);
+
+  @override
+  _ProxyDisposeState createState() => _ProxyDisposeState();
+}
+
+class _ProxyDisposeState extends State<ProxyDispose> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+
+  @override
+  void dispose() {
+    widget.disposeCallback();
+    super.dispose();
+  }
+}
+
 //普通Toast进出动画
 class NormalAnimation extends StatefulWidget {
   final Widget child;
   final bool reverse;
-  final void Function() disposeCallback;
-
 
   const NormalAnimation(
-      {Key key, this.child, this.reverse = false, this.disposeCallback})
-      :
-        assert(child != null),
+      {Key key, this.child, this.reverse = false})
+      : assert(child != null),
         super(key: key);
 
   @override
   NormalAnimationState createState() => NormalAnimationState();
 }
 
-class NormalAnimationState extends State<NormalAnimation> with SingleTickerProviderStateMixin{
+class NormalAnimationState extends State<NormalAnimation>
+    with SingleTickerProviderStateMixin {
   static final Tween<Offset> reverseTweenOffset = Tween<Offset>(
     begin: Offset(0, -40),
     end: Offset(0, 0),
@@ -35,16 +60,15 @@ class NormalAnimationState extends State<NormalAnimation> with SingleTickerProvi
 
   @override
   void initState() {
-        controller =
+    controller =
         AnimationController(duration: Duration(milliseconds: 256), vsync: this);
-    animation =
-        CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    animationOffset = (widget.reverse ? reverseTweenOffset : tweenOffset)
-        .animate(animation);
+    animationOffset =
+        (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
     animationOpacity = tweenOpacity.animate(animation);
 
-        controller.forward();
+    controller.forward();
 
     super.initState();
   }
@@ -56,7 +80,6 @@ class NormalAnimationState extends State<NormalAnimation> with SingleTickerProvi
   @override
   void dispose() {
     controller.dispose();
-    widget.disposeCallback?.call();
     super.dispose();
   }
 
@@ -84,29 +107,31 @@ class _NotificationToast extends StatefulWidget {
 
   final Function slideOffFunc;
 
-  const _NotificationToast({Key key,@required this.child,@required this.slideOffFunc}) : super(key: key);
+  const _NotificationToast(
+      {Key key, @required this.child, @required this.slideOffFunc})
+      : super(key: key);
 
   @override
   _NotificationState createState() => _NotificationState();
 }
 
 class _NotificationState extends State<_NotificationToast> {
-
   @override
   Widget build(BuildContext context) {
-    Widget child=widget.child;
-    if(widget.slideOffFunc!=null){
-      child=Dismissible(
-        confirmDismiss: (_){
+    Widget child = widget.child;
+    if (widget.slideOffFunc != null) {
+      child = Dismissible(
+        confirmDismiss: (_) {
           widget.slideOffFunc();
         },
-        child: child, key: UniqueKey(),
+        child: child,
+        key: UniqueKey(),
       );
     }
 
     return SafeArea(
       child: Align(
-        alignment: Alignment(0,-0.99),
+        alignment: Alignment(0, -0.99),
         child: child,
       ),
     );
@@ -122,14 +147,21 @@ class _TextToast extends StatefulWidget {
   final TextStyle textStyle;
   final AlignmentGeometry align;
 
-  const _TextToast({Key key, @required this.text, this.contentPadding, this.contentColor, this.borderRadius, this.textStyle, this.align}) : super(key: key);
+  const _TextToast(
+      {Key key,
+      @required this.text,
+      this.contentPadding,
+      this.contentColor,
+      this.borderRadius,
+      this.textStyle,
+      this.align})
+      : super(key: key);
 
   @override
   _TextToastState createState() => _TextToastState();
 }
 
 class _TextToastState extends State<_TextToast> {
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -152,21 +184,21 @@ class _TextToastState extends State<_TextToast> {
         },
       ),
     );
-
   }
 }
 
-class LoadAnimation extends StatefulWidget {
+class FadeAnimation extends StatefulWidget {
   final Widget child;
+  final Duration duration;
 
-  const LoadAnimation({Key key, this.child}) : super(key: key);
+  const FadeAnimation({Key key, this.child,this. duration}) : super(key: key);
 
   @override
-  _LoadAnimationState createState() => _LoadAnimationState();
+  FadeAnimationState createState() => FadeAnimationState();
 }
 
-class _LoadAnimationState extends State<LoadAnimation> with  SingleTickerProviderStateMixin {
-
+class FadeAnimationState extends State<FadeAnimation>
+    with SingleTickerProviderStateMixin {
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
   AnimationController controller;
   Animation<double> animation;
@@ -175,7 +207,7 @@ class _LoadAnimationState extends State<LoadAnimation> with  SingleTickerProvide
   @override
   void initState() {
     controller =
-        AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+        AnimationController(duration: widget.duration??Duration(milliseconds: 300), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
     animationOpacity = tweenOpacity.animate(animation);
@@ -197,10 +229,12 @@ class _LoadAnimationState extends State<LoadAnimation> with  SingleTickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(opacity: animationOpacity,child: widget.child,);
+    return FadeTransition(
+      opacity: animationOpacity,
+      child: widget.child,
+    );
   }
 }
-
 
 //加载提示的Widget
 class _LoadingWidget extends StatelessWidget {
@@ -219,5 +253,43 @@ class _LoadingWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class PositionDelegate extends SingleChildLayoutDelegate {
+  PositionDelegate( {
+    @required this.target,
+    @required this.verticalOffset,
+    PreferDirection preferDirection
+  })  : assert(target != null),
+        assert(verticalOffset != null),
+        this.preferDirection = preferDirection ?? PreferDirection.Below;
+
+  final Offset target;
+
+  final double verticalOffset;
+
+  final PreferDirection preferDirection;
+
+  @override
+  BoxConstraints getConstraintsForChild(BoxConstraints constraints) =>
+      constraints.loosen();
+
+  @override
+  Offset getPositionForChild(Size size, Size childSize) {
+    return positionDependentBox(
+      size: size,
+      childSize: childSize,
+      target: target,
+      verticalOffset: verticalOffset,
+      preferBelow: preferDirection==PreferDirection.Below,
+    );
+  }
+
+  @override
+  bool shouldRelayout(PositionDelegate oldDelegate) {
+    return target != oldDelegate.target ||
+        verticalOffset != oldDelegate.verticalOffset ||
+        preferDirection != oldDelegate.preferDirection;
   }
 }

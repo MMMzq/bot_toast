@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'basis.dart';
 import 'key_board_safe_area.dart';
 import 'package:flutter/scheduler.dart';
+
+import 'toast_navigator_observer.dart';
 
 part 'toast_widget.dart';
 
 part 'bot_toast_manager.dart';
-
-typedef CancelFunc = void Function();
-typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
-typedef WrapWidget = Widget Function(Widget widget);
 
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -22,10 +21,12 @@ class BotToast {
   static const String textKey = "_textKey";
   static const String notificationKey = "_notificationKey";
   static const String loadKey = "_loadKey";
+  static const String attachedKey = "_attachedKey";
   static const String defaultKey = "_defaultKey";
 
-  static final List<GlobalKey<NormalAnimationState>> cacheNotification = [];
-  static final List<GlobalKey<NormalAnimationState>> cacheText = [];
+  static final List<CancelFunc> cacheNotification = [];
+  static final List<CancelFunc> cacheText = [];
+  static final List<CancelFunc> cacheAttached = [];
 
   ///此方法暂时不能多次初始化!
   static init(BuildContext context) {
@@ -90,27 +91,28 @@ class BotToast {
       bool enableSlideOff = true,
       bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
-    _safeRun(() {
-      if (onlyOne) {
-        cacheNotification
-            .forEach((globalKey) => globalKey.currentState?.hide());
-        cacheNotification.clear();
-      }
-      cacheNotification.add(key);
-    });
 
     CancelFunc cancelAnimationFunc;
 
+    if (onlyOne) {
+      cacheNotification
+          .forEach((cancelAnimationFunc) => cancelAnimationFunc());
+      cacheNotification.clear();
+    }
+    cacheNotification.add((){cancelAnimationFunc();});
+
     final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) => NormalAnimation(
-              key: key,
-              reverse: true,
+        toastBuilder: (cancelFunc) => ProxyDispose(
               disposeCallback: () {
-                cacheNotification.remove(key);
+                cacheNotification.remove(cancelAnimationFunc);
               },
-              child: _NotificationToast(
-                  child: toastBuilder(cancelAnimationFunc),
-                  slideOffFunc: enableSlideOff ? cancelFunc : null),
+              child: NormalAnimation(
+                key: key,
+                reverse: true,
+                child: _NotificationToast(
+                    child: toastBuilder(cancelAnimationFunc),
+                    slideOffFunc: enableSlideOff ? cancelFunc : null),
+              ),
             ),
         groupKey: notificationKey);
 
@@ -172,15 +174,14 @@ class BotToast {
       bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
-    _safeRun(() {
-      if (onlyOne) {
-        cacheText.forEach((globalKey) => globalKey.currentState?.hide());
-        cacheText.clear();
-      }
-      cacheText.add(key);
-    });
 
     CancelFunc cancelAnimationFunc;
+
+    if (onlyOne) {
+      cacheText.forEach((cancel) => cancel());
+      cacheText.clear();
+    }
+    cacheText.add((){cancelAnimationFunc();});
 
     final cancelFunc = showEnhancedWidget(
       groupKey: textKey,
@@ -190,13 +191,14 @@ class BotToast {
       ignoreContentClick: ignoreContentClick,
       backgroundColor: backgroundColor,
       duration: duration,
-      toastBuilder: (_) => NormalAnimation(
+      toastBuilder: (_) => SafeArea(child: ProxyDispose(
+          disposeCallback: () {
+            cacheText.remove(cancelAnimationFunc);
+          },
+          child: NormalAnimation(
             key: key,
-            disposeCallback: () {
-              cacheNotification.remove(key);
-            },
             child: toastBuilder(cancelAnimationFunc),
-          ),
+          ))),
     );
 
     //有动画的方式关闭
@@ -236,14 +238,14 @@ class BotToast {
   }) {
     assert(loadWidget != null, "loadWidget not null");
 
-    final key = GlobalKey<_LoadAnimationState>();
+    final key = GlobalKey<FadeAnimationState>();
 
     CancelFunc cancelAnimationFunc;
 
     CancelFunc cancelFunc = showEnhancedWidget(
         groupKey: loadKey,
-        toastBuilder: (_) => loadWidget(cancelAnimationFunc),
-        warpWidget: (child) => LoadAnimation(
+        toastBuilder: (_) => SafeArea(child: loadWidget(cancelAnimationFunc)),
+        warpWidget: (child) => FadeAnimation(
               key: key,
               child: child,
             ),
@@ -269,6 +271,88 @@ class BotToast {
     removeAll(loadKey);
   }
 
+  static CancelFunc showAttachedWidget({
+    @required ToastBuilder attachedWidget,
+    BuildContext targetContext,
+    Color backgroundColor = Colors.transparent,
+    Offset target,
+    double verticalOffset=24,
+    Duration duration,
+    PreferDirection preferDirection,
+    bool allowClick = false,
+    bool clickClose = true,
+    bool ignoreContentClick = false,
+    bool onlyOne = true,
+    bool crossPage = false,
+  }) {
+    assert(!(targetContext != null && target != null),
+        "targetContext and target cannot coexist");
+    assert(targetContext != null || target != null,
+        "targetContext and target must exist one");
+
+    if (target == null) {
+      RenderObject renderObject = targetContext.findRenderObject();
+      if (renderObject is RenderBox) {
+        target =
+            renderObject.localToGlobal(renderObject.size.center(Offset.zero));
+      } else {
+        throw Exception(
+            "context.findRenderObject() return result must be RenderBox class");
+      }
+    }
+    GlobalKey<FadeAnimationState> key = GlobalKey<FadeAnimationState>();
+
+    CancelFunc cancelAnimationFunc;
+
+    if (onlyOne) {
+      cacheAttached.forEach((cancel) => cancel());
+      cacheAttached.clear();
+    }
+    cacheAttached.add((){cancelAnimationFunc();});
+
+    CancelFunc cancelFunc = showEnhancedWidget(
+        allowClick: allowClick,
+        clickClose: clickClose,
+        groupKey: attachedKey,
+        crossPage: crossPage,
+        backgroundColor: backgroundColor,
+        ignoreContentClick: ignoreContentClick,
+        closeFunc: ()=>cancelAnimationFunc(),
+        warpWidget: (widget)=>FadeAnimation(child: widget,key: key,duration: Duration(milliseconds: 150),),
+        duration: duration,
+        toastBuilder: (_) => ProxyDispose(
+            disposeCallback: () {
+              cacheAttached.remove(cancelAnimationFunc);
+            },
+            child: CustomSingleChildLayout(
+              delegate: PositionDelegate(
+                  target: target,
+                  verticalOffset: verticalOffset ?? 0,
+                  preferDirection: preferDirection),
+              child: attachedWidget(cancelAnimationFunc),
+            )));
+
+    cancelAnimationFunc = () async {
+      await key.currentState?.hide();
+      cancelFunc();
+    };
+
+    return cancelAnimationFunc;
+  }
+
+  /*
+    _________________________________
+   |          MainContent            |
+   |                      <----------------------allowClick
+   |                      <----------------------clickClose
+   |      ___________________        |
+   |     |                   |       |
+   |     |    ToastContent   |       |
+   |     |                <----------------------ignoreContentClick
+   |     |___________________|       |
+   |_________________________________|
+   */
+
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
@@ -276,6 +360,7 @@ class BotToast {
       bool allowClick = true,
       bool clickClose = false,
       bool ignoreContentClick = false,
+      bool crossPage = true,
       CancelFunc closeFunc,
       Color backgroundColor = Colors.transparent,
       WrapWidget warpWidget,
@@ -288,33 +373,35 @@ class BotToast {
             child: GestureDetector(
               onTap: clickClose ? () => (closeFunc ?? cancel)() : null,
               behavior: allowClick
-              ? HitTestBehavior.translucent
-              : HitTestBehavior.opaque,
+                  ? HitTestBehavior.translucent
+                  : HitTestBehavior.opaque,
               child: SizedBox.expand(
-            child: Builder(
-              builder: (BuildContext context) {
-                TextStyle textStyle = Theme.of(context).textTheme.body1;
-                Widget child = DefaultTextStyle(
-                    style: textStyle,
-                    child: Stack(
-                      children: <Widget>[
-                        IgnorePointer(
-                          child: Container(color: backgroundColor),
-                        ),
-                        SafeArea(
-                            child: IgnorePointer(
-                          ignoring: ignoreContentClick,
-                          child: toastBuilder(cancel),
-                        ))
-                      ],
-                    ));
-                return warpWidget != null ? warpWidget(child) : child;
-              },
-            ),
+                child: Builder(
+                  builder: (BuildContext context) {
+                    TextStyle textStyle = Theme.of(context).textTheme.body1;
+                    Widget child = DefaultTextStyle(
+                        style: textStyle,
+                        child: Stack(
+                          children: <Widget>[
+                            IgnorePointer(
+                              child: Container(color: backgroundColor),
+                            ),
+                            IgnorePointer(
+                              ignoring: ignoreContentClick,
+                              child: toastBuilder(cancel),
+                            )                          ],
+                        ));
+                    return warpWidget != null ? warpWidget(child) : child;
+                  },
+                ),
               ),
             ),
           );
         });
+
+    if (!crossPage) {
+      BotToastNavigatorObserver.instance.runOnce(cancelFunc);
+    }
 
     if (duration != null) {
       Future.delayed(duration, () {

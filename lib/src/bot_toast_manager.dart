@@ -8,20 +8,23 @@ class _BotToastManager extends StatefulWidget {
 }
 
 class _BotToastManagerState extends State<_BotToastManager> {
-  Map<String, Map<UniqueKey, Widget>> _map = {};
+  Map<String, Map<UniqueKey, IndexedSemantics>> _map = {};
+  int index=0;
 
   @override
   Widget build(BuildContext context) {
+    List<IndexedSemantics> children = _map.values.fold([], (value, items) {
+      return value..addAll(items.values);
+    });
+    children.sort((a,b)=>a.index.compareTo(b.index));
     return Stack(
-        children: _map.values.fold([], (value, items) {
-          return value..addAll(items.values);
-        }));
+        children: children);
   }
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
     setState(() {
       _map[groupKey] ??= {};
-      _map[groupKey][key] = widget;
+      _map[groupKey][key] = IndexedSemantics(index: index++,child: widget,);
     });
   }
 
