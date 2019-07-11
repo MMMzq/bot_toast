@@ -16,11 +16,13 @@ void _safeRun(void Function() callback) {
   SchedulerBinding.instance.scheduleFrame();
 }
 
-///todo 不要调用[ToastBuilder]方法生成widget时,
+///todo
+///不要调用[ToastBuilder]方法生成widget时,
 ///请注意该生成的Widget不会吸收背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
 ///并且会吸收事件,具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
-///如果真的要生成,可以考虑使用[IgnorePointer]
+///如果真的要生成,可以考虑使用[IgnorePointer].
+///如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 class BotToast {
   static GlobalKey<_BotToastManagerState> _managerState;
   static const String textKey = "_textKey";
