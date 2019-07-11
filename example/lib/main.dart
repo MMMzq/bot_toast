@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:example/text/text.dart';
 import 'package:flutter/material.dart';
 
+import 'attached_toast/attached_toast.dart';
 import 'loading/custom_loading.dart';
 import 'loading/loading.dart';
 import 'notification/custom_notification.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -167,10 +169,34 @@ class EnterPage extends StatelessWidget {
                           child: Text("CustomLoading"),
                         ),
                       ),
-                    )
+                    ),
+
 
                   ],
                 ),
+                Text(
+                  "Other",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                Divider(),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => AttachedToast()));
+                          },
+                          child: Text("AttachedToast"),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ]),
             ),
           ),

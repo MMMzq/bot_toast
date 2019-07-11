@@ -10,8 +10,21 @@ class SimpleNotification extends StatefulWidget {
 class _SimpleNotificationState extends State<SimpleNotification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
-  bool onlyOne = false;
+  bool onlyOne = true;
   int seconds = 2;
+  @override
+  void initState() {
+    BotToast.showSimpleNotification(
+        title: "do you still love me ?",
+        subTitle: "yes!",
+        enableSlideOff: enableSlideOff,
+        hideCloseButton: hideCloseButton,
+        onlyOne: onlyOne,
+        duration: Duration(seconds: seconds));
+
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
