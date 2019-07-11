@@ -38,6 +38,7 @@ class BotToast {
           key: _managerState,
         );
       }));
+      Navigator.of(context,rootNavigator: true).widget.observers.add(BotToastNavigatorObserver());
     });
   }
 

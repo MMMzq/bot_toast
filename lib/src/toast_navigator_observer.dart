@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
+
+
+///如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
+///可以参考[BotToast.init]方法添加
+///或者在创建[Navigator]时直接添加
+///    Example:
+///    MaterialApp(
+///      navigatorObservers: [BotToastNavigatorObserver()],
+///      title: 'Flutter Demo',
+///      home: ToastWidget(
+///        child: XxxxPage(title: 'Flutter Demo Home Page'),
+///      ),
+///    );
 class BotToastNavigatorObserver extends NavigatorObserver{
   final List<VoidCallback> _leavePageCallbacks=[];
   static final instance =BotToastNavigatorObserver._();
 
-  bool debugInitialization=false;
-
   factory BotToastNavigatorObserver(){
-    assert((){
-      instance.debugInitialization=true;
-      return true;
-    }());
     return instance;
   }
 
   void runOnce(VoidCallback leavePageCallback){
-    assert(debugInitialization,
-    """
-    Please initialize!
-    Example:
-    MaterialApp(
-      navigatorObservers: [BotToastNavigatorObserver()],
-      title: 'Flutter Demo',
-      home: ToastWidget(
-        child: XxxxPage(title: 'Flutter Demo Home Page'),
-      ),
-    );
-    """);
+
     VoidCallback voidCallback;
     voidCallback = (){
       leavePageCallback();
