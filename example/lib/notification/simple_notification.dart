@@ -11,6 +11,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
   bool onlyOne = true;
+  bool crossPage=true;
   int seconds = 2;
   @override
   void initState() {
@@ -20,8 +21,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
         enableSlideOff: enableSlideOff,
         hideCloseButton: hideCloseButton,
         onlyOne: onlyOne,
+        crossPage: crossPage,
         duration: Duration(seconds: seconds));
-
 
     super.initState();
   }
@@ -46,6 +47,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                       enableSlideOff: enableSlideOff,
                       hideCloseButton: hideCloseButton,
                       onlyOne: onlyOne,
+                      crossPage: crossPage,
                       duration: Duration(seconds: seconds));
                 },
                 child: Text("simpleNotification"),
@@ -76,6 +78,15 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                   });
                 },
                 title: Text("onlyOne: "),
+              ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -108,18 +119,11 @@ class _SimpleNotificationState extends State<SimpleNotification> {
 
 String _code = """
 BotToast.showSimpleNotification(
-
-         title: "do you still love me ?",
-         
-         subTitle: "yes!",
-         
-         enableSlideOff: enableSlideOff,
-         
-         hideCloseButton: hideCloseButton,
-         
-         onlyOne: onlyOne,
-         
-         duration: Duration(seconds: seconds)
-         
-);
+    title: "do you still love me ?",
+    subTitle: "yes!",
+    enableSlideOff: enableSlideOff,
+    hideCloseButton: hideCloseButton,
+    onlyOne: onlyOne,
+    crossPage: crossPage,
+    duration: Duration(seconds: seconds));
 """;

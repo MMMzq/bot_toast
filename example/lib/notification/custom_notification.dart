@@ -50,7 +50,8 @@ class CustomNotification extends StatefulWidget {
 
 class _CustomNotificationState extends State<CustomNotification> {
   bool enableSlideOff = true;
-  bool onlyOne = false;
+  bool onlyOne = true;
+  bool crossPage = true;
   int seconds = 10;
 
   @override
@@ -76,6 +77,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                     },
                     enableSlideOff: enableSlideOff,
                     onlyOne: onlyOne,
+                    crossPage: crossPage
 
                   );
                 },
@@ -98,6 +100,15 @@ class _CustomNotificationState extends State<CustomNotification> {
                   });
                 },
                 title: Text("onlyOne: "),
+              ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),

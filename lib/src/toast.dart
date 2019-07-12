@@ -32,20 +32,25 @@ class BotToast {
   static const String defaultKey = "_defaultKey";
 
   static final List<CancelFunc> cacheNotification = [];
-  static final List<CancelFunc> cacheText = [];
-  static final List<CancelFunc> cacheAttached = [];
+  static final Map<String, List<CancelFunc>> cacheCancelFunc = {
+    textKey: [],
+    notificationKey: [],
+    loadKey: [],
+    attachedKey: [],
+    defaultKey: [],
+  };
 
   ///此方法暂时不能多次初始化!
   static init(BuildContext context) {
     _safeRun(() {
       assert(_managerState == null, "不允许初始化多次!");
+      (context.ancestorWidgetOfExactType(MaterialApp) as MaterialApp).navigatorObservers.add(BotToastNavigatorObserver());
       _managerState = GlobalKey<_BotToastManagerState>();
       Overlay.of(context).insert(OverlayEntry(builder: (_) {
         return _BotToastManager(
           key: _managerState,
         );
       }));
-      Navigator.of(context,rootNavigator: true).widget.observers.add(BotToastNavigatorObserver());
     });
   }
 
@@ -55,11 +60,13 @@ class BotToast {
       Duration duration = const Duration(seconds: 2),
       bool enableSlideOff = true,
       bool hideCloseButton = false,
-      bool onlyOne = false}) {
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showNotification(
         duration: duration,
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
+        crossPage: crossPage,
         hideCloseButton: hideCloseButton,
         title: (_) => Text(title),
         subtitle: subTitle == null ? null : (_) => Text(subTitle),
@@ -75,11 +82,13 @@ class BotToast {
       Duration duration = const Duration(seconds: 2),
       EdgeInsetsGeometry contentPadding,
       bool enableSlideOff = true,
+      bool crossPage = true,
       bool hideCloseButton = false,
-      bool onlyOne = false}) {
+      bool onlyOne = true}) {
     return showCustomNotification(
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
+        crossPage: crossPage,
         duration: duration,
         toastBuilder: (cancel) {
           return Card(
@@ -97,30 +106,25 @@ class BotToast {
       {@required ToastBuilder toastBuilder,
       Duration duration = const Duration(seconds: 2),
       bool enableSlideOff = true,
-      bool onlyOne = false}) {
+      bool crossPage = true,
+      bool onlyOne = true}) {
     final key = GlobalKey<NormalAnimationState>();
 
     CancelFunc cancelAnimationFunc;
 
-    if (onlyOne) {
-      cacheNotification
-          .forEach((cancelAnimationFunc) => cancelAnimationFunc());
-      cacheNotification.clear();
-    }
-    cacheNotification.add((){cancelAnimationFunc();});
-
-    final cancelFunc = showWidget(
-        toastBuilder: (cancelFunc) => ProxyDispose(
-              disposeCallback: () {
-                cacheNotification.remove(cancelAnimationFunc);
-              },
-              child: NormalAnimation(
-                key: key,
-                reverse: true,
-                child: _NotificationToast(
-                    child: toastBuilder(cancelAnimationFunc),
-                    slideOffFunc: enableSlideOff ? cancelFunc : null),
-              ),
+    CancelFunc cancelFunc = showEnhancedWidget(
+        crossPage: crossPage,
+        allowClick: true,
+        clickClose: false,
+        ignoreContentClick: false,
+        onlyOne: onlyOne,
+        duration: duration,
+        toastBuilder: (cancelFunc) => NormalAnimation(
+              key: key,
+              reverse: true,
+              child: _NotificationToast(
+                  child: toastBuilder(cancelAnimationFunc),
+                  slideOffFunc: enableSlideOff ? cancelFunc : null),
             ),
         groupKey: notificationKey);
 
@@ -129,9 +133,6 @@ class BotToast {
       cancelFunc();
     };
 
-    if (duration != null) {
-      Future.delayed(duration, cancelAnimationFunc);
-    }
     return cancelAnimationFunc;
   }
 
@@ -152,9 +153,12 @@ class BotToast {
           const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
       bool clickClose = false,
-      bool onlyOne = false}) {
+        bool crossPage = true,
+
+        bool onlyOne = false}) {
     return showCustomText(
         duration: duration,
+        crossPage: crossPage,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
         onlyOne: onlyOne,
@@ -177,36 +181,29 @@ class BotToast {
       {@required ToastBuilder toastBuilder,
       Color backgroundColor = Colors.transparent,
       Duration duration = const Duration(seconds: 2),
+      bool crossPage = true,
       bool clickClose = false,
       bool ignoreContentClick = false,
       bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
-
     CancelFunc cancelAnimationFunc;
 
-    if (onlyOne) {
-      cacheText.forEach((cancel) => cancel());
-      cacheText.clear();
-    }
-    cacheText.add((){cancelAnimationFunc();});
-
-    final cancelFunc = showEnhancedWidget(
+    CancelFunc cancelFunc = showEnhancedWidget(
       groupKey: textKey,
       closeFunc: () => cancelAnimationFunc(),
       clickClose: clickClose,
       allowClick: true,
+      onlyOne: onlyOne,
+      crossPage: crossPage,
       ignoreContentClick: ignoreContentClick,
       backgroundColor: backgroundColor,
       duration: duration,
-      toastBuilder: (_) => SafeArea(child: ProxyDispose(
-          disposeCallback: () {
-            cacheText.remove(cancelAnimationFunc);
-          },
-          child: NormalAnimation(
+      toastBuilder: (_) => SafeArea(
+              child: NormalAnimation(
             key: key,
             child: toastBuilder(cancelAnimationFunc),
-          ))),
+          )),
     );
 
     //有动画的方式关闭
@@ -223,6 +220,7 @@ class BotToast {
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
   static CancelFunc showLoading({
+    bool crossPage = true,
     bool clickClose = false,
     bool allowClick = false,
     Duration duration,
@@ -232,6 +230,8 @@ class BotToast {
         loadWidget: (_) => _LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
+        crossPage: crossPage,
+        ignoreContentClick: true,
         duration: duration,
         backgroundColor: backgroundColor);
   }
@@ -241,6 +241,7 @@ class BotToast {
     bool clickClose = false,
     bool allowClick = false,
     bool ignoreContentClick = true,
+    bool crossPage = false,
     Duration duration,
     Color backgroundColor = Colors.black26,
   }) {
@@ -259,9 +260,11 @@ class BotToast {
             ),
         clickClose: clickClose,
         allowClick: allowClick,
+        crossPage: crossPage,
+        ignoreContentClick: ignoreContentClick,
+        onlyOne: false,
         duration: duration,
         closeFunc: () => cancelAnimationFunc(),
-        ignoreContentClick: ignoreContentClick,
         backgroundColor: backgroundColor);
 
     cancelAnimationFunc = () async {
@@ -284,11 +287,11 @@ class BotToast {
     BuildContext targetContext,
     Color backgroundColor = Colors.transparent,
     Offset target,
-    double verticalOffset=24,
+    double verticalOffset = 24,
     Duration duration,
     PreferDirection preferDirection,
     bool ignoreContentClick = false,
-    bool onlyOne = true,
+    bool onlyOne = false,
     bool allowClick = true,
     bool crossPage = false,
   }) {
@@ -311,33 +314,28 @@ class BotToast {
 
     CancelFunc cancelAnimationFunc;
 
-    if (onlyOne) {
-      cacheAttached.forEach((cancel) => cancel());
-      cacheAttached.clear();
-    }
-    cacheAttached.add((){cancelAnimationFunc();});
-
     CancelFunc cancelFunc = showEnhancedWidget(
         allowClick: allowClick,
         clickClose: true,
         groupKey: attachedKey,
         crossPage: crossPage,
+        onlyOne: onlyOne,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
-        closeFunc: ()=>cancelAnimationFunc(),
-        warpWidget: (widget)=>FadeAnimation(child: widget,key: key,duration: Duration(milliseconds: 150),),
+        closeFunc: () => cancelAnimationFunc(),
+        warpWidget: (widget) => FadeAnimation(
+              child: widget,
+              key: key,
+              duration: Duration(milliseconds: 150),
+            ),
         duration: duration,
-        toastBuilder: (_) => ProxyDispose(
-            disposeCallback: () {
-              cacheAttached.remove(cancelAnimationFunc);
-            },
-            child: CustomSingleChildLayout(
+        toastBuilder: (_) => CustomSingleChildLayout(
               delegate: PositionDelegate(
                   target: target,
                   verticalOffset: verticalOffset ?? 0,
                   preferDirection: preferDirection),
               child: attachedWidget(cancelAnimationFunc),
-            )));
+            ));
 
     cancelAnimationFunc = () async {
       await key.currentState?.hide();
@@ -364,21 +362,36 @@ class BotToast {
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
       String groupKey,
+      bool crossPage = true,
       bool allowClick = true,
       bool clickClose = false,
       bool ignoreContentClick = false,
-      bool crossPage = true,
+      bool onlyOne = false,
       CancelFunc closeFunc,
       Color backgroundColor = Colors.transparent,
       WrapWidget warpWidget,
       Duration duration}) {
+    //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
+    CancelFunc dismissFunc;
+
+    List<CancelFunc> cache = cacheCancelFunc[groupKey ?? defaultKey] ??= [];
+    if (onlyOne) {
+      cache.forEach((cancel) => cancel());
+      cache.clear();
+    }
+    VoidCallback rememberFunc = () => dismissFunc();
+    cache.add(rememberFunc);
+
+    print(cache.length);
+
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
         toastBuilder: (cancel) {
-          CancelFunc dismissFunc=closeFunc ?? cancel;
           return KeyBoardSafeArea(
-            child: Builder(
+            child: ProxyDispose(disposeCallback: () {
+              cache.remove(rememberFunc);
+            }, child: Builder(
               builder: (BuildContext context) {
                 TextStyle textStyle = Theme.of(context).textTheme.body1;
                 Widget child = DefaultTextStyle(
@@ -386,7 +399,8 @@ class BotToast {
                     child: Stack(
                       children: <Widget>[
                         Listener(
-                          onPointerDown: clickClose ? (_) => dismissFunc() : null,
+                          onPointerDown:
+                              clickClose ? (_) => dismissFunc() : null,
                           behavior: allowClick
                               ? HitTestBehavior.translucent
                               : HitTestBehavior.opaque,
@@ -398,13 +412,16 @@ class BotToast {
                         IgnorePointer(
                           ignoring: ignoreContentClick,
                           child: toastBuilder(cancel),
-                        )                          ],
+                        )
+                      ],
                     ));
                 return warpWidget != null ? warpWidget(child) : child;
               },
-            ),
+            )),
           );
         });
+
+    dismissFunc = closeFunc ?? cancelFunc;
 
     if (!crossPage) {
       BotToastNavigatorObserver.instance.runOnce(cancelFunc);

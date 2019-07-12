@@ -11,6 +11,8 @@ class _TextSampleState extends State<TextSample> {
   int seconds = 2;
   bool clickClose = false;
   bool onlyOne = true;
+  bool crossPage=true;
+
   double align = 0.8;
   int fontSize = 17;
   int borderRadius = 8;
@@ -37,6 +39,7 @@ class _TextSampleState extends State<TextSample> {
                       duration: Duration(seconds: seconds),
                       onlyOne: onlyOne,
                       clickClose: clickClose,
+                      crossPage: crossPage,
                       align: Alignment(0, align),
                       textStyle: TextStyle(
                           color: Color(fontColor),
@@ -78,6 +81,15 @@ class _TextSampleState extends State<TextSample> {
                   });
                 },
                 title: Text("clickClose: "),
+              ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
               ),
               ListTile(
                 title: Text("align:  Alignment(0, $align)"),

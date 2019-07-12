@@ -10,8 +10,10 @@ class Notification extends StatefulWidget {
 class _NotificationState extends State<Notification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
-  bool onlyOne = false;
+  bool onlyOne = true;
+  bool crossPage = true;
   int seconds = 2;
+  double contentPadding = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,8 @@ class _NotificationState extends State<Notification> {
                           onPressed: cancel,
                         ),
                     enableSlideOff: enableSlideOff,
+                    crossPage: crossPage,
+                    contentPadding: EdgeInsets.all(contentPadding),
                     hideCloseButton: hideCloseButton,
                     onlyOne: onlyOne,
                     duration: Duration(seconds: seconds)
@@ -76,6 +80,15 @@ class _NotificationState extends State<Notification> {
                 },
                 title: Text("onlyOne: "),
               ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
+              ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
                 trailing: CupertinoSlider(
@@ -85,6 +98,19 @@ class _NotificationState extends State<Notification> {
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("contentPadding:   $contentPadding"),
+                trailing: CupertinoSlider(
+                  min: 1,
+                  max: 30,
+                  value: contentPadding,
+                  onChanged: (double value) {
+                    setState(() {
+                      contentPadding = value;
                     });
                   },
                 ),
