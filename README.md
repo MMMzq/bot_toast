@@ -20,6 +20,8 @@ BotToast ❤
 
 [example](https://github.com/MMMzq/bot_toast/blob/master/example/lib/main.dart)
 
+## 以下请内容已失效,具体api已经变动了
+
 ### 🐺效果图
 (全损画质😂)
 
