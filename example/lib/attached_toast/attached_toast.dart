@@ -13,8 +13,6 @@ class _AttachedToastState extends State<AttachedToast> {
   double verticalOffset = 24;
   int second = 4;
   PreferDirection preferDirection = PreferDirection.Below;
-  bool allowClick = true;
-  bool clickClose = false;
   bool ignoreContentClick = false;
   bool onlyOne = true;
   bool crossPage = false;
@@ -27,16 +25,17 @@ class _AttachedToastState extends State<AttachedToast> {
         verticalOffset: verticalOffset,
         duration: Duration(seconds: second),
         preferDirection: preferDirection,
-        allowClick: allowClick,
-        clickClose: clickClose,
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
         crossPage: crossPage,
         backgroundColor: Color(backgroundColor),
         attachedWidget: (cancel) => (Card(
-              child: RaisedButton(
-                onPressed: cancel,
-                child: Text("cancel"),
+              child: IconButton(
+                padding: EdgeInsets.all(20),
+                onPressed: (){
+                  BotToast.showSimpleNotification(title: "Let's go travel together.😘");
+                },
+                icon: Icon(Icons.favorite,color: Colors.redAccent,),
               ),
             )));
   }
@@ -90,24 +89,8 @@ class _AttachedToastState extends State<AttachedToast> {
                 },
                 title: Text("preferDirection: $preferDirection"),
               ),
-              SwitchListTile(
-                value: allowClick,
-                onChanged: (value) {
-                  setState(() {
-                    allowClick = value;
-                  });
-                },
-                title: Text("allowClick: "),
-              ),
-              SwitchListTile(
-                value: clickClose,
-                onChanged: (value) {
-                  setState(() {
-                    clickClose = value;
-                  });
-                },
-                title: Text("clickClose: "),
-              ),
+
+
               SwitchListTile(
                 value: ignoreContentClick,
                 onChanged: (value) {

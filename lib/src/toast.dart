@@ -287,8 +287,6 @@ class BotToast {
     double verticalOffset=24,
     Duration duration,
     PreferDirection preferDirection,
-    bool allowClick = false,
-    bool clickClose = true,
     bool ignoreContentClick = false,
     bool onlyOne = true,
     bool crossPage = false,
@@ -319,8 +317,8 @@ class BotToast {
     cacheAttached.add((){cancelAnimationFunc();});
 
     CancelFunc cancelFunc = showEnhancedWidget(
-        allowClick: allowClick,
-        clickClose: clickClose,
+        allowClick: false,
+        clickClose: true,
         groupKey: attachedKey,
         crossPage: crossPage,
         backgroundColor: backgroundColor,
@@ -377,9 +375,17 @@ class BotToast {
         groupKey: groupKey,
         key: key,
         toastBuilder: (cancel) {
+          CancelFunc dismissFunc=closeFunc ?? cancel;
           return KeyBoardSafeArea(
             child: GestureDetector(
-              onTap: clickClose ? () => (closeFunc ?? cancel)() : null,
+              onTap: clickClose ? () => dismissFunc() : null,
+              onLongPress: clickClose ? () => dismissFunc() : null,
+              onDoubleTap: clickClose ? () => dismissFunc() : null,
+              onVerticalDragStart: clickClose ? (_) => dismissFunc() : null,
+              onHorizontalDragStart: clickClose ? (_) => dismissFunc() : null,
+              onForcePressStart: clickClose ? (_) => dismissFunc() : null,
+//              onPanStart: clickClose ? (_) => dismissFunc() : null,
+//              onScaleStart: clickClose ? (_) => dismissFunc() : null,
               behavior: allowClick
                   ? HitTestBehavior.translucent
                   : HitTestBehavior.opaque,
