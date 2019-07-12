@@ -16,6 +16,7 @@ class _AttachedToastState extends State<AttachedToast> {
   bool ignoreContentClick = false;
   bool onlyOne = true;
   bool crossPage = false;
+  bool allowClick = false;
   int backgroundColor = 0x00000000;
 
   CancelFunc show({BuildContext context, Offset target}) {
@@ -28,6 +29,7 @@ class _AttachedToastState extends State<AttachedToast> {
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
         crossPage: crossPage,
+        allowClick: allowClick,
         backgroundColor: Color(backgroundColor),
         attachedWidget: (cancel) => (Card(
               child: IconButton(
@@ -117,6 +119,15 @@ class _AttachedToastState extends State<AttachedToast> {
                   });
                 },
                 title: Text("crossPage: "),
+              ),
+              SwitchListTile(
+                value: allowClick,
+                onChanged: (value) {
+                  setState(() {
+                    allowClick = value;
+                  });
+                },
+                title: Text("allowClick: "),
               ),
               ListTile(
                 title: Text("duration:   ${second}s"),

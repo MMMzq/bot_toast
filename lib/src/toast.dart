@@ -289,6 +289,7 @@ class BotToast {
     PreferDirection preferDirection,
     bool ignoreContentClick = false,
     bool onlyOne = true,
+    bool allowClick = true,
     bool crossPage = false,
   }) {
     assert(!(targetContext != null && target != null),
@@ -317,7 +318,7 @@ class BotToast {
     cacheAttached.add((){cancelAnimationFunc();});
 
     CancelFunc cancelFunc = showEnhancedWidget(
-        allowClick: false,
+        allowClick: allowClick,
         clickClose: true,
         groupKey: attachedKey,
         crossPage: crossPage,
@@ -377,38 +378,30 @@ class BotToast {
         toastBuilder: (cancel) {
           CancelFunc dismissFunc=closeFunc ?? cancel;
           return KeyBoardSafeArea(
-            child: GestureDetector(
-              onTap: clickClose ? () => dismissFunc() : null,
-              onLongPress: clickClose ? () => dismissFunc() : null,
-              onDoubleTap: clickClose ? () => dismissFunc() : null,
-              onVerticalDragStart: clickClose ? (_) => dismissFunc() : null,
-              onHorizontalDragStart: clickClose ? (_) => dismissFunc() : null,
-              onForcePressStart: clickClose ? (_) => dismissFunc() : null,
-//              onPanStart: clickClose ? (_) => dismissFunc() : null,
-//              onScaleStart: clickClose ? (_) => dismissFunc() : null,
-              behavior: allowClick
-                  ? HitTestBehavior.translucent
-                  : HitTestBehavior.opaque,
-              child: SizedBox.expand(
-                child: Builder(
-                  builder: (BuildContext context) {
-                    TextStyle textStyle = Theme.of(context).textTheme.body1;
-                    Widget child = DefaultTextStyle(
-                        style: textStyle,
-                        child: Stack(
-                          children: <Widget>[
-                            IgnorePointer(
-                              child: Container(color: backgroundColor),
-                            ),
-                            IgnorePointer(
-                              ignoring: ignoreContentClick,
-                              child: toastBuilder(cancel),
-                            )                          ],
-                        ));
-                    return warpWidget != null ? warpWidget(child) : child;
-                  },
-                ),
-              ),
+            child: Builder(
+              builder: (BuildContext context) {
+                TextStyle textStyle = Theme.of(context).textTheme.body1;
+                Widget child = DefaultTextStyle(
+                    style: textStyle,
+                    child: Stack(
+                      children: <Widget>[
+                        Listener(
+                          onPointerDown: clickClose ? (_) => dismissFunc() : null,
+                          behavior: allowClick
+                              ? HitTestBehavior.translucent
+                              : HitTestBehavior.opaque,
+                          child: SizedBox.expand(),
+                        ),
+                        IgnorePointer(
+                          child: Container(color: backgroundColor),
+                        ),
+                        IgnorePointer(
+                          ignoring: ignoreContentClick,
+                          child: toastBuilder(cancel),
+                        )                          ],
+                    ));
+                return warpWidget != null ? warpWidget(child) : child;
+              },
             ),
           );
         });
