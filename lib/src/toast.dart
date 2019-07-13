@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'basis.dart';
 import 'key_board_safe_area.dart';
@@ -31,7 +33,6 @@ class BotToast {
   static const String attachedKey = "_attachedKey";
   static const String defaultKey = "_defaultKey";
 
-  static final List<CancelFunc> cacheNotification = [];
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
     notificationKey: [],
@@ -44,7 +45,9 @@ class BotToast {
   static init(BuildContext context) {
     _safeRun(() {
       assert(_managerState == null, "不允许初始化多次!");
-      (context.ancestorWidgetOfExactType(MaterialApp) as MaterialApp).navigatorObservers.add(BotToastNavigatorObserver());
+      (context.ancestorWidgetOfExactType(MaterialApp) as MaterialApp)
+          .navigatorObservers
+          .add(BotToastNavigatorObserver());
       _managerState = GlobalKey<_BotToastManagerState>();
       Overlay.of(context).insert(OverlayEntry(builder: (_) {
         return _BotToastManager(
@@ -119,6 +122,7 @@ class BotToast {
         ignoreContentClick: false,
         onlyOne: onlyOne,
         duration: duration,
+        closeFunc: ()=>cancelAnimationFunc(),
         toastBuilder: (cancelFunc) => NormalAnimation(
               key: key,
               reverse: true,
@@ -153,9 +157,8 @@ class BotToast {
           const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
       bool clickClose = false,
-        bool crossPage = true,
-
-        bool onlyOne = false}) {
+      bool crossPage = true,
+      bool onlyOne = false}) {
     return showCustomText(
         duration: duration,
         crossPage: crossPage,
@@ -358,6 +361,7 @@ class BotToast {
    |_________________________________|
    */
 
+
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
@@ -374,15 +378,17 @@ class BotToast {
     //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     CancelFunc dismissFunc;
 
-    List<CancelFunc> cache = cacheCancelFunc[groupKey ?? defaultKey] ??= [];
+    final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
     if (onlyOne) {
-      cache.forEach((cancel) => cancel());
+      final clone = cache.toList();
       cache.clear();
+      clone.forEach((cancel) {
+        cancel();
+      });
     }
-    VoidCallback rememberFunc = () => dismissFunc();
-    cache.add(rememberFunc);
+    VoidCallback rememberFunc = ()=>dismissFunc();
+    cache.add(rememberFunc) ;
 
-    print(cache.length);
 
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,

@@ -157,7 +157,7 @@ class _TextSampleState extends State<TextSample> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("backgroundColor:   "),
+                    Text("background:",overflow: TextOverflow.fade,),
                     Container(
                       height: 20,
                       width: 20,
