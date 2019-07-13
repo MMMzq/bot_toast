@@ -216,5 +216,24 @@ class _AttachedToastState extends State<AttachedToast> {
 }
 
 String _code = """
-
+BotToast.showAttachedWidget(
+        target: target,
+        targetContext: context,
+        verticalOffset: verticalOffset,
+        duration: Duration(seconds: second),
+        preferDirection: preferDirection,
+        ignoreContentClick: ignoreContentClick,
+        onlyOne: onlyOne,
+        crossPage: crossPage,
+        allowClick: allowClick,
+        backgroundColor: Color(backgroundColor),
+        attachedWidget: (cancel) => (Card(
+              child: IconButton(
+                padding: EdgeInsets.all(20),
+                onPressed: (){
+                  BotToast.showSimpleNotification(title: "Let's go travel together.😘");
+                },
+                icon: Icon(Icons.favorite,color: Colors.redAccent,),
+              ),
+)));
 """;
