@@ -42,17 +42,25 @@ class BotToast {
 
   ///此方法暂时不能多次初始化!
   static init(BuildContext context) {
+    assert(BotToastNavigatorObserver.debugInitialization,
+    """
+    请初始化BotToastNavigatorObserver
+    Please initialize!
+    Example:
+    MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: BotToastInit(child: EnterPage()),
+    );
+    """);
     _safeRun(() {
       assert(_managerState == null, "不允许初始化多次!");
-      (context.ancestorWidgetOfExactType(MaterialApp) as MaterialApp)
-          .navigatorObservers
-          .add(BotToastNavigatorObserver());
-      _managerState = GlobalKey<_BotToastManagerState>();
       Overlay.of(context).insert(OverlayEntry(builder: (_) {
         return _BotToastManager(
           key: _managerState,
         );
       }));
+      _managerState = GlobalKey<_BotToastManagerState>();
     });
   }
 

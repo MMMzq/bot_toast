@@ -17,12 +17,27 @@ class BotToastNavigatorObserver extends NavigatorObserver{
   final List<VoidCallback> _leavePageCallbacks=[];
   static final instance =BotToastNavigatorObserver._();
 
+  static bool debugInitialization=false;
+
   factory BotToastNavigatorObserver(){
+    assert((){
+      debugInitialization=true;
+      return true;
+    }());
     return instance;
   }
 
   void runOnce(VoidCallback leavePageCallback){
-
+    assert(debugInitialization,
+    """
+    Please initialize!
+    Example:
+    MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: BotToastInit(child: EnterPage()),
+    );
+    """);
     VoidCallback voidCallback;
     voidCallback = (){
       leavePageCallback();
@@ -37,7 +52,7 @@ class BotToastNavigatorObserver extends NavigatorObserver{
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     final copy = _leavePageCallbacks.toList();
     for(VoidCallback callback in copy){
-        callback();
+      callback();
     }
   }
 
