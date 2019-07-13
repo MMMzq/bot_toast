@@ -1,15 +1,14 @@
-import 'dart:collection';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'basis.dart';
-import 'key_board_safe_area.dart';
 import 'package:flutter/scheduler.dart';
 
+import 'basis.dart';
+import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 
-part 'toast_widget.dart';
-
 part 'bot_toast_manager.dart';
+part 'toast_widget.dart';
 
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -19,10 +18,10 @@ void _safeRun(void Function() callback) {
 }
 
 ///todo
-///不要调用[ToastBuilder]方法生成widget时,
-///请注意该生成的Widget不会吸收背景不会吸收点击事件
+///不要在调用[ToastBuilder]方法生成widget时,
+///该确保生成的Widget背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
-///并且会吸收事件,具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
+///并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
 ///如果真的要生成,可以考虑使用[IgnorePointer].
 ///如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 class BotToast {
@@ -378,6 +377,7 @@ class BotToast {
     //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     CancelFunc dismissFunc;
 
+    //onlyOne 功能
     final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
     if (onlyOne) {
       final clone = cache.toList();
@@ -389,6 +389,15 @@ class BotToast {
     VoidCallback rememberFunc = ()=>dismissFunc();
     cache.add(rememberFunc) ;
 
+    //定时功能
+    Timer timer;
+    if (duration != null) {
+      timer=Timer(duration,(){
+        dismissFunc();
+        timer=null;
+      });
+    }
+
 
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,
@@ -397,6 +406,7 @@ class BotToast {
           return KeyBoardSafeArea(
             child: ProxyDispose(disposeCallback: () {
               cache.remove(rememberFunc);
+              timer?.cancel();
             }, child: Builder(
               builder: (BuildContext context) {
                 TextStyle textStyle = Theme.of(context).textTheme.body1;
@@ -433,11 +443,7 @@ class BotToast {
       BotToastNavigatorObserver.instance.runOnce(cancelFunc);
     }
 
-    if (duration != null) {
-      Future.delayed(duration, () {
-        (closeFunc ?? cancelFunc)();
-      });
-    }
+
 
     return cancelFunc;
   }
