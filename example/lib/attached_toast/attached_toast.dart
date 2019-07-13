@@ -16,8 +16,10 @@ class _AttachedToastState extends State<AttachedToast> {
   bool ignoreContentClick = false;
   bool onlyOne = true;
   bool crossPage = false;
-  bool allowClick = false;
+  bool allowClick = true;
   int backgroundColor = 0x00000000;
+
+  double buttonAlign=0;
 
   CancelFunc show({BuildContext context, Offset target}) {
     return BotToast.showAttachedWidget(
@@ -54,14 +56,6 @@ class _AttachedToastState extends State<AttachedToast> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Builder(builder: (context) {
-                return RaisedButton(
-                  onPressed: () {
-                    show(context: context);
-                  },
-                  child: Text("AttachedToast"),
-                );
-              }),
               GestureDetector(
                 onTapDown: (details) {
                   setState(() {
@@ -79,6 +73,33 @@ class _AttachedToastState extends State<AttachedToast> {
                     "click me",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Align(
+                  alignment: Alignment(buttonAlign, 0),
+                  child: Builder(builder: (context) {
+                    return RaisedButton(
+                      onPressed: () {
+                        show(context: context);
+                      },
+                      child: Text("AttachedToast"),
+                    );
+                  }),
+                ),
+              ),
+              ListTile(
+                title: Text("buttonAlign: $buttonAlign"),
+                trailing: CupertinoSlider(
+                  min: -1,
+                  max: 1,
+                  value: buttonAlign.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      buttonAlign = value;
+                    });
+                  },
                 ),
               ),
               SwitchListTile(
@@ -159,7 +180,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("backgroundColor:   "),
+                    Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,

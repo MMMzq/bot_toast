@@ -10,8 +10,9 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   int backgroundColor = 0x42000000;
   int seconds = 2;
-  bool clickClose = false;
+  bool clickClose = true;
   bool allowClick = true;
+  bool crossPage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class _LoadingState extends State<Loading> {
                   BotToast.showLoading(
                       clickClose: clickClose,
                       allowClick: allowClick,
+                      crossPage: crossPage,
                       duration: Duration(
                         seconds: seconds,
                       ),
@@ -68,11 +70,20 @@ class _LoadingState extends State<Loading> {
                 },
                 title: Text("allowClick: "),
               ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
+              ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("backgroundColor:   "),
+                    Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,
@@ -107,13 +118,14 @@ class _LoadingState extends State<Loading> {
   }
 }
 
-String _code = """
+String _code =
+"""
 BotToast.showLoading(
-         clickClose: clickClose,
-         allowClick: allowClick,
-         duration: Duration(
-           seconds: seconds,
-         ),
-         backgroundColor: Color(backgroundColor)
-);
+    clickClose: clickClose,
+    allowClick: allowClick,
+    crossPage: crossPage,
+    duration: Duration(
+      seconds: seconds,
+    ),
+    backgroundColor: Color(backgroundColor));
 """;

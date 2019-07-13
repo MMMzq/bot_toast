@@ -22,7 +22,7 @@ class _NotificationState extends State<Notification> {
         title: Text("Notification"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -30,13 +30,12 @@ class _NotificationState extends State<Notification> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showNotification(
-                    leading: (_) => SizedBox.fromSize(
+                    leading: (cancel) => SizedBox.fromSize(
                         size: const Size(40, 40),
-                        child: ClipOval(
-                            child: Icon(
-                          Icons.favorite,
-                          color: Colors.redAccent,
-                        ))),
+                        child: IconButton(
+                          icon: Icon(Icons.favorite,color: Colors.redAccent),
+                          onPressed: cancel,
+                        )),
                     title: (_) => Text('I love u'),
                     subtitle: (_) => Text("let's be together"),
                     trailing: (cancel) => IconButton(
@@ -131,31 +130,27 @@ class _NotificationState extends State<Notification> {
   }
 }
 
-String _code = """
+String _code =
+"""
 BotToast.showNotification(
          leading: (_) => SizedBox.fromSize(
-                          size: const Size(40, 40),
-                          child: ClipOval(
-                              child: Icon(
-                            Icons.favorite,
-                            color: Colors.redAccent,
-                          ))),
-                          
+             size: const Size(40, 40),
+             child: ClipOval(
+                 child: Icon(
+               Icons.favorite,
+               color: Colors.redAccent,
+             ))),
          title: (_) => Text('I love u'),
-         
          subtitle: (_) => Text("let's be together"),
-         
          trailing: (cancel) => IconButton(
-                            icon: Icon(Icons.cancel),
-                            onPressed: cancel,),
-                          
+               icon: Icon(Icons.cancel),
+               onPressed: cancel,
+             ),
          enableSlideOff: enableSlideOff,
-         
+         crossPage: crossPage,
+         contentPadding: EdgeInsets.all(contentPadding),
          hideCloseButton: hideCloseButton,
-         
          onlyOne: onlyOne,
-         
          duration: Duration(seconds: seconds)
-        
 );
 """;

@@ -20,6 +20,8 @@ class _TextSampleState extends State<TextSample> {
   int backgroundColor = 0x00000000;
   int contentColor = 0x8A000000;
 
+  int index=0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,7 @@ class _TextSampleState extends State<TextSample> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showText(
-                      text: "I miss you ☺",
+                      text: (index++).isOdd?"Always together☺":"My mind is all about you.😘",
                       duration: Duration(seconds: seconds),
                       onlyOne: onlyOne,
                       clickClose: clickClose,
@@ -217,17 +219,17 @@ class _TextSampleState extends State<TextSample> {
 
 String _code = """
 BotToast.showText(
-         text: "I miss you ☺",
-         duration: Duration(seconds: seconds),
-         onlyOne: onlyOne,
-         clickClose: clickClose,
-         align: Alignment(0, align),
-         textStyle: TextStyle(
-             color: Color(fontColor),
-             fontSize: fontSize.toDouble()),
-         borderRadius:
-             BorderRadius.circular(borderRadius.toDouble()),
-         backgroundColor: Color(backgroundColor),
-         contentColor: Color(contentColor)     
-);
+    text: (index++).isOdd?"Always together☺":"My mind is all about you.😘",
+    duration: Duration(seconds: seconds),
+    onlyOne: onlyOne,
+    clickClose: clickClose,
+    crossPage: crossPage,
+    align: Alignment(0, align),
+    textStyle: TextStyle(
+        color: Color(fontColor),
+        fontSize: fontSize.toDouble()),
+    borderRadius:
+        BorderRadius.circular(borderRadius.toDouble()),
+    backgroundColor: Color(backgroundColor),
+    contentColor: Color(contentColor));
 """;

@@ -2,44 +2,69 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class _CustomLoadWidget extends StatelessWidget {
+class _CustomLoadWidget extends StatefulWidget {
   final CancelFunc cancelFunc;
 
   const _CustomLoadWidget({Key key, this.cancelFunc}) : super(key: key);
 
-  void handleTap(){
+  @override
+  __CustomLoadWidgetState createState() => __CustomLoadWidgetState();
+}
+
+class __CustomLoadWidgetState extends State<_CustomLoadWidget>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+
+    animationController.addStatusListener((AnimationStatus status){
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+    animationController.forward();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  void handleTap() {
     BotToast.showCustomText(
         onlyOne: true,
         duration: null,
         toastBuilder: (textCancel) => Align(
-          alignment: Alignment(0, 0.8),
-          child: Card(
-            child: Row(
-              mainAxisSize:
-              MainAxisSize.min,
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(
-                      Icons.favorite,
-                      color: Colors
-                          .redAccent,
-                    ),
-                    onPressed: () {
-                      cancelFunc();
-                      textCancel();
-                    }),
-                Padding(
-                  padding:
-                  const EdgeInsets
-                      .symmetric(
-                      horizontal:
-                      8.0),
-                  child: Text("me too"),
-                )
-              ],
-            ),
-          ),
-        ));
+              alignment: Alignment(0, 0.8),
+              child: Card(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: Colors.redAccent,
+                        ),
+                        onPressed: () {
+                          widget.cancelFunc();
+                          textCancel();
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("me too"),
+                    )
+                  ],
+                ),
+              ),
+            ));
   }
 
   @override
@@ -51,12 +76,16 @@ class _CustomLoadWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.favorite_border,
-                  color: Colors.redAccent,
+              FadeTransition(
+                opacity: animationController,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Colors.redAccent,
+                    size: 30
+                  ),
+                  onPressed: handleTap,
                 ),
-                onPressed: handleTap,
               ),
               Text(
                 "i miss you",
@@ -67,9 +96,7 @@ class _CustomLoadWidget extends StatelessWidget {
       ),
     );
   }
-
 }
-
 
 class CustomLoading extends StatefulWidget {
   @override
@@ -82,6 +109,7 @@ class _CustomLoadingState extends State<CustomLoading> {
   bool clickClose = true;
   bool allowClick = true;
   bool ignoreContentClick = false;
+  bool crossPage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -151,11 +179,20 @@ class _CustomLoadingState extends State<CustomLoading> {
                 },
                 title: Text("ignoreContentClick: "),
               ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
+              ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("backgroundColor:   "),
+                    Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,
@@ -191,12 +228,15 @@ class _CustomLoadingState extends State<CustomLoading> {
 }
 
 String _code = """
-BotToast.showLoading(
-         clickClose: clickClose,
-         allowClick: allowClick,
-         duration: Duration(
-           seconds: seconds,
-         ),
-         backgroundColor: Color(backgroundColor)
-);
+BotToast.showCustomLoading(
+    clickClose: clickClose,
+    allowClick: allowClick,
+    ignoreContentClick: ignoreContentClick,
+    duration: Duration(
+      seconds: seconds,
+    ),
+    backgroundColor: Color(backgroundColor),
+    loadWidget: (cancelFunc) {
+      return _CustomLoadWidget(cancelFunc: cancelFunc);
+    });
 """;

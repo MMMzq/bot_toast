@@ -9,9 +9,13 @@ class CustomText extends StatefulWidget {
 
 class _CustomTextState extends State<CustomText> {
   int seconds = 2;
+  bool crossPage = true;
   bool clickClose = false;
+  bool ignoreContentClick = false;
   bool onlyOne = true;
   int backgroundColor = 0x00000000;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,13 @@ class _CustomTextState extends State<CustomText> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showCustomText(
-                    toastBuilder: (cancel) => Align(
+                    duration: Duration(seconds: seconds),
+                    onlyOne: onlyOne,
+                    clickClose: clickClose,
+                    crossPage: crossPage,
+                    ignoreContentClick: ignoreContentClick,
+                    backgroundColor: Color(backgroundColor),
+                    toastBuilder: (_) => Align(
                           alignment: Alignment(0, 0.8),
                           child: Card(
                             child: Row(
@@ -39,19 +49,22 @@ class _CustomTextState extends State<CustomText> {
                                       Icons.favorite_border,
                                       color: Colors.redAccent,
                                     ),
-                                    onPressed: cancel),
+                                    onPressed: () {
+                                      BotToast.showSimpleNotification(
+                                          title: "Yes, I do!",
+                                          crossPage: crossPage,
+                                          closeIcon: Icon(Icons.favorite,color: Colors.redAccent,),
+                                          duration: Duration(seconds: seconds));
+                                    }),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Text("yes, I do!"),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text("propose marriage?"),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                    duration: Duration(seconds: seconds),
-                    onlyOne: onlyOne,
-                    clickClose: clickClose,
-                    backgroundColor: Color(backgroundColor),
                   );
                 },
                 child: Text("TextToast"),
@@ -87,11 +100,29 @@ class _CustomTextState extends State<CustomText> {
                 },
                 title: Text("clickClose: "),
               ),
+              SwitchListTile(
+                value: crossPage,
+                onChanged: (value) {
+                  setState(() {
+                    crossPage = value;
+                  });
+                },
+                title: Text("crossPage: "),
+              ),
+              SwitchListTile(
+                value: ignoreContentClick,
+                onChanged: (value) {
+                  setState(() {
+                    ignoreContentClick = value;
+                  });
+                },
+                title: Text("ignoreContentClick: "),
+              ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("backgroundColor:   "),
+                    Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,
@@ -128,7 +159,13 @@ class _CustomTextState extends State<CustomText> {
 
 String _code = """
 BotToast.showCustomText(
-  toastBuilder: (cancel) => Align(
+  duration: Duration(seconds: seconds),
+  onlyOne: onlyOne,
+  clickClose: clickClose,
+  crossPage: crossPage,
+  ignoreContentClick: ignoreContentClick,
+  backgroundColor: Color(backgroundColor),
+  toastBuilder: (_) => Align(
         alignment: Alignment(0, 0.8),
         child: Card(
           child: Row(
@@ -139,18 +176,21 @@ BotToast.showCustomText(
                     Icons.favorite_border,
                     color: Colors.redAccent,
                   ),
-                  onPressed: cancel),
+                  onPressed: () {
+                    BotToast.showSimpleNotification(
+                        title: "Yes, I do!",
+                        crossPage: crossPage,
+                        closeIcon: Icon(Icons.favorite,color: Colors.redAccent,),
+                        duration: Duration(seconds: seconds));
+                  }),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text("yes, I do!"),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8),
+                child: Text("propose marriage?"),
               ),
             ],
           ),
         ),
       ),
-  duration: Duration(seconds: seconds),
-  onlyOne: onlyOne,
-  clickClose: clickClose,
-  backgroundColor: Color(backgroundColor),
 );
 """;

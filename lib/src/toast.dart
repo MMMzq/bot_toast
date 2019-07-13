@@ -8,6 +8,7 @@ import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 
 part 'bot_toast_manager.dart';
+
 part 'toast_widget.dart';
 
 void _safeRun(void Function() callback) {
@@ -42,8 +43,7 @@ class BotToast {
 
   ///此方法暂时不能多次初始化!
   static init(BuildContext context) {
-    assert(BotToastNavigatorObserver.debugInitialization,
-    """
+    assert(BotToastNavigatorObserver.debugInitialization, """
     请初始化BotToastNavigatorObserver
     Please initialize!
     Example:
@@ -67,6 +67,7 @@ class BotToast {
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
+      Icon closeIcon,
       Duration duration = const Duration(seconds: 2),
       bool enableSlideOff = true,
       bool hideCloseButton = false,
@@ -80,8 +81,8 @@ class BotToast {
         hideCloseButton: hideCloseButton,
         title: (_) => Text(title),
         subtitle: subTitle == null ? null : (_) => Text(subTitle),
-        trailing: (cancel) =>
-            IconButton(icon: Icon(Icons.cancel), onPressed: cancel));
+        trailing: (cancel) => IconButton(
+            icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
   }
 
   static CancelFunc showNotification(
@@ -129,7 +130,7 @@ class BotToast {
         ignoreContentClick: false,
         onlyOne: onlyOne,
         duration: duration,
-        closeFunc: ()=>cancelAnimationFunc(),
+        closeFunc: () => cancelAnimationFunc(),
         toastBuilder: (cancelFunc) => NormalAnimation(
               key: key,
               reverse: true,
@@ -292,6 +293,19 @@ class BotToast {
     removeAll(loadKey);
   }
 
+  /*
+    _________________________________
+   |          MainContent            |
+   |                      <----------------------allowClick
+   |                      <----------------------clickClose
+   |      ___________________        |
+   |     |                   |       |
+   |     |    ToastContent   |       |
+   |     |                <----------------------ignoreContentClick
+   |     |___________________|       |
+   |_________________________________|
+   */
+
   static CancelFunc showAttachedWidget({
     @required ToastBuilder attachedWidget,
     BuildContext targetContext,
@@ -355,20 +369,6 @@ class BotToast {
     return cancelAnimationFunc;
   }
 
-  /*
-    _________________________________
-   |          MainContent            |
-   |                      <----------------------allowClick
-   |                      <----------------------clickClose
-   |      ___________________        |
-   |     |                   |       |
-   |     |    ToastContent   |       |
-   |     |                <----------------------ignoreContentClick
-   |     |___________________|       |
-   |_________________________________|
-   */
-
-
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
@@ -386,7 +386,8 @@ class BotToast {
     CancelFunc dismissFunc;
 
     //onlyOne 功能
-    final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
+    final List<CancelFunc> cache =
+        (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
     if (onlyOne) {
       final clone = cache.toList();
       cache.clear();
@@ -394,18 +395,17 @@ class BotToast {
         cancel();
       });
     }
-    VoidCallback rememberFunc = ()=>dismissFunc();
-    cache.add(rememberFunc) ;
+    VoidCallback rememberFunc = () => dismissFunc();
+    cache.add(rememberFunc);
 
     //定时功能
     Timer timer;
     if (duration != null) {
-      timer=Timer(duration,(){
+      timer = Timer(duration, () {
         dismissFunc();
-        timer=null;
+        timer = null;
       });
     }
-
 
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,
@@ -450,8 +450,6 @@ class BotToast {
     if (!crossPage) {
       BotToastNavigatorObserver.instance.runOnce(cancelFunc);
     }
-
-
 
     return cancelFunc;
   }

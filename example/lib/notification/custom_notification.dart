@@ -61,7 +61,7 @@ class _CustomNotificationState extends State<CustomNotification> {
         title: Text("CustomNotification"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -78,7 +78,6 @@ class _CustomNotificationState extends State<CustomNotification> {
                     enableSlideOff: enableSlideOff,
                     onlyOne: onlyOne,
                     crossPage: crossPage
-
                   );
                 },
                 child: Text("CustomNotification"),
@@ -155,13 +154,15 @@ class _CustomNotificationState extends State<CustomNotification> {
 
 String _code = """
 BotToast.showCustomNotification(
+         duration: Duration(seconds: seconds),
          toastBuilder: (cancel) {
-              return CustomWidget(
-                     cancelFunc: cancel,
-              );},
+           return CustomWidget(
+             cancelFunc: cancel,
+           );
+         },
          enableSlideOff: enableSlideOff,
          onlyOne: onlyOne,
-         duration: Duration(seconds: seconds)         
+         crossPage: crossPage
 );
 """;
 
