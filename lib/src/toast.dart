@@ -64,6 +64,8 @@ class BotToast {
     });
   }
 
+  ///显示简单的通知Toast
+  ///
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
@@ -85,6 +87,8 @@ class BotToast {
             icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
   }
 
+  ///显示一个标准的通知Toast
+  ///
   static CancelFunc showNotification(
       {ToastBuilder leading,
       ToastBuilder title,
@@ -113,6 +117,8 @@ class BotToast {
         });
   }
 
+  ///显示一个自定义的通知Toast
+  ///
   static CancelFunc showCustomNotification(
       {@required ToastBuilder toastBuilder,
       Duration duration = const Duration(seconds: 2),
@@ -148,6 +154,9 @@ class BotToast {
     return cancelAnimationFunc;
   }
 
+  ///显示一个标准文本Toast
+  ///
+  ///
   ///[text] 需要显示的文本
   ///[duration] 持续时间
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
@@ -183,6 +192,8 @@ class BotToast {
             ));
   }
 
+  ///显示一个自定义的文本Toast
+  ///
   ///[text] 需要显示的文本
   ///[duration] 持续时间
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
@@ -226,6 +237,8 @@ class BotToast {
     return cancelAnimationFunc;
   }
 
+  ///显示一个标准的加载Toast
+  ///
   ///[clickClose] 是否允许用户提前点击页面关闭Toast
   ///[allowClick] 使用允许用户可以点击页面,如果为true则用户可以正常触发事件,如果为false则用户的点击事件全都吸收掉
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
@@ -247,6 +260,8 @@ class BotToast {
         backgroundColor: backgroundColor);
   }
 
+  ///显示一个自定义的加载Toast
+  ///
   static CancelFunc showCustomLoading({
     @required ToastBuilder loadWidget,
     bool clickClose = false,
@@ -306,6 +321,9 @@ class BotToast {
    |_________________________________|
    */
 
+  ///显示一个定位Toast
+  ///该方法可以在某个Widget(一般是Button)或者给定一个offset周围显示
+  ///
   static CancelFunc showAttachedWidget({
     @required ToastBuilder attachedWidget,
     BuildContext targetContext,
@@ -369,6 +387,13 @@ class BotToast {
     return cancelAnimationFunc;
   }
 
+  ///显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
+  ///核心方法,详情使用请看:
+  ///[BotToast.showCustomNotification]
+  ///[BotToast.showCustomText]
+  ///[BotToast.showCustomLoading]
+  ///
+  ///
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
@@ -454,7 +479,9 @@ class BotToast {
     return cancelFunc;
   }
 
-  ///[widget] 需要显示的Widget
+  ///显示一个Widget在屏幕上,该Widget可以跨多个页面存在
+  ///
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
   ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
