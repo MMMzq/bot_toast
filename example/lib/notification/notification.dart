@@ -9,7 +9,6 @@ class Notification extends StatefulWidget {
 
 class _NotificationState extends State<Notification> {
   bool enableSlideOff = true;
-  bool hideCloseButton = false;
   bool onlyOne = true;
   bool crossPage = true;
   int seconds = 2;
@@ -45,7 +44,6 @@ class _NotificationState extends State<Notification> {
                     enableSlideOff: enableSlideOff,
                     crossPage: crossPage,
                     contentPadding: EdgeInsets.all(contentPadding),
-                    hideCloseButton: hideCloseButton,
                     onlyOne: onlyOne,
                     duration: Duration(seconds: seconds)
                   );
@@ -60,15 +58,6 @@ class _NotificationState extends State<Notification> {
                   });
                 },
                 title: Text("enableSlideOff: "),
-              ),
-              SwitchListTile(
-                value: hideCloseButton,
-                onChanged: (value) {
-                  setState(() {
-                    hideCloseButton = value;
-                  });
-                },
-                title: Text("hideCloseButton: "),
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -149,7 +138,6 @@ BotToast.showNotification(
          enableSlideOff: enableSlideOff,
          crossPage: crossPage,
          contentPadding: EdgeInsets.all(contentPadding),
-         hideCloseButton: hideCloseButton,
          onlyOne: onlyOne,
          duration: Duration(seconds: seconds)
 );

@@ -2,9 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-
 //该类是基于自己的size充满整个屏幕下的情况使用的,
-//或者说是自己offset距离屏幕顶部为0的下使用的
+//或者说是自己offset距离屏幕底部为0的下使用的
 class KeyBoardSafeArea extends StatelessWidget {
 
   final Widget child ;

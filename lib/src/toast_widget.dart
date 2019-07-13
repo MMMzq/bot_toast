@@ -187,6 +187,7 @@ class _TextToastState extends State<_TextToast> {
   }
 }
 
+//淡出淡入动画
 class FadeAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
@@ -256,6 +257,7 @@ class _LoadingWidget extends StatelessWidget {
   }
 }
 
+//定位Delegate
 class PositionDelegate extends SingleChildLayoutDelegate {
   PositionDelegate( {
     @required this.target,

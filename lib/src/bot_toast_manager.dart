@@ -28,7 +28,7 @@ class _BotToastManagerState extends State<_BotToastManager> {
   ///例如:如果不加入该UniqueKey将会导致
   ///[BotToast.showEnhancedWidget]onlyOne功能失效,
   ///主要是因为flutter,只是根据runtimeType来进行判断的话
-  ///会导致调错了各个Toast的dispose之类
+  ///会导致调错了各个Toast的dispose
   void insert(String groupKey, UniqueKey key, Widget widget) {
     setState(() {
       _map[groupKey] ??= {};

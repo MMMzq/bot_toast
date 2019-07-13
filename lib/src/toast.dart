@@ -18,7 +18,18 @@ void _safeRun(void Function() callback) {
   SchedulerBinding.instance.scheduleFrame();
 }
 
-///todo
+/*区域图
+  _________________________________
+|          MainContent            |
+|                                 |
+|                                 |
+|      ___________________        |
+|     |                   |       |
+|     |    ToastContent   |       |
+|     |___________________|       |
+|_________________________________|
+ */
+///todo 添加到注意事项
 ///不要在调用[ToastBuilder]方法生成widget时,
 ///该确保生成的Widget背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
@@ -66,6 +77,14 @@ class BotToast {
 
   ///显示简单的通知Toast
   ///
+  ///[title] 标题
+  ///[subTitle] 副标题
+  ///[closeIcon] 关闭按钮的图标
+  ///[enableSlideOff] 是否能滑动删除
+  ///[hideCloseButton] 是否隐藏关闭按钮
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
@@ -80,15 +99,20 @@ class BotToast {
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
         crossPage: crossPage,
-        hideCloseButton: hideCloseButton,
         title: (_) => Text(title),
         subtitle: subTitle == null ? null : (_) => Text(subTitle),
-        trailing: (cancel) => IconButton(
+        trailing: hideCloseButton?null:(cancel) => IconButton(
             icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
   }
 
   ///显示一个标准的通知Toast
   ///
+  ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding] 请看[ListTile]
+  ///[enableSlideOff] 是否能滑动删除
+  ///[hideCloseButton] 是否有incl
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showNotification(
       {ToastBuilder leading,
       ToastBuilder title,
@@ -98,7 +122,6 @@ class BotToast {
       EdgeInsetsGeometry contentPadding,
       bool enableSlideOff = true,
       bool crossPage = true,
-      bool hideCloseButton = false,
       bool onlyOne = true}) {
     return showCustomNotification(
         enableSlideOff: enableSlideOff,
@@ -112,13 +135,18 @@ class BotToast {
                 leading: leading?.call(cancel),
                 title: title?.call(cancel),
                 subtitle: subtitle?.call(cancel),
-                trailing: hideCloseButton ? null : trailing?.call(cancel)),
+                trailing: trailing?.call(cancel)),
           );
         });
   }
 
   ///显示一个自定义的通知Toast
   ///
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///[enableSlideOff] 是否能滑动删除
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showCustomNotification(
       {@required ToastBuilder toastBuilder,
       Duration duration = const Duration(seconds: 2),
@@ -156,12 +184,17 @@ class BotToast {
 
   ///显示一个标准文本Toast
   ///
-  ///
   ///[text] 需要显示的文本
-  ///[duration] 持续时间
-  ///[clickClose] 是否允许用户提前点击页面关闭Toast
-  ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
-  ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
+  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
+  ///[contentColor] ToastContent区域背景颜色
+  ///[borderRadius] ToastContent区域圆角
+  ///[textStyle] 字体样式
+  ///[align] ToastContent区域在MainContent区域的对齐
+  ///[contentPadding] ToastContent区域的内补
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[clickClose] 请看[showEnhancedWidget.clickClose]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showText(
       {@required String text,
       Color backgroundColor = Colors.transparent,
@@ -194,11 +227,13 @@ class BotToast {
 
   ///显示一个自定义的文本Toast
   ///
-  ///[text] 需要显示的文本
-  ///[duration] 持续时间
-  ///[clickClose] 是否允许用户提前点击页面关闭Toast
-  ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
-  ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[clickClose] 请看[showEnhancedWidget.clickClose]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showCustomText(
       {@required ToastBuilder toastBuilder,
       Color backgroundColor = Colors.transparent,
@@ -239,10 +274,11 @@ class BotToast {
 
   ///显示一个标准的加载Toast
   ///
-  ///[clickClose] 是否允许用户提前点击页面关闭Toast
-  ///[allowClick] 使用允许用户可以点击页面,如果为true则用户可以正常触发事件,如果为false则用户的点击事件全都吸收掉
-  ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
-  ///如果此方法的样式不符合,可以使用showWidget参照此方法定义一个
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[allowClick] 请看[showEnhancedWidget.allowClick]
+  ///[clickClose] 请看[showEnhancedWidget.clickClose]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showLoading({
     bool crossPage = true,
     bool clickClose = false,
@@ -262,6 +298,14 @@ class BotToast {
 
   ///显示一个自定义的加载Toast
   ///
+  ///[loadWidget] 生成需要显示的Widget的builder函数
+  ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[allowClick] 请看[showEnhancedWidget.allowClick]
+  ///[clickClose] 请看[showEnhancedWidget.clickClose]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showCustomLoading({
     @required ToastBuilder loadWidget,
     bool clickClose = false,
@@ -308,22 +352,20 @@ class BotToast {
     removeAll(loadKey);
   }
 
-  /*
-    _________________________________
-   |          MainContent            |
-   |                      <----------------------allowClick
-   |                      <----------------------clickClose
-   |      ___________________        |
-   |     |                   |       |
-   |     |    ToastContent   |       |
-   |     |                <----------------------ignoreContentClick
-   |     |___________________|       |
-   |_________________________________|
-   */
-
   ///显示一个定位Toast
   ///该方法可以在某个Widget(一般是Button)或者给定一个offset周围显示
   ///
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///[targetContext] 目标Widget(一般是一个按钮),使用上一般会使用[Builder]包裹,来获取到BuildContext
+  ///[target] 目标[Offset],该偏移是以屏幕左上角为原点来计算的
+  ///[target]和[targetContext] 只能二选一
+  ///[verticalOffset]  垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
+  ///[preferDirection] 偏好方向,如果在空间允许的情况下,会偏向显示在那边
+  ///[duration] 请看[showEnhancedWidget.duration]
+  ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
+  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[allowClick] 请看[showEnhancedWidget.allowClick]
+  ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showAttachedWidget({
     @required ToastBuilder attachedWidget,
     BuildContext targetContext,
@@ -387,13 +429,50 @@ class BotToast {
     return cancelAnimationFunc;
   }
 
+  /*区域图
+    _________________________________
+   |          MainContent            |
+   |                      <----------------------allowClick
+   |                      <----------------------clickClose
+   |      ___________________        |
+   |     |                   |       |
+   |     |    ToastContent   |       |
+   |     |                <----------------------ignoreContentClick
+   |     |___________________|       |
+   |_________________________________|
+   */
+
   ///显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
   ///核心方法,详情使用请看:
   ///[BotToast.showCustomNotification]
   ///[BotToast.showCustomText]
   ///[BotToast.showCustomLoading]
+  ///[BotToast.showAttachedWidget]
   ///
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
+  ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///
+  ///[crossPage] 跨页面显示,如果为true,则该Toast会跨越多个Route显示,
+  ///如果为false则在当前Route发生变化时,会自动关闭该Toast
+  ///
+  ///[allowClick] 是否在该Toast显示时,能否正常点击触发事件
+  ///[clickClose] 是否在点击屏幕触发事件时自动关闭该Toast
+  ///
+  ///[ignoreContentClick] 是否忽视ToastContext区域
+  ///这个参数如果为true时,用户点击该ToastContext区域时,用户可以的点击事件可以正常到达到Page上
+  ///换一句话说就是透明的(即时Toast背景颜色不是透明),如果为false,则情况反之
+  ///
+  ///[onlyOne] 该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
+  ///
+  ///[clickClose] 该函数参数主要目的使一个自动关闭功能(定时关闭,点击关闭)
+  ///触发关闭前调用[AnimationController]来启动并等待动画后再关闭
+  ///
+  ///[backgroundColor]  MainContent区域的背景颜色
+  ///[warpWidget] 一个wrap函数,可以用来warp MainContent区域,例如[showCustomLoading]就包裹了一个动画
+  ///让MainContent区域也具有动画
+  ///
+  ///[duration] 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
       UniqueKey key,
