@@ -214,6 +214,7 @@ class BotToast {
         crossPage: crossPage,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
+        ignoreContentClick: true,
         onlyOne: onlyOne,
         toastBuilder: (_) => _TextToast(
               contentPadding: contentPadding,
