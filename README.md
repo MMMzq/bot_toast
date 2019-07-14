@@ -225,7 +225,7 @@ backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
-ignoreContentClick | false | false| [ignoreContentClick说明](#通用参数说明)
+ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 allowClick | 否 | false| [allowClick说明](#通用参数说明)
 crossPage | 否 | false| [crossPage说明](#通用参数说明)
