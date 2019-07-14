@@ -240,7 +240,7 @@ backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
 key | 否 | 无|[key说明](#通用参数说明)
 groupKey | 否 | 无|[groupKey说明](#通用参数说明)
-ignoreContentClick | false | false| [ignoreContentClick说明](#通用参数说明)
+ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
 allowClick | 否 | true| [allowClick说明](#通用参数说明)
