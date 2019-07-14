@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-//todo 添加到注意事项里面
+
 ///如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
 ///可以参考[BotToast.init]方法添加
 ///或者在创建[Navigator]时直接添加
@@ -27,7 +27,7 @@ class BotToastNavigatorObserver extends NavigatorObserver{
     return instance;
   }
 
-  void runOnce(VoidCallback leavePageCallback){
+  void register(VoidCallback leavePageCallback){
     assert(debugInitialization,
     """
     Please initialize!
@@ -38,12 +38,13 @@ class BotToastNavigatorObserver extends NavigatorObserver{
       home: BotToastInit(child: EnterPage()),
     );
     """);
-    VoidCallback voidCallback;
-    voidCallback = (){
-      leavePageCallback();
-      _leavePageCallbacks.remove(voidCallback);
-    };
-    _leavePageCallbacks.add(voidCallback);
+    assert(leavePageCallback!=null);
+    _leavePageCallbacks.add(leavePageCallback);
+  }
+
+  void unregister(VoidCallback leavePageCallback){
+    assert(leavePageCallback!=null);
+    _leavePageCallbacks.remove(leavePageCallback);
   }
 
   BotToastNavigatorObserver._();

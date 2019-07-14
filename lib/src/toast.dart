@@ -29,7 +29,6 @@ void _safeRun(void Function() callback) {
 |     |___________________|       |
 |_________________________________|
  */
-///todo 添加到注意事项
 ///[ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
 ///并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
@@ -484,6 +483,7 @@ class BotToast {
       Duration duration}) {
     //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     CancelFunc dismissFunc;
+    VoidCallback rememberFunc = () => dismissFunc();
 
     //onlyOne 功能
     final List<CancelFunc> cache =
@@ -495,7 +495,6 @@ class BotToast {
         cancel();
       });
     }
-    VoidCallback rememberFunc = () => dismissFunc();
     cache.add(rememberFunc);
 
     //定时功能
@@ -507,6 +506,11 @@ class BotToast {
       });
     }
 
+    //跨页自动关闭
+    if (!crossPage) {
+      BotToastNavigatorObserver.instance.register(rememberFunc);
+    }
+
     CancelFunc cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
@@ -514,6 +518,7 @@ class BotToast {
           return KeyBoardSafeArea(
             child: ProxyDispose(disposeCallback: () {
               cache.remove(rememberFunc);
+              BotToastNavigatorObserver.instance.unregister(rememberFunc);
               timer?.cancel();
             }, child: Builder(
               builder: (BuildContext context) {
@@ -546,10 +551,6 @@ class BotToast {
         });
 
     dismissFunc = closeFunc ?? cancelFunc;
-
-    if (!crossPage) {
-      BotToastNavigatorObserver.instance.runOnce(cancelFunc);
-    }
 
     return cancelFunc;
   }

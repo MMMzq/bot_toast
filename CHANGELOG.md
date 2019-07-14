@@ -19,3 +19,7 @@
 ## [1.0.0+2]
 
 * 更新文档及在线例子
+
+## [1.0.1]
+
+* Toast关闭后,清理向BotToastNavigatorObserver注册的函数
