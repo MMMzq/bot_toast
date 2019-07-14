@@ -1,6 +1,5 @@
 BotToast ❤
 ========= 
-## 文档暂时失效,这两天我会补充新的文档,因为更新了大量的功能,之前的文档不能用,如果实在需要看效果可以运行example,每个重要功能都有示例
 
 ## 一个真正意义上的flutter Toast库!
 
@@ -8,37 +7,34 @@ BotToast ❤
 
 - 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制! (这是他最重要的特点,跟别的Toast库不同的地方)
 
-- 以flutter的方式实现,不需要任何原生代码,这意味的兼容会得到很好的保证
+- 功能丰富,支持显示通知,文本,加载,附属等类型Toast
 
 - 支持在弹出各种自定义Toast,或者说你可以弹出任何Widget,只要它符合flutter代码的要求即可
 
-- 使用时不用传入BuildContext,这意味着你可以脱离BuildContext的限制
+- Api简单易用,基本上没有必要参数(包括BuildContext),基本上都是可选参数
 
-- BotToast弹出的弹窗可以跨越多个页面存在
+- 纯flutter实现,不容易带来兼容问题
 
 ### 🐼例子
 
-[example](https://github.com/MMMzq/bot_toast/blob/master/example/lib/main.dart)
-
-## 以下请内容已失效,具体api已经变动了
+[在线例子(上架中)]()
 
 ### 🐺效果图
-(全损画质😂)
 
-> **标准使用**
+Notification|Attached
+--------|-------
+![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
 
-![普通使用](https://raw.githubusercontent.com/MMMzq/bot_toast/master/doc/media/demo1.gif)
-
-> **结合dio使用**
-
-![结合dio](https://github.com/MMMzq/bot_toast/raw/master/doc/media/demo2.gif)
+Loading|Text 
+--------|-------
+![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)
 
 ### 🐮快速使用
 
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: 0.0.2
+     bot_toast: 1.0.0
 ```
 
 #### 2. 导入BotToast库
@@ -46,76 +42,221 @@ dependencies:
 import 'package:bot_toast/bot_toast.dart';
 ```
 
-#### 3. 添加BotToastInit
+#### 3. 初始化BotToast
 ``` dart
 ///像这样,BotToast将会自动去初始化
 MaterialApp(
       title: 'BotToast Demo',
-      home: BotToastInit(child: XxxPage()),
+      navigatorObservers: [BotToastNavigatorObserver()],//1.注册路由观察者
+      home: BotToastInit(  //2.初始化BotToast
+          child: XxxxPage()
+      ),
     );
 ```
 
 
 #### 4. 使用BotToast
 ``` dart
-BotToast.showText(text:"xxxx")  //弹出一个文本框;
+BotToast.showText(text:"xxxx");  //弹出一个文本框;
 ```
 
-```
-final cancel=BotToast.showLoading(); //弹出一个加载动画
-cancel(); //关闭加载动画
+```dart
+BotToast.showSimpleNotification(title: "init"); //弹出简单通知Toast
 ```
 
+```dart
+BotToast.showLoading(); //弹出一个加载动画
 ```
-///弹出一个自定义页面
-BotToast.showWidget(
-    widget: Center(
-        child: Card(
-            child: Text("这是个自定义页面"),
+
+```dart
+//弹出一个定位Toast
+BotToast.showAttachedWidget(
+    attachedWidget: (_) => Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.favorite,
+              color: Colors.redAccent,
             ),
-        )
-    );
+          ),
+        ),
+    duration: Duration(seconds: 2),
+    target: Offset(520, 520));
 ```
 
 ### 🐹主要Api文档
 
-#### 1. BotToast.showText
-##### 弹出文本框 
-(可选参数是不是很少?那我想改样式怎么办?没错我目前的想法就是:如果样式不符合你的需求,可参照此方法自定义一个,很简单.因为一个项目里TextToast的样式基本上固定好的.如果真的有需要,我后续会提供样式的控制,例如提供info,error等TextToast)
+#### 区域图
+
+```
+  _________________________________
+|          MainContent            |
+|                                 |
+|                                 |
+|      ___________________        |
+|     |                   |       |
+|     |    ToastContent   |       |
+|     |___________________|       |
+|_________________________________|
+```
+
+#### 通用参数说明
+参数 | 说明
+---- | --- 
+toastBuilder | 生成需要显示的Widget的函数  (```typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);```)
+key | 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget
+groupKey | 代表此Toast在那个分组的key,
+duration | 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
+crossPage | 是否跨页面显示,如果为true,则该Toast会跨越多个Route显示,如果为false则在当前Route发生变化时,会自动关闭该Toast,例如[Navigator.push]-[Navigator.pop]等
+allowClick | 是否在该Toast显示时,能否正常点击触发事件
+clickClose | 是否在点击屏幕触发事件时自动关闭该Toast
+ignoreContentClick | 是否忽视ToastContext区域如果为true时,用户点击该ToastContext区域时,用户可以的点击事件可以正常到达到Page上,换一句话说就是透明的(即便是Toast背景颜色不是透明),如果为false,则情况反之
+onlyOne | 表示是否该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
+backgroundColor | MainContent区域的背景颜色
 
 
-参数 | 是否必须 | 说明
----- | --- | ---
-text | 是 | 需要显示的文本
-duration | 否 | 持续时间
-clickClose | 否 | 是否允许用户提前点击页面关闭Toast
 
-<br>
+#### 1.BotToast.showSimpleNotification
+##### 显示简单的通知Toast
 
-#### 2. BotToast.showLoading (如果样式不符合你的需求,可参照此方法自定义一个,很简单)
-##### 弹出一个加载动画 
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+title | 是 | 无 | 标题
+subTitle | 否 | 无| 副标题
+closeIcon | 否 | 无|关闭按钮的图标
+enableSlideOff | 否 | true| 是否能滑动删除
+hideCloseButton | 否 | false| 是否隐藏关闭按钮
+duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 
-参数 | 是否必须 | 说明
----- | --- | ---
-clickClose | 否 | 是否允许用户提前点击页面关闭Toast
-allowClick | 否 | 使用允许用户可以点击页面,如果为true则用户可以正常触发事件,如果为false则用户的点击事件全都吸收掉
+#### 2.BotToast.showNotification
+##### 显示一个标准的通知Toast
 
-<br>
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+leading | 否 | 无 | 头部
+title | 否 | 无 | 标题
+subTitle | 否 | 无| 副标题
+trailing | 否 | 无 | 尾部
+contentPadding | 否 | 无 | ToastContent区域的内补
+duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
+enableSlideOff | 否 | true| 是否能滑动删除
 
-#### 3. BotToast.closeAllLoading
-##### 关闭所有加载动画
+#### 3.BotToast.showCustomNotification
+##### 显示一个自定义的通知Toast
 
-不需要任何参数
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+enableSlideOff | 否 | true| 是否能滑动删除
+duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 
-<br>
 
-#### 4.BotToast.showWidget
-##### 弹出一个给定的Widget (BotToast.showText和BotToast.showLoading都是基于此方法编写的)
 
-参数 | 是否必须 | 说明
----- | --- | ---
-widget | 是 | 需要显示的Widget
-key | 否 | 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget
-groupKey | 否 | 代表分组的key,主要用于[BotToast.removeAll]和[BotToast.remove]
+
+#### 4.BotToast.showAttachedWidget
+##### 显示一个定位Toast,该方法可以在某个Widget(一般是Button)或者给定一个offset周围显示
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+attachedBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+targetContext | 否 | 无| 目标Widget(一般是一个按钮),使用上一般会使用[Builder]包裹,来获取到BuildContext  ([target]和[targetContext] 只能二选一)
+target | 否 | 无| 目标[Offset],该偏移是以屏幕左上角为原点来计算的  ([target]和[targetContext] 只能二选一)
+preferDirection | 否 | 无| 偏好方向,如果在空间允许的情况下,会偏向显示在那边
+verticalOffset | 否 | ```24```| 垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
+duration | 否 | 无| [duration说明](#通用参数说明)
+onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
+allowClick | 否 | true| [allowClick说明](#通用参数说明)
+ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
+backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+
+
+
+#### 5.BotToast.showText
+##### 显示一个标准文本Toast
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+text | 是 | 无 | 需要显示的文本
+contentColor | 否 | `Colors.black54` | ToastContent区域背景颜色
+borderRadius | 否 | `BorderRadius.all(Radius.circular(8))` | ToastContent区域圆角
+textStyle | 否 | `TextStyle(fontSize: 17, color: Colors.white)` | 字体样式
+align | 否 | `Alignment(0, 0.8)` | ToastContent区域在MainContent区域的对齐
+contentPadding | 否 | ```EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7)``` | ToastContent区域的内补
+backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
+onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+clickClose | 否 | false| [clickClose说明](#通用参数说明)
+
+#### 6.BotToast.showCustomText
+##### 显示一个自定义的文本Toast
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
+clickClose | 否 | false| [clickClose说明](#通用参数说明)
+ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
+backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+
+#### 7.BotToast.showLoading
+##### 显示一个标准的加载Toast
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+duration | 否 | 无| [duration说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+clickClose | 否 | false| [clickClose说明](#通用参数说明)
+allowClick | 否 | false| [allowClick说明](#通用参数说明)
+backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+
+
+#### 8.BotToast.showCustomLoading
+##### 显示一个自定义的加载Toast
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+ignoreContentClick | false | false| [ignoreContentClick说明](#通用参数说明)
+clickClose | 否 | false| [clickClose说明](#通用参数说明)
+allowClick | 否 | false| [allowClick说明](#通用参数说明)
+crossPage | 否 | false| [crossPage说明](#通用参数说明)
+duration | 否 | 无| [duration说明](#通用参数说明)
+backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+
+#### 9.BotToast.showEnhancedWidget
+##### 显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+key | 否 | 无|[key说明](#通用参数说明)
+groupKey | 否 | 无|[groupKey说明](#通用参数说明)
+ignoreContentClick | false | false| [ignoreContentClick说明](#通用参数说明)
+clickClose | 否 | false| [clickClose说明](#通用参数说明)
+onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
+allowClick | 否 | true| [allowClick说明](#通用参数说明)
+crossPage | 否 | true| [crossPage说明](#通用参数说明)
+closeFunc | 否 | 无 | 该函数参数主要目的使Toast关闭之做一些处理例如触发关闭前调用[AnimationController]来启动并等待动画后再关闭
+warpWidget | 否 | 无 | 一个wrap函数,可以用来warp MainContent区域,例如[showCustomLoading]就包裹了一个动画让MainContent区域也具有动画
+duration | 否 | 无| [duration说明](#通用参数说明)
+backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+
+#### 10.BotToast.showWidget
+##### 显示一个Widget在屏幕上,该Widget可以跨多个页面存在
+
+参数 | 是否必须 |默认值| 说明
+---- | --- | ---|----
+toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
+key | 否 | 无|[key说明](#通用参数说明)
+groupKey | 否 | 无|[groupKey说明](#通用参数说明)
 
 
