@@ -18,7 +18,7 @@ BotToast ❤
 
 ### 🐼例子
 
-[在线例子(上架中)]()
+[在线例子(Online demo)](https://mmmzq.github.io/bot_toast/#/) (Web效果可能有偏差,真实效果请以手机端为准)
 
 ### 🐺效果图
 
