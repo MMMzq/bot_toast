@@ -14,7 +14,7 @@ class _AllState extends State<All> {
     BotToast.showSimpleNotification(title: "init");
     BotToast.showText(text: "init");
     BotToast.showAttachedWidget(
-        attachedWidget: (_) => Card(
+        attachedBuilder: (_) => Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(

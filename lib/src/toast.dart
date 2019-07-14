@@ -109,7 +109,6 @@ class BotToast {
   ///
   ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding] 请看[ListTile]
   ///[enableSlideOff] 是否能滑动删除
-  ///[hideCloseButton] 是否有incl
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
@@ -185,12 +184,12 @@ class BotToast {
   ///显示一个标准文本Toast
   ///
   ///[text] 需要显示的文本
-  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[contentColor] ToastContent区域背景颜色
   ///[borderRadius] ToastContent区域圆角
   ///[textStyle] 字体样式
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[contentPadding] ToastContent区域的内补
+  ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
@@ -208,7 +207,7 @@ class BotToast {
       Duration duration = const Duration(seconds: 2),
       bool clickClose = false,
       bool crossPage = true,
-      bool onlyOne = false}) {
+      bool onlyOne = true}) {
     return showCustomText(
         duration: duration,
         crossPage: crossPage,
@@ -288,7 +287,7 @@ class BotToast {
     Color backgroundColor = Colors.black26,
   }) {
     return showCustomLoading(
-        loadWidget: (_) => _LoadingWidget(),
+        toastBuilder: (_) => _LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -299,24 +298,23 @@ class BotToast {
 
   ///显示一个自定义的加载Toast
   ///
-  ///[loadWidget] 生成需要显示的Widget的builder函数
+  ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[duration] 请看[showEnhancedWidget.duration]
-  ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showCustomLoading({
-    @required ToastBuilder loadWidget,
+    @required ToastBuilder toastBuilder,
     bool clickClose = false,
     bool allowClick = false,
-    bool ignoreContentClick = true,
+    bool ignoreContentClick = false,
     bool crossPage = false,
     Duration duration,
     Color backgroundColor = Colors.black26,
   }) {
-    assert(loadWidget != null, "loadWidget not null");
+    assert(toastBuilder != null, "loadWidget not null");
 
     final key = GlobalKey<FadeAnimationState>();
 
@@ -324,7 +322,7 @@ class BotToast {
 
     CancelFunc cancelFunc = showEnhancedWidget(
         groupKey: loadKey,
-        toastBuilder: (_) => SafeArea(child: loadWidget(cancelAnimationFunc)),
+        toastBuilder: (_) => SafeArea(child: toastBuilder(cancelAnimationFunc)),
         warpWidget: (child) => FadeAnimation(
               key: key,
               child: child,
@@ -356,7 +354,7 @@ class BotToast {
   ///显示一个定位Toast
   ///该方法可以在某个Widget(一般是Button)或者给定一个offset周围显示
   ///
-  ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///[attachedBuilder] 生成需要显示的Widget的builder函数
   ///[targetContext] 目标Widget(一般是一个按钮),使用上一般会使用[Builder]包裹,来获取到BuildContext
   ///[target] 目标[Offset],该偏移是以屏幕左上角为原点来计算的
   ///[target]和[targetContext] 只能二选一
@@ -366,9 +364,8 @@ class BotToast {
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
-  ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showAttachedWidget({
-    @required ToastBuilder attachedWidget,
+    @required ToastBuilder attachedBuilder,
     BuildContext targetContext,
     Color backgroundColor = Colors.transparent,
     Offset target,
@@ -378,7 +375,6 @@ class BotToast {
     bool ignoreContentClick = false,
     bool onlyOne = false,
     bool allowClick = true,
-    bool crossPage = false,
   }) {
     assert(!(targetContext != null && target != null),
         "targetContext and target cannot coexist");
@@ -403,7 +399,7 @@ class BotToast {
         allowClick: allowClick,
         clickClose: true,
         groupKey: attachedKey,
-        crossPage: crossPage,
+        crossPage: false,
         onlyOne: onlyOne,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
@@ -419,7 +415,7 @@ class BotToast {
                   target: target,
                   verticalOffset: verticalOffset ?? 0,
                   preferDirection: preferDirection),
-              child: attachedWidget(cancelAnimationFunc),
+              child: attachedBuilder(cancelAnimationFunc),
             ));
 
     cancelAnimationFunc = () async {
@@ -455,18 +451,18 @@ class BotToast {
   ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///
   ///[crossPage] 跨页面显示,如果为true,则该Toast会跨越多个Route显示,
-  ///如果为false则在当前Route发生变化时,会自动关闭该Toast
+  ///如果为false则在当前Route发生变化时,会自动关闭该Toast,例如[Navigator.push]-[Navigator.pop]
   ///
   ///[allowClick] 是否在该Toast显示时,能否正常点击触发事件
   ///[clickClose] 是否在点击屏幕触发事件时自动关闭该Toast
   ///
   ///[ignoreContentClick] 是否忽视ToastContext区域
   ///这个参数如果为true时,用户点击该ToastContext区域时,用户可以的点击事件可以正常到达到Page上
-  ///换一句话说就是透明的(即时Toast背景颜色不是透明),如果为false,则情况反之
+  ///换一句话说就是透明的(即便是Toast背景颜色不是透明),如果为false,则情况反之
   ///
-  ///[onlyOne] 该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
+  ///[onlyOne] 表示是否该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
   ///
-  ///[clickClose] 该函数参数主要目的使一个自动关闭功能(定时关闭,点击关闭)
+  ///[closeFunc] 该函数参数主要目的使Toast关闭之做一些处理例如
   ///触发关闭前调用[AnimationController]来启动并等待动画后再关闭
   ///
   ///[backgroundColor]  MainContent区域的背景颜色

@@ -15,7 +15,6 @@ class _AttachedToastState extends State<AttachedToast> {
   PreferDirection preferDirection = PreferDirection.Below;
   bool ignoreContentClick = false;
   bool onlyOne = true;
-  bool crossPage = false;
   bool allowClick = true;
   int backgroundColor = 0x00000000;
 
@@ -30,10 +29,9 @@ class _AttachedToastState extends State<AttachedToast> {
         preferDirection: preferDirection,
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
-        crossPage: crossPage,
         allowClick: allowClick,
         backgroundColor: Color(backgroundColor),
-        attachedWidget: (cancel) => (Card(
+        attachedBuilder: (cancel) => (Card(
               child: IconButton(
                 padding: EdgeInsets.all(20),
                 onPressed: (){
@@ -133,15 +131,6 @@ class _AttachedToastState extends State<AttachedToast> {
                 title: Text("onlyOne: "),
               ),
               SwitchListTile(
-                value: crossPage,
-                onChanged: (value) {
-                  setState(() {
-                    crossPage = value;
-                  });
-                },
-                title: Text("crossPage: "),
-              ),
-              SwitchListTile(
                 value: allowClick,
                 onChanged: (value) {
                   setState(() {
@@ -224,7 +213,6 @@ BotToast.showAttachedWidget(
         preferDirection: preferDirection,
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
-        crossPage: crossPage,
         allowClick: allowClick,
         backgroundColor: Color(backgroundColor),
         attachedWidget: (cancel) => (Card(

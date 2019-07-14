@@ -133,7 +133,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                         seconds: seconds,
                       ),
                       backgroundColor: Color(backgroundColor),
-                      loadWidget: (cancelFunc) {
+                      toastBuilder: (cancelFunc) {
                         return _CustomLoadWidget(cancelFunc: cancelFunc);
                       });
                 },
