@@ -30,8 +30,7 @@ void _safeRun(void Function() callback) {
 |_________________________________|
  */
 ///todo 添加到注意事项
-///不要在调用[ToastBuilder]方法生成widget时,
-///该确保生成的Widget背景不会吸收点击事件
+///[ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
 ///并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
 ///如果真的要生成,可以考虑使用[IgnorePointer].
