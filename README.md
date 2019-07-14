@@ -1,5 +1,6 @@
 BotToast ❤
 ========= 
+[![](https://img.shields.io/pub/v/bot_toast.svg?label=bot_toast&logo=https%3A%2F%2Fpub.flutter-io.cn%2Fpackages%2Fbot_toast)](https://pub.flutter-io.cn/packages/bot_toast)
 
 ## 一个真正意义上的flutter Toast库!
 
