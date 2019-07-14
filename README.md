@@ -114,7 +114,7 @@ ignoreContentClick | 是否忽视ToastContext区域如果为true时,用户点击
 onlyOne | 表示是否该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
 backgroundColor | MainContent区域的背景颜色
 
-
+<br>
 
 #### 1.BotToast.showSimpleNotification
 ##### 显示简单的通知Toast
@@ -129,6 +129,8 @@ hideCloseButton | 否 | false| 是否隐藏关闭按钮
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
+
+<br>
 
 #### 2.BotToast.showNotification
 ##### 显示一个标准的通知Toast
@@ -145,6 +147,8 @@ crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 enableSlideOff | 否 | true| 是否能滑动删除
 
+<br>
+
 #### 3.BotToast.showCustomNotification
 ##### 显示一个自定义的通知Toast
 
@@ -156,7 +160,7 @@ duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说�
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 
-
+<br>
 
 
 #### 4.BotToast.showAttachedWidget
@@ -175,6 +179,7 @@ allowClick | 否 | true| [allowClick说明](#通用参数说明)
 ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
 
+<br>
 
 
 #### 5.BotToast.showText
@@ -194,6 +199,8 @@ onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 
+<br>
+
 #### 6.BotToast.showCustomText
 ##### 显示一个自定义的文本Toast
 
@@ -207,6 +214,8 @@ clickClose | 否 | false| [clickClose说明](#通用参数说明)
 ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
 
+<br>
+
 #### 7.BotToast.showLoading
 ##### 显示一个标准的加载Toast
 
@@ -217,6 +226,8 @@ crossPage | 否 | true| [crossPage说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 allowClick | 否 | false| [allowClick说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+
+<br>
 
 
 #### 8.BotToast.showCustomLoading
@@ -231,6 +242,8 @@ allowClick | 否 | false| [allowClick说明](#通用参数说明)
 crossPage | 否 | false| [crossPage说明](#通用参数说明)
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+
+<br>
 
 #### 9.BotToast.showEnhancedWidget
 ##### 显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
@@ -249,6 +262,8 @@ closeFunc | 否 | 无 | 该函数参数主要目的使Toast关闭之做一些处
 warpWidget | 否 | 无 | 一个wrap函数,可以用来warp MainContent区域,例如[showCustomLoading]就包裹了一个动画让MainContent区域也具有动画
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+
+<br>
 
 #### 10.BotToast.showWidget
 ##### 显示一个Widget在屏幕上,该Widget可以跨多个页面存在
