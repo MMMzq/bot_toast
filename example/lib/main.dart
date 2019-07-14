@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:example/text/text.dart';
 import 'package:flutter/material.dart';
 
 import 'all.dart';
@@ -10,6 +9,7 @@ import 'notification/custom_notification.dart';
 import 'notification/simple_notification.dart';
 import 'notification/notification.dart' as notification;
 import 'text/custom_text.dart';
+import 'text/text.dart';
 
 void main() => runApp(MyApp());
 
