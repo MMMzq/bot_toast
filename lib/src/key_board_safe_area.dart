@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 //该类是基于自己的size充满整个屏幕下的情况使用的,
