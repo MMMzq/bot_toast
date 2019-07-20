@@ -94,7 +94,10 @@ BotToast.showAttachedWidget(
 - [ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如[Scaffold],[Material]都会默认占满整个父空间,
 并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method] 如果真的要生成,可以考虑使用[IgnorePointer],如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 
+#### 更详细的实现细节请看[bot_toast是怎样炼成的](https://juejin.im/post/5d2b0261f265da1bb003edc6)
+
 <br>
+
 
 ### 🐹主要Api文档
 
