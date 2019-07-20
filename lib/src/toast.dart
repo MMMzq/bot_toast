@@ -15,7 +15,7 @@ void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     callback();
   });
-  SchedulerBinding.instance.scheduleFrame();
+  SchedulerBinding.instance.ensureVisualUpdate();
 }
 
 /*区域图
@@ -63,7 +63,13 @@ class BotToast {
     );
     """);
     _safeRun(() {
-      assert(_managerState == null, "不允许初始化多次!");
+      if(_managerState != null){
+        assert((){
+          debugPrint("BotToast.init处始化多次!");
+          return true;
+        }());
+        return;
+      }
       Overlay.of(context).insert(OverlayEntry(builder: (_) {
         return _BotToastManager(
           key: _managerState,

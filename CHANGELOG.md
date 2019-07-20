@@ -23,3 +23,8 @@
 ## [1.0.1]
 
 * Toast关闭后,清理向BotToastNavigatorObserver注册的函数
+
+## [1.0.2]
+
+* 放宽init重复初始化检查的程度
+* 替换scheduleFrame方法为ensureVisualUpdate
