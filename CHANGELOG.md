@@ -33,3 +33,8 @@
 
 * 修复当pop所有Route再push Route会出现Bug
 * 加固了当项目使用MaterialApp.navigatorKey,能使用reInit重新初始化
+
+## [1.1.0]
+* 增强showAttachedWidget方法,支持更多方向,并且定位的更准确了
+* showAttachedWidget方法添加了horizontalOffset参数来控制水平偏移
+* PreferDirection的Below,Upside(被删除了),现在枚举值更加直观

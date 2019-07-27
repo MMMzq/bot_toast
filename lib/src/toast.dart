@@ -419,27 +419,33 @@ class BotToast {
     BuildContext targetContext,
     Color backgroundColor = Colors.transparent,
     Offset target,
-    double verticalOffset = 24,
+    double verticalOffset = 0,
+    double horizontalOffset=0.0,
     Duration duration,
     PreferDirection preferDirection,
     bool ignoreContentClick = false,
     bool onlyOne = false,
     bool allowClick = true,
   }) {
+    assert(verticalOffset>=0,"verticalOffset必须为正数");
+    assert(horizontalOffset>=0,"horizontalOffset必须为正数");
     assert(!(targetContext != null && target != null),
     "targetContext and target cannot coexist");
     assert(targetContext != null || target != null,
     "targetContext and target must exist one");
 
+    Rect targetRect;
     if (target == null) {
       RenderObject renderObject = targetContext.findRenderObject();
       if (renderObject is RenderBox) {
-        target =
-            renderObject.localToGlobal(renderObject.size.center(Offset.zero));
+        final position = renderObject.localToGlobal(Offset.zero);
+        targetRect=Rect.fromLTWH(position.dx, position.dy, renderObject.size.width, renderObject.size.height);
       } else {
         throw Exception(
             "context.findRenderObject() return result must be RenderBox class");
       }
+    }else{
+      targetRect=Rect.fromLTWH(target.dx, target.dy, 0, 0);//点矩形
     }
     GlobalKey<FadeAnimationState> key = GlobalKey<FadeAnimationState>();
 
@@ -462,8 +468,9 @@ class BotToast {
         duration: duration,
         toastBuilder: (_) => CustomSingleChildLayout(
           delegate: PositionDelegate(
-              target: target,
+              target: targetRect,
               verticalOffset: verticalOffset ?? 0,
+              horizontalOffset: horizontalOffset ?? 0,
               preferDirection: preferDirection),
           child: attachedBuilder(cancelAnimationFunc),
         ));
