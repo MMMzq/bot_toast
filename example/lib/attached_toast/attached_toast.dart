@@ -10,21 +10,23 @@ class AttachedToast extends StatefulWidget {
 class _AttachedToastState extends State<AttachedToast> {
   BuildContext targetContext;
   Offset target;
-  double verticalOffset = 24;
+  double verticalOffset = 0;
+  double horizontalOffset = 0;
   int second = 4;
-  PreferDirection preferDirection = PreferDirection.Below;
+  PreferDirection preferDirection = PreferDirection.topCenter;
   bool ignoreContentClick = false;
   bool onlyOne = true;
   bool allowClick = true;
   int backgroundColor = 0x00000000;
 
-  double buttonAlign=0;
+  double buttonAlign = 0;
 
   CancelFunc show({BuildContext context, Offset target}) {
     return BotToast.showAttachedWidget(
         target: target,
         targetContext: context,
         verticalOffset: verticalOffset,
+        horizontalOffset: horizontalOffset,
         duration: Duration(seconds: second),
         preferDirection: preferDirection,
         ignoreContentClick: ignoreContentClick,
@@ -32,12 +34,15 @@ class _AttachedToastState extends State<AttachedToast> {
         allowClick: allowClick,
         backgroundColor: Color(backgroundColor),
         attachedBuilder: (cancel) => (Card(
-              child: IconButton(
-                padding: EdgeInsets.all(20),
-                onPressed: (){
-                  BotToast.showSimpleNotification(title: "Let's go travel together.😘");
-                },
-                icon: Icon(Icons.favorite,color: Colors.redAccent,),
+              child: Container(
+                width: 300,
+                child: IconButton(
+                  padding: EdgeInsets.all(5),
+                  onPressed: (){
+                    BotToast.showSimpleNotification(title: "Let's go travel together.😘");
+                  },
+                  icon: Icon(Icons.favorite,color: Colors.redAccent,),
+                ),
               ),
             )));
   }
@@ -56,16 +61,12 @@ class _AttachedToastState extends State<AttachedToast> {
             children: <Widget>[
               GestureDetector(
                 onTapDown: (details) {
-                  setState(() {
-                    verticalOffset=0;
-
-                  });
                   show(target: details.globalPosition);
                 },
                 child: Container(
                   color: Colors.redAccent,
-                  height: 100,
-                  width: 300,
+                  height: 120,
+                  width: double.infinity,
                   alignment: Alignment.center,
                   child: Text(
                     "click me",
@@ -100,18 +101,243 @@ class _AttachedToastState extends State<AttachedToast> {
                   },
                 ),
               ),
-              SwitchListTile(
-                value: preferDirection == PreferDirection.Below,
-                onChanged: (value) {
-                  setState(() {
-                    preferDirection =
-                        value ? PreferDirection.Below : PreferDirection.Upside;
-                  });
-                },
-                title: Text("preferDirection: $preferDirection"),
+              Text("$preferDirection",style: TextStyle(fontSize: 15),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: SizedBox.shrink(),
+                  ),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.topLeft,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.topCenter,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.topRight,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Spacer(),
+                ],
               ),
-
-
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Expanded(
+                      child: Text(
+                    "topLeft",
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: Text(
+                    "topCenter",
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: Text(
+                    "topRight",
+                    textAlign: TextAlign.center,
+                  )),
+                  Spacer(),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.leftTop,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.rightTop,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                    "leftTop",
+                    textAlign: TextAlign.center,
+                  )),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Text(
+                    "rightTop",
+                    textAlign: TextAlign.center,
+                  )),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.leftCenter,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.rightCenter,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                    "leftCenter",
+                    textAlign: TextAlign.center,
+                  )),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Text(
+                    "rightCenter",
+                    textAlign: TextAlign.center,
+                  )),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.leftBottom,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.rightBottom,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                    "leftBottom",
+                    textAlign: TextAlign.center,
+                  )),
+                  Spacer(),
+                  Spacer(),
+                  Spacer(),
+                  Expanded(
+                      child: Text(
+                    "rightBottom",
+                    textAlign: TextAlign.center,
+                  )),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.bottomLeft,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.bottomCenter,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Expanded(
+                      child: Radio(
+                          value: PreferDirection.bottomRight,
+                          groupValue: preferDirection,
+                          onChanged: (value) {
+                            setState(() {
+                              preferDirection = value;
+                            });
+                          })),
+                  Spacer(),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Expanded(
+                      child: Text(
+                    "bottomLeft",
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: Text(
+                    "bottomCenter",
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: Text(
+                    "bottomRight",
+                    textAlign: TextAlign.center,
+                  )),
+                  Spacer(),
+                ],
+              ),
               SwitchListTile(
                 value: ignoreContentClick,
                 onChanged: (value) {
@@ -161,6 +387,20 @@ class _AttachedToastState extends State<AttachedToast> {
                   onChanged: (double value) {
                     setState(() {
                       verticalOffset = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title:
+                    Text("horizontalOffset:   ${horizontalOffset.toString()}"),
+                trailing: CupertinoSlider(
+                  min: 0,
+                  max: 40,
+                  value: horizontalOffset.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      horizontalOffset = value;
                     });
                   },
                 ),
