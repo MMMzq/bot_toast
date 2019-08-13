@@ -16,6 +16,16 @@ BotToast ❤
 
 - 纯flutter实现,不容易带来兼容问题
 
+- In the true sense of Toast, you can call it whenever you need it, without any restrictions! (This is his most important feature, different from other Toast libraries)
+
+- Feature-rich, support for displaying notifications, text, loading, attachments, etc. Toast
+
+- Support for popping up various custom Toasts, or you can pop up any Widget as long as it meets the requirements of the flutter code.
+
+- Api is easy to use, basically has no necessary parameters (including BuildContext), basically all optional parameters
+
+- Pure flutter implementation, it is not easy to bring compatibility problems
+
 ### 🐼例子
 
 [在线例子(Online demo)](https://mmmzq.github.io/bot_toast/#/) (Web效果可能有偏差,真实效果请以手机端为准)
