@@ -23,8 +23,9 @@ class _AllState extends State<All> {
                 ),
               ),
             ),
+        enableSafeArea: false,
         duration: Duration(seconds: 2),
-        target: Offset(520, 520));
+        target: Offset(52, 0));
 
     super.initState();
   }
