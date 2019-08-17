@@ -16,6 +16,16 @@ BotToast ❤
 
 - 纯flutter实现,不容易带来兼容问题
 
+- In the true sense of Toast, you can call it whenever you need it, without any restrictions! (This is his most important feature, different from other Toast libraries)
+
+- Feature-rich, support for displaying notifications, text, loading, attachments, etc. Toast
+
+- Support for popping up various custom Toasts, or you can pop up any Widget as long as it meets the requirements of the flutter code.
+
+- Api is easy to use, basically has no necessary parameters (including BuildContext), basically all optional parameters
+
+- Pure flutter implementation, it is not easy to bring compatibility problems
+
 ### 🐼例子
 
 [在线例子(Online demo)](https://mmmzq.github.io/bot_toast/#/) (Web效果可能有偏差,真实效果请以手机端为准)
@@ -35,7 +45,7 @@ Loading|Text
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: 1.1.0
+     bot_toast: ^1.1.0
 ```
 
 #### 2. 导入BotToast库
@@ -86,6 +96,16 @@ BotToast.showAttachedWidget(
 ```
 
 <br>
+
+### 🐧1.1.0版本说明
+- 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
+
+- `PreferDirection.Below`和`PreferDirection.Upside`被废弃了,可以改用表达更清晰的topCenter,和bottomCenter来代替,且效果完全一致。这两个枚举将会在下个大版本被删除!
+
+- `showAttachedWidget`的`preferDirection` 只是期望的方向,实际的位置可能因为空间不足而遭到调整
+
+- 实际调整顺序可以拿`topLeft`来进行说明,如果上方空间不足则调整为`bottomLeft`,然后左边空间不足的话就再判断右边的空间是否充足,充足的话结果为`bottomRight`,不充足最终结果为`bottomCenter`
+
 
 ### 🐨注意事项
 
