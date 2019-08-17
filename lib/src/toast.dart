@@ -411,6 +411,7 @@ class BotToast {
   ///[target]和[targetContext] 只能二选一
   ///[verticalOffset]  垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
   ///[preferDirection] 偏好方向,如果在空间允许的情况下,会偏向显示在那边
+  ///[enableSafeArea] 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
