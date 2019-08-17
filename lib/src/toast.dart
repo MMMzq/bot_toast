@@ -427,6 +427,7 @@ class BotToast {
     bool ignoreContentClick = false,
     bool onlyOne = false,
     bool allowClick = true,
+    bool enableSafeArea
   }) {
     assert(verticalOffset>=0,"verticalOffset必须为正数");
     assert(horizontalOffset>=0,"horizontalOffset必须为正数");
@@ -472,6 +473,7 @@ class BotToast {
               target: targetRect,
               verticalOffset: verticalOffset ?? 0,
               horizontalOffset: horizontalOffset ?? 0,
+              enableSafeArea: enableSafeArea??true,
               preferDirection: preferDirection),
           child: attachedBuilder(cancelAnimationFunc),
         ));

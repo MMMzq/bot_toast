@@ -264,11 +264,14 @@ class PositionDelegate extends SingleChildLayoutDelegate {
     @required this.target,
      this.verticalOffset,
     this.horizontalOffset,
+    this.enableSafeArea=true,
     PreferDirection preferDirection
   })  : assert(target != null),
         assert(verticalOffset != null),
         assert(horizontalOffset != null),
         this.preferDirection = preferDirection ?? PreferDirection.topCenter;
+
+  final bool enableSafeArea;
 
   final Rect target;
 
@@ -283,9 +286,9 @@ class PositionDelegate extends SingleChildLayoutDelegate {
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    final appStatusHeight=MediaQueryData.fromWindow(window).padding.top;
+    final double top = enableSafeArea?MediaQueryData.fromWindow(window).padding.top:0;
     return positionToastBox(
-      containerRect: Rect.fromLTWH(0, appStatusHeight, size.width, size.height-appStatusHeight),
+      containerRect: Rect.fromLTWH(0, top, size.width, size.height-top),
       toastSize: childSize,
       targetRect: target,
       verticalOffset: verticalOffset??0,
@@ -399,8 +402,6 @@ Offset positionToastBox({
   }
 
   Offset resultOffset;
-  print(direction);
-
   switch(direction){
     case "topLeft":
       resultOffset=targetRect.topLeft-Offset(0, toastSize.height)+Offset(horizontalOffset,-verticalOffset,);
