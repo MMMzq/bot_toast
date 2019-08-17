@@ -15,6 +15,7 @@ build_web_compilers:packages/build_web_compilers/
 built_collection:packages/built_collection/
 built_value:packages/built_value/
 charcode:packages/charcode/
+checked_yaml:packages/checked_yaml/
 code_builder:packages/code_builder/
 collection:packages/collection/
 convert:packages/convert/

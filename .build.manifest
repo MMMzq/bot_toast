@@ -30,9 +30,9 @@ packages/build_runner/src/server/graph_viz.html
 packages/build_runner/src/server/graph_viz.js
 packages/build_runner/src/server/graph_viz_main.dart.js
 packages/build_web_compilers/src/dev_compiler_stack_trace/stack_trace_mapper.dart.js
-packages/flutter_web/assets/Ahem.ttf
-packages/flutter_web/assets/houdini_painter.js
+packages/flutter_web_ui/assets/Ahem.ttf
 packages/flutter_web_ui/assets/Roboto-Regular.ttf
+packages/flutter_web_ui/assets/houdini_painter.js
 packages/front_end/src/fasta/README.md
 packages/front_end/src/fasta/TESTING.md
 packages/front_end/src/fasta/builder/README.md
