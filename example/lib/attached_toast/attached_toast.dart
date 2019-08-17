@@ -34,14 +34,29 @@ class _AttachedToastState extends State<AttachedToast> {
         allowClick: allowClick,
         backgroundColor: Color(backgroundColor),
         attachedBuilder: (cancel) => (Card(
+          color: Colors.amber,
               child: Container(
-                width: 300,
-                child: IconButton(
-                  padding: EdgeInsets.all(5),
-                  onPressed: (){
-                    BotToast.showSimpleNotification(title: "Let's go travel together.😘");
-                  },
-                  icon: Icon(Icons.favorite,color: Colors.redAccent,),
+                padding: EdgeInsets.symmetric(horizontal: 8),
+//                width: 200,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    FlatButton.icon(
+                      padding: EdgeInsets.all(5),
+                      onPressed: (){
+                        BotToast.showSimpleNotification(title: "Let's go travel together.😘");
+                      },
+                      label: Text("favorite"),
+                      icon: Icon(Icons.favorite,color: Colors.redAccent),
+                    ),
+                    FlatButton.icon(
+                      padding: EdgeInsets.all(5),
+                      onPressed: (){
+                        BotToast.showSimpleNotification(title: "Thank you for liking me.😝");
+                      },
+                      label: Text("bookmark"),
+                      icon: Icon(Icons.bookmark,color: Colors.redAccent),
+                    )                  ],
                 ),
               ),
             )));
@@ -63,14 +78,16 @@ class _AttachedToastState extends State<AttachedToast> {
                 onTapDown: (details) {
                   show(target: details.globalPosition);
                 },
-                child: Container(
-                  color: Colors.redAccent,
-                  height: 120,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "click me",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                child: Card(
+                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  color: Colors.black45,
+                  child: Container(
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "click me",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
                   ),
                 ),
               ),
