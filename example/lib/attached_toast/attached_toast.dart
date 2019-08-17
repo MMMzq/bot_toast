@@ -17,6 +17,7 @@ class _AttachedToastState extends State<AttachedToast> {
   bool ignoreContentClick = false;
   bool onlyOne = true;
   bool allowClick = true;
+  bool enableSafeArea = true;
   int backgroundColor = 0x00000000;
 
   double buttonAlign = 0;
@@ -32,6 +33,7 @@ class _AttachedToastState extends State<AttachedToast> {
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
         allowClick: allowClick,
+        enableSafeArea: enableSafeArea,
         backgroundColor: Color(backgroundColor),
         attachedBuilder: (cancel) => (Card(
           color: Colors.amber,
@@ -381,6 +383,15 @@ class _AttachedToastState extends State<AttachedToast> {
                   });
                 },
                 title: Text("allowClick: "),
+              ),
+              SwitchListTile(
+                value: enableSafeArea,
+                onChanged: (value) {
+                  setState(() {
+                    enableSafeArea = value;
+                  });
+                },
+                title: Text("enableSafeArea: "),
               ),
               ListTile(
                 title: Text("duration:   ${second}s"),
