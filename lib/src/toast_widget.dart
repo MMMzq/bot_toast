@@ -258,7 +258,7 @@ class _LoadingWidget extends StatelessWidget {
 }
 
 //定位Delegate
-//使用该类默认是以左上角来定位的也就是Offset(0,0)
+//使用该类默认是以Offset(0,app导航栏高度)为原点
 class PositionDelegate extends SingleChildLayoutDelegate {
   PositionDelegate( {
     @required this.target,
@@ -284,7 +284,7 @@ class PositionDelegate extends SingleChildLayoutDelegate {
   @override
   Offset getPositionForChild(Size size, Size childSize) {
     return positionToastBox(
-      containerRect: Rect.fromLTWH(0, 0, size.width, size.height),
+      containerRect: Rect.fromLTWH(0, MediaQueryData.fromWindow(window).padding.top, size.width, size.height),
       toastSize: childSize,
       targetRect: target,
       verticalOffset: verticalOffset??0,
@@ -325,6 +325,20 @@ Offset positionToastBox({
   assert(preferDirection != null);
   assert(_containsOffset(containerRect,targetRect.topLeft)&&_containsOffset(containerRect,targetRect.bottomRight),"containerRect 必须完全包含 targetRect");
 
+  assert((){
+    if(preferDirection==PreferDirection.Upside||preferDirection==PreferDirection.Below){
+      print(
+          """bot_toast:你使用废弃的枚举:Upside,Below,你可以使用表达更清晰的topCenter,bottomCenter来代替,效果完全一样。Upside,Below将会在下一个大版本被删除""");
+    }
+    return true;
+  }());
+  if(preferDirection==PreferDirection.Upside){
+    preferDirection=PreferDirection.topCenter;
+  }else if(preferDirection==PreferDirection.Below){
+    preferDirection=PreferDirection.bottomCenter;
+  }
+
+
   bool canPlaceTop({double extraSpace=0}){
     return toastSize.height+verticalOffset<targetRect.top-containerRect.top+extraSpace;
   }
@@ -338,42 +352,6 @@ Offset positionToastBox({
   }
   bool canPlaceRight({double extraSpace=0}){
     return toastSize.width+horizontalOffset<containerRect.right-targetRect.right+extraSpace;
-  }
-
-  String inferHorizontalAlignDirection(){
-    if(targetRect.center==containerRect.center) return "Center"; //完全居中时的特殊情况
-
-    bool leftOverflow=targetRect.center.dx-containerRect.left<toastSize.width/2;
-    bool rightOverflow=containerRect.right-targetRect.center.dx<toastSize.width/2;
-
-    if(leftOverflow&&rightOverflow){
-      return "Center";
-    }else if(leftOverflow&&canPlaceRight(extraSpace: targetRect.width)){
-      return "Left";
-    }else if(rightOverflow&&canPlaceLeft(extraSpace: targetRect.width)){
-      return "Right";
-    }else{
-      //这是都两边都溢出的情况,这是加了offset的情况
-      return "Center";
-    }
-  }
-
-  String inferVerticalAlignDirection(){
-    if(targetRect.center==containerRect.center) return "Center"; //完全居中时的特殊情况
-
-    bool topOverflow=targetRect.center.dy-containerRect.top<toastSize.height/2;
-    bool bottomOverflow=containerRect.bottom-targetRect.center.dy<toastSize.height/2;
-
-    if(topOverflow&&bottomOverflow){
-      return "Center";
-    }else if(topOverflow&&canPlaceBottom(extraSpace: targetRect.height)){
-      return "Top";
-    }else if(bottomOverflow&&canPlaceTop(extraSpace: targetRect.height)){
-      return "Bottom";
-    }else{
-      //这是都两边都溢出的情况
-      return "Center";
-    }
   }
 
   String direction;
@@ -392,25 +370,25 @@ Offset positionToastBox({
   if(preferDirection.index<=PreferDirection.bottomRight.index){
     switch(_getDirection(preferDirection).replaceAll("top", "").replaceAll("bottom", "")){
       case "Left":
-        direction+=canPlaceRight(extraSpace: targetRect.width)?"Left":"Right";
+        direction+=canPlaceRight(extraSpace: targetRect.width)?"Left":canPlaceLeft(extraSpace: targetRect.width)?"Right":"Center";
         break;
       case "Center":
-        direction+=inferHorizontalAlignDirection();
+        direction+="Center";
         break;
       case "Right":
-        direction+=canPlaceLeft(extraSpace: targetRect.width)?"Right":"Left";
+        direction+=canPlaceLeft(extraSpace: targetRect.width)?"Right":canPlaceRight(extraSpace: targetRect.width)?"Left":"Center";
         break;
     }
   }else{
     switch(_getDirection(preferDirection).replaceAll("left", "").replaceAll("right", "")){
       case "Top":
-        direction+=canPlaceBottom(extraSpace: targetRect.height)?"Top":"Bottom";
+        direction+=canPlaceBottom(extraSpace: targetRect.height)?"Top":canPlaceTop(extraSpace: targetRect.height)?"Bottom":"Center";
         break;
       case "Center":
-        direction+=inferVerticalAlignDirection();
+        direction+="Center";
         break;
       case "Bottom":
-        direction+=canPlaceTop(extraSpace: targetRect.height)?"Bottom":"Top";
+        direction+=canPlaceTop(extraSpace: targetRect.height)?"Bottom":canPlaceBottom(extraSpace: targetRect.height)?"Top":"Center";
         break;
     }
   }
@@ -421,7 +399,16 @@ Offset positionToastBox({
       resultOffset=targetRect.topLeft-Offset(0, toastSize.height)+Offset(horizontalOffset,-verticalOffset,);
       break;
     case "topCenter":
-      resultOffset=targetRect.topCenter-Offset(toastSize.width/2, toastSize.height)+Offset(0,-verticalOffset, );
+      bool rightOverflow = toastSize.width/2>containerRect.right-targetRect.topCenter.dx;
+      bool leftOverflow = toastSize.width/2>targetRect.topCenter.dx-containerRect.left;
+      if(rightOverflow){
+        resultOffset=Offset(containerRect.right-toastSize.width, targetRect.top-toastSize.height);
+      }else if(leftOverflow){
+        resultOffset=Offset(containerRect.left, targetRect.top-toastSize.height);
+      }else{
+        resultOffset=targetRect.topCenter-Offset(toastSize.width/2, toastSize.height);
+      }
+      resultOffset+=Offset(0,-verticalOffset);
       break;
     case "topRight":
       resultOffset=targetRect.topRight-Offset(toastSize.width, toastSize.height)+Offset(-horizontalOffset,-verticalOffset, );
@@ -430,7 +417,16 @@ Offset positionToastBox({
       resultOffset=targetRect.bottomLeft+Offset(horizontalOffset,verticalOffset);
       break;
     case "bottomCenter":
-      resultOffset=targetRect.bottomCenter-Offset(toastSize.width/2, 0)+Offset(0, verticalOffset);
+      bool rightOverflow = toastSize.width/2>containerRect.right-targetRect.topCenter.dx;
+      bool leftOverflow = toastSize.width/2>targetRect.topCenter.dx-containerRect.left;
+      if(rightOverflow){
+        resultOffset=Offset(containerRect.right-toastSize.width, targetRect.bottom);
+      }else if(leftOverflow){
+        resultOffset=Offset(containerRect.left, targetRect.bottom);
+      }else{
+        resultOffset=targetRect.bottomCenter-Offset(toastSize.width/2, 0);
+      }
+      resultOffset+=Offset(0, verticalOffset);
       break;
     case "bottomRight":
       resultOffset=targetRect.bottomRight-Offset(toastSize.width, 0)+Offset(-horizontalOffset, verticalOffset);
@@ -439,7 +435,16 @@ Offset positionToastBox({
       resultOffset=targetRect.topLeft-Offset(toastSize.width, 0)+Offset(-horizontalOffset, verticalOffset);
       break;
     case "leftCenter":
-      resultOffset=targetRect.centerLeft-Offset(toastSize.width, toastSize.height/2)+Offset(-horizontalOffset, 0);
+      bool topOverflow= toastSize.height/2>targetRect.centerLeft.dy-containerRect.top;
+      bool bottomOverflow = toastSize.height/2>containerRect.bottom-targetRect.centerLeft.dy;
+      if(topOverflow){
+        resultOffset=Offset(targetRect.left-toastSize.width,containerRect.top, );
+      }else if(bottomOverflow){
+        resultOffset=Offset(targetRect.left-toastSize.width,containerRect.top-toastSize.height, );
+      }else{
+        resultOffset=targetRect.centerLeft-Offset(toastSize.width, toastSize.height/2);
+      }
+      resultOffset+=Offset(-horizontalOffset, 0);
       break;
     case "leftBottom":
       resultOffset=targetRect.bottomLeft-Offset(toastSize.width, toastSize.height)+Offset(-horizontalOffset, -verticalOffset);
@@ -448,7 +453,16 @@ Offset positionToastBox({
       resultOffset=targetRect.topRight+Offset(horizontalOffset,verticalOffset);
       break;
     case "rightCenter":
-      resultOffset=targetRect.centerRight-Offset(0, toastSize.height/2)+Offset(horizontalOffset, 0);
+      bool topOverflow= toastSize.height/2>targetRect.centerLeft.dy-containerRect.top;
+      bool bottomOverflow = toastSize.height/2>containerRect.bottom-targetRect.centerLeft.dy;
+      if(topOverflow){
+        resultOffset=Offset(targetRect.right,containerRect.top, );
+      }else if(bottomOverflow){
+        resultOffset=Offset(targetRect.right,containerRect.top-toastSize.height, );
+      }else{
+        resultOffset=targetRect.centerRight-Offset(0, toastSize.height/2);
+      }
+      resultOffset+=Offset(horizontalOffset, 0);
       break;
     case "rightBottom":
       resultOffset=targetRect.bottomRight-Offset(0, toastSize.height)+Offset(horizontalOffset, -verticalOffset);
