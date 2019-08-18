@@ -45,7 +45,7 @@ Loading|Text
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: ^1.0.3
+     bot_toast: ^1.1.0
 ```
 
 #### 2. 导入BotToast库
@@ -96,6 +96,16 @@ BotToast.showAttachedWidget(
 ```
 
 <br>
+
+### 🐧1.1.0版本说明
+- 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
+
+- `PreferDirection.Below`和`PreferDirection.Upside`被废弃了,可以改用表达更清晰的topCenter,和bottomCenter来代替,且效果完全一致。这两个枚举将会在下个大版本被删除!
+
+- `showAttachedWidget`的`preferDirection` 只是期望的方向,实际的位置可能因为空间不足而遭到调整
+
+- 实际调整顺序可以拿`topLeft`来进行说明,如果上方空间不足则调整为`bottomLeft`,然后左边空间不足的话就再判断右边的空间是否充足,充足的话结果为`bottomRight`,不充足最终结果为`bottomCenter`
+
 
 ### 🐨注意事项
 
@@ -214,6 +224,7 @@ targetContext | 否 | 无| 目标Widget(一般是一个按钮),使用上一般�
 target | 否 | 无| 目标[Offset],该偏移是以屏幕左上角为原点来计算的  ([target]和[targetContext] 只能二选一)
 preferDirection | 否 | 无| 偏好方向,如果在空间允许的情况下,会偏向显示在那边
 verticalOffset | 否 | ```24```| 垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
+enableSafeArea | 否 | true | 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之 
 duration | 否 | 无| [duration说明](#通用参数说明)
 onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
 allowClick | 否 | true| [allowClick说明](#通用参数说明)

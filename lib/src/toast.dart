@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -410,6 +411,7 @@ class BotToast {
   ///[target]和[targetContext] 只能二选一
   ///[verticalOffset]  垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
   ///[preferDirection] 偏好方向,如果在空间允许的情况下,会偏向显示在那边
+  ///[enableSafeArea] 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
@@ -419,27 +421,34 @@ class BotToast {
     BuildContext targetContext,
     Color backgroundColor = Colors.transparent,
     Offset target,
-    double verticalOffset = 24,
+    double verticalOffset = 0,
+    double horizontalOffset=0.0,
     Duration duration,
     PreferDirection preferDirection,
     bool ignoreContentClick = false,
     bool onlyOne = false,
     bool allowClick = true,
+    bool enableSafeArea
   }) {
+    assert(verticalOffset>=0,"verticalOffset必须为正数");
+    assert(horizontalOffset>=0,"horizontalOffset必须为正数");
     assert(!(targetContext != null && target != null),
     "targetContext and target cannot coexist");
     assert(targetContext != null || target != null,
     "targetContext and target must exist one");
 
+    Rect targetRect;
     if (target == null) {
       RenderObject renderObject = targetContext.findRenderObject();
       if (renderObject is RenderBox) {
-        target =
-            renderObject.localToGlobal(renderObject.size.center(Offset.zero));
+        final position = renderObject.localToGlobal(Offset.zero);
+        targetRect=Rect.fromLTWH(position.dx, position.dy, renderObject.size.width, renderObject.size.height);
       } else {
         throw Exception(
             "context.findRenderObject() return result must be RenderBox class");
       }
+    }else{
+      targetRect=Rect.fromLTWH(target.dx, target.dy, 0, 0);//点矩形
     }
     GlobalKey<FadeAnimationState> key = GlobalKey<FadeAnimationState>();
 
@@ -462,8 +471,10 @@ class BotToast {
         duration: duration,
         toastBuilder: (_) => CustomSingleChildLayout(
           delegate: PositionDelegate(
-              target: target,
+              target: targetRect,
               verticalOffset: verticalOffset ?? 0,
+              horizontalOffset: horizontalOffset ?? 0,
+              enableSafeArea: enableSafeArea??true,
               preferDirection: preferDirection),
           child: attachedBuilder(cancelAnimationFunc),
         ));
