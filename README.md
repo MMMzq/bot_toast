@@ -6,7 +6,7 @@ BotToast ❤
 
 ## 一个真正意义上的flutter Toast库!
 
-###  🐶特点
+###  🐶简介
 
 - 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制! (这是他最重要的特点,跟别的Toast库不同的地方)
 
@@ -27,6 +27,15 @@ BotToast ❤
 - Api is easy to use, basically has no necessary parameters (including BuildContext), basically all optional parameters
 
 - Pure flutter implementation, it is not easy to bring compatibility problems
+
+### 🐲Feature
+
+- [x] Text Toast
+- [x] Attachment Toast
+- [x] Loading Toast
+- [x] Notification Toast
+- [ ] Dialog
+- [ ] SnackBar 
 
 ### 🐼例子
 
