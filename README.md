@@ -30,12 +30,12 @@ BotToast ❤
 
 ### 🐲Feature
 
-- [x] Text Toast
-- [x] Attachment Toast
-- [x] Loading Toast
-- [x] Notification Toast
-- [ ] Dialog
-- [ ] SnackBar 
+1. - [x] Text Toast
+2. - [x] Attachment Toast
+3. - [x] Loading Toast
+4. - [x] Notification Toast
+5. - [ ] Dialog
+6. - [ ] SnackBar 
 
 ### 🐼例子
 
