@@ -166,6 +166,7 @@ BotToast.showAttachedWidget(
 参数 | 说明
 ---- | --- 
 toastBuilder | 生成需要显示的Widget的函数  (```typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);```)
+CancelFunc | 调用BotToast.showXxx都会返回此函数,调用此方法将会提前关闭对应的Toast
 key | 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget
 groupKey | 代表此Toast在那个分组的key,
 duration | 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
