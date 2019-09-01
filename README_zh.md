@@ -6,15 +6,15 @@ BotToast ❤
 [![Build Status](https://travis-ci.com/MMMzq/bot_toast.svg?branch=master)](https://travis-ci.com/MMMzq/bot_toast)
 [![codecov](https://codecov.io/gh/MMMzq/bot_toast/branch/master/graph/badge.svg)](https://codecov.io/gh/MMMzq/bot_toast)
 
-* [🐲概述](#🐲概述)
-* [🐼在线Demo](#🐼在线demo)
-* [🐳示例项目](#🐳示例项目)
-* [🐺效果图](#🐺效果图)
-* [🐮快速使用](#🐮快速使用) 
-* [🐨注意事项](#🐨注意事项) 
-* [📃主要Api文档](#📃主要Api文档⬅) 
+* [🐲概述](#概述)
+* [🐼在线Demo](#在线demo)
+* [🐳示例项目](#示例项目)
+* [🐺效果图](#效果图)
+* [🐮快速使用](#快速使用) 
+* [🐨注意事项](#注意事项) 
+* [📃主要Api文档](#主要Api文档) 
 
-###  🐲概述
+###  概述
 
 - 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制! (这是他最重要的特点,跟别的Toast库不同的地方)
 
@@ -30,10 +30,10 @@ BotToast ❤
 
 **[在线例子](https://mmmzq.github.io/bot_toast/#/)** (Web效果可能有偏差,真实效果请以手机端为准)
 
-### 🐳示例项目
+### 示例项目
 **[sample project](https://github.com/MMMzq/bot_toast/tree/master/example)**
 
-### 🐺效果图
+### 效果图
 
 Notification|Attached
 --------|-------
@@ -43,7 +43,7 @@ Loading|Text
 --------|-------
 ![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)
 
-### 🐮快速使用
+### 快速使用
 
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
@@ -100,8 +100,7 @@ BotToast.showAttachedWidget(
 
 <br>
 
-
-### 🐨注意事项
+### 注意事项
 
 - 如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
 
@@ -128,7 +127,7 @@ BotToast.showAttachedWidget(
 
 <br>
 
-### 🐧1.1.0版本说明
+### 1.1.0版本说明
 - 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
 
 - `PreferDirection.Below`和`PreferDirection.Upside`被废弃了,可以改用表达更清晰的topCenter,和bottomCenter来代替,且效果完全一致。这两个枚举将会在下个大版本被删除!
@@ -139,7 +138,8 @@ BotToast.showAttachedWidget(
 
 <br>
 
-###  [📃主要Api文档⬅](https://github.com/MMMzq/bot_toast/blob/master/API.md)
+###  主要Api文档
+[主要Api文档](https://github.com/MMMzq/bot_toast/blob/master/API.md)
 
 
 
