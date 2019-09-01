@@ -28,15 +28,6 @@ BotToast ❤
 
 - Pure flutter implementation, it is not easy to bring compatibility problems
 
-### 🐲Feature
-
-1. - [x] Text Toast
-2. - [x] Attachment Toast
-3. - [x] Loading Toast
-4. - [x] Notification Toast
-5. - [ ] Dialog
-6. - [ ] SnackBar 
-
 ### 🐼例子
 
 [在线例子(Online demo)](https://mmmzq.github.io/bot_toast/#/) (Web效果可能有偏差,真实效果请以手机端为准)
