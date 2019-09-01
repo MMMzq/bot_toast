@@ -6,6 +6,8 @@ BotToast ❤
 [![Build Status](https://travis-ci.com/MMMzq/bot_toast.svg?branch=master)](https://travis-ci.com/MMMzq/bot_toast)
 [![codecov](https://codecov.io/gh/MMMzq/bot_toast/branch/master/graph/badge.svg)](https://codecov.io/gh/MMMzq/bot_toast)
 
+### Language: [English](https://github.com/MMMzq/bot_toast) | 中文简体
+
 * [🐲概述](#概述)
 * [🐼在线Demo](#在线demo)
 * [🐳示例项目](#示例项目)
