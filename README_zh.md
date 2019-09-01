@@ -1,4 +1,4 @@
-BotToast ❤
+BotToast 🤖
 ========= 
 一个真正意义上的flutter Toast库!
 
