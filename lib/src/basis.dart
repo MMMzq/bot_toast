@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///Toast的关闭函数,调用将会提前关闭对应的Toast
 typedef CancelFunc = void Function();
 typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
 typedef WrapWidget = Widget Function(Widget widget);

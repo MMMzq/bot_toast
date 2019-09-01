@@ -75,10 +75,10 @@ class BotToast {
     });
   }
 
+  ///todo 2.0版本修改初始化方式
+  ///
   ///使用此方法是不可靠的,只有第一次使用BotToastInit安全的,之后可能因为BotToastInit被移除Navigator,导致调用不到init
   ///一般这种情况只会出现在pop所有路由再推一个路由出现,同时根[MaterialApp.navigatorKey]改变就会出现问题,所以只能手动reInit
-  ///
-  ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
   static init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     请初始化BotToastNavigatorObserver
@@ -98,6 +98,8 @@ class BotToast {
     });
   }
 
+
+  ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
   static void _init(){
     _managerState = GlobalKey<_BotToastManagerState>();
     BotToastNavigatorObserverProxy observerProxy;
@@ -570,8 +572,9 @@ class BotToast {
     }
 
     //跨页自动关闭
-    BotToastNavigatorObserverProxy observerProxy = BotToastNavigatorObserverProxy.all(rememberFunc);
+    BotToastNavigatorObserverProxy observerProxy;
     if (!crossPage) {
+      observerProxy= BotToastNavigatorObserverProxy.all(rememberFunc);
       BotToastNavigatorObserver.register(observerProxy);
     }
 

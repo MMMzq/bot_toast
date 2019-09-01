@@ -306,10 +306,6 @@ class PositionDelegate extends SingleChildLayoutDelegate {
 }
 
 
-bool _containsOffset(Rect containerRect,Offset targetOffset){
-  return targetOffset.dx >= containerRect.left && targetOffset.dx <= containerRect.right && targetOffset.dy >= containerRect.top && targetOffset.dy <= containerRect.bottom;
-}
-
 //当该方法推断出来的方向等于xxxCenter时
 //则verticalOffset或者horizontalOffset失效
 //例如:
@@ -327,17 +323,22 @@ Offset positionToastBox({
   assert(targetRect != null);
   assert(verticalOffset != null);
   assert(preferDirection != null);
-  assert(_containsOffset(containerRect,targetRect.topLeft)&&_containsOffset(containerRect,targetRect.bottomRight),"containerRect 必须完全包含 targetRect");
+  //裁剪
+  targetRect=targetRect.intersect(containerRect);
 
   assert((){
+    // ignore: deprecated_member_use_from_same_package
     if(preferDirection==PreferDirection.Upside||preferDirection==PreferDirection.Below){
       print(
           """bot_toast:你使用废弃的枚举:Upside,Below,你可以使用表达更清晰的topCenter,bottomCenter来代替,效果完全一样。Upside,Below将会在下一个大版本被删除""");
     }
     return true;
   }());
+
+  // ignore: deprecated_member_use_from_same_package
   if(preferDirection==PreferDirection.Upside){
     preferDirection=PreferDirection.topCenter;
+  // ignore: deprecated_member_use_from_same_package
   }else if(preferDirection==PreferDirection.Below){
     preferDirection=PreferDirection.bottomCenter;
   }
