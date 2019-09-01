@@ -57,7 +57,7 @@ dependencies:
 import 'package:bot_toast/bot_toast.dart';
 ```
 
-#### 3. Initialization BotToast
+#### 3. initialization BotToast
 ``` dart
 ///Like this, BotToast will automatically initialize
 MaterialApp(
