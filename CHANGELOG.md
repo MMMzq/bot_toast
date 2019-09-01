@@ -44,3 +44,10 @@
 * 实际调整顺序可以拿`topLeft`来进行说明,如果上方空间不足则调整为`bottomLeft`,然后左边空间不足的话就再判断右边的空间是否充足,充足的话结果为`bottomRight`,不充足最终结果为`bottomCenter`
 
 * 对于`preferDirection=xxxCenter`的情况,其交叉轴的偏移将会忽略
+
+## [1.1.1]
+* Bug fix:
+
+The targetContext of the showAttachedWidget method causes a positioning error when it is inside the ScrollView.
+
+showAttachedWidget方法的targetContext在ScrollView里面时导致定位出错
