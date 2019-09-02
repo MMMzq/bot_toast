@@ -115,7 +115,7 @@ BotToast.showAttachedWidget(
 
   @override
   void initState() {
-  navigatorState=GlobalKey<NavigatorState>();
+    navigatorState=GlobalKey<NavigatorState>();
     Future.delayed(Duration(seconds: 1), //模拟点击改变GlobalKey<NavigatorState>
         (){
           setState(() {
