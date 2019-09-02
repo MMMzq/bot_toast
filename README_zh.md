@@ -111,8 +111,11 @@ BotToast.showAttachedWidget(
 
 - 如果你在项目中使用了[MaterialApp.navigatorKey]参数请在改变[MaterialApp.navigatorKey]时请调用reInit重新初始化
 ```
+  GlobalKey<NavigatorState> navigatorState;
+
   @override
   void initState() {
+  navigatorState=GlobalKey<NavigatorState>();
     Future.delayed(Duration(seconds: 1), //模拟点击改变GlobalKey<NavigatorState>
         (){
           setState(() {
@@ -123,6 +126,19 @@ BotToast.showAttachedWidget(
     );
     super.initState();
   }
+  
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: navigatorState,
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: ToastWidget(
+        child: Xxxpage(),
+      ),
+    );
+  }
+  
+  
 ```
 
 #### 更详细的实现细节请看[bot_toast是怎样炼成的](https://juejin.im/post/5d2b0261f265da1bb003edc6)
