@@ -37,13 +37,13 @@ BotToast 🤖
 
 ### 🐺效果图
 
-Notification|Attached
+Text|Attached
 --------|-------
-![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
+![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
 
-Loading|Text 
+Loading|Notification 
 --------|-------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)
+![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)
 
 ### 🐮快速使用
 
