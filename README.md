@@ -36,13 +36,13 @@ A really easy to use flutter toast library!
 
 ### 🐺Renderings
 
-Notification|Attached
+Text|Attached
 --------|-------
-![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attachments](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
+![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
 
-Loading|Text 
+Loading|Notification 
 --------|-------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)
+![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)
 
 ### 🐮Getting started
 
