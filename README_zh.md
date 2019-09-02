@@ -132,7 +132,7 @@ BotToast.showAttachedWidget(
     return MaterialApp(
       navigatorKey: navigatorState,
       navigatorObservers: [BotToastNavigatorObserver()],
-      home: ToastWidget(
+      home: BotToastInit(
         child: Xxxpage(),
       ),
     );
