@@ -324,7 +324,11 @@ Offset positionToastBox({
   assert(verticalOffset != null);
   assert(preferDirection != null);
   //裁剪
-  targetRect=targetRect.intersect(containerRect);
+  if(containerRect.overlaps(targetRect)){
+    targetRect=targetRect.intersect(containerRect);
+  }else{
+    targetRect=Rect.fromLTWH(containerRect.left, containerRect.top, 0, 0);
+  }
 
   assert((){
     // ignore: deprecated_member_use_from_same_package
