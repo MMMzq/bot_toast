@@ -7,10 +7,11 @@ import 'package:flutter/scheduler.dart';
 import 'basis.dart';
 import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
+import 'toast_widget/toast_widget.dart';
 
 part 'bot_toast_manager.dart';
 
-part 'toast_widget.dart';
+
 
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -220,7 +221,7 @@ class BotToast {
         toastBuilder: (cancelFunc) => NormalAnimation(
           key: key,
           reverse: true,
-          child: _NotificationToast(
+          child: NotificationToast(
               child: toastBuilder(cancelAnimationFunc),
               slideOffFunc: enableSlideOff ? cancelFunc : null),
         ),
@@ -268,7 +269,7 @@ class BotToast {
         clickClose: clickClose,
         ignoreContentClick: true,
         onlyOne: onlyOne,
-        toastBuilder: (_) => _TextToast(
+        toastBuilder: (_) => TextToast(
           contentPadding: contentPadding,
           contentColor: contentColor,
           borderRadius: borderRadius,
@@ -340,7 +341,7 @@ class BotToast {
     Color backgroundColor = Colors.black26,
   }) {
     return showCustomLoading(
-        toastBuilder: (_) => _LoadingWidget(),
+        toastBuilder: (_) => LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
