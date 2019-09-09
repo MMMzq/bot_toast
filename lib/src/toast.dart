@@ -11,8 +11,6 @@ import 'toast_widget/toast_widget.dart';
 
 part 'bot_toast_manager.dart';
 
-
-
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     callback();
@@ -55,59 +53,46 @@ class BotToast {
     defaultKey: [],
   };
 
-  ///如果你在项目中使用了[MaterialApp.navigatorKey]参数请在改变[MaterialApp.navigatorKey]时请调用reInit重新初始化
-  ///Example:
-  ///  @override
-  ///  void initState() {
-  ///    Future.delayed(Duration(seconds: 1), //模拟点击改变GlobalKey<NavigatorState>
-  ///        (){
-  ///          setState(() {
-  ///            navigatorState=GlobalKey<NavigatorState>();
-  ///            BotToast.reInit(()=>navigatorState.currentState);
-  ///          });
-  ///        }
-  ///    );
-  ///    super.initState();
-  ///}
-  static reInit(NavigatorState navigatorState()){
-    _safeRun((){
-       _navigatorState=navigatorState();
-       _init();
-    });
-  }
-
-  ///todo 2.0版本修改初始化方式
-  ///
-  ///使用此方法是不可靠的,只有第一次使用BotToastInit安全的,之后可能因为BotToastInit被移除Navigator,导致调用不到init
   ///一般这种情况只会出现在pop所有路由再推一个路由出现,同时根[MaterialApp.navigatorKey]改变就会出现问题,所以只能手动reInit
   static init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     请初始化BotToastNavigatorObserver
     Please initialize!
     Example:
-    MaterialApp(
-      title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(child: EnterPage()),
+    BotToastInit(
+      child: MaterialApp(
+        title: 'BotToast Demo',
+        navigatorObservers: [BotToastNavigatorObserver()],
+        home: EnterPage()
+      ),
     );
     """);
     _safeRun(() {
-      if (_managerState == null) {
-        _navigatorState = Navigator.of(context, rootNavigator: true);
-        _init();
+      void visitor(Element element) {
+        if (element.widget is Navigator) {
+          if (_navigatorState == null ||
+              _managerState.currentState == null ||
+              _navigatorState != (element as StatefulElement).state) {
+            _navigatorState = (element as StatefulElement).state;
+            _init();
+          }
+        } else {
+          element.visitChildElements(visitor);
+        }
       }
+
+      context.visitChildElements(visitor);
     });
   }
 
-
   ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
-  static void _init(){
+  static void _init() {
     _managerState = GlobalKey<_BotToastManagerState>();
     BotToastNavigatorObserverProxy observerProxy;
     final overlayEntry = OverlayEntry(
         builder: (_) {
           return ProxyDispose(
-            disposeCallback: (){
+            disposeCallback: () {
               BotToastNavigatorObserver.unregister(observerProxy);
             },
             child: _BotToastManager(
@@ -117,10 +102,11 @@ class BotToast {
         },
         maintainState: true);
     _navigatorState.overlay.insert(overlayEntry);
-    observerProxy=BotToastNavigatorObserverProxy(
-      didPush:(route,_){
-        if(route.isFirst){
-          _navigatorState.overlay.rearrange([overlayEntry], below: overlayEntry);
+    observerProxy = BotToastNavigatorObserverProxy(
+      didPush: (route, _) {
+        if (route.isFirst) {
+          _navigatorState.overlay
+              .rearrange([overlayEntry], below: overlayEntry);
         }
       },
     );
@@ -139,13 +125,13 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   static CancelFunc showSimpleNotification(
       {@required String title,
-        String subTitle,
-        Icon closeIcon,
-        Duration duration = const Duration(seconds: 2),
-        bool enableSlideOff = true,
-        bool hideCloseButton = false,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      String subTitle,
+      Icon closeIcon,
+      Duration duration = const Duration(seconds: 2),
+      bool enableSlideOff = true,
+      bool hideCloseButton = false,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showNotification(
         duration: duration,
         enableSlideOff: enableSlideOff,
@@ -156,7 +142,7 @@ class BotToast {
         trailing: hideCloseButton
             ? null
             : (cancel) => IconButton(
-            icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
+                icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
   }
 
   ///显示一个标准的通知Toast
@@ -168,14 +154,14 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showNotification(
       {ToastBuilder leading,
-        ToastBuilder title,
-        ToastBuilder subtitle,
-        ToastBuilder trailing,
-        Duration duration = const Duration(seconds: 2),
-        EdgeInsetsGeometry contentPadding,
-        bool enableSlideOff = true,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      ToastBuilder title,
+      ToastBuilder subtitle,
+      ToastBuilder trailing,
+      Duration duration = const Duration(seconds: 2),
+      EdgeInsetsGeometry contentPadding,
+      bool enableSlideOff = true,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showCustomNotification(
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
@@ -202,10 +188,10 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showCustomNotification(
       {@required ToastBuilder toastBuilder,
-        Duration duration = const Duration(seconds: 2),
-        bool enableSlideOff = true,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      Duration duration = const Duration(seconds: 2),
+      bool enableSlideOff = true,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     final key = GlobalKey<NormalAnimationState>();
 
     CancelFunc cancelAnimationFunc;
@@ -219,12 +205,12 @@ class BotToast {
         duration: duration,
         closeFunc: () => cancelAnimationFunc(),
         toastBuilder: (cancelFunc) => NormalAnimation(
-          key: key,
-          reverse: true,
-          child: NotificationToast(
-              child: toastBuilder(cancelAnimationFunc),
-              slideOffFunc: enableSlideOff ? cancelFunc : null),
-        ),
+              key: key,
+              reverse: true,
+              child: NotificationToast(
+                  child: toastBuilder(cancelAnimationFunc),
+                  slideOffFunc: enableSlideOff ? cancelFunc : null),
+            ),
         groupKey: notificationKey);
 
     cancelAnimationFunc = () async {
@@ -250,18 +236,18 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   static CancelFunc showText(
       {@required String text,
-        Color backgroundColor = Colors.transparent,
-        Color contentColor = Colors.black54,
-        BorderRadiusGeometry borderRadius =
-        const BorderRadius.all(Radius.circular(8)),
-        TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-        AlignmentGeometry align = const Alignment(0, 0.8),
-        EdgeInsetsGeometry contentPadding =
-        const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-        Duration duration = const Duration(seconds: 2),
-        bool clickClose = false,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      Color backgroundColor = Colors.transparent,
+      Color contentColor = Colors.black54,
+      BorderRadiusGeometry borderRadius =
+          const BorderRadius.all(Radius.circular(8)),
+      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+      AlignmentGeometry align = const Alignment(0, 0.8),
+      EdgeInsetsGeometry contentPadding =
+          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+      Duration duration = const Duration(seconds: 2),
+      bool clickClose = false,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showCustomText(
         duration: duration,
         crossPage: crossPage,
@@ -270,13 +256,13 @@ class BotToast {
         ignoreContentClick: true,
         onlyOne: onlyOne,
         toastBuilder: (_) => TextToast(
-          contentPadding: contentPadding,
-          contentColor: contentColor,
-          borderRadius: borderRadius,
-          textStyle: textStyle,
-          align: align,
-          text: text,
-        ));
+              contentPadding: contentPadding,
+              contentColor: contentColor,
+              borderRadius: borderRadius,
+              textStyle: textStyle,
+              align: align,
+              text: text,
+            ));
   }
 
   ///显示一个自定义的文本Toast
@@ -290,12 +276,12 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showCustomText(
       {@required ToastBuilder toastBuilder,
-        Color backgroundColor = Colors.transparent,
-        Duration duration = const Duration(seconds: 2),
-        bool crossPage = true,
-        bool clickClose = false,
-        bool ignoreContentClick = false,
-        bool onlyOne = false}) {
+      Color backgroundColor = Colors.transparent,
+      Duration duration = const Duration(seconds: 2),
+      bool crossPage = true,
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      bool onlyOne = false}) {
     final key = GlobalKey<NormalAnimationState>();
 
     CancelFunc cancelAnimationFunc;
@@ -311,7 +297,7 @@ class BotToast {
       backgroundColor: backgroundColor,
       duration: duration,
       toastBuilder: (_) => SafeArea(
-          child: NormalAnimation(
+              child: NormalAnimation(
             key: key,
             child: toastBuilder(cancelAnimationFunc),
           )),
@@ -378,9 +364,9 @@ class BotToast {
         groupKey: loadKey,
         toastBuilder: (_) => SafeArea(child: toastBuilder(cancelAnimationFunc)),
         warpWidget: (child) => FadeAnimation(
-          key: key,
-          child: child,
-        ),
+              key: key,
+              child: child,
+            ),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -419,39 +405,39 @@ class BotToast {
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
-  static CancelFunc showAttachedWidget({
-    @required ToastBuilder attachedBuilder,
-    BuildContext targetContext,
-    Color backgroundColor = Colors.transparent,
-    Offset target,
-    double verticalOffset = 0,
-    double horizontalOffset=0.0,
-    Duration duration,
-    PreferDirection preferDirection,
-    bool ignoreContentClick = false,
-    bool onlyOne = false,
-    bool allowClick = true,
-    bool enableSafeArea
-  }) {
-    assert(verticalOffset>=0,"verticalOffset必须为正数");
-    assert(horizontalOffset>=0,"horizontalOffset必须为正数");
+  static CancelFunc showAttachedWidget(
+      {@required ToastBuilder attachedBuilder,
+      BuildContext targetContext,
+      Color backgroundColor = Colors.transparent,
+      Offset target,
+      double verticalOffset = 0,
+      double horizontalOffset = 0.0,
+      Duration duration,
+      PreferDirection preferDirection,
+      bool ignoreContentClick = false,
+      bool onlyOne = false,
+      bool allowClick = true,
+      bool enableSafeArea}) {
+    assert(verticalOffset >= 0, "verticalOffset必须为正数");
+    assert(horizontalOffset >= 0, "horizontalOffset必须为正数");
     assert(!(targetContext != null && target != null),
-    "targetContext and target cannot coexist");
+        "targetContext and target cannot coexist");
     assert(targetContext != null || target != null,
-    "targetContext and target must exist one");
+        "targetContext and target must exist one");
 
     Rect targetRect;
     if (target == null) {
       RenderObject renderObject = targetContext.findRenderObject();
       if (renderObject is RenderBox) {
         final position = renderObject.localToGlobal(Offset.zero);
-        targetRect=Rect.fromLTWH(position.dx, position.dy, renderObject.size.width, renderObject.size.height);
+        targetRect = Rect.fromLTWH(position.dx, position.dy,
+            renderObject.size.width, renderObject.size.height);
       } else {
         throw Exception(
             "context.findRenderObject() return result must be RenderBox class");
       }
-    }else{
-      targetRect=Rect.fromLTWH(target.dx, target.dy, 0, 0);//点矩形
+    } else {
+      targetRect = Rect.fromLTWH(target.dx, target.dy, 0, 0); //点矩形
     }
     GlobalKey<FadeAnimationState> key = GlobalKey<FadeAnimationState>();
 
@@ -467,20 +453,20 @@ class BotToast {
         ignoreContentClick: ignoreContentClick,
         closeFunc: () => cancelAnimationFunc(),
         warpWidget: (widget) => FadeAnimation(
-          child: widget,
-          key: key,
-          duration: Duration(milliseconds: 150),
-        ),
+              child: widget,
+              key: key,
+              duration: Duration(milliseconds: 150),
+            ),
         duration: duration,
         toastBuilder: (_) => CustomSingleChildLayout(
-          delegate: PositionDelegate(
-              target: targetRect,
-              verticalOffset: verticalOffset ?? 0,
-              horizontalOffset: horizontalOffset ?? 0,
-              enableSafeArea: enableSafeArea??true,
-              preferDirection: preferDirection),
-          child: attachedBuilder(cancelAnimationFunc),
-        ));
+              delegate: PositionDelegate(
+                  target: targetRect,
+                  verticalOffset: verticalOffset ?? 0,
+                  horizontalOffset: horizontalOffset ?? 0,
+                  enableSafeArea: enableSafeArea ?? true,
+                  preferDirection: preferDirection),
+              child: attachedBuilder(cancelAnimationFunc),
+            ));
 
     cancelAnimationFunc = () async {
       await key.currentState?.hide();
@@ -536,24 +522,24 @@ class BotToast {
   ///[duration] 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
   static CancelFunc showEnhancedWidget(
       {@required ToastBuilder toastBuilder,
-        UniqueKey key,
-        String groupKey,
-        bool crossPage = true,
-        bool allowClick = true,
-        bool clickClose = false,
-        bool ignoreContentClick = false,
-        bool onlyOne = false,
-        CancelFunc closeFunc,
-        Color backgroundColor = Colors.transparent,
-        WrapWidget warpWidget,
-        Duration duration}) {
+      UniqueKey key,
+      String groupKey,
+      bool crossPage = true,
+      bool allowClick = true,
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      bool onlyOne = false,
+      CancelFunc closeFunc,
+      Color backgroundColor = Colors.transparent,
+      WrapWidget warpWidget,
+      Duration duration}) {
     //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     CancelFunc dismissFunc;
     VoidCallback rememberFunc = () => dismissFunc();
 
     //onlyOne 功能
     final List<CancelFunc> cache =
-    (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
+        (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
     if (onlyOne) {
       final clone = cache.toList();
       cache.clear();
@@ -575,7 +561,7 @@ class BotToast {
     //跨页自动关闭
     BotToastNavigatorObserverProxy observerProxy;
     if (!crossPage) {
-      observerProxy= BotToastNavigatorObserverProxy.all(rememberFunc);
+      observerProxy = BotToastNavigatorObserverProxy.all(rememberFunc);
       BotToastNavigatorObserver.register(observerProxy);
     }
 
@@ -586,7 +572,7 @@ class BotToast {
           return KeyBoardSafeArea(
             child: ProxyDispose(disposeCallback: () {
               cache.remove(rememberFunc);
-              if(observerProxy!=null){
+              if (observerProxy != null) {
                 BotToastNavigatorObserver.unregister(observerProxy);
               }
               timer?.cancel();
@@ -599,7 +585,7 @@ class BotToast {
                       children: <Widget>[
                         Listener(
                           onPointerDown:
-                          clickClose ? (_) => dismissFunc() : null,
+                              clickClose ? (_) => dismissFunc() : null,
                           behavior: allowClick
                               ? HitTestBehavior.translucent
                               : HitTestBehavior.opaque,
