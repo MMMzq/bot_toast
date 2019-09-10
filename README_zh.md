@@ -145,6 +145,12 @@ BotToast.showAttachedWidget(
 
 <br>
 
+### 2.0路线图
+
+- [x] 修改初始化方式
+- [ ] 能自定义动画
+
+
 ### 🐧1.1.0版本说明
 - 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
 
