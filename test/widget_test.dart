@@ -265,37 +265,34 @@ class TestApp extends StatelessWidget {
   final VoidCallback callback;
   final void Function(BuildContext ctx) contextCallback;
   final Widget child;
-  bool isFirst = false;
 
   TestApp({this.callback, this.child, this.contextCallback});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Builder(
-                builder: (ctx) => FlatButton(
-                    key: ValueKey("main"),
-                    onPressed: () async {
-                      if (!isFirst) {
-                        BotToast.reInit(() => Navigator.of(ctx));
-                        isFirst = true;
-                      }
-                      callback?.call();
-                      contextCallback?.call(ctx);
-                    },
-                    child: Text(""))),
-            child
-          ]..removeWhere((test)=>test==null),
+    return BotToastInit(
+      child: MaterialApp(
+        title: 'BotToast Demo',
+        navigatorObservers: [BotToastNavigatorObserver()],
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Builder(
+                  builder: (ctx) => FlatButton(
+                      key: ValueKey("main"),
+                      onPressed: () async {
+                        callback?.call();
+                        contextCallback?.call(ctx);
+                      },
+                      child: Text(""))),
+              child
+            ]..removeWhere((test)=>test==null),
+          ),
         ),
       ),
     );
