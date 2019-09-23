@@ -21,14 +21,4 @@ enum PreferDirection {
   rightTop,
   rightCenter,
   rightBottom,
-
-  ///废弃,改用表达更清晰的bottomCenter,和bottomCenter效果完全一致
-  ///在下个大版本将会删除
-  @deprecated
-  Below,
-
-  ///废弃,改用表达更清晰的topCenter,和topCenter效果完全一致
-  ///在下个大版本将会删除
-  @deprecated
-  Upside
 }

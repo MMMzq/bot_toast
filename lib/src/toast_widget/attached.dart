@@ -78,24 +78,6 @@ Offset positionToastBox({
     targetRect=Rect.fromLTWH(containerRect.left, containerRect.top, 0, 0);
   }
 
-  assert((){
-    // ignore: deprecated_member_use_from_same_package
-    if(preferDirection==PreferDirection.Upside||preferDirection==PreferDirection.Below){
-      print(
-          """bot_toast:你使用废弃的枚举:Upside,Below,你可以使用表达更清晰的topCenter,bottomCenter来代替,效果完全一样。Upside,Below将会在下一个大版本被删除""");
-    }
-    return true;
-  }());
-
-  // ignore: deprecated_member_use_from_same_package
-  if(preferDirection==PreferDirection.Upside){
-    preferDirection=PreferDirection.topCenter;
-    // ignore: deprecated_member_use_from_same_package
-  }else if(preferDirection==PreferDirection.Below){
-    preferDirection=PreferDirection.bottomCenter;
-  }
-
-
   bool canPlaceTop({double extraSpace=0}){
     return toastSize.height+verticalOffset<targetRect.top-containerRect.top+extraSpace;
   }
