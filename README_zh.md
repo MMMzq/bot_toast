@@ -8,13 +8,14 @@ BotToast 🤖
 
 ### Language: [English](https://github.com/MMMzq/bot_toast) | 中文简体
 
-* [🐲概述](#概述)
-* [🐼在线Demo](#在线demo)
-* [🐳示例项目](#示例项目)
-* [🐺效果图](#效果图)
-* [🐮快速使用](#快速使用) 
-* [🐨注意事项](#注意事项) 
-* [📃主要Api文档](#主要Api文档) 
+* [🐲概述](#🐲概述)
+* [🐼在线Demo](#🐼在线demo)
+* [🐳示例项目](#🐳示例项目)
+* [🐺效果图](#🐺效果图)
+* [🐮快速使用](#🐮快速使用) 
+* [🐨注意事项](#🐨注意事项) 
+* [🐱2.0版本说明](#🐱2.0版本说明) 
+* [📃主要Api文档](#📃主要Api文档⬅) 
 
 ###  🐲概述
 
@@ -37,13 +38,13 @@ BotToast 🤖
 
 ### 🐺效果图
 
-Text|Attached
+Notification|Attached
 --------|-------
-![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
+![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
 
-Loading|Notification 
+Loading|Text 
 --------|-------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)
+![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)
 
 ### 🐮快速使用
 
@@ -59,6 +60,20 @@ import 'package:bot_toast/bot_toast.dart';
 ```
 
 #### 3. 初始化BotToast
+
+- 2.x.x版本初始化方式
+``` dart
+//1.使用BotToastInit直接包裹MaterialApp
+BotToastInit(
+  child:MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],//2.注册路由观察者
+      home: XxxxPage(),
+  )
+);
+
+```
+- 1.x.x版本初始化方式
 ``` dart
 ///像这样,BotToast将会自动去初始化
 MaterialApp(
@@ -69,7 +84,6 @@ MaterialApp(
       ),
     );
 ```
-
 
 #### 4. 使用BotToast
 ``` dart
@@ -102,6 +116,7 @@ BotToast.showAttachedWidget(
 
 <br>
 
+
 ### 🐨注意事项
 
 - 如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
@@ -109,55 +124,25 @@ BotToast.showAttachedWidget(
 - [ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如[Scaffold],[Material]都会默认占满整个父空间,
 并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method] 如果真的要生成,可以考虑使用[IgnorePointer],如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 
-- 如果你在项目中使用了[MaterialApp.navigatorKey]参数请在改变[MaterialApp.navigatorKey]时请调用reInit重新初始化
-```
-  GlobalKey<NavigatorState> navigatorState;
 
-  @override
-  void initState() {
-    navigatorState=GlobalKey<NavigatorState>();
-    Future.delayed(Duration(seconds: 1), //模拟点击改变GlobalKey<NavigatorState>
-        (){
-          setState(() {
-            navigatorState=GlobalKey<NavigatorState>();
-            BotToast.reInit(()=>navigatorState.currentState);
-          });
-        }
-    );
-    super.initState();
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorState,
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(
-        child: Xxxpage(),
-      ),
-    );
-  }
-  
-  
-```
+### 🐱2.0版本说明
+- 修改了初始化的方式,1.x版本升级到2.0修改需手动修改来进行适配。具体修改可看这里->[2.0初始化修改](#3. 初始化BotToast)
+
+- `reInit`被删除,因为2.x版本不再需要此方法
+
+- `PreferDirection.Below`和`PreferDirection.Upside`已被正式移除
+
+- 重构了代码结构
+
+- 修复了一些`showAttachedWidget`的bug
+
+<br>
 
 #### 更详细的实现细节请看[bot_toast是怎样炼成的](https://juejin.im/post/5d2b0261f265da1bb003edc6)
 
 <br>
 
-### 🐧1.1.0版本说明
-- 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
-
-- `PreferDirection.Below`和`PreferDirection.Upside`被废弃了,可以改用表达更清晰的topCenter,和bottomCenter来代替,且效果完全一致。这两个枚举将会在下个大版本被删除!
-
-- `showAttachedWidget`的`preferDirection` 只是期望的方向,实际的位置可能因为空间不足而遭到调整
-
-- 实际调整顺序可以拿`topLeft`来进行说明,如果上方空间不足则调整为`bottomLeft`,然后左边空间不足的话就再判断右边的空间是否充足,充足的话结果为`bottomRight`,不充足最终结果为`bottomCenter`
-
-<br>
-
-###  📃主要Api文档
-[主要Api文档](https://github.com/MMMzq/bot_toast/blob/master/API.md)
+###  [📃主要Api文档⬅](https://github.com/MMMzq/bot_toast/blob/master/API.md)
 
 
 
