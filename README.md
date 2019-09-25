@@ -27,6 +27,18 @@ A really easy to use flutter toast library!
 
 - Pure flutter implementation, it is not easy to bring compatibility problems
 
+### 🐱2.0 Version
+
+- Modified the initialization way, 1.x version upgrade to 2.0 modification needs manual modification to adapt。see -> [2.0 initialization](#Getting-started) 
+
+- `reInit` is removed because this method is no longer needed in version 2.x
+
+- PreferDirection.Below and PreferDirection.Upside have been officially removed
+
+- Refactoring the code structure
+
+- fix `showAttachedWidget` some bug
+
 ### 🐼Online Demo
 
 **[Online demo](https://mmmzq.github.io/bot_toast/#/)** (Web effects may be biased, the actual effect is subject to the mobile phone)
@@ -49,7 +61,7 @@ Loading|Notification
 #### 1. add dependencies into you project pubspec.yaml file
 ``` dart
 dependencies:
-     bot_toast: ^1.1.1
+     bot_toast: ^2.0.0
 ```
 
 #### 2. import BotToast lib
@@ -58,6 +70,20 @@ import 'package:bot_toast/bot_toast.dart';
 ```
 
 #### 3. initialization BotToast
+
+- 2.x.x版本初始化方式
+``` dart
+//1. wrap MaterialApp with BotToastInit
+BotToastInit(
+  child:MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],//2.registered route observer
+      home: XxxxPage(),
+  )
+);
+
+```
+- 1.x.x版本初始化方式
 ``` dart
 ///Like this, BotToast will automatically initialize
 MaterialApp(
