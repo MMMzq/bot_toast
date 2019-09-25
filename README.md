@@ -71,7 +71,7 @@ import 'package:bot_toast/bot_toast.dart';
 
 #### 3. initialization BotToast
 
-- 2.x.x版本初始化方式
+- 2.x.x version
 ``` dart
 //1. wrap MaterialApp with BotToastInit
 BotToastInit(
@@ -83,7 +83,7 @@ BotToastInit(
 );
 
 ```
-- 1.x.x版本初始化方式
+- 1.x.x version
 ``` dart
 ///Like this, BotToast will automatically initialize
 MaterialApp(
