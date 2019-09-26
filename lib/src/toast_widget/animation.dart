@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 class NormalAnimation extends StatefulWidget {
   final Widget child;
   final bool reverse;
+  final AnimationController animationController;
 
   const NormalAnimation(
-      {Key key, this.child, this.reverse = false})
+      {Key key, this.child, this.reverse = false, this.animationController})
       : assert(child != null),
         super(key: key);
 
@@ -33,7 +34,7 @@ class NormalAnimationState extends State<NormalAnimation>
 
   @override
   void initState() {
-    controller =
+    controller = widget.animationController ??
         AnimationController(duration: Duration(milliseconds: 256), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
@@ -77,9 +78,10 @@ class NormalAnimationState extends State<NormalAnimation>
 //淡出淡入动画
 class FadeAnimation extends StatefulWidget {
   final Widget child;
-  final Duration duration;
+  final AnimationController controller;
 
-  const FadeAnimation({Key key, this.child,this. duration}) : super(key: key);
+  const FadeAnimation({Key key, this.child, this.controller})
+      : super(key: key);
 
   @override
   FadeAnimationState createState() => FadeAnimationState();
@@ -94,8 +96,7 @@ class FadeAnimationState extends State<FadeAnimation>
 
   @override
   void initState() {
-    controller =
-        AnimationController(duration: widget.duration??Duration(milliseconds: 300), vsync: this);
+    controller = widget.controller;
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
     animationOpacity = tweenOpacity.animate(animation);
@@ -124,33 +125,43 @@ class FadeAnimationState extends State<FadeAnimation>
   }
 }
 
-
 class SnackBarAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  const SnackBarAnimation({@required this.child,Key key, this.duration, }) :assert(child!=null), super(key: key);
+  const SnackBarAnimation({
+    @required this.child,
+    Key key,
+    this.duration,
+  })  : assert(child != null),
+        super(key: key);
 
   @override
   _SnackBarAnimationState createState() => _SnackBarAnimationState();
 }
 
-class _SnackBarAnimationState extends State<SnackBarAnimation> with SingleTickerProviderStateMixin {
-
+class _SnackBarAnimationState extends State<SnackBarAnimation>
+    with SingleTickerProviderStateMixin {
   static const Curve _snackBarHeightCurve = Curves.fastOutSlowIn;
-  static const Curve _snackBarFadeCurve = Interval(0.72, 1.0, curve: Curves.fastOutSlowIn);
+  static const Curve _snackBarFadeCurve =
+      Interval(0.72, 1.0, curve: Curves.fastOutSlowIn);
 
-  AnimationController controller ;
+  AnimationController controller;
 
-  CurvedAnimation heightAnimation ;
-  CurvedAnimation fadeAnimation ;
+  CurvedAnimation heightAnimation;
+
+  CurvedAnimation fadeAnimation;
 
   @override
   void initState() {
-    controller =
-        AnimationController(duration: widget.duration??Duration(seconds: 1), vsync: this);
-    heightAnimation = CurvedAnimation(parent: controller, curve: _snackBarHeightCurve);
-    fadeAnimation = CurvedAnimation(parent: controller, curve: _snackBarFadeCurve, reverseCurve: const Threshold(0.0));
+    controller = AnimationController(
+        duration: widget.duration ?? Duration(seconds: 1), vsync: this);
+    heightAnimation =
+        CurvedAnimation(parent: controller, curve: _snackBarHeightCurve);
+    fadeAnimation = CurvedAnimation(
+        parent: controller,
+        curve: _snackBarFadeCurve,
+        reverseCurve: const Threshold(0.0));
     controller.forward();
     super.initState();
   }

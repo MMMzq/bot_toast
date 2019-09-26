@@ -192,33 +192,27 @@ class BotToast {
       bool enableSlideOff = true,
       bool crossPage = true,
       bool onlyOne = true}) {
-    final key = GlobalKey<NormalAnimationState>();
 
-    CancelFunc cancelAnimationFunc;
+    final controller = AnimationController(
+        vsync: TickerProviderImpl(), duration: Duration(milliseconds: 256));
 
-    CancelFunc cancelFunc = showEnhancedWidget(
+    return showEnhancedWidget(
         crossPage: crossPage,
         allowClick: true,
         clickClose: false,
         ignoreContentClick: false,
         onlyOne: onlyOne,
         duration: duration,
-        closeFunc: () => cancelAnimationFunc(),
+        closeFunc: controller.reverse,
         toastBuilder: (cancelFunc) => NormalAnimation(
-              key: key,
               reverse: true,
+              animationController: controller,
               child: NotificationToast(
-                  child: toastBuilder(cancelAnimationFunc),
+                  child: toastBuilder(cancelFunc),
                   slideOffFunc: enableSlideOff ? cancelFunc : null),
             ),
         groupKey: notificationKey);
 
-    cancelAnimationFunc = () async {
-      await key.currentState?.hide();
-      cancelFunc();
-    };
-
-    return cancelAnimationFunc;
   }
 
   ///显示一个标准文本Toast
@@ -282,13 +276,13 @@ class BotToast {
       bool clickClose = false,
       bool ignoreContentClick = false,
       bool onlyOne = false}) {
-    final key = GlobalKey<NormalAnimationState>();
 
-    CancelFunc cancelAnimationFunc;
+    final controller = AnimationController(
+        vsync: TickerProviderImpl(), duration: Duration(milliseconds: 256));
 
-    CancelFunc cancelFunc = showEnhancedWidget(
+    return showEnhancedWidget(
       groupKey: textKey,
-      closeFunc: () => cancelAnimationFunc(),
+      closeFunc: controller.reverse,
       clickClose: clickClose,
       allowClick: true,
       onlyOne: onlyOne,
@@ -296,20 +290,12 @@ class BotToast {
       ignoreContentClick: ignoreContentClick,
       backgroundColor: backgroundColor,
       duration: duration,
-      toastBuilder: (_) => SafeArea(
-              child: NormalAnimation(
-            key: key,
-            child: toastBuilder(cancelAnimationFunc),
-          )),
+      toastBuilder: (cancelFunc) => SafeArea(
+          child: NormalAnimation(
+        animationController: controller,
+        child: toastBuilder(cancelFunc),
+      )),
     );
-
-    //有动画的方式关闭
-    cancelAnimationFunc = () async {
-      await key.currentState?.hide();
-      cancelFunc();
-    };
-
-    return cancelAnimationFunc;
   }
 
   ///显示一个标准的加载Toast
@@ -356,15 +342,14 @@ class BotToast {
   }) {
     assert(toastBuilder != null, "loadWidget not null");
 
-    final key = GlobalKey<FadeAnimationState>();
+    final controller = AnimationController(
+        vsync: TickerProviderImpl(), duration: Duration(milliseconds: 300));
 
-    CancelFunc cancelAnimationFunc;
-
-    CancelFunc cancelFunc = showEnhancedWidget(
+    return showEnhancedWidget(
         groupKey: loadKey,
-        toastBuilder: (_) => SafeArea(child: toastBuilder(cancelAnimationFunc)),
+        toastBuilder: (cancelFunc) => SafeArea(child: toastBuilder(cancelFunc)),
         warpWidget: (child) => FadeAnimation(
-              key: key,
+              controller: controller,
               child: child,
             ),
         clickClose: clickClose,
@@ -373,15 +358,8 @@ class BotToast {
         ignoreContentClick: ignoreContentClick,
         onlyOne: false,
         duration: duration,
-        closeFunc: () => cancelAnimationFunc(),
+        closeFunc: controller.reverse,
         backgroundColor: backgroundColor);
-
-    cancelAnimationFunc = () async {
-      await key.currentState?.hide();
-      cancelFunc();
-    };
-
-    return cancelAnimationFunc;
   }
 
   ///此方法一般使用在dispose里面,防止因为开发人员没有主动去关闭,或者是请求api时的出现异常
@@ -439,11 +417,10 @@ class BotToast {
     } else {
       targetRect = Rect.fromLTWH(target.dx, target.dy, 0, 0); //点矩形
     }
-    GlobalKey<FadeAnimationState> key = GlobalKey<FadeAnimationState>();
+    final controller = AnimationController(
+        vsync: TickerProviderImpl(), duration: Duration(milliseconds: 150));
 
-    CancelFunc cancelAnimationFunc;
-
-    CancelFunc cancelFunc = showEnhancedWidget(
+    return showEnhancedWidget(
         allowClick: allowClick,
         clickClose: true,
         groupKey: attachedKey,
@@ -451,29 +428,21 @@ class BotToast {
         onlyOne: onlyOne,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
-        closeFunc: () => cancelAnimationFunc(),
+        closeFunc: controller.reverse,
         warpWidget: (widget) => FadeAnimation(
+              controller: controller,
               child: widget,
-              key: key,
-              duration: Duration(milliseconds: 150),
             ),
         duration: duration,
-        toastBuilder: (_) => CustomSingleChildLayout(
+        toastBuilder: (cancelFunc) => CustomSingleChildLayout(
               delegate: PositionDelegate(
                   target: targetRect,
                   verticalOffset: verticalOffset ?? 0,
                   horizontalOffset: horizontalOffset ?? 0,
                   enableSafeArea: enableSafeArea ?? true,
                   preferDirection: preferDirection),
-              child: attachedBuilder(cancelAnimationFunc),
+              child: attachedBuilder(cancelFunc),
             ));
-
-    cancelAnimationFunc = () async {
-      await key.currentState?.hide();
-      cancelFunc();
-    };
-
-    return cancelAnimationFunc;
   }
 
   /*区域图
@@ -529,13 +498,16 @@ class BotToast {
       bool clickClose = false,
       bool ignoreContentClick = false,
       bool onlyOne = false,
-      CancelFunc closeFunc,
+      FutureFunc closeFunc,
       Color backgroundColor = Colors.transparent,
       WrapWidget warpWidget,
       Duration duration}) {
     //由于dismissFunc一开始是为空的,所以在赋值之前需要在闭包里使用
-    CancelFunc dismissFunc;
-    VoidCallback rememberFunc = () => dismissFunc();
+    CancelFunc cancelFunc;
+    CancelFunc dismissFunc = ()async{
+      await closeFunc?.call();
+      cancelFunc();
+    };
 
     //onlyOne 功能
     final List<CancelFunc> cache =
@@ -547,7 +519,7 @@ class BotToast {
         cancel();
       });
     }
-    cache.add(rememberFunc);
+    cache.add(dismissFunc);
 
     //定时功能
     Timer timer;
@@ -561,17 +533,17 @@ class BotToast {
     //跨页自动关闭
     BotToastNavigatorObserverProxy observerProxy;
     if (!crossPage) {
-      observerProxy = BotToastNavigatorObserverProxy.all(rememberFunc);
+      observerProxy = BotToastNavigatorObserverProxy.all(dismissFunc);
       BotToastNavigatorObserver.register(observerProxy);
     }
 
-    CancelFunc cancelFunc = showWidget(
+    cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
         toastBuilder: (cancel) {
           return KeyBoardSafeArea(
             child: ProxyDispose(disposeCallback: () {
-              cache.remove(rememberFunc);
+              cache.remove(dismissFunc);
               if (observerProxy != null) {
                 BotToastNavigatorObserver.unregister(observerProxy);
               }
@@ -606,9 +578,7 @@ class BotToast {
           );
         });
 
-    dismissFunc = closeFunc ?? cancelFunc;
-
-    return cancelFunc;
+    return dismissFunc;
   }
 
   ///显示一个Widget在屏幕上,该Widget可以跨多个页面存在
