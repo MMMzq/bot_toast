@@ -64,8 +64,8 @@ Offset positionToastBox({
   @required Rect targetRect,
   @required PreferDirection preferDirection,
   double verticalOffset = 0.0,double horizontalOffset=0.0}){
-  assert(verticalOffset>=0,"verticalOffset必须为正数");
-  assert(horizontalOffset>=0,"horizontalOffset必须为正数");
+  assert(verticalOffset>=0,"verticalOffset must be a positive number");
+  assert(horizontalOffset>=0,"horizontalOffset must be a positive number");
   assert(containerRect != null);
   assert(toastSize != null);
   assert(targetRect != null);
