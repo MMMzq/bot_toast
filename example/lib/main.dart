@@ -11,19 +11,17 @@ import 'notification/notification.dart' as notification;
 import 'text/custom_text.dart';
 import 'text/text.dart';
 
-void main() => runApp(MyApp());
+void main(){
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BotToastInit(
       child: MaterialApp(
         title: 'BotToast Demo',
         navigatorObservers: [BotToastNavigatorObserver()],
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
         home: EnterPage(),
       ),
     );

@@ -11,7 +11,7 @@ class _TextSampleState extends State<TextSample> {
   int seconds = 2;
   bool clickClose = false;
   bool onlyOne = true;
-  bool crossPage=true;
+  bool crossPage = true;
 
   double align = 0.8;
   int fontSize = 17;
@@ -19,8 +19,10 @@ class _TextSampleState extends State<TextSample> {
   int fontColor = 0xFFFFFFFF;
   int backgroundColor = 0x00000000;
   int contentColor = 0x8A000000;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
-  int index=0;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,18 @@ class _TextSampleState extends State<TextSample> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showText(
-                      text: (index++).isOdd?"Always together☺":"My mind is all about you.😘",
+                      text: (index++).isOdd
+                          ? "Always together☺"
+                          : "My mind is all about you.😘",
                       duration: Duration(seconds: seconds),
                       onlyOne: onlyOne,
                       clickClose: clickClose,
                       crossPage: crossPage,
                       align: Alignment(0, align),
+                      animationDuration:
+                          Duration(milliseconds: animationMilliseconds),
+                      animationReverseDuration:
+                          Duration(milliseconds: animationReverseMilliseconds),
                       textStyle: TextStyle(
                           color: Color(fontColor),
                           fontSize: fontSize.toDouble()),
@@ -62,6 +70,35 @@ class _TextSampleState extends State<TextSample> {
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),
@@ -159,7 +196,10 @@ class _TextSampleState extends State<TextSample> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("background:",overflow: TextOverflow.fade,),
+                    Text(
+                      "background:",
+                      overflow: TextOverflow.fade,
+                    ),
                     Container(
                       height: 20,
                       width: 20,

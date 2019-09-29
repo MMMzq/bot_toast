@@ -13,6 +13,8 @@ class _LoadingState extends State<Loading> {
   bool clickClose = true;
   bool allowClick = true;
   bool crossPage = true;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,10 @@ class _LoadingState extends State<Loading> {
                       clickClose: clickClose,
                       allowClick: allowClick,
                       crossPage: crossPage,
+                      animationDuration:
+                          Duration(milliseconds: animationMilliseconds),
+                      animationReverseDuration:
+                          Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(
                         seconds: seconds,
                       ),
@@ -48,6 +54,35 @@ class _LoadingState extends State<Loading> {
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),
@@ -118,8 +153,7 @@ class _LoadingState extends State<Loading> {
   }
 }
 
-String _code =
-"""
+String _code = """
 BotToast.showLoading(
     clickClose: clickClose,
     allowClick: allowClick,

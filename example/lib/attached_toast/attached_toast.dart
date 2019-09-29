@@ -19,6 +19,8 @@ class _AttachedToastState extends State<AttachedToast> {
   bool allowClick = true;
   bool enableSafeArea = true;
   int backgroundColor = 0x00000000;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
   double buttonAlign = 0;
 
@@ -29,6 +31,10 @@ class _AttachedToastState extends State<AttachedToast> {
         verticalOffset: verticalOffset,
         horizontalOffset: horizontalOffset,
         duration: Duration(seconds: second),
+        animationDuration:
+        Duration(milliseconds: animationMilliseconds),
+        animationReverseDuration:
+        Duration(milliseconds: animationReverseMilliseconds),
         preferDirection: preferDirection,
         ignoreContentClick: ignoreContentClick,
         onlyOne: onlyOne,
@@ -130,7 +136,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.topLeft,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -139,7 +145,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.topCenter,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -148,7 +154,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.topRight,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -183,7 +189,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftTop,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -195,7 +201,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightTop,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -225,7 +231,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftCenter,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -237,7 +243,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightCenter,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -267,7 +273,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftBottom,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -279,7 +285,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightBottom,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -310,7 +316,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.bottomLeft,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -319,7 +325,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.bottomCenter,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -328,7 +334,7 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.bottomRight,
                           groupValue: preferDirection,
-                          onChanged: (value) {
+                          onChanged: (PreferDirection value) {
                             setState(() {
                               preferDirection = value;
                             });
@@ -402,6 +408,35 @@ class _AttachedToastState extends State<AttachedToast> {
                   onChanged: (double value) {
                     setState(() {
                       second = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),
