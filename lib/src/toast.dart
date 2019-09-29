@@ -3,13 +3,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
 import 'basis.dart';
+import 'bot_toast_manager.dart';
 import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
-import 'bot_toast_manager.dart';
 
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -54,7 +53,7 @@ class BotToast {
   };
 
   ///一般这种情况只会出现在pop所有路由再推一个路由出现,同时根[MaterialApp.navigatorKey]改变就会出现问题,所以只能手动reInit
-  static init(BuildContext context) {
+  static void init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
     Example:
