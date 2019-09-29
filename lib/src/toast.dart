@@ -278,12 +278,16 @@ class BotToast {
       EdgeInsetsGeometry contentPadding =
           const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
+        Duration animationDuration,
+        Duration animationReverseDuration,
       bool clickClose = false,
       bool crossPage = true,
       bool onlyOne = true}) {
     return showCustomText(
         customAnimation: customAnimation,
         duration: duration,
+        animationDuration: animationDuration,
+        animationReverseDuration: animationReverseDuration,
         crossPage: crossPage,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
@@ -359,6 +363,8 @@ class BotToast {
     bool clickClose = false,
     bool allowClick = false,
     Duration duration,
+    Duration animationDuration,
+    Duration animationReverseDuration,
     Color backgroundColor = Colors.black26,
   }) {
     return showCustomLoading(
@@ -369,6 +375,8 @@ class BotToast {
         crossPage: crossPage,
         ignoreContentClick: true,
         duration: duration,
+        animationDuration: animationDuration,
+        animationReverseDuration: animationReverseDuration,
         backgroundColor: backgroundColor);
   }
 
