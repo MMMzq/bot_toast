@@ -38,11 +38,11 @@ class BotToast {
   static GlobalKey<BotToastManagerState> _managerState;
   static NavigatorState _navigatorState;
 
-  static const String textKey = "_textKey";
-  static const String notificationKey = "_notificationKey";
-  static const String loadKey = "_loadKey";
-  static const String attachedKey = "_attachedKey";
-  static const String defaultKey = "_defaultKey";
+  static const String textKey = '_textKey';
+  static const String notificationKey = '_notificationKey';
+  static const String loadKey = '_loadKey';
+  static const String attachedKey = '_attachedKey';
+  static const String defaultKey = '_defaultKey';
 
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
@@ -228,7 +228,7 @@ class BotToast {
       bool crossPage = true,
       bool onlyOne = true}) {
     final AnimationController controller = _createAnimationController(
-        animationDuration ?? Duration(milliseconds: 256),
+        animationDuration ?? const Duration(milliseconds: 256),
         reverseDuration: animationReverseDuration);
 
     customAnimation ??= notificationAnimation;
@@ -326,7 +326,7 @@ class BotToast {
       bool ignoreContentClick = false,
       bool onlyOne = false}) {
     final AnimationController controller = _createAnimationController(
-        animationDuration ?? Duration(milliseconds: 256),
+        animationDuration ?? const Duration(milliseconds: 256),
         reverseDuration: animationReverseDuration);
 
     customAnimation ??= textAnimation;
@@ -368,7 +368,7 @@ class BotToast {
   }) {
     return showCustomLoading(
         customAnimation: customAnimation,
-        toastBuilder: (_) => LoadingWidget(),
+        toastBuilder: (_) => const LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -403,10 +403,10 @@ class BotToast {
     Duration animationReverseDuration,
     Color backgroundColor = Colors.black26,
   }) {
-    assert(toastBuilder != null, "loadWidget not null");
+    assert(toastBuilder != null, 'loadWidget not null');
 
     final AnimationController controller = _createAnimationController(
-        animationDuration ?? Duration(milliseconds: 300),
+        animationDuration ?? const Duration(milliseconds: 300),
         reverseDuration: animationReverseDuration);
 
     customAnimation ??= loadingAnimation;
@@ -465,12 +465,12 @@ class BotToast {
       bool onlyOne = false,
       bool allowClick = true,
       bool enableSafeArea}) {
-    assert(verticalOffset >= 0.0, "must be a positive number");
-    assert(horizontalOffset >= 0.0, "must be a positive number");
+    assert(verticalOffset >= 0.0, 'must be a positive number');
+    assert(horizontalOffset >= 0.0, 'must be a positive number');
     assert(!(targetContext != null && target != null),
-        "targetContext and target cannot coexist");
+        'targetContext and target cannot coexist');
     assert(targetContext != null || target != null,
-        "targetContext and target must exist one");
+        'targetContext and target must exist one');
 
     Rect targetRect;
     if (target == null) {
@@ -481,14 +481,14 @@ class BotToast {
             renderObject.size.width, renderObject.size.height);
       } else {
         throw Exception(
-            "context.findRenderObject() return result must be RenderBox class");
+            'context.findRenderObject() return result must be RenderBox class');
       }
     } else {
       targetRect = Rect.fromLTWH(target.dx, target.dy, 0, 0); //点矩形
     }
 
     final AnimationController controller = _createAnimationController(
-        animationDuration ?? Duration(milliseconds: 150),
+        animationDuration ?? const Duration(milliseconds: 150),
         reverseDuration: animationReverseDuration);
 
     customAnimation ??= attachedAnimation;
@@ -631,7 +631,7 @@ class BotToast {
                           behavior: allowClick
                               ? HitTestBehavior.translucent
                               : HitTestBehavior.opaque,
-                          child: SizedBox.expand(),
+                          child: const SizedBox.expand(),
                         ),
                         IgnorePointer(
                           child: Container(color: backgroundColor),

@@ -33,7 +33,7 @@ class _NotificationState extends State<NotificationToast> {
 
     return SafeArea(
       child: Align(
-        alignment: Alignment(0, -0.99),
+        alignment: const Alignment(0, -0.99),
         child: child,
       ),
     );

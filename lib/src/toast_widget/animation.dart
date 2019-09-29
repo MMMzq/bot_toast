@@ -38,12 +38,12 @@ class NormalAnimation extends StatefulWidget {
 class NormalAnimationState extends State<NormalAnimation>
     with SingleTickerProviderStateMixin {
   static final Tween<Offset> reverseTweenOffset = Tween<Offset>(
-    begin: Offset(0, -40),
-    end: Offset(0, 0),
+    begin: const Offset(0, -40),
+    end: const Offset(0, 0),
   );
   static final Tween<Offset> tweenOffset = Tween<Offset>(
-    begin: Offset(0, 40),
-    end: Offset(0, 0),
+    begin: const Offset(0, 40),
+    end: const Offset(0, 0),
   );
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
   Animation<double> animation;
