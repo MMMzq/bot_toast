@@ -1,5 +1,4 @@
-
-name: CI
+name: ci
 
 on: [push]
 
@@ -7,14 +6,38 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup flutter
-      run: |
-        git clone https://github.com/flutter/flutter.git -b stable --depth 1
-        ./flutter/bin/flutter doctor
-    - name: Flutter unit test
-      run: ./flutter/bin/flutter test --coverage --coverage-path=lcov.info
-    - name: Report code coverage
-      run: bash <(curl -s https://codecov.io/bash)
+      - uses: actions/checkout@v1
+
+      - name: Setup flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1
+          ./flutter/bin/flutter doctor
+
+      - name: Flutter unit test
+        run: ./flutter/bin/flutter test --coverage --coverage-path=lcov.info
+
+      - name: Report code coverage
+        run: bash <(curl -s https://codecov.io/bash)
+
+  web-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b master --depth 1
+          ./flutter/bin/flutter doctor
+          ./flutter/bin/flutter --version
+
+      - name: Enable web
+        run: ./flutter/bin/flutter config --enable-web
+
+      - name: Build web
+        run: |
+          cd ./example
+          ../flutter/bin/flutter build web
