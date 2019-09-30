@@ -1,25 +1,29 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-final WrapAnimation notificationAnimation=(controller,child)=>NormalAnimation(
-  reverse: true,
-  controller: controller,
-  child: child,
-);
+Widget notificationAnimation(AnimationController controller, Widget child) =>
+    NormalAnimation(
+      reverse: true,
+      controller: controller,
+      child: child,
+    );
 
-final WrapAnimation textAnimation=(controller,child)=>NormalAnimation(
-  controller: controller,
-  child: child,
-);
-final WrapAnimation loadingAnimation=(controller,child)=>FadeAnimation(
-  controller: controller,
-  child: child,
-);
+Widget textAnimation(AnimationController controller, Widget child) =>
+    NormalAnimation(
+      controller: controller,
+      child: child,
+    );
 
-final WrapAnimation attachedAnimation=(controller,child)=>FadeAnimation(
-  controller: controller,
-  child: child,
-);
+Widget loadingAnimation(AnimationController controller, Widget child) =>
+    FadeAnimation(
+      controller: controller,
+      child: child,
+    );
+
+Widget attachedAnimation(AnimationController controller, Widget child) =>
+    FadeAnimation(
+      controller: controller,
+      child: child,
+    );
 
 class NormalAnimation extends StatefulWidget {
   final Widget child;
@@ -53,8 +57,8 @@ class NormalAnimationState extends State<NormalAnimation>
 
   @override
   void initState() {
-
-    animation = CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    animation =
+        CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
 
     animationOffset =
         (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
@@ -63,12 +67,6 @@ class NormalAnimationState extends State<NormalAnimation>
     widget.controller.forward();
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -94,8 +92,7 @@ class FadeAnimation extends StatefulWidget {
   final Widget child;
   final AnimationController controller;
 
-  const FadeAnimation({Key key, this.child, this.controller})
-      : super(key: key);
+  const FadeAnimation({Key key, this.child, this.controller}) : super(key: key);
 
   @override
   FadeAnimationState createState() => FadeAnimationState();
@@ -109,19 +106,14 @@ class FadeAnimationState extends State<FadeAnimation>
 
   @override
   void initState() {
-    animation = CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    animation =
+        CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
 
     animationOpacity = tweenOpacity.animate(animation);
 
     widget.controller.forward();
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -132,4 +124,3 @@ class FadeAnimationState extends State<FadeAnimation>
     );
   }
 }
-

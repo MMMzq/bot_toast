@@ -31,11 +31,6 @@ class _NotificationState extends State<NotificationToast> {
       );
     }
 
-    return SafeArea(
-      child: Align(
-        alignment: const Alignment(0, -0.99),
-        child: child,
-      ),
-    );
+    return child;
   }
 }

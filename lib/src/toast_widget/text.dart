@@ -7,7 +7,6 @@ class TextToast extends StatefulWidget {
   final Color contentColor;
   final BorderRadiusGeometry borderRadius;
   final TextStyle textStyle;
-  final AlignmentGeometry align;
 
   const TextToast(
       {Key key,
@@ -15,8 +14,7 @@ class TextToast extends StatefulWidget {
         this.contentPadding,
         this.contentColor,
         this.borderRadius,
-        this.textStyle,
-        this.align})
+        this.textStyle,})
       : super(key: key);
 
   @override
@@ -26,25 +24,22 @@ class TextToast extends StatefulWidget {
 class TextToastState extends State<TextToast> {
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: widget.align,
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Container(
-              constraints: constraints.copyWith(
-                  maxWidth: constraints.biggest.width * 0.6),
-              padding: widget.contentPadding,
-              decoration: BoxDecoration(
-                color: widget.contentColor,
-                borderRadius: widget.borderRadius,
-              ),
-              child: Text(
-                widget.text,
-                style: widget.textStyle,
-                textAlign: TextAlign.center,
-              ));
-        },
-      ),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+            constraints: constraints.copyWith(
+                maxWidth: constraints.biggest.width * 0.6),
+            padding: widget.contentPadding,
+            decoration: BoxDecoration(
+              color: widget.contentColor,
+              borderRadius: widget.borderRadius,
+            ),
+            child: Text(
+              widget.text,
+              style: widget.textStyle,
+              textAlign: TextAlign.center,
+            ));
+      },
     );
   }
 }

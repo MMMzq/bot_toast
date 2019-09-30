@@ -9,7 +9,6 @@ import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
-
 void _safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     callback();
@@ -131,7 +130,9 @@ class BotToast {
   ///[closeIcon] 关闭按钮的图标
   ///[enableSlideOff] 是否能滑动删除
   ///[hideCloseButton] 是否隐藏关闭按钮
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[notificationAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[notificationAnimation]
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[duration] 请看[showEnhancedWidget.duration]
@@ -141,6 +142,8 @@ class BotToast {
       {@required String title,
       String subTitle,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = notificationAnimation,
+      Alignment align = const Alignment(0, -0.99),
       Icon closeIcon,
       Duration duration = const Duration(seconds: 2),
       Duration animationDuration,
@@ -151,6 +154,8 @@ class BotToast {
       bool onlyOne = true}) {
     return showNotification(
         customAnimation: customAnimation,
+        customToastAnimation: customToastAnimation,
+        align: align,
         duration: duration,
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
@@ -169,7 +174,9 @@ class BotToast {
   ///
   ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding] 请看[ListTile]
   ///[enableSlideOff] 是否能滑动删除
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[notificationAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[notificationAnimation]
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[duration] 请看[showEnhancedWidget.duration]
@@ -181,6 +188,8 @@ class BotToast {
       ToastBuilder subtitle,
       ToastBuilder trailing,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = notificationAnimation,
+      Alignment align = const Alignment(0, -0.99),
       Duration duration = const Duration(seconds: 2),
       Duration animationDuration,
       Duration animationReverseDuration,
@@ -190,6 +199,8 @@ class BotToast {
       bool onlyOne = true}) {
     return showCustomNotification(
         customAnimation: customAnimation,
+        customToastAnimation: customToastAnimation,
+        align: align,
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
         crossPage: crossPage,
@@ -212,7 +223,9 @@ class BotToast {
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[enableSlideOff] 是否能滑动删除
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[notificationAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[notificationAnimation]
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[duration] 请看[showEnhancedWidget.duration]
@@ -221,6 +234,8 @@ class BotToast {
   static CancelFunc showCustomNotification(
       {@required ToastBuilder toastBuilder,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = notificationAnimation,
+      Alignment align = const Alignment(0, -0.99),
       Duration duration = const Duration(seconds: 2),
       Duration animationDuration,
       Duration animationReverseDuration,
@@ -231,8 +246,6 @@ class BotToast {
         animationDuration ?? const Duration(milliseconds: 256),
         reverseDuration: animationReverseDuration);
 
-    customAnimation ??= notificationAnimation;
-
     return showEnhancedWidget(
         crossPage: crossPage,
         allowClick: true,
@@ -241,11 +254,30 @@ class BotToast {
         onlyOne: onlyOne,
         duration: duration,
         closeFunc: controller.reverse,
-        toastBuilder: (cancelFunc) => customAnimation(
-            controller,
-            NotificationToast(
-                child: toastBuilder(cancelFunc),
-                slideOffFunc: enableSlideOff ? cancelFunc : null)),
+        warpWidget: (child) => ProxyDispose(
+              disposeCallback: () {
+                controller.dispose();
+              },
+              child: customAnimation != null
+                  ? customAnimation(controller, child)
+                  : child,
+            ),
+        toastBuilder: (cancelFunc) {
+          Widget child = NotificationToast(
+              child: toastBuilder(cancelFunc),
+              slideOffFunc: enableSlideOff ? cancelFunc : null);
+          if (customToastAnimation != null) {
+            child = customToastAnimation(controller, child);
+          }
+          return SafeArea(
+            child: align != null
+                ? Align(
+                    alignment: align,
+                    child: child,
+                  )
+                : child,
+          );
+        },
         groupKey: notificationKey);
   }
 
@@ -255,9 +287,10 @@ class BotToast {
   ///[contentColor] ToastContent区域背景颜色
   ///[borderRadius] ToastContent区域圆角
   ///[textStyle] 字体样式
-  ///[align] ToastContent区域在MainContent区域的对齐
   ///[contentPadding] ToastContent区域的内补
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[textAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[textAnimation]
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
@@ -268,6 +301,7 @@ class BotToast {
   static CancelFunc showText(
       {@required String text,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = textAnimation,
       Color backgroundColor = Colors.transparent,
       Color contentColor = Colors.black54,
       BorderRadiusGeometry borderRadius =
@@ -277,13 +311,14 @@ class BotToast {
       EdgeInsetsGeometry contentPadding =
           const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
       Duration duration = const Duration(seconds: 2),
-        Duration animationDuration,
-        Duration animationReverseDuration,
+      Duration animationDuration,
+      Duration animationReverseDuration,
       bool clickClose = false,
       bool crossPage = true,
       bool onlyOne = true}) {
     return showCustomText(
         customAnimation: customAnimation,
+        customToastAnimation: customToastAnimation,
         duration: duration,
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
@@ -292,12 +327,12 @@ class BotToast {
         clickClose: clickClose,
         ignoreContentClick: true,
         onlyOne: onlyOne,
+        align: align,
         toastBuilder: (_) => TextToast(
               contentPadding: contentPadding,
               contentColor: contentColor,
               borderRadius: borderRadius,
               textStyle: textStyle,
-              align: align,
               text: text,
             ));
   }
@@ -305,7 +340,9 @@ class BotToast {
   ///显示一个自定义的文本Toast
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[textAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[textAnimation]
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
@@ -317,6 +354,8 @@ class BotToast {
   static CancelFunc showCustomText(
       {@required ToastBuilder toastBuilder,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = textAnimation,
+      Alignment align = const Alignment(0, 0.8),
       Color backgroundColor = Colors.transparent,
       Duration duration = const Duration(seconds: 2),
       Duration animationDuration,
@@ -329,8 +368,6 @@ class BotToast {
         animationDuration ?? const Duration(milliseconds: 256),
         reverseDuration: animationReverseDuration);
 
-    customAnimation ??= textAnimation;
-
     return showEnhancedWidget(
       groupKey: textKey,
       closeFunc: controller.reverse,
@@ -341,14 +378,35 @@ class BotToast {
       ignoreContentClick: ignoreContentClick,
       backgroundColor: backgroundColor,
       duration: duration,
-      toastBuilder: (cancelFunc) => SafeArea(
-          child: customAnimation(controller, toastBuilder(cancelFunc))),
+      warpWidget: (child) => ProxyDispose(
+        disposeCallback: () {
+          controller.dispose();
+        },
+        child: customAnimation != null
+            ? customAnimation(controller, child)
+            : child,
+      ),
+      toastBuilder: (cancelFunc) {
+        Widget child = customToastAnimation != null
+            ? customToastAnimation(controller, toastBuilder(cancelFunc))
+            : toastBuilder(cancelFunc);
+        return SafeArea(
+          child: align != null
+              ? Align(
+                  alignment: align,
+                  child: child,
+                )
+              : child,
+        );
+      },
     );
   }
 
   ///显示一个标准的加载Toast
   ///
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[loadingAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[loadingAnimation]
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[duration] 请看[showEnhancedWidget.duration]
@@ -357,7 +415,9 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showLoading({
-    WrapAnimation customAnimation,
+    WrapAnimation customAnimation = loadingAnimation,
+    WrapAnimation customToastAnimation,
+    Alignment align = Alignment.center,
     bool crossPage = true,
     bool clickClose = false,
     bool allowClick = false,
@@ -368,6 +428,8 @@ class BotToast {
   }) {
     return showCustomLoading(
         customAnimation: customAnimation,
+        customToastAnimation: customToastAnimation,
+        align: align,
         toastBuilder: (_) => const LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
@@ -381,7 +443,9 @@ class BotToast {
 
   ///显示一个自定义的加载Toast
   ///
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[loadingAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[loadingAnimation]
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[align] ToastContent区域在MainContent区域的对齐
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[toastBuilder] 生成需要显示的Widget的builder函数
@@ -393,7 +457,9 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   static CancelFunc showCustomLoading({
     @required ToastBuilder toastBuilder,
-    WrapAnimation customAnimation,
+    WrapAnimation customAnimation = loadingAnimation,
+    WrapAnimation customToastAnimation,
+    Alignment align = Alignment.center,
     bool clickClose = false,
     bool allowClick = false,
     bool ignoreContentClick = false,
@@ -409,12 +475,29 @@ class BotToast {
         animationDuration ?? const Duration(milliseconds: 300),
         reverseDuration: animationReverseDuration);
 
-    customAnimation ??= loadingAnimation;
-
     return showEnhancedWidget(
         groupKey: loadKey,
-        toastBuilder: (cancelFunc) => SafeArea(child: toastBuilder(cancelFunc)),
-        warpWidget: (child) => customAnimation(controller, child),
+        toastBuilder: (cancelFunc) {
+          Widget child = customToastAnimation != null
+              ? customToastAnimation(controller, toastBuilder(cancelFunc))
+              : toastBuilder(cancelFunc);
+          return SafeArea(
+            child: align != null
+                ? Align(
+                    alignment: align,
+                    child: child,
+                  )
+                : child,
+          );
+        },
+        warpWidget: (child) => ProxyDispose(
+              disposeCallback: () {
+                controller.dispose();
+              },
+              child: customAnimation != null
+                  ? customAnimation(controller, child)
+                  : child,
+            ),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -442,7 +525,8 @@ class BotToast {
   ///[verticalOffset]  垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
   ///[preferDirection] 偏好方向,如果在空间允许的情况下,会偏向显示在那边
   ///[enableSafeArea] 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之
-  ///[customAnimation] 包装Toast的动画,可用于自定义动画,默认[attachedAnimation]
+  ///[customAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为null
+  ///[customToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,默认值为[attachedAnimation]
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///[duration] 请看[showEnhancedWidget.duration]
@@ -452,10 +536,11 @@ class BotToast {
   static CancelFunc showAttachedWidget(
       {@required ToastBuilder attachedBuilder,
       WrapAnimation customAnimation,
+      WrapAnimation customToastAnimation = attachedAnimation,
       BuildContext targetContext,
       Color backgroundColor = Colors.transparent,
       Offset target,
-      double verticalOffset = 0,
+      double verticalOffset = 0.0,
       double horizontalOffset = 0.0,
       Duration duration,
       Duration animationDuration,
@@ -491,8 +576,6 @@ class BotToast {
         animationDuration ?? const Duration(milliseconds: 150),
         reverseDuration: animationReverseDuration);
 
-    customAnimation ??= attachedAnimation;
-
     return showEnhancedWidget(
         allowClick: allowClick,
         clickClose: true,
@@ -502,8 +585,15 @@ class BotToast {
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         closeFunc: controller.reverse,
-        warpWidget: (widget) => customAnimation(controller, widget),
         duration: duration,
+        warpWidget: (child) => ProxyDispose(
+              disposeCallback: () {
+                controller.dispose();
+              },
+              child: customAnimation != null
+                  ? customAnimation(controller, child)
+                  : child,
+            ),
         toastBuilder: (cancelFunc) => CustomSingleChildLayout(
               delegate: PositionDelegate(
                   target: targetRect,
@@ -511,7 +601,10 @@ class BotToast {
                   horizontalOffset: horizontalOffset ?? 0,
                   enableSafeArea: enableSafeArea ?? true,
                   preferDirection: preferDirection),
-              child: attachedBuilder(cancelFunc),
+              child: customToastAnimation != null
+                  ? customToastAnimation(
+                      controller, attachedBuilder(cancelFunc))
+                  : attachedBuilder(cancelFunc),
             ));
   }
 
