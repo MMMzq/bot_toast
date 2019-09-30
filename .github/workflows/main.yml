@@ -45,7 +45,7 @@ jobs:
         run: ./flutter/bin/flutter config --enable-web
 
       - name: Build web
-        run: cd example &&../flutter/bin/flutter pub get && ../flutter/bin/flutter build web && cd ..
+        run: cd example && ../flutter/bin/flutter build web && cd ..
 
 
       - name: Deploy web To GH-Page
