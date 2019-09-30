@@ -66,13 +66,15 @@ class CustomLoadingAnimation extends StatefulWidget {
 class _CustomLoadingAnimationState extends State<CustomLoadingAnimation> {
   static Tween<Offset> tweenOffset = Tween<Offset>(
     begin: const Offset(0.8, 0.0),
-    end: Offset.zero,);
+    end: Offset.zero,
+  );
   Animation<double> animation;
 
   @override
   void initState() {
     widget.controller.forward();
-    animation = CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    animation =
+        CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
     super.initState();
   }
 
@@ -82,10 +84,12 @@ class _CustomLoadingAnimationState extends State<CustomLoadingAnimation> {
       child: widget.child,
       animation: widget.controller,
       builder: (BuildContext context, Widget child) {
-        return FractionalTranslation(translation: tweenOffset.evaluate(animation),child: Opacity(
-          opacity: animation.value,
-          child: child,
-        ));
+        return FractionalTranslation(
+            translation: tweenOffset.evaluate(animation),
+            child: Opacity(
+              opacity: animation.value,
+              child: child,
+            ));
       },
     );
   }
@@ -107,8 +111,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showAttachedWidget(
-                      attachedBuilder: (_) =>
-                          Card(
+                      attachedBuilder: (_) => Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
@@ -134,9 +137,9 @@ class _CustomAnimationState extends State<CustomAnimation> {
                     text: 'this is custom animation ',
                     customToastAnimation: (controller, Widget child) =>
                         CustomAnimationWidget(
-                          controller: controller,
-                          child: child,
-                        ),
+                      controller: controller,
+                      child: child,
+                    ),
                   );
                 },
                 child: const Text('customTextAnimation'),

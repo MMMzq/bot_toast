@@ -5,9 +5,9 @@
 
 * `showEnhancedWidget`方法的`closeFunc`参数其含义已经发生了变化了,现在是等待`closeFunc`函数执行完毕才移除Toast
 
-* 更新example的样式,并添加了更多demo
-
 * 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
+
+* 更新example的样式,并添加了更多demo
 
 * 修复了`showAttachedWidget`方法的一些bug
 

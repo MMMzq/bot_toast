@@ -12,7 +12,7 @@ import 'notification/notification.dart' as notification;
 import 'text/custom_text.dart';
 import 'text/text.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
@@ -149,10 +149,8 @@ class EnterPage extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: RaisedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => Loading()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => Loading()));
                           },
                           child: Text("Loading"),
                         ),
@@ -172,8 +170,6 @@ class EnterPage extends StatelessWidget {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
                 Text(
@@ -196,15 +192,14 @@ class EnterPage extends StatelessWidget {
                           child: Text("AttachedToast"),
                         ),
                       ),
-                    ), Expanded(
+                    ),
+                    Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: RaisedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => All()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => All()));
                           },
                           child: Text("All"),
                         ),
