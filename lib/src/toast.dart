@@ -255,13 +255,10 @@ class BotToast {
         duration: duration,
         closeFunc: controller.reverse,
         warpWidget: (child) => ProxyDispose(
-              disposeCallback: () {
-                controller.dispose();
-              },
-              child: customAnimation != null
-                  ? customAnimation(controller, child)
-                  : child,
-            ),
+            disposeCallback: controller.dispose,
+            child: customAnimation != null
+                ? customAnimation(controller, child)
+                : child),
         toastBuilder: (cancelFunc) {
           Widget child = NotificationToast(
               child: toastBuilder(cancelFunc),
@@ -270,12 +267,8 @@ class BotToast {
             child = customToastAnimation(controller, child);
           }
           return SafeArea(
-            child: align != null
-                ? Align(
-                    alignment: align,
-                    child: child,
-                  )
-                : child,
+            child:
+                align != null ? Align(alignment: align, child: child) : child,
           );
         },
         groupKey: notificationKey);
@@ -369,37 +362,29 @@ class BotToast {
         reverseDuration: animationReverseDuration);
 
     return showEnhancedWidget(
-      groupKey: textKey,
-      closeFunc: controller.reverse,
-      clickClose: clickClose,
-      allowClick: true,
-      onlyOne: onlyOne,
-      crossPage: crossPage,
-      ignoreContentClick: ignoreContentClick,
-      backgroundColor: backgroundColor,
-      duration: duration,
-      warpWidget: (child) => ProxyDispose(
-        disposeCallback: () {
-          controller.dispose();
-        },
-        child: customAnimation != null
-            ? customAnimation(controller, child)
-            : child,
-      ),
-      toastBuilder: (cancelFunc) {
-        Widget child = customToastAnimation != null
-            ? customToastAnimation(controller, toastBuilder(cancelFunc))
-            : toastBuilder(cancelFunc);
-        return SafeArea(
-          child: align != null
-              ? Align(
-                  alignment: align,
-                  child: child,
-                )
-              : child,
-        );
-      },
-    );
+        groupKey: textKey,
+        closeFunc: controller.reverse,
+        clickClose: clickClose,
+        allowClick: true,
+        onlyOne: onlyOne,
+        crossPage: crossPage,
+        ignoreContentClick: ignoreContentClick,
+        backgroundColor: backgroundColor,
+        duration: duration,
+        warpWidget: (child) => ProxyDispose(
+            disposeCallback: controller.dispose,
+            child: customAnimation != null
+                ? customAnimation(controller, child)
+                : child),
+        toastBuilder: (cancelFunc) {
+          Widget child = customToastAnimation != null
+              ? customToastAnimation(controller, toastBuilder(cancelFunc))
+              : toastBuilder(cancelFunc);
+          return SafeArea(
+              child: align != null
+                  ? Align(alignment: align, child: child)
+                  : child);
+        });
   }
 
   ///显示一个标准的加载Toast
@@ -482,22 +467,15 @@ class BotToast {
               ? customToastAnimation(controller, toastBuilder(cancelFunc))
               : toastBuilder(cancelFunc);
           return SafeArea(
-            child: align != null
-                ? Align(
-                    alignment: align,
-                    child: child,
-                  )
-                : child,
-          );
+              child: align != null
+                  ? Align(alignment: align, child: child)
+                  : child);
         },
         warpWidget: (child) => ProxyDispose(
-              disposeCallback: () {
-                controller.dispose();
-              },
-              child: customAnimation != null
-                  ? customAnimation(controller, child)
-                  : child,
-            ),
+            disposeCallback: controller.dispose,
+            child: customAnimation != null
+                ? customAnimation(controller, child)
+                : child),
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -587,25 +565,20 @@ class BotToast {
         closeFunc: controller.reverse,
         duration: duration,
         warpWidget: (child) => ProxyDispose(
-              disposeCallback: () {
-                controller.dispose();
-              },
-              child: customAnimation != null
-                  ? customAnimation(controller, child)
-                  : child,
-            ),
+            disposeCallback: controller.dispose,
+            child: customAnimation != null
+                ? customAnimation(controller, child)
+                : child),
         toastBuilder: (cancelFunc) => CustomSingleChildLayout(
-              delegate: PositionDelegate(
-                  target: targetRect,
-                  verticalOffset: verticalOffset ?? 0,
-                  horizontalOffset: horizontalOffset ?? 0,
-                  enableSafeArea: enableSafeArea ?? true,
-                  preferDirection: preferDirection),
-              child: customToastAnimation != null
-                  ? customToastAnimation(
-                      controller, attachedBuilder(cancelFunc))
-                  : attachedBuilder(cancelFunc),
-            ));
+            delegate: PositionDelegate(
+                target: targetRect,
+                verticalOffset: verticalOffset ?? 0,
+                horizontalOffset: horizontalOffset ?? 0,
+                enableSafeArea: enableSafeArea ?? true,
+                preferDirection: preferDirection),
+            child: customToastAnimation != null
+                ? customToastAnimation(controller, attachedBuilder(cancelFunc))
+                : attachedBuilder(cancelFunc)));
   }
 
   /*区域图
@@ -711,33 +684,28 @@ class BotToast {
                 BotToastNavigatorObserver.unregister(observerProxy);
               }
               timer?.cancel();
-            }, child: Builder(
-              builder: (BuildContext context) {
-                TextStyle textStyle = Theme.of(context).textTheme.body1;
-                Widget child = DefaultTextStyle(
-                    style: textStyle,
-                    child: Stack(
-                      children: <Widget>[
-                        Listener(
-                          onPointerDown:
-                              clickClose ? (_) => dismissFunc() : null,
-                          behavior: allowClick
-                              ? HitTestBehavior.translucent
-                              : HitTestBehavior.opaque,
-                          child: const SizedBox.expand(),
-                        ),
-                        IgnorePointer(
-                          child: Container(color: backgroundColor),
-                        ),
-                        IgnorePointer(
-                          ignoring: ignoreContentClick,
-                          child: toastBuilder(dismissFunc),
-                        )
-                      ],
-                    ));
-                return warpWidget != null ? warpWidget(child) : child;
-              },
-            )),
+            }, child: Builder(builder: (BuildContext context) {
+              TextStyle textStyle = Theme.of(context).textTheme.body1;
+              Widget child = DefaultTextStyle(
+                  style: textStyle,
+                  child: Stack(children: <Widget>[
+                    Listener(
+                      onPointerDown: clickClose ? (_) => dismissFunc() : null,
+                      behavior: allowClick
+                          ? HitTestBehavior.translucent
+                          : HitTestBehavior.opaque,
+                      child: const SizedBox.expand(),
+                    ),
+                    IgnorePointer(
+                      child: Container(color: backgroundColor),
+                    ),
+                    IgnorePointer(
+                      ignoring: ignoreContentClick,
+                      child: toastBuilder(dismissFunc),
+                    )
+                  ]));
+              return warpWidget != null ? warpWidget(child) : child;
+            })),
           );
         });
 
