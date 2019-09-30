@@ -1,6 +1,6 @@
 name: ci
 
-on: [push]
+on: [push,pull_request]
 
 jobs:
   build:
@@ -9,19 +9,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
 
-      - name: Setup flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable --depth 1
-          ./flutter/bin/flutter doctor
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
 
       - name: Flutter unit test
-        run: ./flutter/bin/flutter test --coverage --coverage-path=lcov.info
+        run: flutter test --coverage --coverage-path=lcov.info
 
-      - name: Report code coverage
-        run: bash <(curl -s https://codecov.io/bash)
+      - name: Report CodeCov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: lcov.info
+          flags: unittests
 
-  web-build:
+  build-web:
 
     runs-on: ubuntu-latest
 
@@ -38,6 +45,13 @@ jobs:
         run: ./flutter/bin/flutter config --enable-web
 
       - name: Build web
-        run: |
-          cd ./example
-          ../flutter/bin/flutter build web
+        run: cd example && ../flutter/bin/flutter build web && cd ..
+
+
+      - name: Deploy web To GH-Page
+        if: github.ref == 'master'
+        uses: peaceiris/actions-gh-pages@v2.4.0
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./example/build/web/
