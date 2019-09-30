@@ -173,10 +173,10 @@ class EnterPage extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "Other",
+                  'Other',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -189,7 +189,7 @@ class EnterPage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (_) => AttachedToast()));
                           },
-                          child: Text("AttachedToast"),
+                          child: Text('AttachedToast'),
                         ),
                       ),
                     ),
