@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 //通知Toast的Widget
 class NotificationToast extends StatefulWidget {
@@ -8,8 +6,12 @@ class NotificationToast extends StatefulWidget {
 
   final Function slideOffFunc;
 
-  const NotificationToast(
-      {Key key, @required this.child, @required this.slideOffFunc})
+  final List<DismissDirection> dismissDirections;
+
+  const NotificationToast({Key key,
+    @required this.child,
+    @required this.slideOffFunc,
+    this.dismissDirections})
       : super(key: key);
 
   @override
@@ -17,18 +19,28 @@ class NotificationToast extends StatefulWidget {
 }
 
 class _NotificationState extends State<NotificationToast> {
+  Future<bool> confirmDismiss(DismissDirection direction) async {
+    widget.slideOffFunc();
+    return true;
+  }
+
+  Key key = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     Widget child = widget.child;
-    if (widget.slideOffFunc != null) {
-      child = Dismissible(
-        confirmDismiss: (_) async {
-          widget.slideOffFunc();
-          return true;
-        },
-        child: child,
-        key: UniqueKey(),
-      );
+
+    if (widget.slideOffFunc != null &&
+        widget.dismissDirections != null &&
+        widget.dismissDirections.isNotEmpty) {
+      widget.dismissDirections.forEach((direction) {
+        child = Dismissible(
+          direction: direction,
+          key: key,
+          confirmDismiss: confirmDismiss,
+          child: child,
+        );
+      });
     }
 
     return child;

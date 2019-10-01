@@ -131,6 +131,7 @@ class BotToast {
   ///[enableSlideOff] 是否能滑动删除
   ///[hideCloseButton] 是否隐藏关闭按钮
   ///[align] ToastContent区域在MainContent区域的对齐
+  ///[dismissDirections] 能进行滑动关闭的方向
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为[notificationAnimation]
   ///[animationDuration] 请看[showAnimationWidget.animationDuration]
@@ -138,24 +139,28 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
-  static CancelFunc showSimpleNotification(
-      {@required String title,
-      String subTitle,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = notificationAnimation,
-      Alignment align = const Alignment(0, -0.99),
-      Icon closeIcon,
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      bool enableSlideOff = true,
-      bool hideCloseButton = false,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+  static CancelFunc showSimpleNotification({@required String title,
+    String subTitle,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = notificationAnimation,
+    Alignment align = const Alignment(0, -0.99),
+    List<DismissDirection> dismissDirections = const [
+      DismissDirection.horizontal,
+      DismissDirection.up
+    ],
+    Icon closeIcon,
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    bool enableSlideOff = true,
+    bool hideCloseButton = false,
+    bool crossPage = true,
+    bool onlyOne = true}) {
     return showNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
         align: align,
+        dismissDirections: dismissDirections,
         duration: duration,
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
@@ -166,7 +171,8 @@ class BotToast {
         subtitle: subTitle == null ? null : (_) => Text(subTitle),
         trailing: hideCloseButton
             ? null
-            : (cancel) => IconButton(
+            : (cancel) =>
+            IconButton(
                 icon: closeIcon ?? Icon(Icons.cancel), onPressed: cancel));
   }
 
@@ -175,6 +181,7 @@ class BotToast {
   ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding] 请看[ListTile]
   ///[enableSlideOff] 是否能滑动删除
   ///[align] ToastContent区域在MainContent区域的对齐
+  ///[dismissDirections] 能进行滑动关闭的方向
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为[notificationAnimation]
   ///[animationDuration] 请看[showAnimationWidget.animationDuration]
@@ -182,25 +189,29 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
-  static CancelFunc showNotification(
-      {ToastBuilder leading,
-      ToastBuilder title,
-      ToastBuilder subtitle,
-      ToastBuilder trailing,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = notificationAnimation,
-      Alignment align = const Alignment(0, -0.99),
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      EdgeInsetsGeometry contentPadding,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+  static CancelFunc showNotification({ToastBuilder leading,
+    ToastBuilder title,
+    ToastBuilder subtitle,
+    ToastBuilder trailing,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = notificationAnimation,
+    Alignment align = const Alignment(0, -0.99),
+    List<DismissDirection> dismissDirections = const [
+      DismissDirection.horizontal,
+      DismissDirection.up
+    ],
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    EdgeInsetsGeometry contentPadding,
+    bool enableSlideOff = true,
+    bool crossPage = true,
+    bool onlyOne = true}) {
     return showCustomNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
         align: align,
+        dismissDirections: dismissDirections,
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
         crossPage: crossPage,
@@ -224,6 +235,7 @@ class BotToast {
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[enableSlideOff] 是否能滑动删除
   ///[align] ToastContent区域在MainContent区域的对齐
+  ///[dismissDirections] 能进行滑动关闭的方向
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为[notificationAnimation]
   ///[animationDuration] 请看[showAnimationWidget.animationDuration]
@@ -231,17 +243,20 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
-  static CancelFunc showCustomNotification(
-      {@required ToastBuilder toastBuilder,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = notificationAnimation,
-      Alignment align = const Alignment(0, -0.99),
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+  static CancelFunc showCustomNotification({@required ToastBuilder toastBuilder,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = notificationAnimation,
+    Alignment align = const Alignment(0, -0.99),
+    List<DismissDirection> dismissDirections = const [
+      DismissDirection.horizontal,
+      DismissDirection.up
+    ],
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    bool enableSlideOff = true,
+    bool crossPage = true,
+    bool onlyOne = true}) {
     return showAnimationWidget(
         crossPage: crossPage,
         allowClick: true,
@@ -265,6 +280,7 @@ class BotToast {
         toastBuilder: (cancelFunc) =>
             NotificationToast(
                 child: toastBuilder(cancelFunc),
+                dismissDirections: dismissDirections,
                 slideOffFunc: enableSlideOff ? cancelFunc : null),
         groupKey: notificationKey);
   }
@@ -286,24 +302,23 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
-  static CancelFunc showText(
-      {@required String text,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = textAnimation,
-      Color backgroundColor = Colors.transparent,
-      Color contentColor = Colors.black54,
-      BorderRadiusGeometry borderRadius =
-          const BorderRadius.all(Radius.circular(8)),
-      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-      AlignmentGeometry align = const Alignment(0, 0.8),
-      EdgeInsetsGeometry contentPadding =
-          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      bool clickClose = false,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+  static CancelFunc showText({@required String text,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = textAnimation,
+    Color backgroundColor = Colors.transparent,
+    Color contentColor = Colors.black54,
+    BorderRadiusGeometry borderRadius =
+    const BorderRadius.all(Radius.circular(8)),
+    TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+    AlignmentGeometry align = const Alignment(0, 0.8),
+    EdgeInsetsGeometry contentPadding =
+    const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    bool clickClose = false,
+    bool crossPage = true,
+    bool onlyOne = true}) {
     return showCustomText(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -316,7 +331,8 @@ class BotToast {
         ignoreContentClick: true,
         onlyOne: onlyOne,
         align: align,
-        toastBuilder: (_) => TextToast(
+        toastBuilder: (_) =>
+            TextToast(
               contentPadding: contentPadding,
               contentColor: contentColor,
               borderRadius: borderRadius,
@@ -339,19 +355,18 @@ class BotToast {
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
-  static CancelFunc showCustomText(
-      {@required ToastBuilder toastBuilder,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = textAnimation,
-      Alignment align = const Alignment(0, 0.8),
-      Color backgroundColor = Colors.transparent,
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      bool crossPage = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false}) {
+  static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = textAnimation,
+    Alignment align = const Alignment(0, 0.8),
+    Color backgroundColor = Colors.transparent,
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    bool crossPage = true,
+    bool clickClose = false,
+    bool ignoreContentClick = false,
+    bool onlyOne = false}) {
     return showAnimationWidget(
         groupKey: textKey,
         clickClose: clickClose,
@@ -497,29 +512,28 @@ class BotToast {
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
-  static CancelFunc showAttachedWidget(
-      {@required ToastBuilder attachedBuilder,
-        WrapAnimation wrapAnimation,
-        WrapAnimation wrapToastAnimation = attachedAnimation,
-      BuildContext targetContext,
-      Offset target,
-        Color backgroundColor = Colors.transparent,
-      double verticalOffset = 0.0,
-      double horizontalOffset = 0.0,
-      Duration duration,
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      PreferDirection preferDirection,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      bool allowClick = true,
-      bool enableSafeArea}) {
+  static CancelFunc showAttachedWidget({@required ToastBuilder attachedBuilder,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = attachedAnimation,
+    BuildContext targetContext,
+    Offset target,
+    Color backgroundColor = Colors.transparent,
+    double verticalOffset = 0.0,
+    double horizontalOffset = 0.0,
+    Duration duration,
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    PreferDirection preferDirection,
+    bool ignoreContentClick = false,
+    bool onlyOne = false,
+    bool allowClick = true,
+    bool enableSafeArea}) {
     assert(verticalOffset >= 0.0, 'must be a positive number');
     assert(horizontalOffset >= 0.0, 'must be a positive number');
     assert(!(targetContext != null && target != null),
-        'targetContext and target cannot coexist');
+    'targetContext and target cannot coexist');
     assert(targetContext != null || target != null,
-        'targetContext and target must exist one');
+    'targetContext and target must exist one');
 
     Rect targetRect;
     if (target == null) {
@@ -675,19 +689,18 @@ class BotToast {
   ///让MainContent区域也具有动画
   ///
   ///[duration] 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
-  static CancelFunc showEnhancedWidget(
-      {@required ToastBuilder toastBuilder,
-      UniqueKey key,
-      String groupKey,
-      bool crossPage = true,
-      bool allowClick = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      FutureFunc closeFunc,
-      Color backgroundColor = Colors.transparent,
-      WrapWidget warpWidget,
-      Duration duration}) {
+  static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
+    UniqueKey key,
+    String groupKey,
+    bool crossPage = true,
+    bool allowClick = true,
+    bool clickClose = false,
+    bool ignoreContentClick = false,
+    bool onlyOne = false,
+    FutureFunc closeFunc,
+    Color backgroundColor = Colors.transparent,
+    WrapWidget warpWidget,
+    Duration duration}) {
     assert(toastBuilder != null);
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
@@ -699,7 +712,7 @@ class BotToast {
 
     //onlyOne 功能
     final List<CancelFunc> cache =
-        (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
+    (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
     if (onlyOne) {
       final clone = cache.toList();
       cache.clear();
@@ -737,7 +750,10 @@ class BotToast {
               }
               timer?.cancel();
             }, child: Builder(builder: (BuildContext context) {
-              TextStyle textStyle = Theme.of(context).textTheme.body1;
+              TextStyle textStyle = Theme
+                  .of(context)
+                  .textTheme
+                  .body1;
               Widget child = DefaultTextStyle(
                   style: textStyle,
                   child: Stack(children: <Widget>[
