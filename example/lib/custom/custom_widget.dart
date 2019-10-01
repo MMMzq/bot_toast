@@ -72,7 +72,7 @@ void showAlertDialog(bool blockPopup,
               ),
             ],
           ),
-      animationDuration: Duration(milliseconds: 256));
+      animationDuration: Duration(milliseconds: 300));
 }
 
 class CustomWidget extends StatefulWidget {
@@ -116,7 +116,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                     blockPopup = value;
                   });
                 },
-                title: const Text('blockPopup: '),
+                title: const Text('DisablePhysicalButton: '),
               ),
               const Divider(),
             ],
@@ -158,6 +158,7 @@ class CustomOffsetAnimation extends StatefulWidget {
 
 class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
   Tween<Offset> tweenOffset;
+  Tween<double> tweenScale;
 
   Animation<double> animation;
 
@@ -167,9 +168,10 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
       begin: const Offset(0.0, 0.8),
       end: Offset.zero,
     );
-    widget.controller.forward();
+    tweenScale = Tween<double>(begin: 0.3, end: 1.0);
     animation =
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    widget.controller.forward();
     super.initState();
   }
 
@@ -180,7 +182,16 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
       animation: widget.controller,
       builder: (BuildContext context, Widget child) {
         return FractionalTranslation(
-            translation: tweenOffset.evaluate(animation), child: child);
+            translation: tweenOffset.evaluate(animation),
+            child: ClipRect(
+              child: Transform.scale(
+                scale: tweenScale.evaluate(animation),
+                child: Opacity(
+                  child: child,
+                  opacity: animation.value,
+                ),
+              ),
+            ));
       },
     );
   }
