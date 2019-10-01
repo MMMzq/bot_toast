@@ -7,6 +7,8 @@
 
 * 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
 
+* `WrapWidget`方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的
+
 * 更新example的样式,并添加了更多demo
 
 * 修复了`showAttachedWidget`方法的一些bug

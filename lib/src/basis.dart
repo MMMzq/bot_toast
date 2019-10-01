@@ -4,9 +4,10 @@ import 'package:flutter/scheduler.dart';
 ///Toast的关闭函数,调用将会提前关闭对应的Toast
 typedef CancelFunc = void Function();
 typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
-typedef WrapWidget = Widget Function(Widget widget);
 typedef FutureFunc = Future Function();
-typedef WrapAnimation = Widget Function(AnimationController controller,Widget child);
+
+typedef WrapWidget = Widget Function(CancelFunc cancelFunc, Widget widget);
+typedef WrapAnimation = Widget Function(AnimationController controller, CancelFunc cancelFunc, Widget widget);
 
 class TickerProviderImpl extends TickerProvider {
   @override

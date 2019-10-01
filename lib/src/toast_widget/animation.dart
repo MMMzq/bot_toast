@@ -1,25 +1,30 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-Widget notificationAnimation(AnimationController controller, Widget child) =>
+Widget notificationAnimation(AnimationController controller,
+    CancelFunc cancelFunc, Widget child) =>
     NormalAnimation(
       reverse: true,
       controller: controller,
       child: child,
     );
 
-Widget textAnimation(AnimationController controller, Widget child) =>
+Widget textAnimation(AnimationController controller, CancelFunc cancelFunc,
+    Widget child) =>
     NormalAnimation(
       controller: controller,
       child: child,
     );
 
-Widget loadingAnimation(AnimationController controller, Widget child) =>
+Widget loadingAnimation(AnimationController controller, CancelFunc cancelFunc,
+    Widget child) =>
     FadeAnimation(
       controller: controller,
       child: child,
     );
 
-Widget attachedAnimation(AnimationController controller, Widget child) =>
+Widget attachedAnimation(AnimationController controller, CancelFunc cancelFunc,
+    Widget child) =>
     FadeAnimation(
       controller: controller,
       child: child,
@@ -30,8 +35,7 @@ class NormalAnimation extends StatefulWidget {
   final bool reverse;
   final AnimationController controller;
 
-  const NormalAnimation(
-      {Key key, this.child, this.reverse = false, this.controller})
+  const NormalAnimation({Key key, this.child, this.reverse = false, this.controller})
       : assert(child != null),
         super(key: key);
 
