@@ -2,16 +2,16 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomWidget extends StatefulWidget {
+class _CustomWidget extends StatefulWidget {
   final CancelFunc cancelFunc;
 
-  const CustomWidget({Key key, this.cancelFunc}) : super(key: key);
+  const _CustomWidget({Key key, this.cancelFunc}) : super(key: key);
 
   @override
   _CustomWidgetState createState() => _CustomWidgetState();
 }
 
-class _CustomWidgetState extends State<CustomWidget> {
+class _CustomWidgetState extends State<_CustomWidget> {
   bool loveMe = true;
 
   @override
@@ -77,7 +77,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds),
                       toastBuilder: (cancel) {
-                        return CustomWidget(
+                        return _CustomWidget(
                           cancelFunc: cancel,
                         );
                       },

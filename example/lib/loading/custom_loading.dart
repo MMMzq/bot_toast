@@ -69,25 +69,23 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              FadeTransition(
-                opacity: animationController,
-                child: IconButton(
-                  icon: Icon(Icons.favorite, color: Colors.redAccent, size: 30),
-                  onPressed: handleTap,
-                ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            FadeTransition(
+              opacity: animationController,
+              child: IconButton(
+                icon: Icon(Icons.favorite, color: Colors.redAccent, size: 30),
+                onPressed: handleTap,
               ),
-              Text(
-                "i miss you",
-              )
-            ],
-          ),
+            ),
+            Text(
+              "i miss you",
+            )
+          ],
         ),
       ),
     );
@@ -135,6 +133,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                         seconds: seconds,
                       ),
                       backgroundColor: Color(backgroundColor),
+                      align: Alignment.center,
                       toastBuilder: (cancelFunc) {
                         return _CustomLoadWidget(cancelFunc: cancelFunc);
                       });

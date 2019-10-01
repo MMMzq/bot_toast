@@ -45,7 +45,6 @@ class _AttachedToastState extends State<AttachedToast> {
           color: Colors.amber,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8),
-//                width: 200,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

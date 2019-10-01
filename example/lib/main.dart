@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'all.dart';
 import 'attached_toast/attached_toast.dart';
-import 'custom/custom.dart';
+import 'custom/custom_animation.dart';
+import 'custom/custom_widget.dart';
 import 'loading/custom_loading.dart';
 import 'loading/loading.dart';
 import 'notification/custom_notification.dart';
@@ -219,10 +220,24 @@ class EnterPage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (_) => CustomAnimation()));
                           },
-                          child: Text("CustomAnimation"),
+                          child: const Text('CustomAnimation'),
                         ),
                       ),
                     ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => CustomWidget()));
+                          },
+                          child: const Text('CustomWidget'),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ]),
