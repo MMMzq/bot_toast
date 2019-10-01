@@ -254,7 +254,9 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
-          child = wrapToastAnimation(controller, cancel, child);
+          if (wrapToastAnimation != null) {
+            child = wrapToastAnimation(controller, cancel, child);
+          }
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
@@ -364,7 +366,9 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
-          child = wrapToastAnimation(controller, cancel, child);
+          if (wrapToastAnimation != null) {
+            child = wrapToastAnimation(controller, cancel, child);
+          }
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
@@ -450,7 +454,9 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
-          child = wrapToastAnimation(controller, cancel, child);
+          if (wrapToastAnimation != null) {
+            child = wrapToastAnimation(controller, cancel, child);
+          }
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
