@@ -1,6 +1,6 @@
 name: ci
 
-on: [push,pull_request,release]
+on: [push,pull_request]
 
 jobs:
   build:
@@ -46,11 +46,3 @@ jobs:
 
       - name: Build web
         run: cd example && ../flutter/bin/flutter build web && cd ..
-
-      - name: Deploy web To GH-Page
-        if: github.ref == 'master' && github.event_name == 'release'
-        uses: peaceiris/actions-gh-pages@v2.4.0
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./example/build/web/
