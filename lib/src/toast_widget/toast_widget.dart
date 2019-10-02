@@ -5,6 +5,31 @@ export 'loading.dart';
 export 'notification.dart';
 export 'text.dart';
 
+class ProxyInitState extends StatefulWidget {
+  final Widget child;
+  final VoidCallback initStateCallback;
+
+  const ProxyInitState({Key key, this.initStateCallback, this.child})
+      : super(key: key);
+
+  @override
+  _ProxyInitStateState createState() => _ProxyInitStateState();
+}
+
+class _ProxyInitStateState extends State<ProxyInitState> {
+  @override
+  void initState() {
+    widget.initStateCallback();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
+
+
 class ProxyDispose extends StatefulWidget {
   final Widget child;
   final VoidCallback disposeCallback;

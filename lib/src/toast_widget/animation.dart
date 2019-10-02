@@ -68,7 +68,6 @@ class NormalAnimationState extends State<NormalAnimation>
         (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
     animationOpacity = tweenOpacity.animate(animation);
 
-    widget.controller.forward();
 
     super.initState();
   }
@@ -115,7 +114,6 @@ class FadeAnimationState extends State<FadeAnimation>
 
     animationOpacity = tweenOpacity.animate(animation);
 
-    widget.controller.forward();
 
     super.initState();
   }

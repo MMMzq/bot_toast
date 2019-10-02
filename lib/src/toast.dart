@@ -558,7 +558,7 @@ class BotToast {
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         animationDuration:
-        animationReverseDuration ?? const Duration(milliseconds: 150),
+        animationDuration ?? const Duration(milliseconds: 150),
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
@@ -579,7 +579,7 @@ class BotToast {
   ///显示一个使用了Animation的Toast
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
-  ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration]
+  ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration],值得注意的是建议不要超过[duration]
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///
   ///[wrapAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,
@@ -615,7 +615,7 @@ class BotToast {
     assert(animationDuration != null);
 
     AnimationController controller = _createAnimationController(
-        animationDuration ?? const Duration(milliseconds: 150),
+        animationDuration,
         reverseDuration: animationReverseDuration);
 
     return showEnhancedWidget(
@@ -630,14 +630,20 @@ class BotToast {
         closeFunc: () => controller?.reverse(),
         duration: duration,
         warpWidget: (cancel, child) =>
-            ProxyDispose(
-                disposeCallback: () {
-                  controller.dispose();
-                  controller = null;
-                },
-                child: wrapAnimation != null
-                    ? wrapAnimation(controller, cancel, child)
-                    : child),
+            ProxyInitState(
+              initStateCallback: () {
+                assert(!controller.isAnimating);
+                controller.forward();
+              },
+              child: ProxyDispose(
+                  disposeCallback: () {
+                    controller.dispose();
+                    controller = null;
+                  },
+                  child: wrapAnimation != null
+                      ? wrapAnimation(controller, cancel, child)
+                      : child),
+            ),
         toastBuilder: (cancelFunc) =>
         wrapToastAnimation != null
             ? wrapToastAnimation(
