@@ -43,10 +43,10 @@ backgroundColor | MainContent区域的背景颜色
 title | 是 | 无 | 标题
 subTitle | 否 | 无| 副标题
 dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
-animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `notificationAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 256)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `notificationAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, -0.99)` | ToastContent区域在MainContent区域的对齐
 closeIcon | 否 | 无|关闭按钮的图标
 enableSlideOff | 否 | true| 是否能滑动删除
@@ -67,10 +67,10 @@ title | 否 | 无 | 标题
 subTitle | 否 | 无| 副标题
 trailing | 否 | 无 | 尾部
 dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
-animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `notificationAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 256)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `notificationAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, -0.99)` | ToastContent区域在MainContent区域的对齐
 contentPadding | 否 | 无 | ToastContent区域的内补
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
@@ -87,10 +87,10 @@ enableSlideOff | 否 | true| 是否能滑动删除
 ---- | --- | ---|----
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
 dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
-animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `notificationAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 256)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `notificationAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, -0.99)` | ToastContent区域在MainContent区域的对齐
 enableSlideOff | 否 | true| 是否能滑动删除
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
@@ -108,10 +108,10 @@ onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 attachedBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
 targetContext | 否 | 无| 目标Widget(一般是一个按钮),使用上一般会使用[Builder]包裹,来获取到BuildContext  ([target]和[targetContext] 只能二选一)
 target | 否 | 无| 目标[Offset],该偏移是以屏幕左上角为原点来计算的  ([target]和[targetContext] 只能二选一)
-animationDuration | 否 | `Duration(milliseconds: 150)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `attachedAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 150)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `attachedAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 preferDirection | 否 | 无| 偏好方向,如果在空间允许的情况下,会偏向显示在那边
 verticalOffset | 否 | ```24```| 垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
 enableSafeArea | 否 | true | 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之 
@@ -130,10 +130,10 @@ backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通�
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
 text | 是 | 无 | 需要显示的文本
-animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `textAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 256)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `textAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, 0.8)` | ToastContent区域在MainContent区域的对齐
 contentColor | 否 | `Colors.black54` | ToastContent区域背景颜色
 borderRadius | 否 | `BorderRadius.all(Radius.circular(8))` | ToastContent区域圆角
@@ -153,10 +153,10 @@ clickClose | 否 | false| [clickClose说明](#通用参数说明)
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
-animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | `textAnimation` | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 256)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | `textAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, 0.8)` | ToastContent区域在MainContent区域的对齐
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
@@ -172,10 +172,10 @@ backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通�
 
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
-animationDuration | 否 | `Duration(milliseconds: 300)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | `loadingAnimation` | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | 无 | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 300)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | `loadingAnimation` | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment.center` | ToastContent区域在MainContent区域的对齐
 duration | 否 | 无| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
@@ -192,10 +192,10 @@ backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
-animationDuration | 否 | `Duration(milliseconds: 300)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
-animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
-wrapAnimation | 否 | `loadingAnimation` | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
-wrapToastAnimation | 否 | 无 | [wrapToastAnimation说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
+animationDuration | 否 | `Duration(milliseconds: 300)` | [说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
+animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
+wrapAnimation | 否 | `loadingAnimation` | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
+wrapToastAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment.center` | ToastContent区域在MainContent区域的对齐
 ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
@@ -222,8 +222,8 @@ ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
 allowClick | 否 | true| [allowClick说明](#通用参数说明)
-crossPage | 否 | true| [crossPage说明请看showEnhancedWidget.crossPage](#通用参数说明)
-closeFunc | 否 | 无 | [closeFunc说明请看showEnhancedWidget.closeFunc](#10bottoastshowenhancedwidget)
+crossPage | 否 | true| [说明请看showEnhancedWidget.crossPage](#10bottoastshowenhancedwidget)
+closeFunc | 否 | 无 | [说明请看showEnhancedWidget.closeFunc](#10bottoastshowenhancedwidget)
 warpWidget | 否 | 无 | [warpWidget说明](#10bottoastshowenhancedwidget)
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
