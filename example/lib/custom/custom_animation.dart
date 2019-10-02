@@ -152,7 +152,6 @@ class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
 
   @override
   void initState() {
-    widget.controller.forward();
     animation =
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
     super.initState();
@@ -203,7 +202,6 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
       begin: Offset(widget.reverse ? -0.8 : 0.8, 0.0),
       end: Offset.zero,
     );
-    widget.controller.forward();
     animation =
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
     super.initState();
@@ -247,7 +245,6 @@ class _CustomAttachedAnimationState extends State<CustomAttachedAnimation> {
 
   @override
   void initState() {
-    widget.controller.forward();
     animation =
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
     super.initState();

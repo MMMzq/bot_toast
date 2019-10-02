@@ -171,7 +171,6 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
     tweenScale = Tween<double>(begin: 0.3, end: 1.0);
     animation =
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
-    widget.controller.forward();
     super.initState();
   }
 
