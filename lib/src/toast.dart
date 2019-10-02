@@ -577,6 +577,11 @@ class BotToast {
   }
 
   ///显示一个使用了Animation的Toast
+  ///使用请看:
+  ///[BotToast.showCustomNotification]
+  ///[BotToast.showCustomText]
+  ///[BotToast.showCustomLoading]
+  ///[BotToast.showAttachedWidget]
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[animationDuration] 正向动画的持续时间,其含义等同于[AnimationController.duration],值得注意的是建议不要超过[duration]
@@ -666,10 +671,7 @@ class BotToast {
 
   ///显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
   ///核心方法,详情使用请看:
-  ///[BotToast.showCustomNotification]
-  ///[BotToast.showCustomText]
-  ///[BotToast.showCustomLoading]
-  ///[BotToast.showAttachedWidget]
+  ///[BotToast.showAnimationWidget]
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
