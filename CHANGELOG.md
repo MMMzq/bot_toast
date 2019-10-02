@@ -1,3 +1,6 @@
+## [2.0.0+2]
+* Update document
+
 ## [2.0.0+1]
 * Delete useless print
 

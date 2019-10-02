@@ -129,7 +129,7 @@ BotToast.showAttachedWidget(
 ///1.x.x版本的初始化方式
 MaterialApp(
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],//1.注册路由观察者   
+      navigatorObservers: [BotToastNavigatorObserver()],
       home: BotToastInit(  //2.初始化BotToast
           child: XxxxPage()
       ),
@@ -142,7 +142,7 @@ MaterialApp(
 BotToastInit(
   child:MaterialApp(
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],//2.注册路由观察者
+      navigatorObservers: [BotToastNavigatorObserver()],
       home: XxxxPage(),
   )
 );

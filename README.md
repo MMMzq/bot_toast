@@ -124,7 +124,7 @@ change:
 MaterialApp(
       title: 'BotToast Demo',
       navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(  //2.初始化BotToast
+      home: BotToastInit(  
           child: XxxxPage()
       ),
     );
