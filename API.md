@@ -42,7 +42,7 @@ backgroundColor | MainContent区域的背景颜色
 ---- | --- | ---|----
 title | 是 | 无 | 标题
 subTitle | 否 | 无| 副标题
-dismissDirections | 否 | `[DismissDirection.horizontal,DismissDirection.up]` | 能进行滑动关闭的方向
+dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
 animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
 animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
 wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
@@ -66,7 +66,7 @@ leading | 否 | 无 | 头部
 title | 否 | 无 | 标题
 subTitle | 否 | 无| 副标题
 trailing | 否 | 无 | 尾部
-dismissDirections | 否 | `[DismissDirection.horizontal,DismissDirection.up]` | 能进行滑动关闭的方向
+dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
 animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
 animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
 wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
@@ -86,7 +86,7 @@ enableSlideOff | 否 | true| 是否能滑动删除
 参数 | 是否必须 |默认值| 说明
 ---- | --- | ---|----
 toastBuilder | 是 | 无 | [toastBuilder说明](#通用参数说明)
-dismissDirections | 否 | `[DismissDirection.horizontal,DismissDirection.up]` | 能进行滑动关闭的方向
+dismissDirections | 否 | `[horizontal,up]` | 能进行滑动关闭的方向
 animationDuration | 否 | `Duration(milliseconds: 256)` | [animationDuration说明请看showAnimationWidget.animationDuration](#9bottoastshowanimationwidget)
 animationReverseDuration | 否 | 无 | [animationReverseDuration说明请看showAnimationWidget.animationReverseDuration](#9bottoastshowanimationwidget)
 wrapAnimation | 否 | 无 | [wrapAnimation说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)

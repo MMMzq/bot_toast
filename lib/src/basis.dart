@@ -11,7 +11,7 @@ typedef WrapAnimation = Widget Function(AnimationController controller, CancelFu
 
 class TickerProviderImpl extends TickerProvider {
   @override
-  Ticker createTicker(onTick) {
+  Ticker createTicker(TickerCallback onTick) {
     return Ticker(onTick);
   }
 }

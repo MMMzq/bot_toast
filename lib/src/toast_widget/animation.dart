@@ -35,7 +35,8 @@ class NormalAnimation extends StatefulWidget {
   final bool reverse;
   final AnimationController controller;
 
-  const NormalAnimation({Key key, this.child, this.reverse = false, this.controller})
+  const NormalAnimation(
+      {Key key, @required this.child, this.reverse = false, this.controller})
       : assert(child != null),
         super(key: key);
 
