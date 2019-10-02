@@ -1,17 +1,26 @@
 ## [2.0.0]
-* 修改了初始化的方式现在更为好用
+* 修改了初始化的方式现在更为通用
 
-* 支持自定义Toast的动画和持续时间😀
+* 支持自定义Toast的**动画**和持续时间😉
 
 * `showEnhancedWidget`方法的`closeFunc`参数其含义已经发生了变化了,现在是等待`closeFunc`函数执行完毕才移除Toast
 
+* 添加`showAnimationWidget`方法,可以使用这个方法来高度自定义一个有动画的Toast🤩
+
 * 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
 
-* `WrapWidget`方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的
+* `WrapWidget`类型方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的
+
+* `showXxxNotification` 添加`dismissDirections`参数:表示能进行滑动关闭的方向 
+
+* `showXxxText`,`showXxxLoading`,`showXxxNotification`等方法添加了`align`参数:表示ToastContent区域在MainContent区域的对齐,可用于自定义Toast放置的位置
+
+* 修复了`showAttachedWidget`方法的一些bug
+
+* 支持flutter web(注意不能确保其稳定性)
 
 * 更新example的样式,并添加了更多demo
 
-* 修复了`showAttachedWidget`方法的一些bug
 
 ## [1.1.1]
 * Bug fix:
