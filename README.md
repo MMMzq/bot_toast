@@ -6,7 +6,7 @@ A really easy to use flutter toast library!
 [![Build Status](https://github.com/MMMzq/bot_toast/workflows/CI/badge.svg)](https://github.com/MMMzq/bot_toast/actions)
 [![codecov](https://codecov.io/gh/MMMzq/bot_toast/branch/master/graph/badge.svg)](https://codecov.io/gh/MMMzq/bot_toast)
 
-### Language: English | [中文简体](https://github.com/MMMzq/bot_toast/blob/master/README_zh.md)
+### Language: English | [中文简体](README_zh.md)
 
 * [🐲Overview](#Overview)
 * [🐼Online Demo](#Online-Demo)
@@ -34,17 +34,17 @@ A really easy to use flutter toast library!
 **[Online demo](https://mmmzq.github.io/bot_toast/#/)** (Web effects may be biased, the actual effect is subject to the mobile phone)
 
 ### 🐳Example
-**[Sample project](https://github.com/MMMzq/bot_toast/tree/master/example)**
+**[Sample project](example)**
 
 ### 🐺Renderings
 
 Notification|Attached|CustomAnimation
 --------|-------|--------
-![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)|![CustomAnimation](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_animation.gif)
+![Notification](doc/gif/notification.gif)|![Attached](doc/gif/attached.gif)|![CustomAnimation](doc/gif/custom_animation.gif)
 
 Loading|Text|CustomWidget
 --------|-------|----------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![CustomWidget](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_widget.gif)
+![Loading](doc/gif/loading.gif)|![Text](doc/gif/text.gif)|![CustomWidget](doc/gif/custom_widget.gif)
 
 ### 🐮Getting started
 
@@ -112,7 +112,7 @@ BotToast.showAttachedWidget(
 
 - Remove the `reInit` method and the two deprecated enumerations `PreferDirection.Below` and `PreferDirection.Upside`
 
-- [More detailed version 2.0 changes, click to view](https://github.com/MMMzq/bot_toast/blob/master/CHANGELOG.md#200)
+- [More detailed version 2.0 changes, click to view](CHANGELOG.md#200)
 
 #### 1.x version upgrade to 2.x version
 
@@ -167,7 +167,7 @@ showEnhancedWidget(
 
 
 ###  📃Documentation
-[Documentation](https://github.com/MMMzq/bot_toast/blob/master/API.md)
+[Documentation](API.md)
 
 
 

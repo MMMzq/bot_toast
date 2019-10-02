@@ -1,5 +1,5 @@
 ## [2.0.0]
-* 修改了初始化的方式现在更为通用
+* 修改初始化的方式,现在更为通用
 
 * 支持自定义Toast的**动画**和持续时间😉
 
@@ -9,7 +9,7 @@
 
 * 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
 
-* `WrapWidget`类型方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的
+* `WrapWidget`类型方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的,如果有使用请看这里进行兼容[1.x版本升级到2.x版本](README_zh.md#1x版本升级到2x版本)
 
 * `showXxxNotification` 添加`dismissDirections`参数:表示能进行滑动关闭的方向 
 
@@ -21,6 +21,29 @@
 
 * 更新example的样式,并添加了更多demo
 
+<br>
+
+* Modify the way of initialization, now more general
+
+* Support for custom Toast **animation** and **animation duration**😉
+
+* The meaning of the `closeFunc` parameter of the `showEnhancedWidget` method has changed. Now it is wait for the `closeFunc` function to complete before removing Toast.
+
+* Add the `showAnimationWidget` method, you can use this method to highly customize an animated Toast🤩
+
+* Remove the `reInit` method and the two deprecated enumerations `PreferDirection.Below` and `PreferDirection.Upside`
+
+* `WrapWidget` type method parameter changed (not compatible with 1.x version),see [1.x version upgrade 2.x version ](README.md#1x-version-upgrade-to-2x-version)
+
+* `showXxxNotification` Add `dismissDirections` parameter
+
+* `showXxxText`, `showXxxLoading`, `showXxxNotification` method adds `align` parameter
+
+* Fixed some bugs in the `showAttachedWidget` method
+
+* Support flutter web (note that it cannot ensure its stability)
+
+* Updated the style of example and added more demos
 
 ## [1.1.1]
 * Bug fix:

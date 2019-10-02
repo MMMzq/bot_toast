@@ -6,7 +6,7 @@ BotToast 🤖
 [![Build Status](https://github.com/MMMzq/bot_toast/workflows/CI/badge.svg)](https://github.com/MMMzq/bot_toast/actions)
 [![codecov](https://codecov.io/gh/MMMzq/bot_toast/branch/master/graph/badge.svg)](https://codecov.io/gh/MMMzq/bot_toast)
 
-### Language: [English](https://github.com/MMMzq/bot_toast) | 中文简体
+### Language: [English](README.md) | 中文简体
 
 * [🐲概述](#概述)
 * [🐼在线Demo](#在线demo)
@@ -38,17 +38,17 @@ BotToast 🤖
 **[在线例子](https://mmmzq.github.io/bot_toast/#/)** (Web效果可能有偏差,真实效果请以手机端为准,第一次加载可能会很久)
 
 ### 🐳示例项目
-**[sample project](https://github.com/MMMzq/bot_toast/tree/master/example)**
+**[sample project](example)**
 
 ### 🐺效果图
 
 Notification|Attached|CustomAnimation
 --------|-------|--------
-![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)|![CustomAnimation](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_animation.gif)
+![Notification](doc/gif/notification.gif)|![Attached](doc/gif/attached.gif)|![CustomAnimation](doc/gif/custom_animation.gif)
 
 Loading|Text|CustomWidget
 --------|-------|----------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![CustomWidget](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_widget.gif)
+![Loading](doc/gif/loading.gif)|![Text](doc/gif/text.gif)|![CustomWidget](doc/gif/custom_widget.gif)
 
 ### 🐮快速使用
 
@@ -119,7 +119,7 @@ BotToast.showAttachedWidget(
 
 - 删除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被弃用的枚举
 
-- [更详细的2.0版本改动,点击查看](https://github.com/MMMzq/bot_toast/blob/master/CHANGELOG.md#200)
+- [更详细的2.0版本改动,点击查看](CHANGELOG.md#200)
 
 ####  1.x版本升级到2.x版本
 
@@ -185,7 +185,7 @@ showEnhancedWidget(
 <br>
 
 ###  📃主要Api文档
-[主要Api文档](https://github.com/MMMzq/bot_toast/blob/master/API.md)
+[主要Api文档](API.md)
 
 
 
