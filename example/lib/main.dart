@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'all.dart';
 import 'attached_toast/attached_toast.dart';
+import 'custom/custom_animation.dart';
+import 'custom/custom_widget.dart';
 import 'loading/custom_loading.dart';
 import 'loading/loading.dart';
 import 'notification/custom_notification.dart';
@@ -11,19 +13,19 @@ import 'notification/notification.dart' as notification;
 import 'text/custom_text.dart';
 import 'text/text.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()], 
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BotToastInit(
+      child: MaterialApp(
+        title: 'BotToast Demo',
+        navigatorObservers: [BotToastNavigatorObserver()],
+        home: EnterPage(),
       ),
-      home: BotToastInit(child: EnterPage()),
     );
   }
 }
@@ -148,10 +150,8 @@ class EnterPage extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: RaisedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => Loading()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => Loading()));
                           },
                           child: Text("Loading"),
                         ),
@@ -171,15 +171,13 @@ class EnterPage extends StatelessWidget {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
                 Text(
-                  "Other",
+                  'Other',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -192,10 +190,27 @@ class EnterPage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (_) => AttachedToast()));
                           },
-                          child: Text("AttachedToast"),
+                          child: Text('AttachedToast'),
                         ),
                       ),
-                    ), Expanded(
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => All()));
+                          },
+                          child: Text("All"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: RaisedButton(
@@ -203,12 +218,26 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => All()));
+                                    builder: (_) => CustomAnimation()));
                           },
-                          child: Text("All"),
+                          child: const Text('CustomAnimation'),
                         ),
                       ),
                     ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => CustomWidget()));
+                          },
+                          child: const Text('CustomWidget'),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ]),

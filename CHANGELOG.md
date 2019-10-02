@@ -1,38 +1,56 @@
-## [0.0.1] 
+## [2.0.0]
+* 修改初始化的方式,现在更为通用
 
-* 只是显示Widget到屏幕
+* 支持自定义Toast的**动画**和持续时间😉
 
-## [0.0.2] 
+* `showEnhancedWidget`方法的`closeFunc`参数其含义已经发生了变化了,现在是等待`closeFunc`函数执行完毕才移除Toast
 
-* 添加Loading Toast
+* 添加`showAnimationWidget`方法,可以使用此方法来高度自定义一个有动画的Toast🤩
 
-## [1.0.0]
+* 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
 
-* 1.支持弹出Notification Toast
-* 2.支持某个Widget 显示
-* 3.对已有的功能进行重构,增强各个方法
+* `WrapWidget`类型方法参数发生变化(破坏性的),但是如果你没有直接使用`showEnhancedWidget`方式的话,这个修改对1.x版本的代码其实是无影响的,如果有使用请看这里进行兼容[1.x版本升级到2.x版本](README_zh.md#1x版本升级到2x版本)
 
-## [1.0.0+1]
+* `showXxxNotification` 添加`dismissDirections`参数:表示能进行滑动关闭的方向 
 
-* 更新文档及在线例子
+* `showXxxText`,`showXxxLoading`,`showXxxNotification`等方法添加了`align`参数:表示ToastContent区域在MainContent区域的对齐,可用于自定义Toast放置的位置
 
-## [1.0.0+2]
+* 修复了`showAttachedWidget`方法的一些bug
 
-* 更新文档及在线例子
+* 支持flutter web(注意不能确保其稳定性)
 
-## [1.0.1]
+* 更新example的样式,并添加了更多demo
 
-* Toast关闭后,清理向BotToastNavigatorObserver注册的函数
+<br>
 
-## [1.0.2]
+* Modify the way of initialization, now more general
 
-* 放宽init重复初始化检查的程度
-* 替换scheduleFrame方法为ensureVisualUpdate
+* Support for custom Toast **animation** and **animation duration**😉
 
-## [1.0.3]
+* The meaning of the `closeFunc` parameter of the `showEnhancedWidget` method has changed. Now it is wait for the `closeFunc` function to complete before removing Toast.
 
-* 修复当pop所有Route再push Route会出现Bug
-* 加固了当项目使用MaterialApp.navigatorKey,能使用reInit重新初始化
+* Add the `showAnimationWidget` method, you can use this method to highly customize an animated Toast🤩
+
+* Remove the `reInit` method and the two deprecated enumerations `PreferDirection.Below` and `PreferDirection.Upside`
+
+* `WrapWidget` type method parameter changed (not compatible with 1.x version),see [1.x version upgrade 2.x version ](README.md#1x-version-upgrade-to-2x-version)
+
+* `showXxxNotification` Add `dismissDirections` parameter
+
+* `showXxxText`, `showXxxLoading`, `showXxxNotification` method adds `align` parameter
+
+* Fixed some bugs in the `showAttachedWidget` method
+
+* Support flutter web (note that it cannot ensure its stability)
+
+* Updated the style of example and added more demos
+
+## [1.1.1]
+* Bug fix:
+
+The targetContext of the showAttachedWidget method causes a positioning error when it is inside the ScrollView.
+
+showAttachedWidget方法的targetContext在ScrollView里面时导致定位出错
 
 ## [1.1.0]
 * 主要对showAttachedWidget方法进行了增强,现在支持更多方向,定位更准确了。
@@ -45,9 +63,40 @@
 
 * 对于`preferDirection=xxxCenter`的情况,其交叉轴的偏移将会忽略
 
-## [1.1.1]
-* Bug fix:
+## [1.0.3]
 
-The targetContext of the showAttachedWidget method causes a positioning error when it is inside the ScrollView.
+* 修复当pop所有Route再push Route会出现Bug
+* 加固了当项目使用MaterialApp.navigatorKey,能使用reInit重新初始化
 
-showAttachedWidget方法的targetContext在ScrollView里面时导致定位出错
+## [1.0.2]
+
+* 放宽init重复初始化检查的程度
+* 替换scheduleFrame方法为ensureVisualUpdate
+
+## [1.0.1]
+
+* Toast关闭后,清理向BotToastNavigatorObserver注册的函数
+
+
+## [1.0.0+2]
+
+* 更新文档及在线例子
+
+
+## [1.0.0+1]
+
+* 更新文档及在线例子
+
+## [1.0.0]
+
+* 1.支持弹出Notification Toast
+* 2.支持某个Widget 显示
+* 3.对已有的功能进行重构,增强各个方法
+
+## [0.0.2] 
+
+* 添加Loading Toast
+
+## [0.0.1] 
+
+* 只是显示Widget到屏幕

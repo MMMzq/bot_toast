@@ -13,6 +13,8 @@ class _NotificationState extends State<Notification> {
   bool crossPage = true;
   int seconds = 2;
   double contentPadding = 2;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +31,27 @@ class _NotificationState extends State<Notification> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showNotification(
-                    leading: (cancel) => SizedBox.fromSize(
-                        size: const Size(40, 40),
-                        child: IconButton(
-                          icon: Icon(Icons.favorite,color: Colors.redAccent),
-                          onPressed: cancel,
-                        )),
-                    title: (_) => Text('I love u'),
-                    subtitle: (_) => Text("let's be together"),
-                    trailing: (cancel) => IconButton(
-                          icon: Icon(Icons.cancel),
-                          onPressed: cancel,
-                        ),
-                    enableSlideOff: enableSlideOff,
-                    crossPage: crossPage,
-                    contentPadding: EdgeInsets.all(contentPadding),
-                    onlyOne: onlyOne,
-                    duration: Duration(seconds: seconds)
-                  );
+                      leading: (cancel) => SizedBox.fromSize(
+                          size: const Size(40, 40),
+                          child: IconButton(
+                            icon: Icon(Icons.favorite, color: Colors.redAccent),
+                            onPressed: cancel,
+                          )),
+                      title: (_) => Text('I love u'),
+                      subtitle: (_) => Text("let's be together"),
+                      trailing: (cancel) => IconButton(
+                            icon: Icon(Icons.cancel),
+                            onPressed: cancel,
+                          ),
+                      enableSlideOff: enableSlideOff,
+                      crossPage: crossPage,
+                      contentPadding: EdgeInsets.all(contentPadding),
+                      onlyOne: onlyOne,
+                      animationDuration:
+                          Duration(milliseconds: animationMilliseconds),
+                      animationReverseDuration:
+                          Duration(milliseconds: animationReverseMilliseconds),
+                      duration: Duration(seconds: seconds));
                 },
                 child: Text("notification"),
               ),
@@ -91,6 +96,35 @@ class _NotificationState extends State<Notification> {
                 ),
               ),
               ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
                 title: Text("contentPadding:   $contentPadding"),
                 trailing: CupertinoSlider(
                   min: 1,
@@ -119,8 +153,7 @@ class _NotificationState extends State<Notification> {
   }
 }
 
-String _code =
-"""
+String _code = """
 BotToast.showNotification(
          leading: (_) => SizedBox.fromSize(
              size: const Size(40, 40),

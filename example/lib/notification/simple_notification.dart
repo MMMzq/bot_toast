@@ -11,8 +11,11 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   bool enableSlideOff = true;
   bool hideCloseButton = false;
   bool onlyOne = true;
-  bool crossPage=true;
+  bool crossPage = true;
   int seconds = 2;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
+
   @override
   void initState() {
     BotToast.showSimpleNotification(
@@ -22,6 +25,9 @@ class _SimpleNotificationState extends State<SimpleNotification> {
         hideCloseButton: hideCloseButton,
         onlyOne: onlyOne,
         crossPage: crossPage,
+        animationDuration: Duration(milliseconds: animationMilliseconds),
+        animationReverseDuration:
+            Duration(milliseconds: animationReverseMilliseconds),
         duration: Duration(seconds: seconds));
 
     super.initState();
@@ -48,6 +54,10 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                       hideCloseButton: hideCloseButton,
                       onlyOne: onlyOne,
                       crossPage: crossPage,
+                      animationDuration:
+                          Duration(milliseconds: animationMilliseconds),
+                      animationReverseDuration:
+                          Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds));
                 },
                 child: Text("simpleNotification"),
@@ -93,10 +103,40 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 trailing: CupertinoSlider(
                   min: 1,
                   max: 20,
+                  divisions: 20,
                   value: seconds.toDouble(),
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),

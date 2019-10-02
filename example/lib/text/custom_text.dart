@@ -14,8 +14,8 @@ class _CustomTextState extends State<CustomText> {
   bool ignoreContentClick = false;
   bool onlyOne = true;
   int backgroundColor = 0x00000000;
-
-
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -38,33 +38,40 @@ class _CustomTextState extends State<CustomText> {
                     crossPage: crossPage,
                     ignoreContentClick: ignoreContentClick,
                     backgroundColor: Color(backgroundColor),
+                    animationDuration:
+                        Duration(milliseconds: animationMilliseconds),
+                    animationReverseDuration:
+                        Duration(milliseconds: animationReverseMilliseconds),
                     toastBuilder: (_) => Align(
-                          alignment: Alignment(0, 0.8),
-                          child: Card(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.redAccent,
-                                    ),
-                                    onPressed: () {
-                                      BotToast.showSimpleNotification(
-                                          title: "Yes, I do!",
-                                          crossPage: crossPage,
-                                          closeIcon: Icon(Icons.favorite,color: Colors.redAccent,),
-                                          duration: Duration(seconds: seconds));
-                                    }),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Text("propose marriage?"),
+                      alignment: Alignment(0, 0.8),
+                      child: Card(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            IconButton(
+                                icon: Icon(
+                                  Icons.favorite_border,
+                                  color: Colors.redAccent,
                                 ),
-                              ],
+                                onPressed: () {
+                                  BotToast.showSimpleNotification(
+                                      title: "Yes, I do!",
+                                      crossPage: crossPage,
+                                      closeIcon: Icon(
+                                        Icons.favorite,
+                                        color: Colors.redAccent,
+                                      ),
+                                      duration: Duration(seconds: seconds));
+                                }),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text("propose marriage?"),
                             ),
-                          ),
+                          ],
                         ),
+                      ),
+                    ),
                   );
                 },
                 child: Text("TextToast"),
@@ -78,6 +85,35 @@ class _CustomTextState extends State<CustomText> {
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),

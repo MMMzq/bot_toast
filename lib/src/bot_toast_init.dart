@@ -23,4 +23,10 @@ class _BotToastInitState extends State<BotToastInit> {
     BotToast.init(context);
     super.initState();
   }
+
+  @override
+  void didUpdateWidget(BotToastInit oldWidget) {
+    BotToast.init(context);
+    super.didUpdateWidget(oldWidget);
+  }
 }

@@ -1,20 +1,56 @@
+name: ci
 
-name: CI
-
-on: [push]
+on: [push,pull_request,release]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup flutter
-      run: |
-        git clone https://github.com/flutter/flutter.git -b stable --depth 1
-        ./flutter/bin/flutter doctor
-    - name: Flutter unit test
-      run: ./flutter/bin/flutter test --coverage --coverage-path=lcov.info
-    - name: Report code coverage
-      run: bash <(curl -s https://codecov.io/bash)
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+
+      - name: Flutter unit test
+        run: flutter test --coverage --coverage-path=lcov.info
+
+      - name: Report CodeCov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: lcov.info
+          flags: unittests
+
+  build-web:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b master --depth 1
+          ./flutter/bin/flutter doctor
+          ./flutter/bin/flutter --version
+
+      - name: Enable web
+        run: ./flutter/bin/flutter config --enable-web
+
+      - name: Build web
+        run: cd example && ../flutter/bin/flutter build web && cd ..
+
+      - name: Deploy web To GH-Page
+        if: github.ref == 'master' && github.event_name == 'release'
+        uses: peaceiris/actions-gh-pages@v2.4.0
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./example/build/web/

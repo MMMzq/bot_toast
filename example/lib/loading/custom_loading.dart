@@ -20,7 +20,7 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
     animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 
-    animationController.addStatusListener((AnimationStatus status){
+    animationController.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
         animationController.reverse();
       } else if (status == AnimationStatus.dismissed) {
@@ -69,29 +69,23 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              FadeTransition(
-                opacity: animationController,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Colors.redAccent,
-                    size: 30
-                  ),
-                  onPressed: handleTap,
-                ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            FadeTransition(
+              opacity: animationController,
+              child: IconButton(
+                icon: Icon(Icons.favorite, color: Colors.redAccent, size: 30),
+                onPressed: handleTap,
               ),
-              Text(
-                "i miss you",
-              )
-            ],
-          ),
+            ),
+            Text(
+              "i miss you",
+            )
+          ],
         ),
       ),
     );
@@ -110,6 +104,8 @@ class _CustomLoadingState extends State<CustomLoading> {
   bool allowClick = true;
   bool ignoreContentClick = false;
   bool crossPage = true;
+  int animationMilliseconds = 200;
+  int animationReverseMilliseconds = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -129,10 +125,15 @@ class _CustomLoadingState extends State<CustomLoading> {
                       clickClose: clickClose,
                       allowClick: allowClick,
                       ignoreContentClick: ignoreContentClick,
+                      animationDuration:
+                          Duration(milliseconds: animationMilliseconds),
+                      animationReverseDuration:
+                          Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(
                         seconds: seconds,
                       ),
                       backgroundColor: Color(backgroundColor),
+                      align: Alignment.center,
                       toastBuilder: (cancelFunc) {
                         return _CustomLoadWidget(cancelFunc: cancelFunc);
                       });
@@ -148,6 +149,35 @@ class _CustomLoadingState extends State<CustomLoading> {
                   onChanged: (double value) {
                     setState(() {
                       seconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationMilliseconds = value.toInt();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                trailing: CupertinoSlider(
+                  min: 100,
+                  max: 1000,
+                  divisions: 18,
+                  value: animationReverseMilliseconds.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      animationReverseMilliseconds = value.toInt();
                     });
                   },
                 ),

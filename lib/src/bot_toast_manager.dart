@@ -1,14 +1,14 @@
-part of 'toast.dart';
+import 'package:flutter/material.dart';
 
-class _BotToastManager extends StatefulWidget {
-  _BotToastManager({Key key}) : super(key: key);
+class BotToastManager extends StatefulWidget {
+  const BotToastManager({Key key}) : super(key: key);
 
   @override
-  _BotToastManagerState createState() => _BotToastManagerState();
+  BotToastManagerState createState() => BotToastManagerState();
 }
 
-class _BotToastManagerState extends State<_BotToastManager> {
-  Map<String, Map<UniqueKey, IndexedSemantics>> _map = {};
+class BotToastManagerState extends State<BotToastManager> {
+  final Map<String, Map<UniqueKey, IndexedSemantics>> _map = {};
   int index = 0;
 
   @override

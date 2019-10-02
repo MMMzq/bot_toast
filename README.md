@@ -3,16 +3,17 @@ BotToast 🤖
 A really easy to use flutter toast library!
 
 [![](https://img.shields.io/pub/v/bot_toast.svg?label=bot_toast&logo=https%3A%2F%2Fpub.flutter-io.cn%2Fpackages%2Fbot_toast)](https://pub.flutter-io.cn/packages/bot_toast)
-[![Build Status](https://travis-ci.com/MMMzq/bot_toast.svg?branch=master)](https://travis-ci.com/MMMzq/bot_toast)
+[![Build Status](https://github.com/MMMzq/bot_toast/workflows/CI/badge.svg)](https://github.com/MMMzq/bot_toast/actions)
 [![codecov](https://codecov.io/gh/MMMzq/bot_toast/branch/master/graph/badge.svg)](https://codecov.io/gh/MMMzq/bot_toast)
 
-### Language: English | [中文简体](https://github.com/MMMzq/bot_toast/blob/master/README_zh.md)
+### Language: English | [中文简体](README_zh.md)
 
 * [🐲Overview](#Overview)
 * [🐼Online Demo](#Online-Demo)
 * [🐳Example](#Example)
 * [🐺Renderings](#Renderings)
 * [🐮Getting started](#Getting-started) 
+* [🐼2.0 version](#20-version)
 * [📃Documentation](#Documentation) 
 
 ###  🐲Overview
@@ -27,29 +28,30 @@ A really easy to use flutter toast library!
 
 - Pure flutter implementation, it is not easy to bring compatibility problems
 
+
 ### 🐼Online Demo
 
 **[Online demo](https://mmmzq.github.io/bot_toast/#/)** (Web effects may be biased, the actual effect is subject to the mobile phone)
 
 ### 🐳Example
-**[Sample project](https://github.com/MMMzq/bot_toast/tree/master/example)**
+**[Sample project](example)**
 
 ### 🐺Renderings
 
-Text|Attached
---------|-------
-![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![Attached](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/attached.gif)
+Notification|Attached|CustomAnimation
+--------|-------|--------
+![Notification](doc/gif/notification.gif)|![Attached](doc/gif/attached.gif)|![CustomAnimation](doc/gif/custom_animation.gif)
 
-Loading|Notification 
---------|-------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Notification](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/notification.gif)
+Loading|Text|CustomWidget
+--------|-------|----------
+![Loading](doc/gif/loading.gif)|![Text](doc/gif/text.gif)|![CustomWidget](doc/gif/custom_widget.gif)
 
 ### 🐮Getting started
 
 #### 1. add dependencies into you project pubspec.yaml file
 ``` dart
 dependencies:
-     bot_toast: ^1.1.1
+     bot_toast: ^2.0.0
 ```
 
 #### 2. import BotToast lib
@@ -59,14 +61,14 @@ import 'package:bot_toast/bot_toast.dart';
 
 #### 3. initialization BotToast
 ``` dart
-///Like this, BotToast will automatically initialize
-MaterialApp(
+//1. wrap MaterialApp with BotToastInit
+BotToastInit(
+  child:MaterialApp(
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],//1.registered route observer
-      home: BotToastInit(  //2.wrap your Page with BotToastInit
-          child: XxxxPage()
-      ),
-    );
+      navigatorObservers: [BotToastNavigatorObserver()],//2.registered route observer
+      home: XxxxPage(),
+  )
+);
 ```
 
 #### 4. use BotToast
@@ -98,11 +100,74 @@ BotToast.showAttachedWidget(
     target: Offset(520, 520));
 ```
 
+### 🐼2.0 version
+
+#### Major changes:
+
+- Support for custom Toast **animation** and **animation duration**
+
+- Add the `showAnimationWidget` method, which can be used to highly customize an animated Toast🤩
+
+- Modified the initialization method to make it more versatile. 1.x version upgrade to 2.0 modification needs manual modification to adapt
+
+- Remove the `reInit` method and the two deprecated enumerations `PreferDirection.Below` and `PreferDirection.Upside`
+
+- [More detailed version 2.0 changes, click to view](CHANGELOG.md#200)
+
+#### 1.x version upgrade to 2.x version
+
+- Modify the location used by BotInit, Now wrap your MaterialApp with `BotToastInit` instead of `XxxPage`
+
+change:
+``` dart
+///1.x.x version initialization method
+MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: BotToastInit(  //2.初始化BotToast
+          child: XxxxPage()
+      ),
+    );
+```
+to:
+``` dart
+///2.x.x version initialization method
+///Wrap your MaterialApp with BotToastInit
+BotToastInit(
+  child:MaterialApp(
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: XxxxPage(),
+  )
+);
+```
+
+- Modify the `warpWidget` parameter of the `showEnhancedWidget` method (note that this step is not necessary, depending on whether you have used `showEnhancedWidget`, if not used, this step can be omitted)
+
+change:
+```dart
+///1.x.x version
+showEnhancedWidget(
+  ...
+  warpWidget:(widget)=>XxxWrap(child:widget);
+  ...
+)
+```
+to:
+```dart
+///2.x.x version
+showEnhancedWidget(
+  ...
+  warpWidget:(cancel,widget)=>XxxWrap(child:widget);
+  ...
+)
+```
+
 <br>
 
 
 ###  📃Documentation
-[Documentation](https://github.com/MMMzq/bot_toast/blob/master/API.md)
+[Documentation](API.md)
 
 
 
