@@ -48,7 +48,7 @@ Notification|Attached|CustomAnimation
 
 Loading|Text|CustomWidget
 --------|-------|----------
-![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![CustomWidget](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_animation.gif)
+![Loading](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/loading.gif)|![Text](https://github.com/MMMzq/bot_toast/raw/master/doc/gif/text.gif)|![CustomWidget](https://github.com/MMMzq/bot_toast/blob/dev/doc/gif/custom_widget.gif)
 
 ### 🐮快速使用
 
@@ -117,13 +117,13 @@ BotToast.showAttachedWidget(
 
 - 修改了初始化的方式使之更为通用,1.x版本升级到2.0修改需手动修改来进行适配。(参考了[overlay_support](https://github.com/boyan01/overlay_support)库的初始化方式,非常感谢)
 
-- 移除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被废除的枚举
+- 删除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被弃用的枚举
 
-- [更详细的2.0改动,点击查看](https://github.com/MMMzq/bot_toast/blob/master/CHANGELOG.md#200)
+- [更详细的2.0版本改动,点击查看](https://github.com/MMMzq/bot_toast/blob/master/CHANGELOG.md#200)
 
 ####  1.x版本升级到2.x版本
 
-- 修改BotInit的位置,现在是直接包裹`MaterialApp`,而不是`XxxPage`
+- 修改BotInit使用的位置,现在是直接包裹`MaterialApp`,而不是`XxxPage`
 
 ``` dart
 ///1.x.x版本的初始化方式
