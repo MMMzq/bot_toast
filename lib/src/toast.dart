@@ -588,7 +588,7 @@ class BotToast {
   ///[animationReverseDuration] 反向动画的持续时间,其含义等同于[AnimationController.reverseDuration]
   ///
   ///[wrapAnimation] 包装MainContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,
-  ///使用这个函数不意味着一定要使用动画,可以额外做一些包装widget的处理,于
+  ///使用这个函数不意味着一定要使用动画,可以额外做一些包装widget的处理
   ///
   ///[wrapToastAnimation] 包装ToastContent区域的动画,可用于自定义动画,如果为null则表示不需要动画,
   ///使用这个函数不意味着一定要使用动画,可以额外做一些包装widget的处理
