@@ -83,9 +83,6 @@ Offset positionToastBox(
   }
 
   bool canPlaceBottom({double extraSpace = 0}) {
-    print(containerRect.bottom - targetRect.bottom);
-    print(targetRect.height);
-    print(toastSize.height);
     return toastSize.height + verticalOffset <
         containerRect.bottom - targetRect.bottom + extraSpace;
   }
@@ -136,7 +133,6 @@ Offset positionToastBox(
         .replaceAll("left", "")
         .replaceAll("right", "")) {
       case "Top":
-        print(canPlaceBottom(extraSpace: targetRect.height));
         direction += canPlaceBottom(extraSpace: targetRect.height)
             ? "Top"
             : canPlaceTop(extraSpace: targetRect.height) ? "Bottom" : "Center";
