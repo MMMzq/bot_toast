@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../bot_toast.dart';
 import 'basis.dart';
+import 'bot_toast_init.dart';
 import 'bot_toast_manager.dart';
 import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
@@ -54,7 +54,7 @@ class BotToast {
   };
 
 
-  static void init(BuildContext context) {
+  static void _init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
     Example:
@@ -62,7 +62,7 @@ class BotToast {
       child: MaterialApp(
         title: 'BotToast Demo',
         navigatorObservers: [BotToastNavigatorObserver()],
-        home: EnterPage()
+        home: XxxPage()
       ),
     );
     """);
@@ -74,13 +74,13 @@ class BotToast {
             return false;
           }
           return true;
-        }(),'Initialization error');
+        }(), 'Initialization error : locale==null');
         if (element.widget is Navigator) {
           if (_navigatorState == null ||
               _managerState.currentState == null ||
               _navigatorState != (element as StatefulElement).state) {
             _navigatorState = (element as StatefulElement).state;
-            _init();
+            _doInit();
           }
         } else {
           element.visitChildElements(visitor);
@@ -97,7 +97,7 @@ class BotToast {
          BotToastInit(
                child: MaterialApp(
                  navigatorObservers: [BotToastNavigatorObserver()],
-                 home: EnterPage(),
+                 home: XxxPage(),
                ),
              );
       ''');
@@ -106,7 +106,7 @@ class BotToast {
   }
 
   ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
-  static void _init() {
+  static void _doInit() {
     _managerState = GlobalKey<BotToastManagerState>();
     BotToastNavigatorObserverProxy observerProxy;
     final overlayEntry = OverlayEntry(
@@ -816,10 +816,11 @@ class BotToast {
       remove(uniqueKey, gk);
     };
     ()async{
-      assert(botToastInitKey.currentState!=null);
+      assert(botToastInitKey.currentState !=
+          null, 'Please wait for BotToastInit to be attached to the Widget tree and then call');
       if(botToastInitKey.currentState.needInit){
         botToastInitKey.currentState.reset();
-        init(botToastInitKey.currentContext);
+        _init(botToastInitKey.currentContext);
         assert(!_initCompleter.isCompleted);
       }
       await _initCompleter.future;
