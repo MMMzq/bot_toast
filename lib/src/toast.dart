@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import '../bot_toast.dart';
 import 'basis.dart';
 import 'bot_toast_manager.dart';
 import 'key_board_safe_area.dart';
@@ -42,6 +43,7 @@ class BotToast {
   static const String loadKey = '_loadKey';
   static const String attachedKey = '_attachedKey';
   static const String defaultKey = '_defaultKey';
+  static Completer<void> _initCompleter;
 
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
@@ -51,7 +53,7 @@ class BotToast {
     defaultKey: [],
   };
 
-  ///一般这种情况只会出现在pop所有路由再推一个路由出现,同时根[MaterialApp.navigatorKey]改变就会出现问题,所以只能手动reInit
+
   static void init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
@@ -64,8 +66,15 @@ class BotToast {
       ),
     );
     """);
+    _initCompleter=Completer<void>();
     _safeRun(() {
       void visitor(Element element) {
+        assert((){
+          if(element.widget is Localizations && ((element as StatefulElement).state as dynamic).locale==null){
+            return false;
+          }
+          return true;
+        }(),'Initialization error');
         if (element.widget is Navigator) {
           if (_navigatorState == null ||
               _managerState.currentState == null ||
@@ -92,6 +101,7 @@ class BotToast {
                ),
              );
       ''');
+      _initCompleter.complete();
     });
   }
 
@@ -805,39 +815,37 @@ class BotToast {
     final CancelFunc cancelFunc = () {
       remove(uniqueKey, gk);
     };
-    _safeRun(() {
-      /*
-      如果currentState为空说明此时BotToast还没初始化完成,此时的状态是处理showWidget和init方法都是是在同一帧里,
-      因此要把showWidget方法放在下一帧处理
-      */
-      if (_managerState.currentState == null) {
-        _safeRun(() {
-          _managerState.currentState
-              .insert(gk, uniqueKey, toastBuilder(cancelFunc));
-        });
-      } else {
+    ()async{
+      assert(botToastInitKey.currentState!=null);
+      if(botToastInitKey.currentState.needInit){
+        botToastInitKey.currentState.reset();
+        init(botToastInitKey.currentContext);
+        assert(!_initCompleter.isCompleted);
+      }
+      await _initCompleter.future;
+      _safeRun(() {
         _managerState.currentState
             .insert(gk, uniqueKey, toastBuilder(cancelFunc));
-      }
-    });
+      });
+    }();
     return cancelFunc;
   }
 
   static void remove(UniqueKey key, [String groupKey]) {
     _safeRun(() {
-      _managerState.currentState.remove(groupKey ?? defaultKey, key);
+      _managerState.currentState?.remove(groupKey ?? defaultKey, key);
     });
   }
 
   static void removeAll([String groupKey]) {
     _safeRun(() {
-      _managerState.currentState.removeAll(groupKey ?? defaultKey);
+      _managerState.currentState?.removeAll(groupKey ?? defaultKey);
     });
   }
 
   static void cleanAll() {
     _safeRun(() {
-      _managerState.currentState.cleanAll();
+      _managerState.currentState?.cleanAll();
     });
   }
 
