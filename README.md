@@ -51,7 +51,7 @@ Loading|Text|CustomWidget
 #### 1. add dependencies into you project pubspec.yaml file
 ``` dart
 dependencies:
-     bot_toast: ^2.0.0
+     bot_toast: ^2.1.0
 ```
 
 #### 2. import BotToast lib
