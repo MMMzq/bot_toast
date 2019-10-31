@@ -1,3 +1,19 @@
+## [2.1.0]
+* bug fix: see [#11](https://github.com/MMMzq/bot_toast/issues/11)
+
+* 移除`BotToastInit`的`key`参数
+
+* `BotToast.init`方法变为私有方法不再公开
+
+* 重构了初始化的方式
+
+* Remove the `key` parameter of `BotToastInit`
+
+* `BotToast.init` method becomes private and no longer public
+
+* Refactored the way to initialize
+
+
 ## [2.0.0+2]
 * Update document
 

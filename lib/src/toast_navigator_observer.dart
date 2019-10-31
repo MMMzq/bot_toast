@@ -18,16 +18,6 @@ class BotToastNavigatorObserverProxy {
 }
 
 ///如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
-///可以参考[BotToast.init]方法添加
-///或者在创建[Navigator]时直接添加
-///    Example:
-///    MaterialApp(
-///      navigatorObservers: [BotToastNavigatorObserver()],
-///      title: 'Flutter Demo',
-///      home: ToastWidget(
-///        child: XxxxPage(title: 'Flutter Demo Home Page'),
-///      ),
-///    );
 class BotToastNavigatorObserver extends NavigatorObserver {
   static final List<BotToastNavigatorObserverProxy> _leavePageCallbacks = [];
 
@@ -44,11 +34,12 @@ class BotToastNavigatorObserver extends NavigatorObserver {
     assert(debugInitialization, """
     Please initialize!
     Example:
-    MaterialApp(
-      title: 'BotToast Demo',
+    BotToastInit(
+      child:MaterialApp(
+      title: 'Xxxx Demo',
       navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(child: EnterPage()),
-    );
+      home: XxxxPage(),
+    ));
     """);
     assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.add(botToastNavigatorObserverProxy);

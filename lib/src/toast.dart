@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'basis.dart';
+import 'bot_toast_init.dart';
 import 'bot_toast_manager.dart';
 import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
@@ -42,6 +43,7 @@ class BotToast {
   static const String loadKey = '_loadKey';
   static const String attachedKey = '_attachedKey';
   static const String defaultKey = '_defaultKey';
+  static Completer<void> _initCompleter;
 
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
@@ -51,8 +53,8 @@ class BotToast {
     defaultKey: [],
   };
 
-  ///一般这种情况只会出现在pop所有路由再推一个路由出现,同时根[MaterialApp.navigatorKey]改变就会出现问题,所以只能手动reInit
-  static void init(BuildContext context) {
+
+  static void _init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
     Example:
@@ -60,18 +62,25 @@ class BotToast {
       child: MaterialApp(
         title: 'BotToast Demo',
         navigatorObservers: [BotToastNavigatorObserver()],
-        home: EnterPage()
+        home: XxxPage()
       ),
     );
     """);
+    _initCompleter=Completer<void>();
     _safeRun(() {
       void visitor(Element element) {
+        assert((){
+          if(element.widget is Localizations && ((element as StatefulElement).state as dynamic).locale==null){
+            return false;
+          }
+          return true;
+        }(), 'Initialization error : locale==null');
         if (element.widget is Navigator) {
           if (_navigatorState == null ||
               _managerState.currentState == null ||
               _navigatorState != (element as StatefulElement).state) {
             _navigatorState = (element as StatefulElement).state;
-            _init();
+            _doInit();
           }
         } else {
           element.visitChildElements(visitor);
@@ -88,15 +97,16 @@ class BotToast {
          BotToastInit(
                child: MaterialApp(
                  navigatorObservers: [BotToastNavigatorObserver()],
-                 home: EnterPage(),
+                 home: XxxPage(),
                ),
              );
       ''');
+      _initCompleter.complete();
     });
   }
 
   ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
-  static void _init() {
+  static void _doInit() {
     _managerState = GlobalKey<BotToastManagerState>();
     BotToastNavigatorObserverProxy observerProxy;
     final overlayEntry = OverlayEntry(
@@ -805,39 +815,38 @@ class BotToast {
     final CancelFunc cancelFunc = () {
       remove(uniqueKey, gk);
     };
-    _safeRun(() {
-      /*
-      如果currentState为空说明此时BotToast还没初始化完成,此时的状态是处理showWidget和init方法都是是在同一帧里,
-      因此要把showWidget方法放在下一帧处理
-      */
-      if (_managerState.currentState == null) {
-        _safeRun(() {
-          _managerState.currentState
-              .insert(gk, uniqueKey, toastBuilder(cancelFunc));
-        });
-      } else {
+    ()async{
+      assert(botToastInitKey.currentState !=
+          null, 'Please wait for BotToastInit to be attached to the Widget tree and then call');
+      if(botToastInitKey.currentState.needInit){
+        botToastInitKey.currentState.reset();
+        _init(botToastInitKey.currentContext);
+        assert(!_initCompleter.isCompleted);
+      }
+      await _initCompleter.future;
+      _safeRun(() {
         _managerState.currentState
             .insert(gk, uniqueKey, toastBuilder(cancelFunc));
-      }
-    });
+      });
+    }();
     return cancelFunc;
   }
 
   static void remove(UniqueKey key, [String groupKey]) {
     _safeRun(() {
-      _managerState.currentState.remove(groupKey ?? defaultKey, key);
+      _managerState.currentState?.remove(groupKey ?? defaultKey, key);
     });
   }
 
   static void removeAll([String groupKey]) {
     _safeRun(() {
-      _managerState.currentState.removeAll(groupKey ?? defaultKey);
+      _managerState.currentState?.removeAll(groupKey ?? defaultKey);
     });
   }
 
   static void cleanAll() {
     _safeRun(() {
-      _managerState.currentState.cleanAll();
+      _managerState.currentState?.cleanAll();
     });
   }
 
