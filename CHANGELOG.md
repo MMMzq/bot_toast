@@ -3,7 +3,7 @@
 
 * 移除`BotToastInit`的`key`参数
 
-* `BotToast.init`方法变为私有方方法不再公开
+* `BotToast.init`方法变为私有方法不再公开
 
 * 重构了初始化的方式
 
