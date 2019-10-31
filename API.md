@@ -113,7 +113,8 @@ animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animatio
 wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
 wrapToastAnimation | 否 | `attachedAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 preferDirection | 否 | 无| 偏好方向,如果在空间允许的情况下,会偏向显示在那边
-verticalOffset | 否 | ```24```| 垂直偏移跟[preferDirection]有关,根据不同的方向会作用在不用的方向上
+verticalOffset | 否 | ```0```| 垂直偏移,如果实际显示的方向为水平居中则该参数无效
+horizontalOffset| 否 | ```0```| 水平偏移,如果实际显示的方向为垂直居中则该参数无效
 enableSafeArea | 否 | true | 如果为true则toast确保不会显示在app状态栏上面(意味着是安全的),false则反之 
 duration | 否 | 无| [duration说明](#通用参数说明)
 onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
