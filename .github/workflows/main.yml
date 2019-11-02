@@ -1,16 +1,19 @@
 name: ci
 
-&paths paths:
-  - '**.dart'
-  - '**.yml'
 
 on:
   push:
-    *paths
+    paths:
+      - '**.dart'
+      - '**.yml'
   pull_request:
-    *paths
+    paths:
+      - '**.dart'
+      - '**.yml'
   release:
-    *paths
+    paths:
+      - '**.dart'
+      - '**.yml'
     types: [published]
 
 jobs:
@@ -62,6 +65,6 @@ jobs:
         if: github.event_name=='release' && github.event.action=='published'
         uses: peaceiris/actions-gh-pages@v2.4.0
         env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./example/build/web/
