@@ -53,7 +53,6 @@ class BotToast {
     defaultKey: [],
   };
 
-
   static void _init(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
@@ -66,11 +65,12 @@ class BotToast {
       ),
     );
     """);
-    _initCompleter=Completer<void>();
+    _initCompleter = Completer<void>();
     _safeRun(() {
       void visitor(Element element) {
-        assert((){
-          if(element.widget is Localizations && ((element as StatefulElement).state as dynamic).locale==null){
+        assert(() {
+          if (element.widget is Localizations &&
+              ((element as StatefulElement).state as dynamic).locale == null) {
             return false;
           }
           return true;
@@ -142,6 +142,8 @@ class BotToast {
   ///[hideCloseButton] 是否隐藏关闭按钮
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[dismissDirections] 能进行滑动关闭的方向
+  ///[onTap] 点击通知Toast的回调
+  ///[onLongPress] 长按通知Toast的回调
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为[notificationAnimation]
   ///[animationDuration] 请看[showAnimationWidget.animationDuration]
@@ -153,6 +155,8 @@ class BotToast {
     String subTitle,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = notificationAnimation,
+    GestureTapCallback onTap,
+    GestureLongPressCallback onLongPress,
     Alignment align = const Alignment(0, -0.99),
     List<DismissDirection> dismissDirections = const [
       DismissDirection.horizontal,
@@ -175,6 +179,8 @@ class BotToast {
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
         enableSlideOff: enableSlideOff,
+        onTap: onTap,
+        onLongPress: onLongPress,
         onlyOne: onlyOne,
         crossPage: crossPage,
         title: (_) => Text(title),
@@ -192,6 +198,8 @@ class BotToast {
   ///[enableSlideOff] 是否能滑动删除
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[dismissDirections] 能进行滑动关闭的方向
+  ///[onTap] 点击通知Toast的回调
+  ///[onLongPress] 长按通知Toast的回调
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为[notificationAnimation]
   ///[animationDuration] 请看[showAnimationWidget.animationDuration]
@@ -205,6 +213,8 @@ class BotToast {
     ToastBuilder trailing,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = notificationAnimation,
+    GestureTapCallback onTap,
+    GestureLongPressCallback onLongPress,
     Alignment align = const Alignment(0, -0.99),
     List<DismissDirection> dismissDirections = const [
       DismissDirection.horizontal,
@@ -231,6 +241,8 @@ class BotToast {
         toastBuilder: (cancel) {
           return Card(
             child: ListTile(
+                onTap: onTap,
+                onLongPress: onLongPress,
                 contentPadding: contentPadding,
                 leading: leading?.call(cancel),
                 title: title?.call(cancel),
@@ -815,10 +827,10 @@ class BotToast {
     final CancelFunc cancelFunc = () {
       remove(uniqueKey, gk);
     };
-    ()async{
-      assert(botToastInitKey.currentState !=
-          null, 'Please wait for BotToastInit to be attached to the Widget tree and then call');
-      if(botToastInitKey.currentState.needInit){
+        () async {
+      assert(botToastInitKey.currentState != null,
+      'Please wait for BotToastInit to be attached to the Widget tree and then call');
+      if (botToastInitKey.currentState.needInit) {
         botToastInitKey.currentState.reset();
         _init(botToastInitKey.currentContext);
         assert(!_initCompleter.isCompleted);

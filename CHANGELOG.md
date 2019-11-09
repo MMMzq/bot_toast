@@ -1,3 +1,8 @@
+## [2.1.1]
+* showSimpleNotification和showNotification方法添加`onTap`,`onLongPress`参数
+
+* showSimpleNotification and showNotification methods add `onTap`, `onLongPress` parameters
+
 ## [2.1.0]
 * bug fix: see [#11](https://github.com/MMMzq/bot_toast/issues/11)
 
