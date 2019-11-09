@@ -23,6 +23,12 @@ class _SimpleNotificationState extends State<SimpleNotification> {
         subTitle: "yes!",
         enableSlideOff: enableSlideOff,
         hideCloseButton: hideCloseButton,
+        onTap: () {
+          BotToast.showText(text: 'Tap toast');
+        },
+        onLongPress: () {
+          BotToast.showText(text: 'Long press toast');
+        },
         onlyOne: onlyOne,
         crossPage: crossPage,
         animationDuration: Duration(milliseconds: animationMilliseconds),
@@ -54,6 +60,12 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                       hideCloseButton: hideCloseButton,
                       onlyOne: onlyOne,
                       crossPage: crossPage,
+                      onTap: () {
+                        BotToast.showText(text: 'Tap toast');
+                      },
+                      onLongPress: () {
+                        BotToast.showText(text: 'Long press toast');
+                      },
                       animationDuration:
                           Duration(milliseconds: animationMilliseconds),
                       animationReverseDuration:

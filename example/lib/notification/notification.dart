@@ -43,6 +43,12 @@ class _NotificationState extends State<Notification> {
                             icon: Icon(Icons.cancel),
                             onPressed: cancel,
                           ),
+                      onTap: () {
+                        BotToast.showText(text: 'Tap toast');
+                      },
+                      onLongPress: () {
+                        BotToast.showText(text: 'Long press toast');
+                      },
                       enableSlideOff: enableSlideOff,
                       crossPage: crossPage,
                       contentPadding: EdgeInsets.all(contentPadding),
