@@ -48,6 +48,8 @@ animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animatio
 wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
 wrapToastAnimation | 否 | `notificationAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, -0.99)` | ToastContent区域在MainContent区域的对齐
+onTap | 否 | 无 | 点击通知Toast的回调
+onLongPress | 否 | 无 | 长按通知Toast的回调
 closeIcon | 否 | 无|关闭按钮的图标
 enableSlideOff | 否 | true| 是否能滑动删除
 hideCloseButton | 否 | false| 是否隐藏关闭按钮
@@ -72,6 +74,8 @@ animationReverseDuration | 否 | 无 | [说明请看showAnimationWidget.animatio
 wrapAnimation | 否 | 无 | [说明请看showAnimationWidget.wrapAnimation](#9bottoastshowanimationwidget)
 wrapToastAnimation | 否 | `notificationAnimation` | [说明请看showAnimationWidget.wrapToastAnimation](#9bottoastshowanimationwidget)
 align | 否 | `Alignment(0, -0.99)` | ToastContent区域在MainContent区域的对齐
+onTap | 否 | 无| 点击通知Toast的回调
+onLongPress | 否 | 无 | 长按通知Toast的回调
 contentPadding | 否 | 无 | ToastContent区域的内补
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
