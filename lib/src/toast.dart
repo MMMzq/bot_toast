@@ -846,19 +846,19 @@ class BotToast {
 
   static void remove(UniqueKey key, [String groupKey]) {
     _safeRun(() {
-      _managerState.currentState?.remove(groupKey ?? defaultKey, key);
+      _managerState?.currentState?.remove(groupKey ?? defaultKey, key);
     });
   }
 
   static void removeAll([String groupKey]) {
     _safeRun(() {
-      _managerState.currentState?.removeAll(groupKey ?? defaultKey);
+      _managerState?.currentState?.removeAll(groupKey ?? defaultKey);
     });
   }
 
   static void cleanAll() {
     _safeRun(() {
-      _managerState.currentState?.cleanAll();
+      _managerState?.currentState?.cleanAll();
     });
   }
 
