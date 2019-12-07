@@ -13,7 +13,6 @@ class BotToastManager {
 
   BotToastManager(this.botToastInitState);
 
-  ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
 
   void dispose() {
     if (_observerProxy != null) {
@@ -21,6 +20,9 @@ class BotToastManager {
     }
   }
 
+
+  ///需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
+  ///在1.7.8版本以下,一般是在使用[Navigator.pushAndRemoveUntil]才可能发生这种情况
   void _checkNavigatorState(BuildContext context) {
     assert(BotToastNavigatorObserver.debugInitialization, """
     Please initialize properly!
@@ -70,17 +72,17 @@ class BotToastManager {
     debugPrint('_navigatorState:${_navigatorState.hashCode}');
 
 
-//    if(_observerProxy==null){
-//      _observerProxy = BotToastNavigatorObserverProxy(
-//        didPush: (route, _) {
-//          if (route.isFirst&&_children.isNotEmpty) {
-//            _navigatorState.overlay
-//                .rearrange(_children, below: _children.first);
-//          }
-//        },
-//      );
-//      BotToastNavigatorObserver.register(_observerProxy);
-//    }
+    if (_observerProxy == null) {
+      _observerProxy = BotToastNavigatorObserverProxy(
+        didPush: (route, _) {
+          if (route.isFirst && _children.isNotEmpty) {
+            _navigatorState.overlay
+                .rearrange(_children, below: _children.first);
+          }
+        },
+      );
+      BotToastNavigatorObserver.register(_observerProxy);
+    }
   }
 
   List<OverlayEntry> get _children =>
