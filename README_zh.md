@@ -55,7 +55,7 @@ Loading|Text|CustomWidget
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: ^2.1.0
+     bot_toast: ^2.2.0
 ```
 
 #### 2. 导入BotToast库

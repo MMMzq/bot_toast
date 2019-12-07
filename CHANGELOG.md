@@ -1,3 +1,8 @@
+## [2.2.0]
+* 重构底层的实现方式以规避一些隐晦的bug
+
+* Refactor the underlying implementation to avoid some hidden bugs
+
 ## [2.1.1]
 * showSimpleNotification和showNotification方法添加`onTap`,`onLongPress`参数
 

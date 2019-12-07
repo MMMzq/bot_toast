@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 
-final GlobalKey<_BotToastInitState> botToastInitKey =
-GlobalKey<_BotToastInitState>();
+import 'bot_toast_manager.dart';
+
+final GlobalKey<BotToastInitState> _botToastInitKey =
+GlobalKey<BotToastInitState>();
+
+BotToastManager get botToastManager {
+  assert(_botToastInitKey?.currentState?._botToastManager != null);
+  return _botToastInitKey.currentState._botToastManager;
+}
 
 class BotToastInit extends StatefulWidget {
   final Widget child;
 
   BotToastInit({@required this.child})
       : assert(child != null),
-        super(key: botToastInitKey);
+        super(key: _botToastInitKey);
 
   @override
-  _BotToastInitState createState() => _BotToastInitState();
+  BotToastInitState createState() => BotToastInitState();
 }
 
-class _BotToastInitState extends State<BotToastInit> {
+class BotToastInitState extends State<BotToastInit> {
   bool _needInit;
-
   bool get needInit => _needInit;
+
+  BotToastManager _botToastManager;
 
   void reset() {
     _needInit = false;
@@ -32,7 +40,14 @@ class _BotToastInitState extends State<BotToastInit> {
   @override
   void initState() {
     _needInit = true;
+    _botToastManager = BotToastManager(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _botToastManager.dispose();
+    super.dispose();
   }
 
   @override

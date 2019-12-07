@@ -42,7 +42,7 @@ class EnterPage extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.only(top: 5),
+              margin: EdgeInsets.only(top: 30),
               child: Column(children: <Widget>[
                 Text(
                   "Notification",
