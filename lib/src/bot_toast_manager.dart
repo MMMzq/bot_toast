@@ -1,60 +1,141 @@
+import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
+import '../bot_toast.dart';
+import 'bot_toast_init.dart';
+import 'toast.dart';
 
-class BotToastManager extends StatefulWidget {
-  const BotToastManager({Key key}) : super(key: key);
 
-  @override
-  BotToastManagerState createState() => BotToastManagerState();
-}
+class BotToastManager {
+  final Map<String, Map<UniqueKey, OverlayEntry>> _map = {};
+  NavigatorState _navigatorState;
+  BotToastNavigatorObserverProxy _observerProxy;
+  BotToastInitState botToastInitState;
 
-class BotToastManagerState extends State<BotToastManager> {
-  final Map<String, Map<UniqueKey, IndexedSemantics>> _map = {};
-  int index = 0;
+  BotToastManager(this.botToastInitState);
 
-  @override
-  Widget build(BuildContext context) {
-    List<IndexedSemantics> children = _map.values.fold([], (value, items) {
-      return value..addAll(items.values);
-    });
-    children.sort((a, b) => a.index.compareTo(b.index));
-    return Stack(children: children);
+  ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
+
+  void dispose() {
+    if (_observerProxy != null) {
+      BotToastNavigatorObserver.unregister(_observerProxy);
+    }
   }
 
-  ///这里不使用传进来的key,是因为该key在这里担当的是一个UUid的职责,
-  ///不应该用在widget里面,
-  ///那为什么有需要自己new 一个UniqueKey()
-  ///这表明这个Widget在这里面是独一无二的,
-  ///这会防止一些隐晦的bug,
-  ///例如:如果不加入该UniqueKey将会导致
-  ///[BotToast.showEnhancedWidget]onlyOne功能失效,
-  ///主要是因为flutter,只是根据runtimeType来进行判断的话
-  ///会导致调错了各个Toast的dispose
+  void _checkNavigatorState(BuildContext context) {
+    assert(BotToastNavigatorObserver.debugInitialization, """
+    Please initialize properly!
+    Example:
+    BotToastInit(
+      child: MaterialApp(
+        title: 'BotToast Demo',
+        navigatorObservers: [BotToastNavigatorObserver()],
+        home: XxxPage()
+      ),
+    );
+    """);
+
+    void visitor(Element element) {
+      assert(() {
+        if (element.widget is Localizations &&
+            ((element as StatefulElement).state as dynamic).locale == null) {
+          return false;
+        }
+        return true;
+      }(), 'Initialization error : locale==null');
+      if (element.widget is Navigator) {
+        if (_navigatorState == null ||
+            _navigatorState != (element as StatefulElement).state) {
+          _navigatorState = (element as StatefulElement).state;
+        }
+      } else {
+        element.visitChildElements(visitor);
+      }
+    }
+
+    context.visitChildElements(visitor);
+
+    assert(_navigatorState != null, '''
+         Initialization error.
+         The initialization method has been modified in version 2.0.
+         do you wrapped you app widget like this?
+         
+         BotToastInit(
+               child: MaterialApp(
+                 navigatorObservers: [BotToastNavigatorObserver()],
+                 home: XxxPage(),
+               ),
+             );
+      ''');
+
+    debugPrint('_navigatorState:${_navigatorState.hashCode}');
+
+
+//    if(_observerProxy==null){
+//      _observerProxy = BotToastNavigatorObserverProxy(
+//        didPush: (route, _) {
+//          if (route.isFirst&&_children.isNotEmpty) {
+//            _navigatorState.overlay
+//                .rearrange(_children, below: _children.first);
+//          }
+//        },
+//      );
+//      BotToastNavigatorObserver.register(_observerProxy);
+//    }
+  }
+
+  List<OverlayEntry> get _children =>
+      _map.values.fold([], (value, items) {
+        return value..addAll(items.values);
+      });
+
+
   void insert(String groupKey, UniqueKey key, Widget widget) {
-    setState(() {
-      _map[groupKey] ??= {};
-      _map[groupKey][key] = IndexedSemantics(
-        index: index++,
-        child: widget,
-        key: UniqueKey(),
-      );
+    _map[groupKey] ??= {};
+    final uniqueKey = UniqueKey();
+    final overlayEntry = OverlayEntry(builder: (_) =>
+        ProxyDispose(key: uniqueKey, child: widget, disposeCallback: () {
+          remove(groupKey, key);
+        },));
+    _map[groupKey][key] = overlayEntry;
+    safeRun(() {
+      assert(botToastInitState != null);
+      if (botToastInitState.needInit) {
+        botToastInitState.reset();
+        _checkNavigatorState(botToastInitState.context);
+      }
+      _navigatorState.overlay.insert(overlayEntry);
     });
   }
 
   void remove(String groupKey, UniqueKey key) {
-    setState(() {
-      _map[groupKey]?.remove(key);
+    safeRun(() {
+      final result = _map[groupKey]?.remove(key);
+      if (result != null) {
+        result.remove();
+      }
     });
   }
 
   void removeAll(String groupKey) {
-    setState(() {
+    safeRun(() {
+      _map[groupKey]?.forEach((key, value) {
+        assert(value != null);
+        value.remove();
+      });
       _map[groupKey]?.clear();
     });
   }
 
   void cleanAll() {
-    setState(() {
+    safeRun(() {
+      List<OverlayEntry> children = _children;
+      assert(children.every((test) => test != null));
+      children.forEach((item) {
+        item.remove();
+      });
       _map.clear();
     });
   }
 }
+
+

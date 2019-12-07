@@ -17,20 +17,66 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  UniqueKey key1 = UniqueKey();
+  UniqueKey key2 = UniqueKey();
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    return BotToastInit(
-      child: MaterialApp(
-        title: 'BotToast Demo',
-        navigatorObservers: [BotToastNavigatorObserver()],
-        home: EnterPage(),
+    return Container(
+      key: key1,
+      child: BotToastInit(
+        child: MaterialApp(
+          key: key2,
+          title: 'BotToast Demo',
+          navigatorKey: navigatorKey,
+          navigatorObservers: [BotToastNavigatorObserver()],
+          home: Column(
+            children: <Widget>[
+              RaisedButton(
+                onPressed: () async {
+                  setState(() {
+                    key1 = UniqueKey();
+                  });
+                },
+                child: Text('切换外层key'),
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  setState(() {
+                    key2 = UniqueKey();
+                  });
+                },
+                child: Text('切换内层层key'),
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  setState(() {
+                    navigatorKey = GlobalKey<NavigatorState>();
+                  });
+                },
+                child: Text('切换导航key'),
+              ),
+              Expanded(child: EnterPage()),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class EnterPage extends StatelessWidget {
+class EnterPage extends StatefulWidget {
+  @override
+  _EnterPageState createState() => _EnterPageState();
+}
+
+class _EnterPageState extends State<EnterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +95,26 @@ class EnterPage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 Divider(),
+                RaisedButton(
+                  onPressed: () async {
+                    final cancel = BotToast.showText(
+                        text: 'test', duration: null);
+//                  await Future.delayed(Duration(milliseconds: 500));
+//                  cancel();
+                  },
+                  child: Text('test'),
+                ),
+                RaisedButton(
+                  onPressed: () async {
+//                    NavigatorState n=Navigator.of(context);
+//                    n.popUntil((_)=>false);
+
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (_) => EnterPage()), (
+                        _) => false);
+                  },
+                  child: Text('弹出所有路由再push'),
+                ),
                 Row(
                   children: <Widget>[
                     Expanded(

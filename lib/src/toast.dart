@@ -10,7 +10,7 @@ import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
-void _safeRun(void Function() callback) {
+void safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
     callback();
   });
@@ -35,15 +35,12 @@ void _safeRun(void Function() callback) {
 ///如果真的要生成,可以考虑使用[IgnorePointer].
 ///如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 class BotToast {
-  static GlobalKey<BotToastManagerState> _managerState;
-  static NavigatorState _navigatorState;
 
   static const String textKey = '_textKey';
   static const String notificationKey = '_notificationKey';
   static const String loadKey = '_loadKey';
   static const String attachedKey = '_attachedKey';
   static const String defaultKey = '_defaultKey';
-  static Completer<void> _initCompleter;
 
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
@@ -53,85 +50,7 @@ class BotToast {
     defaultKey: [],
   };
 
-  static void _init(BuildContext context) {
-    assert(BotToastNavigatorObserver.debugInitialization, """
-    Please initialize properly!
-    Example:
-    BotToastInit(
-      child: MaterialApp(
-        title: 'BotToast Demo',
-        navigatorObservers: [BotToastNavigatorObserver()],
-        home: XxxPage()
-      ),
-    );
-    """);
-    _initCompleter = Completer<void>();
-    _safeRun(() {
-      void visitor(Element element) {
-        assert(() {
-          if (element.widget is Localizations &&
-              ((element as StatefulElement).state as dynamic).locale == null) {
-            return false;
-          }
-          return true;
-        }(), 'Initialization error : locale==null');
-        if (element.widget is Navigator) {
-          if (_navigatorState == null ||
-              _managerState.currentState == null ||
-              _navigatorState != (element as StatefulElement).state) {
-            _navigatorState = (element as StatefulElement).state;
-            _doInit();
-          }
-        } else {
-          element.visitChildElements(visitor);
-        }
-      }
 
-      context.visitChildElements(visitor);
-
-      assert(_navigatorState != null, '''
-         Initialization error.
-         The initialization method has been modified in version 2.0.
-         do you wrapped you app widget like this?
-         
-         BotToastInit(
-               child: MaterialApp(
-                 navigatorObservers: [BotToastNavigatorObserver()],
-                 home: XxxPage(),
-               ),
-             );
-      ''');
-      _initCompleter.complete();
-    });
-  }
-
-  ///这里需要监听didPush是因为,当Navigator的Route集合为空再推一个Route会导致这个页面覆盖_BotToastManager上面,挡住了Toast,因此要手动移动到最后
-  static void _doInit() {
-    _managerState = GlobalKey<BotToastManagerState>();
-    BotToastNavigatorObserverProxy observerProxy;
-    final overlayEntry = OverlayEntry(
-        builder: (_) {
-          return ProxyDispose(
-            disposeCallback: () {
-              BotToastNavigatorObserver.unregister(observerProxy);
-            },
-            child: BotToastManager(
-              key: _managerState,
-            ),
-          );
-        },
-        maintainState: true);
-    _navigatorState.overlay.insert(overlayEntry);
-    observerProxy = BotToastNavigatorObserverProxy(
-      didPush: (route, _) {
-        if (route.isFirst) {
-          _navigatorState.overlay
-              .rearrange([overlayEntry], below: overlayEntry);
-        }
-      },
-    );
-    BotToastNavigatorObserver.register(observerProxy);
-  }
 
   ///显示简单的通知Toast
   ///
@@ -761,6 +680,7 @@ class BotToast {
       });
     }
 
+
     //跨页自动关闭
     BotToastNavigatorObserverProxy observerProxy;
     if (!crossPage) {
@@ -827,39 +747,21 @@ class BotToast {
     final CancelFunc cancelFunc = () {
       remove(uniqueKey, gk);
     };
-        () async {
-      assert(botToastInitKey.currentState != null,
-      'Please wait for BotToastInit to be attached to the Widget tree and then call');
-      if (botToastInitKey.currentState.needInit) {
-        botToastInitKey.currentState.reset();
-        _init(botToastInitKey.currentContext);
-        assert(!_initCompleter.isCompleted);
-      }
-      await _initCompleter.future;
-      _safeRun(() {
-        _managerState.currentState
-            .insert(gk, uniqueKey, toastBuilder(cancelFunc));
-      });
-    }();
+
+    botToastManager.insert(gk, uniqueKey, toastBuilder(cancelFunc));
     return cancelFunc;
   }
 
   static void remove(UniqueKey key, [String groupKey]) {
-    _safeRun(() {
-      _managerState?.currentState?.remove(groupKey ?? defaultKey, key);
-    });
+    botToastManager.remove(groupKey ?? defaultKey, key);
   }
 
   static void removeAll([String groupKey]) {
-    _safeRun(() {
-      _managerState?.currentState?.removeAll(groupKey ?? defaultKey);
-    });
+    botToastManager.removeAll(groupKey ?? defaultKey);
   }
 
   static void cleanAll() {
-    _safeRun(() {
-      _managerState?.currentState?.cleanAll();
-    });
+    botToastManager.cleanAll();
   }
 
   static AnimationController _createAnimationController(Duration duration,
