@@ -33,14 +33,12 @@ class BotToastInitState extends State<BotToastInit> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('BotToastInitState.build');
     _needInit = true;
     return widget.child;
   }
 
   @override
   void initState() {
-    debugPrint('BotToastInitState.init');
     _needInit = true;
     _botToastManager = BotToastManager(this);
     super.initState();
@@ -48,14 +46,12 @@ class BotToastInitState extends State<BotToastInit> {
 
   @override
   void dispose() {
-    debugPrint('BotToastInitState.dispose');
     _botToastManager.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(BotToastInit oldWidget) {
-    debugPrint('BotToastInitState.didUpdateWidget');
     _needInit = true;
     super.didUpdateWidget(oldWidget);
   }

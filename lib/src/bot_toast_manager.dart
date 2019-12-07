@@ -73,7 +73,6 @@ class BotToastManager {
              );
       ''');
 
-    debugPrint('_navigatorState:${_navigatorState.hashCode}');
 
 
     if (_observerProxy == null) {
@@ -96,7 +95,6 @@ class BotToastManager {
 
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
-    print(_children.length);
     _map[groupKey] ??= {};
     final uniqueKey = UniqueKey();
     final overlayEntry = OverlayEntry(builder: (_) =>
