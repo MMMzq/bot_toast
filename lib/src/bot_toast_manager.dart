@@ -18,6 +18,10 @@ class BotToastManager {
     if (_observerProxy != null) {
       BotToastNavigatorObserver.unregister(_observerProxy);
     }
+    _children.forEach((item) {
+      item.remove();
+    });
+    _children.clear();
   }
 
 
@@ -92,11 +96,12 @@ class BotToastManager {
 
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
+    print(_children.length);
     _map[groupKey] ??= {};
     final uniqueKey = UniqueKey();
     final overlayEntry = OverlayEntry(builder: (_) =>
         ProxyDispose(key: uniqueKey, child: widget, disposeCallback: () {
-          remove(groupKey, key);
+          _map[groupKey]?.remove(key);
         },));
     _map[groupKey][key] = overlayEntry;
     safeRun(() {
