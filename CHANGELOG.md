@@ -1,3 +1,6 @@
+## [2.2.1]
+* bug fix: Use `safeRun` method to ensure normal running of `rearrange`
+
 ## [2.2.0]
 * 重构底层的实现方式以规避一些隐晦的bug
 

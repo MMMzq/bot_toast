@@ -78,9 +78,13 @@ class BotToastManager {
     if (_observerProxy == null) {
       _observerProxy = BotToastNavigatorObserverProxy(
         didPush: (route, _) {
-          if (route.isFirst && _children.isNotEmpty) {
-            _navigatorState.overlay
-                .rearrange(_children, below: _children.first);
+          if (route.isFirst) {
+            safeRun(() {
+              if (_children.isNotEmpty) {
+                _navigatorState.overlay
+                    .rearrange(_children, below: _children.first);
+              }
+            });
           }
         },
       );
