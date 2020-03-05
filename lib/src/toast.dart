@@ -35,7 +35,6 @@ void safeRun(void Function() callback) {
 ///如果真的要生成,可以考虑使用[IgnorePointer].
 ///如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
 class BotToast {
-
   static const String textKey = '_textKey';
   static const String notificationKey = '_notificationKey';
   static const String loadKey = '_loadKey';
@@ -49,8 +48,6 @@ class BotToast {
     attachedKey: [],
     defaultKey: [],
   };
-
-
 
   ///显示简单的通知Toast
   ///
@@ -70,6 +67,7 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showSimpleNotification({@required String title,
     String subTitle,
     WrapAnimation wrapAnimation,
@@ -85,6 +83,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    VoidCallback onClose,
     bool enableSlideOff = true,
     bool hideCloseButton = false,
     bool crossPage = true,
@@ -100,6 +99,7 @@ class BotToast {
         enableSlideOff: enableSlideOff,
         onTap: onTap,
         onLongPress: onLongPress,
+        onClose: onClose,
         onlyOne: onlyOne,
         crossPage: crossPage,
         title: (_) => Text(title),
@@ -126,6 +126,7 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showNotification({ToastBuilder leading,
     ToastBuilder title,
     ToastBuilder subtitle,
@@ -143,6 +144,7 @@ class BotToast {
     Duration animationDuration,
     Duration animationReverseDuration,
     EdgeInsetsGeometry contentPadding,
+    VoidCallback onClose,
     bool enableSlideOff = true,
     bool crossPage = true,
     bool onlyOne = true}) {
@@ -154,6 +156,7 @@ class BotToast {
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
         crossPage: crossPage,
+        onClose: onClose,
         duration: duration,
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
@@ -184,6 +187,7 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showCustomNotification({@required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = notificationAnimation,
@@ -195,6 +199,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    VoidCallback onClose,
     bool enableSlideOff = true,
     bool crossPage = true,
     bool onlyOne = true}) {
@@ -204,6 +209,7 @@ class BotToast {
         clickClose: false,
         ignoreContentClick: false,
         onlyOne: onlyOne,
+        onClose: onClose,
         duration: duration,
         animationDuration:
         animationDuration ?? const Duration(milliseconds: 256),
@@ -243,6 +249,7 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showText({@required String text,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = textAnimation,
@@ -257,6 +264,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    VoidCallback onClose,
     bool clickClose = false,
     bool crossPage = true,
     bool onlyOne = true}) {
@@ -269,6 +277,7 @@ class BotToast {
         crossPage: crossPage,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
+        onClose: onClose,
         ignoreContentClick: true,
         onlyOne: onlyOne,
         align: align,
@@ -296,6 +305,7 @@ class BotToast {
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = textAnimation,
@@ -304,6 +314,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    VoidCallback onClose,
     bool crossPage = true,
     bool clickClose = false,
     bool ignoreContentClick = false,
@@ -316,6 +327,7 @@ class BotToast {
         crossPage: crossPage,
         ignoreContentClick: ignoreContentClick,
         backgroundColor: backgroundColor,
+        onClose: onClose,
         duration: duration,
         animationDuration:
         animationDuration ?? const Duration(milliseconds: 256),
@@ -345,6 +357,7 @@ class BotToast {
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showLoading({
     WrapAnimation wrapAnimation = loadingAnimation,
     WrapAnimation wrapToastAnimation,
@@ -352,6 +365,7 @@ class BotToast {
     bool crossPage = true,
     bool clickClose = false,
     bool allowClick = false,
+    VoidCallback onClose,
     Duration duration,
     Duration animationDuration,
     Duration animationReverseDuration,
@@ -366,6 +380,7 @@ class BotToast {
         allowClick: allowClick,
         crossPage: crossPage,
         ignoreContentClick: true,
+        onClose: onClose,
         duration: duration,
         animationDuration: animationDuration,
         animationReverseDuration: animationReverseDuration,
@@ -386,6 +401,7 @@ class BotToast {
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showCustomLoading({
     @required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation = loadingAnimation,
@@ -395,6 +411,7 @@ class BotToast {
     bool allowClick = false,
     bool ignoreContentClick = false,
     bool crossPage = false,
+    VoidCallback onClose,
     Duration duration,
     Duration animationDuration,
     Duration animationReverseDuration,
@@ -418,6 +435,7 @@ class BotToast {
           }
           return SafeArea(child: child);
         },
+        onClose: onClose,
         clickClose: clickClose,
         allowClick: allowClick,
         crossPage: crossPage,
@@ -453,6 +471,7 @@ class BotToast {
   ///[ignoreContentClick] 请看[showEnhancedWidget.ignoreContentClick]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
+  ///[onClose] 请看[showEnhancedWidget.onClose]
   static CancelFunc showAttachedWidget({@required ToastBuilder attachedBuilder,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = attachedAnimation,
@@ -465,6 +484,7 @@ class BotToast {
     Duration animationDuration,
     Duration animationReverseDuration,
     PreferDirection preferDirection,
+    VoidCallback onClose,
     bool ignoreContentClick = false,
     bool onlyOne = false,
     bool allowClick = true,
@@ -496,6 +516,7 @@ class BotToast {
         groupKey: attachedKey,
         crossPage: false,
         onlyOne: onlyOne,
+        onClose: onClose,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         animationDuration:
@@ -543,7 +564,9 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[duration] 请看[showEnhancedWidget.duration]
-  static CancelFunc showAnimationWidget({@required ToastBuilder toastBuilder,
+  ///[onClose] 请看[showEnhancedWidget.onClose]
+  static CancelFunc showAnimationWidget({
+    @required ToastBuilder toastBuilder,
     @required Duration animationDuration,
     Duration animationReverseDuration,
     WrapAnimation wrapAnimation,
@@ -556,7 +579,9 @@ class BotToast {
     bool ignoreContentClick = false,
     bool onlyOne = false,
     Color backgroundColor = Colors.transparent,
-    Duration duration}) {
+    Duration duration,
+    VoidCallback onClose,
+  }) {
     assert(toastBuilder != null);
     assert(animationDuration != null);
 
@@ -570,6 +595,7 @@ class BotToast {
         groupKey: groupKey,
         key: key,
         crossPage: crossPage,
+        onClose: onClose,
         onlyOne: onlyOne,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
@@ -638,6 +664,7 @@ class BotToast {
   ///让MainContent区域也具有动画
   ///
   ///[duration] 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
+  ///[onClose] Toast关闭时调用
   static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
     UniqueKey key,
     String groupKey,
@@ -647,6 +674,7 @@ class BotToast {
     bool ignoreContentClick = false,
     bool onlyOne = false,
     FutureFunc closeFunc,
+    VoidCallback onClose,
     Color backgroundColor = Colors.transparent,
     WrapWidget warpWidget,
     Duration duration}) {
@@ -680,7 +708,6 @@ class BotToast {
       });
     }
 
-
     //跨页自动关闭
     BotToastNavigatorObserverProxy observerProxy;
     if (!crossPage) {
@@ -699,6 +726,7 @@ class BotToast {
                 BotToastNavigatorObserver.unregister(observerProxy);
               }
               timer?.cancel();
+              onClose?.call();
             }, child: Builder(builder: (BuildContext context) {
               TextStyle textStyle = Theme
                   .of(context)

@@ -1,3 +1,6 @@
+## [2.3.0]
+* feat: add onClose callback
+
 ## [2.2.1]
 * bug fix: Use `safeRun` method to ensure normal running of `rearrange`
 
