@@ -2,8 +2,9 @@ name: bot_toast
 description: A really easy to use flutter toast library.Easy to use and feature rich.
 homepage: https://github.com/MMMzq/bot_toast
 email: vivask770@163.com
+author: MMMzp <vivask770@163.com>
 
-version: 2.2.1
+version: 2.3.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
