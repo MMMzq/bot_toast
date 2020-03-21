@@ -1,3 +1,4 @@
+
 import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import '../bot_toast.dart';
@@ -74,11 +75,12 @@ class BotToastManager {
       ''');
 
 
-
     if (_observerProxy == null) {
       _observerProxy = BotToastNavigatorObserverProxy(
         didPush: (route, _) {
+          print('call _observerProxy');
           if (route.isFirst) {
+            print('call first');
             safeRun(() {
               if (_children.isNotEmpty) {
                 _navigatorState.overlay
@@ -99,15 +101,15 @@ class BotToastManager {
 
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
-    _map[groupKey] ??= {};
-    final uniqueKey = UniqueKey();
-    final overlayEntry = OverlayEntry(builder: (_) =>
-        ProxyDispose(key: uniqueKey, child: widget, disposeCallback: () {
-          _map[groupKey]?.remove(key);
-        },));
-    _map[groupKey][key] = overlayEntry;
     safeRun(() {
       assert(botToastInitState != null);
+      _map[groupKey] ??= {};
+      final uniqueKey = UniqueKey();
+      final overlayEntry = OverlayEntry(builder: (_) =>
+          ProxyDispose(key: uniqueKey, child: widget, disposeCallback: () {
+            _map[groupKey]?.remove(key);
+          },));
+      _map[groupKey][key] = overlayEntry;
       if (botToastInitState.needInit) {
         botToastInitState.reset();
         _checkNavigatorState(botToastInitState.context);
