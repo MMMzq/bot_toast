@@ -78,9 +78,7 @@ class BotToastManager {
     if (_observerProxy == null) {
       _observerProxy = BotToastNavigatorObserverProxy(
         didPush: (route, _) {
-          print('call _observerProxy');
           if (route.isFirst) {
-            print('call first');
             safeRun(() {
               if (_children.isNotEmpty) {
                 _navigatorState.overlay

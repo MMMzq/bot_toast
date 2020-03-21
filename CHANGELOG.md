@@ -1,3 +1,6 @@
+## [2.3.1]
+* fix: bug [#43](https://github.com/MMMzq/bot_toast/issues/43)
+
 ## [2.3.0]
 * feat: add onClose callback
 
