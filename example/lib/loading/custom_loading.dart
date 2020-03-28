@@ -279,14 +279,6 @@ class _CustomLoadingState extends State<CustomLoading> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -294,17 +286,3 @@ class _CustomLoadingState extends State<CustomLoading> {
     );
   }
 }
-
-String _code = """
-BotToast.showCustomLoading(
-    clickClose: clickClose,
-    allowClick: allowClick,
-    ignoreContentClick: ignoreContentClick,
-    duration: Duration(
-      seconds: seconds,
-    ),
-    backgroundColor: Color(backgroundColor),
-    loadWidget: (cancelFunc) {
-      return _CustomLoadWidget(cancelFunc: cancelFunc);
-    });
-""";

@@ -191,14 +191,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
+
             ],
           ),
         ),
@@ -207,13 +200,3 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   }
 }
 
-String _code = """
-BotToast.showSimpleNotification(
-    title: "do you still love me ?",
-    subTitle: "yes!",
-    enableSlideOff: enableSlideOff,
-    hideCloseButton: hideCloseButton,
-    onlyOne: onlyOne,
-    crossPage: crossPage,
-    duration: Duration(seconds: seconds));
-""";

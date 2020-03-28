@@ -278,14 +278,7 @@ class _TextSampleState extends State<TextSample> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
+
             ],
           ),
         ),
@@ -294,19 +287,4 @@ class _TextSampleState extends State<TextSample> {
   }
 }
 
-String _code = """
-BotToast.showText(
-    text: (index++).isOdd?"Always together☺":"My mind is all about you.😘",
-    duration: Duration(seconds: seconds),
-    onlyOne: onlyOne,
-    clickClose: clickClose,
-    crossPage: crossPage,
-    align: Alignment(0, align),
-    textStyle: TextStyle(
-        color: Color(fontColor),
-        fontSize: fontSize.toDouble()),
-    borderRadius:
-        BorderRadius.circular(borderRadius.toDouble()),
-    backgroundColor: Color(backgroundColor),
-    contentColor: Color(contentColor));
-""";
+

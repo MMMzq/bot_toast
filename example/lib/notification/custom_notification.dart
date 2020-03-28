@@ -194,28 +194,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  _code,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Divider(),
-              Text("CustomWidget"),
-              Divider(),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  _custom,
-                  textAlign: TextAlign.start,
-                ),
-              ),
+
             ],
           ),
         ),
@@ -224,43 +203,4 @@ class _CustomNotificationState extends State<CustomNotification> {
   }
 }
 
-String _code = """
-BotToast.showCustomNotification(
-         duration: Duration(seconds: seconds),
-         toastBuilder: (cancel) {
-           return CustomWidget(
-             cancelFunc: cancel,
-           );
-         },
-         enableSlideOff: enableSlideOff,
-         onlyOne: onlyOne,
-         crossPage: crossPage
-);
-""";
 
-String _custom = """
-Card(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: IconButton(
-                icon: Icon(Icons.favorite),
-                color: loveMe ? Colors.redAccent : Colors.grey,
-                onPressed: () {
-                  setState(() {
-                    loveMe = !loveMe;
-                    BotToast.showText(
-                        onlyOne: true,
-                        text: loveMe ? "Yes, I love you.😘" : "No!!!!😫");
-                  });
-                }),
-          ),
-          IconButton(
-            icon: Icon(Icons.cancel),
-            color: loveMe ? Colors.redAccent : Colors.grey,
-            onPressed: widget.cancelFunc,
-          )
-        ],
-      ),
-    );
-""";

@@ -180,14 +180,6 @@ class _NotificationState extends State<Notification> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -196,25 +188,4 @@ class _NotificationState extends State<Notification> {
   }
 }
 
-String _code = """
-BotToast.showNotification(
-         leading: (_) => SizedBox.fromSize(
-             size: const Size(40, 40),
-             child: ClipOval(
-                 child: Icon(
-               Icons.favorite,
-               color: Colors.redAccent,
-             ))),
-         title: (_) => Text('I love u'),
-         subtitle: (_) => Text("let's be together"),
-         trailing: (cancel) => IconButton(
-               icon: Icon(Icons.cancel),
-               onPressed: cancel,
-             ),
-         enableSlideOff: enableSlideOff,
-         crossPage: crossPage,
-         contentPadding: EdgeInsets.all(contentPadding),
-         onlyOne: onlyOne,
-         duration: Duration(seconds: seconds)
-);
-""";
+

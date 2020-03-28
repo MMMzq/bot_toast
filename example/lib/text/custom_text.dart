@@ -216,14 +216,6 @@ class _CustomTextState extends State<CustomText> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -231,41 +223,3 @@ class _CustomTextState extends State<CustomText> {
     );
   }
 }
-
-String _code = """
-BotToast.showCustomText(
-  duration: Duration(seconds: seconds),
-  onlyOne: onlyOne,
-  clickClose: clickClose,
-  crossPage: crossPage,
-  ignoreContentClick: ignoreContentClick,
-  backgroundColor: Color(backgroundColor),
-  toastBuilder: (_) => Align(
-        alignment: Alignment(0, 0.8),
-        child: Card(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                    color: Colors.redAccent,
-                  ),
-                  onPressed: () {
-                    BotToast.showSimpleNotification(
-                        title: "Yes, I do!",
-                        crossPage: crossPage,
-                        closeIcon: Icon(Icons.favorite,color: Colors.redAccent,),
-                        duration: Duration(seconds: seconds));
-                  }),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8),
-                child: Text("propose marriage?"),
-              ),
-            ],
-          ),
-        ),
-      ),
-);
-""";

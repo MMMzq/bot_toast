@@ -174,14 +174,7 @@ class _LoadingState extends State<Loading> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
+
             ],
           ),
         ),
@@ -190,13 +183,3 @@ class _LoadingState extends State<Loading> {
   }
 }
 
-String _code = '''
-BotToast.showLoading(
-    clickClose: clickClose,
-    allowClick: allowClick,
-    crossPage: crossPage,
-    duration: Duration(
-      seconds: seconds,
-    ),
-    backgroundColor: Color(backgroundColor));
-''';
