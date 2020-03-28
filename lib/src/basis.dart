@@ -4,7 +4,9 @@ import 'package:flutter/scheduler.dart';
 ///Toast的关闭函数,调用将会提前关闭对应的Toast
 typedef CancelFunc = void Function();
 typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
-typedef FutureFunc = Future Function();
+typedef FutureFunc = Future<void> Function();
+typedef PopTestFunc = bool Function();
+
 
 typedef WrapWidget = Widget Function(CancelFunc cancelFunc, Widget widget);
 typedef WrapAnimation = Widget Function(AnimationController controller, CancelFunc cancelFunc, Widget widget);
@@ -14,6 +16,18 @@ class TickerProviderImpl extends TickerProvider {
   Ticker createTicker(TickerCallback onTick) {
     return Ticker(onTick);
   }
+}
+
+///此枚举会决定Toast对于物理返回键的处理方式
+enum BackButtonBehavior {
+  ///不做任何处理
+  none,
+
+  ///拦截此次点击事件
+  ignore,
+
+  ///拦截此次点击事件,并把Toast关闭
+  close
 }
 
 //请不要调整顺序!!

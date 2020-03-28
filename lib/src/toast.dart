@@ -3,19 +3,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 import 'basis.dart';
 import 'bot_toast_init.dart';
-import 'bot_toast_manager.dart';
 import 'key_board_safe_area.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
-void safeRun(void Function() callback) {
-  SchedulerBinding.instance.addPostFrameCallback((_) {
-    callback();
-  });
-  SchedulerBinding.instance.ensureVisualUpdate();
-}
+
 
 /*区域图
   _________________________________
@@ -68,6 +63,7 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showSimpleNotification({@required String title,
     String subTitle,
     WrapAnimation wrapAnimation,
@@ -83,6 +79,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    BackButtonBehavior backButtonBehavior,
     VoidCallback onClose,
     bool enableSlideOff = true,
     bool hideCloseButton = false,
@@ -95,6 +92,7 @@ class BotToast {
         dismissDirections: dismissDirections,
         duration: duration,
         animationDuration: animationDuration,
+        backButtonBehavior: backButtonBehavior,
         animationReverseDuration: animationReverseDuration,
         enableSlideOff: enableSlideOff,
         onTap: onTap,
@@ -127,6 +125,7 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showNotification({ToastBuilder leading,
     ToastBuilder title,
     ToastBuilder subtitle,
@@ -140,6 +139,7 @@ class BotToast {
       DismissDirection.horizontal,
       DismissDirection.up
     ],
+    BackButtonBehavior backButtonBehavior,
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
@@ -155,6 +155,7 @@ class BotToast {
         dismissDirections: dismissDirections,
         enableSlideOff: enableSlideOff,
         onlyOne: onlyOne,
+        backButtonBehavior: backButtonBehavior,
         crossPage: crossPage,
         onClose: onClose,
         duration: duration,
@@ -188,6 +189,7 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showCustomNotification({@required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = notificationAnimation,
@@ -200,6 +202,7 @@ class BotToast {
     Duration animationDuration,
     Duration animationReverseDuration,
     VoidCallback onClose,
+    BackButtonBehavior backButtonBehavior,
     bool enableSlideOff = true,
     bool crossPage = true,
     bool onlyOne = true}) {
@@ -211,6 +214,7 @@ class BotToast {
         onlyOne: onlyOne,
         onClose: onClose,
         duration: duration,
+        backButtonBehavior: backButtonBehavior,
         animationDuration:
         animationDuration ?? const Duration(milliseconds: 256),
         animationReverseDuration: animationReverseDuration,
@@ -250,6 +254,7 @@ class BotToast {
   ///[clickClose] 请看[showEnhancedWidget.clickClose]
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showText({@required String text,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = textAnimation,
@@ -264,6 +269,7 @@ class BotToast {
     Duration duration = const Duration(seconds: 2),
     Duration animationDuration,
     Duration animationReverseDuration,
+    BackButtonBehavior backButtonBehavior,
     VoidCallback onClose,
     bool clickClose = false,
     bool crossPage = true,
@@ -277,6 +283,7 @@ class BotToast {
         crossPage: crossPage,
         backgroundColor: backgroundColor,
         clickClose: clickClose,
+        backButtonBehavior: backButtonBehavior,
         onClose: onClose,
         ignoreContentClick: true,
         onlyOne: onlyOne,
@@ -306,6 +313,7 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation = textAnimation,
@@ -315,6 +323,7 @@ class BotToast {
     Duration animationDuration,
     Duration animationReverseDuration,
     VoidCallback onClose,
+    BackButtonBehavior backButtonBehavior,
     bool crossPage = true,
     bool clickClose = false,
     bool ignoreContentClick = false,
@@ -327,6 +336,7 @@ class BotToast {
         crossPage: crossPage,
         ignoreContentClick: ignoreContentClick,
         backgroundColor: backgroundColor,
+        backButtonBehavior: backButtonBehavior,
         onClose: onClose,
         duration: duration,
         animationDuration:
@@ -358,10 +368,12 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showLoading({
     WrapAnimation wrapAnimation = loadingAnimation,
     WrapAnimation wrapToastAnimation,
     Alignment align = Alignment.center,
+    BackButtonBehavior backButtonBehavior,
     bool crossPage = true,
     bool clickClose = false,
     bool allowClick = false,
@@ -375,6 +387,7 @@ class BotToast {
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
         align: align,
+        backButtonBehavior: backButtonBehavior,
         toastBuilder: (_) => const LoadingWidget(),
         clickClose: clickClose,
         allowClick: allowClick,
@@ -402,11 +415,14 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
+
   static CancelFunc showCustomLoading({
     @required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation = loadingAnimation,
     WrapAnimation wrapToastAnimation,
     Alignment align = Alignment.center,
+    BackButtonBehavior backButtonBehavior,
     bool clickClose = false,
     bool allowClick = false,
     bool ignoreContentClick = false,
@@ -422,6 +438,7 @@ class BotToast {
     return showAnimationWidget(
         groupKey: loadKey,
         toastBuilder: toastBuilder,
+        backButtonBehavior: backButtonBehavior,
         animationDuration:
         animationDuration ?? const Duration(milliseconds: 300),
         animationReverseDuration: animationReverseDuration,
@@ -565,12 +582,14 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   static CancelFunc showAnimationWidget({
     @required ToastBuilder toastBuilder,
     @required Duration animationDuration,
     Duration animationReverseDuration,
     WrapAnimation wrapAnimation,
     WrapAnimation wrapToastAnimation,
+    BackButtonBehavior backButtonBehavior,
     UniqueKey key,
     String groupKey,
     bool crossPage = true,
@@ -597,6 +616,7 @@ class BotToast {
         crossPage: crossPage,
         onClose: onClose,
         onlyOne: onlyOne,
+        backButtonBehavior: backButtonBehavior,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         closeFunc: () => controller?.reverse(),
@@ -641,13 +661,16 @@ class BotToast {
   ///[BotToast.showAnimationWidget]
   ///
   ///[toastBuilder] 生成需要显示的Widget的builder函数
+  ///
   ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
+  ///
   ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///
   ///[crossPage] 跨页面显示,如果为true,则该Toast会跨越多个Route显示,
   ///如果为false则在当前Route发生变化时,会自动关闭该Toast,例如[Navigator.push]-[Navigator.pop]
   ///
   ///[allowClick] 是否在该Toast显示时,能否正常点击触发事件
+  ///
   ///[clickClose] 是否在点击屏幕触发事件时自动关闭该Toast
   ///
   ///[ignoreContentClick] 是否忽视ToastContext区域
@@ -660,11 +683,19 @@ class BotToast {
   ///触发关闭前调用[AnimationController]来启动并等待动画后再关闭
   ///
   ///[backgroundColor]  MainContent区域的背景颜色
+  ///
   ///[warpWidget] 一个wrap函数,可以用来warp MainContent区域,例如[showCustomLoading]就包裹了一个动画
   ///让MainContent区域也具有动画
   ///
   ///[duration] 持续时间,如果为null则不会去定时关闭,如果不为null则在到达指定时间时自动关闭
+  ///
   ///[onClose] Toast关闭时调用
+  ///
+  ///[backButtonBehavior] 点击物理返回键的行为(在android上等同于物理的返回键),
+  ///如果为[ignore]拦截事件,
+  ///如果为[close]则关闭该toast,并且拦截事件停止冒泡
+  ///如果为null or [none]则不拦截事件
+  ///
   static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
     UniqueKey key,
     String groupKey,
@@ -673,6 +704,7 @@ class BotToast {
     bool clickClose = false,
     bool ignoreContentClick = false,
     bool onlyOne = false,
+    BackButtonBehavior backButtonBehavior,
     FutureFunc closeFunc,
     VoidCallback onClose,
     Color backgroundColor = Colors.transparent,
@@ -715,6 +747,21 @@ class BotToast {
       BotToastNavigatorObserver.register(observerProxy);
     }
 
+    //拦截点击返回事件
+    VoidCallback unRegisterFunc;
+    if (backButtonBehavior == BackButtonBehavior.ignore) {
+      unRegisterFunc = botToastInitState.registerPopListener(() {
+        return true;
+      });
+    } else if (backButtonBehavior == BackButtonBehavior.close) {
+      unRegisterFunc = botToastInitState.registerPopListener(() {
+        dismissFunc();
+        unRegisterFunc?.call();
+        unRegisterFunc = null;
+        return true;
+      });
+    }
+
     cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
@@ -727,6 +774,7 @@ class BotToast {
               }
               timer?.cancel();
               onClose?.call();
+              unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
               TextStyle textStyle = Theme
                   .of(context)
