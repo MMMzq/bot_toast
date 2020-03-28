@@ -691,8 +691,8 @@ class BotToast {
   ///
   ///[onClose] Toast关闭时调用
   ///
-  ///[backButtonBehavior] 点击物理返回键的行为(在android上等同于物理的返回键),
-  ///如果为[ignore]拦截事件,
+  ///[backButtonBehavior] 点击物理返回键的行为(在android上等同于物理的返回键),注意不是导航条上的返回按钮
+  ///如果为[ignore]则拦截返回事件,
   ///如果为[close]则关闭该toast,并且拦截事件停止冒泡
   ///如果为null or [none]则不拦截事件
   ///
