@@ -15,6 +15,7 @@ class _LoadingState extends State<Loading> {
   bool crossPage = true;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class _LoadingState extends State<Loading> {
                       clickClose: clickClose,
                       allowClick: allowClick,
                       crossPage: crossPage,
+                      backButtonBehavior: backButtonBehavior,
                       animationDuration:
                           Duration(milliseconds: animationMilliseconds),
                       animationReverseDuration:
@@ -86,6 +88,41 @@ class _LoadingState extends State<Loading> {
                     });
                   },
                 ),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               SwitchListTile(
                 value: clickClose,
@@ -153,7 +190,7 @@ class _LoadingState extends State<Loading> {
   }
 }
 
-String _code = """
+String _code = '''
 BotToast.showLoading(
     clickClose: clickClose,
     allowClick: allowClick,
@@ -162,4 +199,4 @@ BotToast.showLoading(
       seconds: seconds,
     ),
     backgroundColor: Color(backgroundColor));
-""";
+''';

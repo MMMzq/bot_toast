@@ -2,24 +2,16 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-void showAlertDialog(bool blockPopup,
+void showAlertDialog(BackButtonBehavior backButtonBehavior,
     {VoidCallback cancel,
     VoidCallback confirm,
-    VoidCallback backgroundReturn,
-    VoidCallback physicalBackButton}) {
+      VoidCallback backgroundReturn}) {
   BotToast.showAnimationWidget(
       clickClose: false,
       allowClick: false,
       onlyOne: true,
       crossPage: true,
-      wrapAnimation: (controller, cancel, child) => BackgroundRoute(
-            child: child,
-            blockPopup: blockPopup,
-            cancelFunc: cancel,
-            physicalButtonPopCallback: () {
-              physicalBackButton?.call();
-            },
-          ),
+      backButtonBehavior: backButtonBehavior,
       wrapToastAnimation: (controller, cancel, child) => Stack(
             children: <Widget>[
               GestureDetector(
@@ -81,7 +73,7 @@ class CustomWidget extends StatefulWidget {
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
-  bool blockPopup = false;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -97,26 +89,50 @@ class _CustomWidgetState extends State<CustomWidget> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () {
-                  showAlertDialog(blockPopup, cancel: () {
+                  showAlertDialog(backButtonBehavior, cancel: () {
                     BotToast.showText(text: 'Click cancel');
                   }, confirm: () {
                     BotToast.showText(text: 'Click confirm');
                   }, backgroundReturn: () {
                     BotToast.showText(text: 'Click background');
-                  }, physicalBackButton: () {
-                    BotToast.showText(text: 'Click the physical back button');
                   });
                 },
                 child: const Text('customWidget'),
               ),
-              SwitchListTile(
-                value: blockPopup,
-                onChanged: (value) {
-                  setState(() {
-                    blockPopup = value;
-                  });
-                },
-                title: const Text('DisablePhysicalButton: '),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               const Divider(),
             ],
@@ -127,23 +143,7 @@ class _CustomWidgetState extends State<CustomWidget> {
   }
 }
 
-class BackgroundRoute extends StatefulWidget {
-  final Widget child;
-  final bool blockPopup;
-  final CancelFunc cancelFunc;
-  final VoidCallback physicalButtonPopCallback;
 
-  const BackgroundRoute(
-      {Key key,
-      this.child,
-      this.blockPopup,
-      this.cancelFunc,
-      this.physicalButtonPopCallback})
-      : super(key: key);
-
-  @override
-  _BackgroundRouteState createState() => _BackgroundRouteState();
-}
 
 class CustomOffsetAnimation extends StatefulWidget {
   final AnimationController controller;
@@ -196,46 +196,3 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
   }
 }
 
-class _BackgroundRouteState extends State<BackgroundRoute> {
-  bool _needPop = false;
-  NavigatorState _navigatorState;
-
-  @override
-  void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _navigatorState = Navigator.of(context);
-      _navigatorState.push(PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (_, __, ___) => IgnorePointer(
-                child: WillPopScope(
-                  child: Align(),
-                  onWillPop: () async {
-                    if (_needPop) {
-                      return true;
-                    }
-                    if (!widget.blockPopup) {
-                      widget.physicalButtonPopCallback?.call();
-                      widget.cancelFunc();
-                    }
-                    return false;
-                  },
-                ),
-              )));
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _needPop = true;
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _navigatorState.pop();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-}

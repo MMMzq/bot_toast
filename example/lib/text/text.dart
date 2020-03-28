@@ -21,6 +21,7 @@ class _TextSampleState extends State<TextSample> {
   int contentColor = 0x8A000000;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   int index = 0;
 
@@ -46,6 +47,7 @@ class _TextSampleState extends State<TextSample> {
                       onlyOne: onlyOne,
                       clickClose: clickClose,
                       crossPage: crossPage,
+                      backButtonBehavior: backButtonBehavior,
                       align: Alignment(0, align),
                       animationDuration:
                           Duration(milliseconds: animationMilliseconds),
@@ -102,6 +104,41 @@ class _TextSampleState extends State<TextSample> {
                     });
                   },
                 ),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               SwitchListTile(
                 value: onlyOne,

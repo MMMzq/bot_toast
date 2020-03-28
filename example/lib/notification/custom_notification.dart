@@ -55,6 +55,7 @@ class _CustomNotificationState extends State<CustomNotification> {
   int seconds = 10;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +77,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                       animationReverseDuration:
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds),
+                      backButtonBehavior: backButtonBehavior,
                       toastBuilder: (cancel) {
                         return _CustomWidget(
                           cancelFunc: cancel,
@@ -87,6 +89,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                 },
                 child: Text("CustomNotification"),
               ),
+
               SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
@@ -113,6 +116,41 @@ class _CustomNotificationState extends State<CustomNotification> {
                   });
                 },
                 title: Text("crossPage: "),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
