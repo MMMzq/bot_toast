@@ -55,6 +55,7 @@ class _CustomNotificationState extends State<CustomNotification> {
   int seconds = 10;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +77,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                       animationReverseDuration:
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds),
+                      backButtonBehavior: backButtonBehavior,
                       toastBuilder: (cancel) {
                         return _CustomWidget(
                           cancelFunc: cancel,
@@ -87,6 +89,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                 },
                 child: Text("CustomNotification"),
               ),
+
               SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
@@ -113,6 +116,41 @@ class _CustomNotificationState extends State<CustomNotification> {
                   });
                 },
                 title: Text("crossPage: "),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -156,28 +194,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  _code,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Divider(),
-              Text("CustomWidget"),
-              Divider(),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  _custom,
-                  textAlign: TextAlign.start,
-                ),
-              ),
+
             ],
           ),
         ),
@@ -186,43 +203,4 @@ class _CustomNotificationState extends State<CustomNotification> {
   }
 }
 
-String _code = """
-BotToast.showCustomNotification(
-         duration: Duration(seconds: seconds),
-         toastBuilder: (cancel) {
-           return CustomWidget(
-             cancelFunc: cancel,
-           );
-         },
-         enableSlideOff: enableSlideOff,
-         onlyOne: onlyOne,
-         crossPage: crossPage
-);
-""";
 
-String _custom = """
-Card(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: IconButton(
-                icon: Icon(Icons.favorite),
-                color: loveMe ? Colors.redAccent : Colors.grey,
-                onPressed: () {
-                  setState(() {
-                    loveMe = !loveMe;
-                    BotToast.showText(
-                        onlyOne: true,
-                        text: loveMe ? "Yes, I love you.😘" : "No!!!!😫");
-                  });
-                }),
-          ),
-          IconButton(
-            icon: Icon(Icons.cancel),
-            color: loveMe ? Colors.redAccent : Colors.grey,
-            onPressed: widget.cancelFunc,
-          )
-        ],
-      ),
-    );
-""";

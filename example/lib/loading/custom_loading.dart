@@ -106,6 +106,7 @@ class _CustomLoadingState extends State<CustomLoading> {
   bool crossPage = true;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +125,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                   BotToast.showCustomLoading(
                       clickClose: clickClose,
                       allowClick: allowClick,
+                      backButtonBehavior: backButtonBehavior,
                       ignoreContentClick: ignoreContentClick,
                       animationDuration:
                           Duration(milliseconds: animationMilliseconds),
@@ -181,6 +183,42 @@ class _CustomLoadingState extends State<CustomLoading> {
                     });
                   },
                 ),
+              ),
+
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               SwitchListTile(
                 value: clickClose,
@@ -241,14 +279,6 @@ class _CustomLoadingState extends State<CustomLoading> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -256,17 +286,3 @@ class _CustomLoadingState extends State<CustomLoading> {
     );
   }
 }
-
-String _code = """
-BotToast.showCustomLoading(
-    clickClose: clickClose,
-    allowClick: allowClick,
-    ignoreContentClick: ignoreContentClick,
-    duration: Duration(
-      seconds: seconds,
-    ),
-    backgroundColor: Color(backgroundColor),
-    loadWidget: (cancelFunc) {
-      return _CustomLoadWidget(cancelFunc: cancelFunc);
-    });
-""";

@@ -15,6 +15,7 @@ class _NotificationState extends State<Notification> {
   double contentPadding = 2;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,7 @@ class _NotificationState extends State<Notification> {
                         BotToast.showText(text: 'Long press toast');
                       },
                       enableSlideOff: enableSlideOff,
+                      backButtonBehavior: backButtonBehavior,
                       crossPage: crossPage,
                       contentPadding: EdgeInsets.all(contentPadding),
                       onlyOne: onlyOne,
@@ -87,6 +89,41 @@ class _NotificationState extends State<Notification> {
                   });
                 },
                 title: Text("crossPage: "),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -143,14 +180,6 @@ class _NotificationState extends State<Notification> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -159,25 +188,4 @@ class _NotificationState extends State<Notification> {
   }
 }
 
-String _code = """
-BotToast.showNotification(
-         leading: (_) => SizedBox.fromSize(
-             size: const Size(40, 40),
-             child: ClipOval(
-                 child: Icon(
-               Icons.favorite,
-               color: Colors.redAccent,
-             ))),
-         title: (_) => Text('I love u'),
-         subtitle: (_) => Text("let's be together"),
-         trailing: (cancel) => IconButton(
-               icon: Icon(Icons.cancel),
-               onPressed: cancel,
-             ),
-         enableSlideOff: enableSlideOff,
-         crossPage: crossPage,
-         contentPadding: EdgeInsets.all(contentPadding),
-         onlyOne: onlyOne,
-         duration: Duration(seconds: seconds)
-);
-""";
+

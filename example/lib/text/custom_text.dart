@@ -16,6 +16,7 @@ class _CustomTextState extends State<CustomText> {
   int backgroundColor = 0x00000000;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class _CustomTextState extends State<CustomText> {
                     crossPage: crossPage,
                     ignoreContentClick: ignoreContentClick,
                     backgroundColor: Color(backgroundColor),
+                    backButtonBehavior: backButtonBehavior,
                     animationDuration:
                         Duration(milliseconds: animationMilliseconds),
                     animationReverseDuration:
@@ -118,6 +120,41 @@ class _CustomTextState extends State<CustomText> {
                   },
                 ),
               ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
+              ),
               SwitchListTile(
                 value: onlyOne,
                 onChanged: (value) {
@@ -154,6 +191,8 @@ class _CustomTextState extends State<CustomText> {
                 },
                 title: Text("ignoreContentClick: "),
               ),
+
+
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -177,14 +216,6 @@ class _CustomTextState extends State<CustomText> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
             ],
           ),
         ),
@@ -192,41 +223,3 @@ class _CustomTextState extends State<CustomText> {
     );
   }
 }
-
-String _code = """
-BotToast.showCustomText(
-  duration: Duration(seconds: seconds),
-  onlyOne: onlyOne,
-  clickClose: clickClose,
-  crossPage: crossPage,
-  ignoreContentClick: ignoreContentClick,
-  backgroundColor: Color(backgroundColor),
-  toastBuilder: (_) => Align(
-        alignment: Alignment(0, 0.8),
-        child: Card(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                    color: Colors.redAccent,
-                  ),
-                  onPressed: () {
-                    BotToast.showSimpleNotification(
-                        title: "Yes, I do!",
-                        crossPage: crossPage,
-                        closeIcon: Icon(Icons.favorite,color: Colors.redAccent,),
-                        duration: Duration(seconds: seconds));
-                  }),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8),
-                child: Text("propose marriage?"),
-              ),
-            ],
-          ),
-        ),
-      ),
-);
-""";

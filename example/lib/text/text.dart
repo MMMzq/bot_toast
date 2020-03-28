@@ -21,6 +21,7 @@ class _TextSampleState extends State<TextSample> {
   int contentColor = 0x8A000000;
   int animationMilliseconds = 200;
   int animationReverseMilliseconds = 200;
+  BackButtonBehavior backButtonBehavior = BackButtonBehavior.none;
 
   int index = 0;
 
@@ -46,6 +47,7 @@ class _TextSampleState extends State<TextSample> {
                       onlyOne: onlyOne,
                       clickClose: clickClose,
                       crossPage: crossPage,
+                      backButtonBehavior: backButtonBehavior,
                       align: Alignment(0, align),
                       animationDuration:
                           Duration(milliseconds: animationMilliseconds),
@@ -102,6 +104,41 @@ class _TextSampleState extends State<TextSample> {
                     });
                   },
                 ),
+              ),
+              Center(child: Text('BackButtonBehavior'),),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.none,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('none'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('ignore'),),
+                  ),
+                  Expanded(
+                    child: RadioListTile(value: BackButtonBehavior.close,
+                      groupValue: backButtonBehavior,
+                      onChanged: (value) {
+                        setState(() {
+                          backButtonBehavior = value;
+                        });
+                      },
+                      title: Text('close'),),
+                  )
+                ],
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -241,14 +278,7 @@ class _TextSampleState extends State<TextSample> {
                   },
                 ),
               ),
-              Divider(),
-              Text("code"),
-              Divider(),
-              Text(
-                _code,
-                textAlign: TextAlign.start,
-              ),
-              Divider(),
+
             ],
           ),
         ),
@@ -257,19 +287,4 @@ class _TextSampleState extends State<TextSample> {
   }
 }
 
-String _code = """
-BotToast.showText(
-    text: (index++).isOdd?"Always together☺":"My mind is all about you.😘",
-    duration: Duration(seconds: seconds),
-    onlyOne: onlyOne,
-    clickClose: clickClose,
-    crossPage: crossPage,
-    align: Alignment(0, align),
-    textStyle: TextStyle(
-        color: Color(fontColor),
-        fontSize: fontSize.toDouble()),
-    borderRadius:
-        BorderRadius.circular(borderRadius.toDouble()),
-    backgroundColor: Color(backgroundColor),
-    contentColor: Color(contentColor));
-""";
+

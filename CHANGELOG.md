@@ -1,3 +1,6 @@
+## [2.4.0]
+* feat: Support to intercept click back button event
+
 ## [2.3.1]
 * fix: bug [#43](https://github.com/MMMzq/bot_toast/issues/43)
 

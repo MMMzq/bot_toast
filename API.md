@@ -32,6 +32,7 @@ clickClose | 是否在点击屏幕触发事件时自动关闭该Toast
 ignoreContentClick | 是否忽视ToastContext区域如果为true时,用户点击该ToastContext区域时,用户可以的点击事件可以正常到达到Page上,换一句话说就是透明的(即便是Toast背景颜色不是透明),如果为false,则情况反之
 onlyOne | 表示是否该分组内是否在同一时间里只存在一个Toast,区分是哪一个组是按照[groupKey]来区分的
 backgroundColor | MainContent区域的背景颜色
+backButtonBehavior | 点击物理返回键的行为(在android上等同于物理的返回键),注意不是导航条上的返回按钮,如果为[BackButtonBehavior.ignore]则拦截返回事件,如果为[BackButtonBehavior.close]则关闭该toast,并且拦截事件停止冒泡,如果为null or [BackButtonBehavior.none]则不拦截事件
 
 <br>
 
@@ -56,7 +57,7 @@ hideCloseButton | 否 | false| 是否隐藏关闭按钮
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
-
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 <br>
 
 #### 2.BotToast.showNotification
@@ -81,6 +82,7 @@ duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说�
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 enableSlideOff | 否 | true| 是否能滑动删除
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -100,6 +102,7 @@ enableSlideOff | 否 | true| 是否能滑动删除
 duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -149,6 +152,7 @@ duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说�
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -169,6 +173,7 @@ onlyOne | 否 | false| [onlyOne说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 ignoreContentClick | 否 | false| [ignoreContentClick说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -187,6 +192,7 @@ crossPage | 否 | true| [crossPage说明](#通用参数说明)
 clickClose | 否 | false| [clickClose说明](#通用参数说明)
 allowClick | 否 | false| [allowClick说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -208,6 +214,7 @@ allowClick | 否 | false| [allowClick说明](#通用参数说明)
 crossPage | 否 | false| [crossPage说明](#通用参数说明)
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.black26```| [backgroundColor说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -232,6 +239,7 @@ closeFunc | 否 | 无 | [说明请看showEnhancedWidget.closeFunc](#10bottoastsh
 warpWidget | 否 | 无 | [warpWidget说明](#10bottoastshowenhancedwidget)
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 
@@ -252,6 +260,7 @@ closeFunc | 否 | 无 | 该函数参数主要目的使Toast关闭之做一些处
 warpWidget | 否 | 无 | 一个wrap函数,可以用来warp MainContent区域,例如[showCustomLoading]就包裹了一个动画让MainContent区域也具有动画
 duration | 否 | 无| [duration说明](#通用参数说明)
 backgroundColor | 否 | ```Colors.transparent```| [backgroundColor说明](#通用参数说明)
+backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 
 <br>
 

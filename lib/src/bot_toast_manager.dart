@@ -1,10 +1,17 @@
 
 import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
 import '../bot_toast.dart';
 import 'bot_toast_init.dart';
-import 'toast.dart';
 
+void safeRun(void Function() callback) {
+  SchedulerBinding.instance.addPostFrameCallback((_) {
+    callback();
+  });
+  SchedulerBinding.instance.ensureVisualUpdate();
+}
 
 class BotToastManager {
   final Map<String, Map<UniqueKey, OverlayEntry>> _map = {};
