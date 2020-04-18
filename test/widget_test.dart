@@ -10,7 +10,6 @@ import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_test/flutter_test.dart' as prefix0;
 
 void main() {
   Future click(WidgetTester tester) async {
@@ -381,29 +380,29 @@ class TestApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BotToastInit(
-      child: MaterialApp(
-        title: 'BotToast Demo',
-        navigatorObservers: [BotToastNavigatorObserver()],
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Builder(
-                  builder: (ctx) => FlatButton(
-                      key: ValueKey('main'),
-                      onPressed: () async {
-                        callback?.call();
-                        contextCallback?.call(ctx);
-                      },
-                      child: Text(''))),
-              child
-            ]
-              ..removeWhere((test) => test == null),
-          ),
+    return MaterialApp(
+      title: 'BotToast Demo',
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Builder(
+                builder: (ctx) =>
+                    FlatButton(
+                        key: ValueKey('main'),
+                        onPressed: () async {
+                          callback?.call();
+                          contextCallback?.call(ctx);
+                        },
+                        child: Text(''))),
+            child
+          ]
+            ..removeWhere((test) => test == null),
         ),
       ),
     );

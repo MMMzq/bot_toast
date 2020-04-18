@@ -750,11 +750,13 @@ class BotToast {
     //拦截点击返回事件
     VoidCallback unRegisterFunc;
     if (backButtonBehavior == BackButtonBehavior.ignore) {
-      unRegisterFunc = botToastInitState.registerPopListener(() {
+      unRegisterFunc =
+          BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
         return true;
       });
     } else if (backButtonBehavior == BackButtonBehavior.close) {
-      unRegisterFunc = botToastInitState.registerPopListener(() {
+      unRegisterFunc =
+          BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
         dismissFunc();
         unRegisterFunc?.call();
         unRegisterFunc = null;
