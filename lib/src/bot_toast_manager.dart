@@ -1,9 +1,6 @@
-
 import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import 'bot_toast_init.dart';
 
 void safeRun(void Function() callback) {
   SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -12,68 +9,73 @@ void safeRun(void Function() callback) {
   SchedulerBinding.instance.ensureVisualUpdate();
 }
 
-class BotToastManager {
-  final Map<String, Map<UniqueKey, OverlayEntry>> _map = {};
-  final BotToastInitState _botToastInitState;
+class BotToastManager extends StatefulWidget {
+  final Widget child;
 
-  BotToastManager(this._botToastInitState);
+  const BotToastManager({Key key, this.child}) : super(key: key);
 
+  @override
+  BotToastManagerState createState() => BotToastManagerState();
+}
 
-  void dispose() {
-    _children.forEach((item) {
-      item.remove();
-    });
-    _map.clear();
-  }
+class BotToastManagerState extends State<BotToastManager> {
+  final Map<String, Map<UniqueKey, Widget>> _map = {};
 
-  List<OverlayEntry> get _children =>
+  List<Widget> get _children =>
       _map.values.fold([], (value, items) {
         return value..addAll(items.values);
       });
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
     safeRun(() {
-      assert(_botToastInitState != null);
       _map[groupKey] ??= {};
       final uniqueKey = UniqueKey();
-      final overlayEntry = OverlayEntry(builder: (_) =>
-          ProxyDispose(key: uniqueKey, child: widget, disposeCallback: () {
-            _map[groupKey]?.remove(key);
-          },));
-      _map[groupKey][key] = overlayEntry;
-      _botToastInitState.insert(overlayEntry);
+      widget = ProxyDispose(
+        key: uniqueKey,
+        child: widget,
+        disposeCallback: () {
+          _map[groupKey]?.remove(key);
+        },
+      );
+      _map[groupKey][key] = widget;
+      _update();
     });
   }
 
   void remove(String groupKey, UniqueKey key) {
     safeRun(() {
-      final result = _map[groupKey]?.remove(key);
-      if (result != null) {
-        result.remove();
-      }
+      _map[groupKey]?.remove(key);
+      _update();
     });
   }
 
   void removeAll(String groupKey) {
     safeRun(() {
-      _map[groupKey]?.forEach((key, value) {
-        assert(value != null);
-        value.remove();
-      });
       _map[groupKey]?.clear();
+      _update();
     });
   }
 
   void cleanAll() {
     safeRun(() {
-      List<OverlayEntry> children = _children;
-      assert(children.every((test) => test != null));
-      children.forEach((item) {
-        item.remove();
-      });
       _map.clear();
+      _update();
     });
   }
+
+  void _update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        widget.child,
+      ]
+        ..addAll(_children),
+    );
+  }
 }
-
-

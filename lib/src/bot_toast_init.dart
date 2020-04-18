@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'basis.dart';
 import 'bot_toast_manager.dart';
 
-final GlobalKey<BotToastInitState> _botToastInitKey =
-GlobalKey<BotToastInitState>();
+final GlobalKey<BotToastManagerState> _key =
+GlobalKey<BotToastManagerState>();
 
-BotToastManager get botToastManager {
-  assert(_botToastInitKey?.currentState?._botToastManager != null);
-  return _botToastInitKey.currentState._botToastManager;
+BotToastManagerState get botToastManager {
+  assert(_key?.currentState != null);
+  return _key.currentState;
 }
-
 
 class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
 
@@ -53,38 +52,7 @@ TransitionBuilder BotToastInit() {
   //确保提前初始化,保证WidgetsBinding.instance.addObserver(this);的顺序
   BotToastWidgetsBindingObserver._singleton;
   return (_, Widget child) {
-    return _BotToastInit(child: child);
+    return BotToastManager(key: _key, child: child);
   };
 }
 
-class _BotToastInit extends Overlay {
-  final Widget child;
-
-  _BotToastInit({@required this.child})
-      : assert(child != null),
-        super(key: _botToastInitKey,
-          initialEntries: [
-            OverlayEntry(maintainState: true, builder: (_) => child)
-          ]);
-
-  @override
-  BotToastInitState createState() => BotToastInitState();
-}
-
-class BotToastInitState extends OverlayState {
-
-  BotToastManager _botToastManager;
-
-  @override
-  void initState() {
-    super.initState();
-    _botToastManager = BotToastManager(this);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _botToastManager.dispose();
-  }
-
-}
