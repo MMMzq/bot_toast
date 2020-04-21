@@ -145,7 +145,7 @@ MaterialApp(
 
 - 如果你项目有多个`Navigator`,请将该`BotToastNavigatorObserver`添加到`Navigator.observers`,否则将会影响一些功能
 
-- `ToastBuilder`方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如`Scaffold``,`Material`都会默认占满整个父空间,
+- 使用`ToastBuilder`方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如`Scaffold`,`Material`都会默认占满整个父空间,
 并且会吸收事件(就算透明也是这种情况)
 
 
