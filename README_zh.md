@@ -115,8 +115,7 @@ BotToast.showAttachedWidget(
 
 ####  2.x版本升级到3.x版本
 
-- 修改BotInit使用的位置
-
+将`BotInit`使用的位置:
 ``` dart
 //2.x.x版本的初始化方式
 BotToastInit(
@@ -144,10 +143,10 @@ MaterialApp(
 
 ### 🐨注意事项
 
-- 如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers],否则将会影响一些功能
+- 如果你项目有多个`Navigator`,请将该`BotToastNavigatorObserver`添加到`Navigator.observers`,否则将会影响一些功能
 
-- [ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如[Scaffold],[Material]都会默认占满整个父空间,
-并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method] 如果真的要生成,可以考虑使用[IgnorePointer],如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
+- `ToastBuilder`方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如`Scaffold``,`Material`都会默认占满整个父空间,
+并且会吸收事件(就算透明也是这种情况)
 
 
 <br>
