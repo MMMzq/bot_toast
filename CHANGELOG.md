@@ -1,3 +1,6 @@
+## [2.4.1]
+* bug fix
+
 ## [2.4.0]
 * feat: Support to intercept click back button event
 
