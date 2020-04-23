@@ -115,7 +115,7 @@ BotToast.showAttachedWidget(
 
 ####  2.x版本升级到3.x版本
 
-将`BotInit`使用的位置:
+将`BotToastInit`使用的位置:
 ``` dart
 //2.x.x版本的初始化方式
 BotToastInit(
