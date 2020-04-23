@@ -29,7 +29,7 @@ class BotToastManager {
     _children.forEach((item) {
       item.remove();
     });
-    _children.clear();
+    _map.clear();
   }
 
 
