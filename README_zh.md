@@ -13,7 +13,7 @@ BotToast 🤖
 * [🐳示例项目](#示例项目)
 * [🐺效果图](#效果图)
 * [🐮快速使用](#快速使用) 
-* [🐼2.0版本](#20版本)
+* [🐼3.0版本](#30版本)
 * [🐨注意事项](#注意事项) 
 * [📃主要Api文档](#主要Api文档) 
 
@@ -21,15 +21,15 @@ BotToast 🤖
 
 ###  🐲概述
 
-- 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制! (这是他最重要的特点,跟别的Toast库不同的地方)
+- 真正意义上的Toast,可以在任何你需要的时候调用,不会有任何限制!
 
 - 功能丰富,支持显示通知,文本,加载,附属等类型Toast
 
-- 支持在弹出各种自定义Toast,或者说你可以弹出任何Widget,只要它符合flutter代码的要求即可
+- 支持弹出各种自定义Toast,或者说你可以弹出任何Widget,只要它符合flutter代码的要求即可
 
-- Api简单易用,基本上没有必要参数(包括BuildContext),基本上都是可选参数
+- Api简单易用
 
-- 纯flutter实现,不容易带来兼容问题
+- 纯flutter实现
 
 
 
@@ -55,7 +55,7 @@ Loading|Text|CustomWidget
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: ^2.4.1
+     bot_toast: ^3.0.0
 ```
 
 #### 2. 导入BotToast库
@@ -66,14 +66,12 @@ import 'package:bot_toast/bot_toast.dart';
 #### 3. 初始化BotToast
 
 ``` dart
-//1.使用BotToastInit直接包裹MaterialApp
-BotToastInit(
-  child:MaterialApp(
+MaterialApp(
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],//2.注册路由观察者
+      builder: BotToastInit(), //1.调用BotToastInit
+      navigatorObservers: [BotToastNavigatorObserver()], //2.注册路由观察者
       home: XxxxPage(),
   )
-);
 ```
 
 #### 4. 使用BotToast
@@ -107,38 +105,19 @@ BotToast.showAttachedWidget(
 
 <br>
 
-### 🐼2.0版本
+### 🐼3.0版本
 
 #### 主要改动:
 
-- 支持自定义Toast的**动画**和持续时间😉
+- 重新实现了底层的初始化逻辑,代码更简单,通用,并且不再依赖`Navigator`
 
-- 添加`showAnimationWidget`方法,可以使用此方法来高度自定义一个有动画的Toast🤩
+- 初始化的方式改变(破坏性的)
 
-- 修改了初始化的方式使之更为通用,1.x版本升级到2.0修改需手动修改来进行适配。(参考了[overlay_support](https://github.com/boyan01/overlay_support)库的初始化方式,非常感谢)
+####  2.x版本升级到3.x版本
 
-- 删除`reInit`方法(2.0版本不再需要),以及`PreferDirection.Below`和`PreferDirection.Upside`这两个已经被弃用的枚举
-
-- [更详细的2.0版本改动,点击查看](CHANGELOG.md#200)
-
-####  1.x版本升级到2.x版本
-
-- 修改BotInit使用的位置,现在是直接包裹`MaterialApp`,而不是`XxxPage`
-
-``` dart
-///1.x.x版本的初始化方式
-MaterialApp(
-      title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(  //2.初始化BotToast
-          child: XxxxPage()
-      ),
-    );
-```
-改为:
+将`BotToastInit`使用的位置:
 ``` dart
 //2.x.x版本的初始化方式
-//使用BotToastInit直接包裹MaterialApp
 BotToastInit(
   child:MaterialApp(
       title: 'BotToast Demo',
@@ -148,23 +127,15 @@ BotToastInit(
 );
 ```
 
-- 修改`showEnhancedWidget`的`warpWidget`参数的方法入参(注意这一步不一定需要,这取决于你是否使用过`showEnhancedWidget`,如果没有使用过,这步可以省略)
-```dart
-///1.x.x版本
-showEnhancedWidget(
-  ...
-  warpWidget:(widget)=>XxxWrap(child:widget);
-  ...
-)
-```
 改为:
-```dart
-///2.x.x版本
-showEnhancedWidget(
-  ...
-  warpWidget:(cancel,widget)=>XxxWrap(child:widget);
-  ...
-)
+``` dart
+//3.x.x版本的初始化方式
+MaterialApp(
+      title: 'BotToast Demo',
+      builder: BotToastInit(), //BotToastInit移动到此处
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: XxxxPage(),
+  )
 ```
 
 <br>
@@ -172,15 +143,11 @@ showEnhancedWidget(
 
 ### 🐨注意事项
 
-- 如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
+- 如果你项目有多个`Navigator`,请将该`BotToastNavigatorObserver`添加到`Navigator.observers`,否则将会影响一些功能
 
-- [ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如[Scaffold],[Material]都会默认占满整个父空间,
-并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method] 如果真的要生成,可以考虑使用[IgnorePointer],如果没有遵守规则,将会时某些功能失效例如[allowClick]功能就会失效
+- 使用`ToastBuilder`方法生成widget时,请确保生成的Widget背景不会吸收点击事件,例如`Scaffold`,`Material`都会默认占满整个父空间,
+并且会吸收事件(就算透明也是这种情况)
 
-
-
-
-#### 更详细的实现细节请看[bot_toast是怎样炼成的](https://juejin.im/post/5d2b0261f265da1bb003edc6)
 
 <br>
 

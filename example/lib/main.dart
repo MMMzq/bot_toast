@@ -20,12 +20,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BotToastInit(
-      child: MaterialApp(
-        title: 'BotToast Demo',
-        navigatorObservers: [BotToastNavigatorObserver()],
-        home: EnterPage(),
-      ),
+    return MaterialApp(
+      builder: BotToastInit(),
+      title: 'BotToast Demo',
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: EnterPage(),
     );
   }
 }

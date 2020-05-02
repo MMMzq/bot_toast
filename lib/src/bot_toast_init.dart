@@ -3,37 +3,27 @@ import 'package:flutter/material.dart';
 import 'basis.dart';
 import 'bot_toast_manager.dart';
 
-final GlobalKey<BotToastInitState> _botToastInitKey =
-GlobalKey<BotToastInitState>();
+final GlobalKey<BotToastManagerState> _key =
+GlobalKey<BotToastManagerState>();
 
-BotToastManager get botToastManager {
-  assert(_botToastInitKey?.currentState?._botToastManager != null);
-  return _botToastInitKey.currentState._botToastManager;
+BotToastManagerState get botToastManager {
+  assert(_key?.currentState != null);
+  return _key.currentState;
 }
 
-BotToastInitState get botToastInitState {
-  assert(_botToastInitKey?.currentState?._botToastManager != null);
-  return _botToastInitKey.currentState;
-}
+class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
 
-class BotToastInit extends StatefulWidget {
-  final Widget child;
+  BotToastWidgetsBindingObserver._(){
+    _listener = <PopTestFunc>[];
+    WidgetsBinding.instance.addObserver(this);
+  }
 
-  BotToastInit({@required this.child})
-      : assert(child != null),
-        super(key: _botToastInitKey);
-
-  @override
-  BotToastInitState createState() => BotToastInitState();
-}
-
-class BotToastInitState extends State<BotToastInit>
-    with WidgetsBindingObserver {
-  bool _needInit;
-  bool get needInit => _needInit;
-
-  BotToastManager _botToastManager;
   List<PopTestFunc> _listener;
+
+  static final BotToastWidgetsBindingObserver _singleton = BotToastWidgetsBindingObserver
+      ._();
+
+  static BotToastWidgetsBindingObserver get singleton => _singleton;
 
 
   VoidCallback registerPopListener(PopTestFunc popTestFunc) {
@@ -46,43 +36,23 @@ class BotToastInitState extends State<BotToastInit>
 
   @override
   Future<bool> didPopRoute() async {
-    final clone = _listener.reversed.toList(growable: false);
-    for (PopTestFunc popTest in clone) {
-      if (popTest())
-        return true;
+    if (_listener.isNotEmpty) {
+      final clone = _listener.reversed.toList(growable: false);
+      for (PopTestFunc popTest in clone) {
+        if (popTest()) return true;
+      }
     }
     return super.didPopRoute();
   }
 
-  void reset() {
-    _needInit = false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _needInit = true;
-    return widget.child;
-  }
-
-  @override
-  void initState() {
-    _needInit = true;
-    _botToastManager = BotToastManager(this);
-    _listener = <PopTestFunc>[];
-    WidgetsBinding.instance.addObserver(this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _botToastManager.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(BotToastInit oldWidget) {
-    _needInit = true;
-    super.didUpdateWidget(oldWidget);
-  }
 }
+
+// ignore: non_constant_identifier_names
+TransitionBuilder BotToastInit() {
+  //确保提前初始化,保证WidgetsBinding.instance.addObserver(this);的顺序
+  BotToastWidgetsBindingObserver._singleton;
+  return (_, Widget child) {
+    return BotToastManager(key: _key, child: child);
+  };
+}
+

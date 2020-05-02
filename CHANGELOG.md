@@ -1,3 +1,8 @@
+## [3.0.0]
+* Reimplemented the underlying initialization logic, the code is simpler and more general, and no longer depends on `Navigator`
+
+* Modify the initialization method
+
 ## [2.4.1]
 * bug fix
 

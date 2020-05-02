@@ -13,20 +13,20 @@ A really easy to use flutter toast library!
 * [🐳Example](#Example)
 * [🐺Renderings](#Renderings)
 * [🐮Getting started](#Getting-started) 
-* [🐼2.0 version](#20-version)
+* [🐼3.0 version](#30-version)
 * [📃Documentation](#Documentation) 
 
 ###  🐲Overview
 
-- In the true sense of Toast, you can call it whenever you need it, without any restrictions! (This is his most important feature, different from other Toast libraries)
+- In the true sense of Toast, you can call it whenever you need it, without any restrictions! 
 
 - Feature-rich, support for displaying notifications, text, loading, attachments, etc. Toast
 
 - Support for popping up various custom Toasts, or you can pop up any Widget as long as it meets the requirements of the flutter code.
 
-- Api is easy to use, basically has no necessary parameters (including BuildContext), basically all optional parameters
+- API is simple and easy to use
 
-- Pure flutter implementation, it is not easy to bring compatibility problems
+- Pure flutter implementation
 
 
 ### 🐼Online Demo
@@ -51,7 +51,7 @@ Loading|Text|CustomWidget
 #### 1. add dependencies into you project pubspec.yaml file
 ``` dart
 dependencies:
-     bot_toast: ^2.4.1
+     bot_toast: ^3.0.0
 ```
 
 #### 2. import BotToast lib
@@ -61,14 +61,12 @@ import 'package:bot_toast/bot_toast.dart';
 
 #### 3. initialization BotToast
 ``` dart
-//1. wrap MaterialApp with BotToastInit
-BotToastInit(
-  child:MaterialApp(
+MaterialApp(
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],//2.registered route observer
+      builder: BotToastInit(), //1. call BotToastInit
+      navigatorObservers: [BotToastNavigatorObserver()], //2. registered route observer
       home: XxxxPage(),
   )
-);
 ```
 
 #### 4. use BotToast
@@ -100,39 +98,18 @@ BotToast.showAttachedWidget(
     target: Offset(520, 520));
 ```
 
-### 🐼2.0 version
+### 🐼3.0 version
 
 #### Major changes:
 
-- Support for custom Toast **animation** and **animation duration**
+- Reimplemented the underlying initialization logic, the code is simpler and more general, and no longer depends on `Navigator`
 
-- Add the `showAnimationWidget` method, which can be used to highly customize an animated Toast🤩
+- Modify the initialization method
 
-- Modified the initialization method to make it more versatile. 1.x version upgrade to 2.0 modification needs manual modification to adapt
-
-- Remove the `reInit` method and the two deprecated enumerations `PreferDirection.Below` and `PreferDirection.Upside`
-
-- [More detailed version 2.0 changes, click to view](CHANGELOG.md#200)
-
-#### 1.x version upgrade to 2.x version
-
-- Modify the location used by BotInit, Now wrap your MaterialApp with `BotToastInit` instead of `XxxPage`
-
+#### 2.x version upgrade to 3.x version
 change:
 ``` dart
-///1.x.x version initialization method
-MaterialApp(
-      title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: BotToastInit(  
-          child: XxxxPage()
-      ),
-    );
-```
-to:
-``` dart
-///2.x.x version initialization method
-///Wrap your MaterialApp with BotToastInit
+//2.x.x version initialization method
 BotToastInit(
   child:MaterialApp(
       title: 'BotToast Demo',
@@ -141,27 +118,17 @@ BotToastInit(
   )
 );
 ```
-
-- Modify the `warpWidget` parameter of the `showEnhancedWidget` method (note that this step is not necessary, depending on whether you have used `showEnhancedWidget`, if not used, this step can be omitted)
-
-change:
-```dart
-///1.x.x version
-showEnhancedWidget(
-  ...
-  warpWidget:(widget)=>XxxWrap(child:widget);
-  ...
-)
-```
 to:
-```dart
-///2.x.x version
-showEnhancedWidget(
-  ...
-  warpWidget:(cancel,widget)=>XxxWrap(child:widget);
-  ...
-)
+``` dart
+//3.x.x version initialization method
+MaterialApp(
+      title: 'BotToast Demo',
+      builder: BotToastInit(), 
+      navigatorObservers: [BotToastNavigatorObserver()],
+      home: XxxxPage(),
+  )
 ```
+
 
 <br>
 
