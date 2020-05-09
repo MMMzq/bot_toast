@@ -73,6 +73,20 @@ MaterialApp(
       home: XxxxPage(),
   )
 ```
+or
+``` dart
+final botToastBuilder = BotToastInit();  //1.调用BotToastInit
+MaterialApp(
+      title: 'BotToast Demo',
+      builder: (context, child) {
+        child = myBuilder(context,child);  //do something
+        child = botToastBuilder(context,child); 
+        return child;
+      }, 
+      navigatorObservers: [BotToastNavigatorObserver()], //2.注册路由观察者
+      home: XxxxPage(),
+  )
+```
 
 #### 4. 使用BotToast
 ``` dart
