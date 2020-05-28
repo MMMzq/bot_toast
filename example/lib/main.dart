@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:example/stacking/stacking_toast.dart';
 import 'package:flutter/material.dart';
 
 import 'all.dart';
@@ -238,7 +239,19 @@ class EnterPage extends StatelessWidget {
                       ),
                     )
                   ],
-                )
+                ),
+                const Divider(),
+                Row(
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => StackingToast()));
+                      },
+                      child: Text('StackingToast'),
+                    ),
+                  ],
+                ),
               ]),
             ),
           ),

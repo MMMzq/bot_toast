@@ -3,6 +3,7 @@ export 'animation.dart';
 export 'attached.dart';
 export 'loading.dart';
 export 'notification.dart';
+export 'stacking.dart';
 export 'text.dart';
 
 class ProxyInitState extends StatefulWidget {
@@ -28,7 +29,6 @@ class _ProxyInitStateState extends State<ProxyInitState> {
     return widget.child;
   }
 }
-
 
 class ProxyDispose extends StatefulWidget {
   final Widget child;

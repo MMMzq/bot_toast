@@ -35,6 +35,7 @@ class BotToast {
   static const String loadKey = '_loadKey';
   static const String attachedKey = '_attachedKey';
   static const String defaultKey = '_defaultKey';
+  static const String stackingKey = '_stackingKey';
 
   static final Map<String, List<CancelFunc>> cacheCancelFunc = {
     textKey: [],
@@ -553,6 +554,116 @@ class BotToast {
                     ? wrapToastAnimation(controller, cancel, child)
                     : child),
         toastBuilder: attachedBuilder);
+  }
+
+  static CancelFunc showStackingToast({
+    Widget icon,
+    @required String title,
+    @required String message,
+    StackingToastLevel level,
+    Duration duration = const Duration(seconds: 3),
+    Color backgroundColor,
+    TextStyle textStyle,
+    EdgeInsetsGeometry bodyPadding,
+  }) {
+    assert(title != null);
+    assert(message != null);
+
+    return showCustomStackingToast(
+        duration: duration,
+        toastBuilder: (cancelFunc) {
+          return StackingToast(
+            level: level,
+            icon: icon,
+            title: title,
+            message: message,
+            backgroundColor: backgroundColor,
+            textStyle: textStyle,
+            bodyPadding: bodyPadding,
+          );
+        });
+  }
+
+  static final GlobalKey<StackingToastsContainerState> _stackingToastsContainerKey =
+  GlobalKey<StackingToastsContainerState>();
+  static final UniqueKey _stackingToastsContainerToastKey = UniqueKey();
+
+  static CancelFunc showCustomStackingToast(
+      {@required ToastBuilder toastBuilder,
+        WrapAnimation wrapToastAnimation = stackingAnimation,
+        Duration duration = const Duration(seconds: 3),
+        Duration animationDuration = const Duration(milliseconds: 256),
+        Duration animationReverseDuration = const Duration(milliseconds: 256),
+        VoidCallback onClose,
+        bool ignoreContentClick = false,
+        bool allowClick = true,
+        bool enableSafeArea}) {
+    assert(toastBuilder != null);
+    assert(wrapToastAnimation != null);
+
+    AnimationController controller = _createAnimationController(
+        animationDuration,
+        reverseDuration: animationReverseDuration);
+    Widget toast;
+    CancelFunc removeStackingToastContainerFunc;
+    final CancelFunc removeStackingToastFunc = () async {
+      if (_stackingToastsContainerKey.currentState == null) {
+        return;
+      }
+      await controller?.reverse();
+      _stackingToastsContainerKey.currentState.removeToast(toast);
+      if (_stackingToastsContainerKey.currentState.hasNoToast) {
+        removeStackingToastContainerFunc?.call();
+      }
+    };
+    //定时关闭
+    Timer timer;
+    if (duration != null) {
+      timer = Timer(duration, () {
+        removeStackingToastFunc();
+        timer = null;
+      });
+    }
+    toast = Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      child: wrapToastAnimation(
+        controller,
+        removeStackingToastFunc,
+        ProxyInitState(
+          initStateCallback: () {
+            assert(!controller.isAnimating);
+            controller.forward();
+          },
+          child: ProxyDispose(
+            disposeCallback: () {
+              timer?.cancel();
+              timer = null;
+              controller.dispose();
+              controller = null;
+            },
+            child: toastBuilder(removeStackingToastFunc),
+          ),
+        ),
+      ),
+      // 包裹的toast是在list里的，必须设置key，否则flutter刷新视图时无法判断移除的toast是哪个。
+      key: UniqueKey(),
+    );
+
+    if (_stackingToastsContainerKey.currentState == null) {
+      removeStackingToastContainerFunc = showWidget(
+        toastBuilder: (cancelFunc) {
+          return StackingToastsContainer(
+            key: _stackingToastsContainerKey,
+            firstToast: toast,
+          );
+        },
+        key: _stackingToastsContainerToastKey,
+        groupKey: stackingKey,
+      );
+    } else {
+      _stackingToastsContainerKey.currentState.addToast(toast);
+    }
+    return removeStackingToastFunc;
   }
 
   ///显示一个使用了Animation的Toast

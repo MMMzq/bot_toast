@@ -30,6 +30,14 @@ Widget attachedAnimation(AnimationController controller, CancelFunc cancelFunc,
       child: child,
     );
 
+Widget stackingAnimation(
+    AnimationController controller, CancelFunc cancelFunc, Widget child) =>
+    NormalAnimation(
+      reverse: true,
+      controller: controller,
+      child: child,
+    );
+
 class NormalAnimation extends StatefulWidget {
   final Widget child;
   final bool reverse;
