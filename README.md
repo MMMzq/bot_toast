@@ -99,7 +99,7 @@ BotToast.showLoading(); //popup a sample loading toast
 ```dart
 //popup a attachments toast
 BotToast.showAttachedWidget(
-    attachedWidget: (_) => Card(
+    attachedBuilder: (_) => Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(

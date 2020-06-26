@@ -104,7 +104,7 @@ BotToast.showLoading(); //弹出一个加载动画
 ```dart
 //弹出一个定位Toast
 BotToast.showAttachedWidget(
-    attachedWidget: (_) => Card(
+    attachedBuilder: (_) => Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
