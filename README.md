@@ -89,11 +89,11 @@ BotToast.showText(text:"xxxx");  //popup a text toast;
 ```
 
 ```dart
-BotToast.showSimpleNotification(title: "init"); // popup a sample notification toast;
+BotToast.showSimpleNotification(title: "init"); // popup a notification toast;
 ```
 
 ```dart
-BotToast.showLoading(); //popup a sample loading toast
+BotToast.showLoading(); //popup a loading toast
 ```
 
 ```dart
