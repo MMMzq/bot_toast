@@ -63,7 +63,7 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[backgroundColor] defaults to Theme.of(context).cardColor
-  ///[borderRadius] defaults to 6
+  ///[borderRadius] defaults to 4
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
@@ -131,7 +131,7 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[backgroundColor] defaults to Theme.of(context).cardColor
-  ///[borderRadius] defaults to 6
+  ///[borderRadius] defaults to 4
   static CancelFunc showNotification(
       {ToastBuilder leading,
       ToastBuilder title,
@@ -141,7 +141,7 @@ class BotToast {
       WrapAnimation wrapToastAnimation = notificationAnimation,
       GestureTapCallback onTap,
       Color backgroundColor,
-      double borderRadius = 6,
+      double borderRadius = 4,
       GestureLongPressCallback onLongPress,
       Alignment align = const Alignment(0, -0.99),
       List<DismissDirection> dismissDirections = const [
