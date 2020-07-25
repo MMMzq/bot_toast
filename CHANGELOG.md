@@ -1,3 +1,6 @@
+## [3.0.1]
+* Add two parameters: `backgroundColor` and `borderRadius` to `showSimpleNotification` and `showNotification` methods
+
 ## [3.0.0]
 * Reimplemented the underlying initialization logic, the code is simpler and more general, and no longer depends on `Navigator`
 

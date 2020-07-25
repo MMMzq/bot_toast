@@ -55,7 +55,7 @@ Loading|Text|CustomWidget
 #### 1. pubspec.yaml文件里添加依赖
 ``` dart
 dependencies:
-     bot_toast: ^3.0.0
+     bot_toast: ^3.0.1
 ```
 
 #### 2. 导入BotToast库
@@ -115,6 +115,14 @@ BotToast.showAttachedWidget(
         ),
     duration: Duration(seconds: 2),
     target: Offset(520, 520));
+```
+
+```dart
+//custom api
+BotToast.showCustomNotification(...)
+BotToast.showCustomText(...)
+BotToast.showCustomLoading(...)
+BotToast.showAnimationWidget(...)
 ```
 
 <br>

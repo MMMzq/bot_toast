@@ -84,7 +84,7 @@ onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 enableSlideOff | 否 | true| 是否能滑动删除
 backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 backgroundColor | No | ```Theme.of(context).cardColor```| ```Cards background color``` |
-borderRadius | No | ```4```| ```Cards border radius``` |
+borderRadius | No | ```ThemeData.cardTheme.shape```| ```Cards border radius``` |
 
 <br>
 
@@ -106,7 +106,7 @@ crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
 backgroundColor | No | ```Theme.of(context).cardColor```| ```Cards background color``` |
-borderRadius | No | ```4```| ```Cards border radius``` |
+borderRadius | No | ```ThemeData.cardTheme.shape```| ```Cards border radius``` |
 
 <br>
 

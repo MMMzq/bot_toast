@@ -51,7 +51,7 @@ Loading|Text|CustomWidget
 #### 1. add dependencies into you project pubspec.yaml file
 ``` dart
 dependencies:
-     bot_toast: ^3.0.0
+     bot_toast: ^3.0.1
 ```
 
 #### 2. import BotToast lib
@@ -110,6 +110,14 @@ BotToast.showAttachedWidget(
         ),
     duration: Duration(seconds: 2),
     target: Offset(520, 520));
+```
+
+```dart
+//custom api
+BotToast.showCustomNotification(...)
+BotToast.showCustomText(...)
+BotToast.showCustomLoading(...)
+BotToast.showAnimationWidget(...)
 ```
 
 ### 🐼3.0 version
