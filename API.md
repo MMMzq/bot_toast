@@ -58,6 +58,8 @@ duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说�
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
+backgroundColor | No | ```Theme.of(context).cardColor```| ```Cards background color``` |
+borderRadius | No | ```ThemeData.cardTheme.shape```| ```Cards border radius``` |
 <br>
 
 #### 2.BotToast.showNotification
@@ -105,8 +107,7 @@ duration | 否 | ```Duration(seconds: 2)```| [duration说明](#通用参数说�
 crossPage | 否 | true| [crossPage说明](#通用参数说明)
 onlyOne | 否 | true| [onlyOne说明](#通用参数说明)
 backButtonBehavior | 否 | 无 | [backButtonBehavior说明](#通用参数说明)
-backgroundColor | No | ```Theme.of(context).cardColor```| ```Cards background color``` |
-borderRadius | No | ```ThemeData.cardTheme.shape```| ```Cards border radius``` |
+
 
 <br>
 
