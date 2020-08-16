@@ -50,8 +50,6 @@ class BotToastNavigatorObserver extends NavigatorObserver {
     _leavePageCallbacks.remove(botToastNavigatorObserverProxy);
   }
 
-  BotToastNavigatorObserver._();
-
   @override
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);

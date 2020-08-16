@@ -6,7 +6,8 @@ import 'package:flutter/scheduler.dart';
 
 import 'basis.dart';
 import 'bot_toast_init.dart';
-import 'key_board_safe_area.dart';
+import 'keyboard_safe_area.dart';
+import 'keyboard_visibility.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
@@ -556,21 +557,27 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) =>
-            CustomSingleChildLayout(
-                delegate: PositionDelegate(
-                    target: targetRect,
-                    verticalOffset: verticalOffset ?? 0,
-                    horizontalOffset: horizontalOffset ?? 0,
-                    enableSafeArea: enableSafeArea ?? true,
-                    preferDirection: preferDirection),
-                child: wrapToastAnimation != null
-                    ? wrapToastAnimation(controller, cancel, child)
-                    : child),
+        wrapToastAnimation: (controller, cancel, child) => KeyboardVisibility(
+              onKeyboardVisibilityChanged: (open) {
+                if (open) {
+                  cancel();
+                }
+              },
+              child: CustomSingleChildLayout(
+                  delegate: PositionDelegate(
+                      target: targetRect,
+                      verticalOffset: verticalOffset ?? 0,
+                      horizontalOffset: horizontalOffset ?? 0,
+                      enableSafeArea: enableSafeArea ?? true,
+                      preferDirection: preferDirection),
+                  child: wrapToastAnimation != null
+                      ? wrapToastAnimation(controller, cancel, child)
+                      : child),
+            ),
         toastBuilder: attachedBuilder);
   }
 
-  ///显示一���使用了Animation的Toast
+  ///显示使用了Animation的Toast
   ///使用请看:
   ///[BotToast.showCustomNotification]
   ///[BotToast.showCustomText]
@@ -782,7 +789,7 @@ class BotToast {
         groupKey: groupKey,
         key: key,
         toastBuilder: (_) {
-          return KeyBoardSafeArea(
+          return KeyboardSafeArea(
             child: ProxyDispose(disposeCallback: () {
               cache.remove(dismissFunc);
               if (observerProxy != null) {
@@ -792,6 +799,7 @@ class BotToast {
               onClose?.call();
               unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
+              // ignore: deprecated_member_use
               TextStyle textStyle = Theme.of(context).textTheme.body1;
               Widget child = DefaultTextStyle(
                   style: textStyle,
