@@ -8,14 +8,14 @@ class TextToast extends StatefulWidget {
   final BorderRadiusGeometry borderRadius;
   final TextStyle textStyle;
 
-  const TextToast(
-      {Key key,
-        @required this.text,
-        this.contentPadding,
-        this.contentColor,
-        this.borderRadius,
-        this.textStyle,})
-      : super(key: key);
+  const TextToast({
+    Key key,
+    @required this.text,
+    this.contentPadding,
+    this.contentColor,
+    this.borderRadius,
+    this.textStyle,
+  }) : super(key: key);
 
   @override
   TextToastState createState() => TextToastState();
@@ -27,8 +27,8 @@ class TextToastState extends State<TextToast> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
-            constraints: constraints.copyWith(
-                maxWidth: constraints.biggest.width * 0.6),
+            constraints:
+                constraints.copyWith(maxWidth: constraints.biggest.width * 0.6),
             padding: widget.contentPadding,
             decoration: BoxDecoration(
               color: widget.contentColor,

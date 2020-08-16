@@ -8,10 +8,11 @@ class NotificationToast extends StatefulWidget {
 
   final List<DismissDirection> dismissDirections;
 
-  const NotificationToast({Key key,
-    @required this.child,
-    @required this.slideOffFunc,
-    this.dismissDirections})
+  const NotificationToast(
+      {Key key,
+      @required this.child,
+      @required this.slideOffFunc,
+      this.dismissDirections})
       : super(key: key);
 
   @override

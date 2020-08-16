@@ -29,7 +29,6 @@ class _ProxyInitStateState extends State<ProxyInitState> {
   }
 }
 
-
 class ProxyDispose extends StatefulWidget {
   final Widget child;
   final VoidCallback disposeCallback;

@@ -7,9 +7,9 @@ typedef ToastBuilder = Widget Function(CancelFunc cancelFunc);
 typedef FutureFunc = Future<void> Function();
 typedef PopTestFunc = bool Function();
 
-
 typedef WrapWidget = Widget Function(CancelFunc cancelFunc, Widget widget);
-typedef WrapAnimation = Widget Function(AnimationController controller, CancelFunc cancelFunc, Widget widget);
+typedef WrapAnimation = Widget Function(
+    AnimationController controller, CancelFunc cancelFunc, Widget widget);
 
 class TickerProviderImpl extends TickerProvider {
   @override

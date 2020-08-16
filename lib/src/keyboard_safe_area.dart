@@ -16,4 +16,3 @@ class KeyboardSafeArea extends StatelessWidget {
     );
   }
 }
-

@@ -7,7 +7,7 @@ class BotToastNavigatorObserverProxy {
   void Function(Route<dynamic> route, Route<dynamic> previousRoute) didPop;
 
   BotToastNavigatorObserverProxy(
-  {this.didPush, this.didReplace, this.didRemove, this.didPop});
+      {this.didPush, this.didReplace, this.didRemove, this.didPop});
 
   BotToastNavigatorObserverProxy.all(VoidCallback leavePageCallback) {
     didPush = (_, __) => leavePageCallback();
@@ -30,7 +30,8 @@ class BotToastNavigatorObserver extends NavigatorObserver {
     }());
   }
 
-  static void register(BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
+  static void register(
+      BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
     assert(debugInitialization, """
     Please initialize!
     Example:
@@ -45,7 +46,8 @@ class BotToastNavigatorObserver extends NavigatorObserver {
     _leavePageCallbacks.add(botToastNavigatorObserverProxy);
   }
 
-  static void unregister(BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
+  static void unregister(
+      BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
     assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.remove(botToastNavigatorObserverProxy);
   }
@@ -54,7 +56,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
-      observerProxy.didPush?.call(route,previousRoute);
+      observerProxy.didPush?.call(route, previousRoute);
     }
   }
 
@@ -62,7 +64,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   void didReplace({Route<dynamic> newRoute, Route<dynamic> oldRoute}) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
-      observerProxy.didReplace?.call(newRoute,oldRoute);
+      observerProxy.didReplace?.call(newRoute, oldRoute);
     }
   }
 
@@ -70,7 +72,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   void didRemove(Route<dynamic> route, Route<dynamic> previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
-      observerProxy.didRemove?.call(route,previousRoute);
+      observerProxy.didRemove?.call(route, previousRoute);
     }
   }
 
@@ -78,7 +80,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
-      observerProxy.didPop?.call(route,previousRoute);
+      observerProxy.didPop?.call(route, previousRoute);
     }
   }
 }

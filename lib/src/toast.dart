@@ -174,9 +174,11 @@ class BotToast {
         toastBuilder: (cancel) {
           return Card(
             color: backgroundColor,
-            shape: borderRadius == null ? null : RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
+            shape: borderRadius == null
+                ? null
+                : RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
             child: ListTile(
                 onTap: onTap,
                 onLongPress: onLongPress,

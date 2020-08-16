@@ -1,8 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-Widget notificationAnimation(AnimationController controller,
-    CancelFunc cancelFunc, Widget child) =>
+Widget notificationAnimation(
+        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     NormalAnimation(
       reverse: true,
       controller: controller,
@@ -69,7 +69,6 @@ class NormalAnimationState extends State<NormalAnimation>
         (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
     animationOpacity = tweenOpacity.animate(animation);
 
-
     super.initState();
   }
 
@@ -114,7 +113,6 @@ class FadeAnimationState extends State<FadeAnimation>
         CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
 
     animationOpacity = tweenOpacity.animate(animation);
-
 
     super.initState();
   }

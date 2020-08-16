@@ -21,8 +21,7 @@ class BotToastManager extends StatefulWidget {
 class BotToastManagerState extends State<BotToastManager> {
   final Map<String, Map<UniqueKey, Widget>> _map = {};
 
-  List<Widget> get _children =>
-      _map.values.fold([], (value, items) {
+  List<Widget> get _children => _map.values.fold([], (value, items) {
         return value..addAll(items.values);
       });
 
