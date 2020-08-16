@@ -1,3 +1,6 @@
+## [3.0.2]
+* fix bug: #73
+
 ## [3.0.1]
 * Add two parameters: `backgroundColor` and `borderRadius` to `showSimpleNotification` and `showNotification` methods
 
