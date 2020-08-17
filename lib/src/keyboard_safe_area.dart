@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 class KeyboardSafeArea extends StatelessWidget {
   final Widget child;
 
-  const KeyboardSafeArea({Key key, this.child}) : super(key: key);
+  final bool enable;
+
+  const KeyboardSafeArea({Key key, this.child, this.enable}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (!enable) {
+      return child;
+    }
     MediaQueryData data = MediaQuery.of(context, nullOk: true);
     return Padding(
       padding: EdgeInsets.only(

@@ -1,5 +1,5 @@
-## [3.0.2+1]
-* Format code
+## [3.0.3]
+* feat: add `enableKeyboardSafeArea` option
 
 ## [3.0.2]
 * fix bug: #73

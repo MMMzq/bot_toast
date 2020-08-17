@@ -73,8 +73,7 @@ class BotToastManagerState extends State<BotToastManager> {
     return Stack(
       children: <Widget>[
         widget.child,
-      ]
-        ..addAll(_children),
+      ]..addAll(_children),
     );
   }
 }

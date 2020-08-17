@@ -65,6 +65,7 @@ class BotToast {
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[backgroundColor] defaults to Theme.of(context).cardColor
   ///[borderRadius] defaults to ThemeData.cardTheme.shape
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
@@ -85,6 +86,7 @@ class BotToast {
       Duration animationReverseDuration,
       BackButtonBehavior backButtonBehavior,
       VoidCallback onClose,
+      bool enableKeyboardSafeArea = true,
       bool enableSlideOff = true,
       bool hideCloseButton = false,
       bool crossPage = true,
@@ -95,6 +97,7 @@ class BotToast {
         align: align,
         dismissDirections: dismissDirections,
         duration: duration,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         backgroundColor: backgroundColor,
         borderRadius: borderRadius,
         animationDuration: animationDuration,
@@ -133,6 +136,7 @@ class BotToast {
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[backgroundColor] defaults to Theme.of(context).cardColor
   ///[borderRadius] defaults to ThemeData.cardTheme.shape
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showNotification(
       {ToastBuilder leading,
       ToastBuilder title,
@@ -145,25 +149,27 @@ class BotToast {
       double borderRadius,
       GestureLongPressCallback onLongPress,
       Alignment align = const Alignment(0, -0.99),
-      List<DismissDirection> dismissDirections = const [
-        DismissDirection.horizontal,
-        DismissDirection.up
-      ],
-      BackButtonBehavior backButtonBehavior,
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      EdgeInsetsGeometry contentPadding,
-      VoidCallback onClose,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+        List<DismissDirection> dismissDirections = const [
+          DismissDirection.horizontal,
+          DismissDirection.up
+        ],
+        BackButtonBehavior backButtonBehavior,
+        Duration duration = const Duration(seconds: 2),
+        Duration animationDuration,
+        Duration animationReverseDuration,
+        EdgeInsetsGeometry contentPadding,
+        VoidCallback onClose,
+        bool enableKeyboardSafeArea = true,
+        bool enableSlideOff = true,
+        bool crossPage = true,
+        bool onlyOne = true}) {
     return showCustomNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
         align: align,
         dismissDirections: dismissDirections,
         enableSlideOff: enableSlideOff,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         onlyOne: onlyOne,
         backButtonBehavior: backButtonBehavior,
         crossPage: crossPage,
@@ -206,34 +212,37 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showCustomNotification(
       {@required ToastBuilder toastBuilder,
       WrapAnimation wrapAnimation,
       WrapAnimation wrapToastAnimation = notificationAnimation,
-      Alignment align = const Alignment(0, -0.99),
-      List<DismissDirection> dismissDirections = const [
-        DismissDirection.horizontal,
-        DismissDirection.up
-      ],
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      VoidCallback onClose,
-      BackButtonBehavior backButtonBehavior,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+        Alignment align = const Alignment(0, -0.99),
+        List<DismissDirection> dismissDirections = const [
+          DismissDirection.horizontal,
+          DismissDirection.up
+        ],
+        Duration duration = const Duration(seconds: 2),
+        Duration animationDuration,
+        Duration animationReverseDuration,
+        VoidCallback onClose,
+        BackButtonBehavior backButtonBehavior,
+        bool enableKeyboardSafeArea = true,
+        bool enableSlideOff = true,
+        bool crossPage = true,
+        bool onlyOne = true}) {
     return showAnimationWidget(
         crossPage: crossPage,
         allowClick: true,
         clickClose: false,
         ignoreContentClick: false,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         onlyOne: onlyOne,
         onClose: onClose,
         duration: duration,
         backButtonBehavior: backButtonBehavior,
         animationDuration:
-            animationDuration ?? const Duration(milliseconds: 256),
+        animationDuration ?? const Duration(milliseconds: 256),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -271,6 +280,7 @@ class BotToast {
   ///[crossPage] 请看[showEnhancedWidget.crossPage]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showText(
       {@required String text,
       WrapAnimation wrapAnimation,
@@ -278,19 +288,21 @@ class BotToast {
       Color backgroundColor = Colors.transparent,
       Color contentColor = Colors.black54,
       BorderRadiusGeometry borderRadius =
-          const BorderRadius.all(Radius.circular(8)),
-      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-      AlignmentGeometry align = const Alignment(0, 0.8),
-      EdgeInsetsGeometry contentPadding =
-          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      BackButtonBehavior backButtonBehavior,
-      VoidCallback onClose,
-      bool clickClose = false,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+      const BorderRadius.all(Radius.circular(8)),
+        TextStyle textStyle = const TextStyle(
+            fontSize: 17, color: Colors.white),
+        AlignmentGeometry align = const Alignment(0, 0.8),
+        EdgeInsetsGeometry contentPadding =
+        const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+        Duration duration = const Duration(seconds: 2),
+        Duration animationDuration,
+        Duration animationReverseDuration,
+        BackButtonBehavior backButtonBehavior,
+        VoidCallback onClose,
+        bool enableKeyboardSafeArea = true,
+        bool clickClose = false,
+        bool crossPage = true,
+        bool onlyOne = true}) {
     return showCustomText(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -302,10 +314,12 @@ class BotToast {
         clickClose: clickClose,
         backButtonBehavior: backButtonBehavior,
         onClose: onClose,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         ignoreContentClick: true,
         onlyOne: onlyOne,
         align: align,
-        toastBuilder: (_) => TextToast(
+        toastBuilder: (_) =>
+            TextToast(
               contentPadding: contentPadding,
               contentColor: contentColor,
               borderRadius: borderRadius,
@@ -330,25 +344,27 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
-  static CancelFunc showCustomText(
-      {@required ToastBuilder toastBuilder,
-      WrapAnimation wrapAnimation,
-      WrapAnimation wrapToastAnimation = textAnimation,
-      Alignment align = const Alignment(0, 0.8),
-      Color backgroundColor = Colors.transparent,
-      Duration duration = const Duration(seconds: 2),
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      VoidCallback onClose,
-      BackButtonBehavior backButtonBehavior,
-      bool crossPage = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false}) {
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
+  static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
+    WrapAnimation wrapAnimation,
+    WrapAnimation wrapToastAnimation = textAnimation,
+    Alignment align = const Alignment(0, 0.8),
+    Color backgroundColor = Colors.transparent,
+    Duration duration = const Duration(seconds: 2),
+    Duration animationDuration,
+    Duration animationReverseDuration,
+    VoidCallback onClose,
+    BackButtonBehavior backButtonBehavior,
+    bool enableKeyboardSafeArea = true,
+    bool crossPage = true,
+    bool clickClose = false,
+    bool ignoreContentClick = false,
+    bool onlyOne = false}) {
     return showAnimationWidget(
         groupKey: textKey,
         clickClose: clickClose,
         allowClick: true,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         onlyOne: onlyOne,
         crossPage: crossPage,
         ignoreContentClick: ignoreContentClick,
@@ -357,7 +373,7 @@ class BotToast {
         onClose: onClose,
         duration: duration,
         animationDuration:
-            animationDuration ?? const Duration(milliseconds: 256),
+        animationDuration ?? const Duration(milliseconds: 256),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -386,6 +402,7 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showLoading({
     WrapAnimation wrapAnimation = loadingAnimation,
     WrapAnimation wrapToastAnimation,
@@ -394,6 +411,7 @@ class BotToast {
     bool crossPage = true,
     bool clickClose = false,
     bool allowClick = false,
+    bool enableKeyboardSafeArea = true,
     VoidCallback onClose,
     Duration duration,
     Duration animationDuration,
@@ -404,6 +422,7 @@ class BotToast {
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
         align: align,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         backButtonBehavior: backButtonBehavior,
         toastBuilder: (_) => const LoadingWidget(),
         clickClose: clickClose,
@@ -433,7 +452,7 @@ class BotToast {
   ///[backgroundColor] 请看[showEnhancedWidget.backgroundColor]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
-
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showCustomLoading({
     @required ToastBuilder toastBuilder,
     WrapAnimation wrapAnimation = loadingAnimation,
@@ -444,6 +463,7 @@ class BotToast {
     bool allowClick = false,
     bool ignoreContentClick = false,
     bool crossPage = false,
+    bool enableKeyboardSafeArea = true,
     VoidCallback onClose,
     Duration duration,
     Duration animationDuration,
@@ -454,10 +474,11 @@ class BotToast {
 
     return showAnimationWidget(
         groupKey: loadKey,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         toastBuilder: toastBuilder,
         backButtonBehavior: backButtonBehavior,
         animationDuration:
-            animationDuration ?? const Duration(milliseconds: 300),
+        animationDuration ?? const Duration(milliseconds: 300),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -506,6 +527,7 @@ class BotToast {
   ///[onlyOne] 请看[showEnhancedWidget.onlyOne]
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
   ///[onClose] 请看[showEnhancedWidget.onClose]
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showAttachedWidget(
       {@required ToastBuilder attachedBuilder,
       WrapAnimation wrapAnimation,
@@ -513,17 +535,18 @@ class BotToast {
       BuildContext targetContext,
       Offset target,
       Color backgroundColor = Colors.transparent,
-      double verticalOffset = 0.0,
-      double horizontalOffset = 0.0,
-      Duration duration,
-      Duration animationDuration,
-      Duration animationReverseDuration,
-      PreferDirection preferDirection,
-      VoidCallback onClose,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      bool allowClick = true,
-      bool enableSafeArea}) {
+        double verticalOffset = 0.0,
+        double horizontalOffset = 0.0,
+        Duration duration,
+        Duration animationDuration,
+        Duration animationReverseDuration,
+        PreferDirection preferDirection,
+        VoidCallback onClose,
+        bool ignoreContentClick = false,
+        bool onlyOne = false,
+        bool allowClick = true,
+        bool enableKeyboardSafeArea = true,
+        bool enableSafeArea}) {
     assert(verticalOffset >= 0.0, 'must be a positive number');
     assert(horizontalOffset >= 0.0, 'must be a positive number');
     assert(!(targetContext != null && target != null),
@@ -552,14 +575,16 @@ class BotToast {
         crossPage: false,
         onlyOne: onlyOne,
         onClose: onClose,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         animationDuration:
-            animationDuration ?? const Duration(milliseconds: 150),
+        animationDuration ?? const Duration(milliseconds: 150),
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) => KeyboardVisibility(
+        wrapToastAnimation: (controller, cancel, child) =>
+            KeyboardVisibility(
               onKeyboardVisibilityChanged: (open) {
                 if (open) {
                   cancel();
@@ -607,6 +632,7 @@ class BotToast {
   ///[duration] 请看[showEnhancedWidget.duration]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
+  ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showAnimationWidget({
     @required ToastBuilder toastBuilder,
     @required Duration animationDuration,
@@ -621,6 +647,7 @@ class BotToast {
     bool clickClose = false,
     bool ignoreContentClick = false,
     bool onlyOne = false,
+    bool enableKeyboardSafeArea = true,
     Color backgroundColor = Colors.transparent,
     Duration duration,
     VoidCallback onClose,
@@ -640,12 +667,14 @@ class BotToast {
         crossPage: crossPage,
         onClose: onClose,
         onlyOne: onlyOne,
+        enableKeyboardSafeArea: enableKeyboardSafeArea,
         backButtonBehavior: backButtonBehavior,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         closeFunc: () => controller?.reverse(),
         duration: duration,
-        warpWidget: (cancel, child) => ProxyInitState(
+        warpWidget: (cancel, child) =>
+            ProxyInitState(
               initStateCallback: () {
                 assert(!controller.isAnimating);
                 controller.forward();
@@ -713,27 +742,30 @@ class BotToast {
   ///
   ///[onClose] Toast关闭时调用
   ///
+  ///[enableKeyboardSafeArea] 是否启用键盘安全区,防止键盘挡住Toast
+  ///
   ///[backButtonBehavior] 点击物理返回键的行为(在android上等同于物理的返回键),注意不是导航条上的返回按钮
   ///如果为[ignore]则拦截返回事件,
   ///如果为[close]则关闭该toast,并且拦截事件停止冒泡
   ///如果为null or [none]则不拦截事件
   ///
-  static CancelFunc showEnhancedWidget(
-      {@required ToastBuilder toastBuilder,
-      UniqueKey key,
-      String groupKey,
-      bool crossPage = true,
-      bool allowClick = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      BackButtonBehavior backButtonBehavior,
-      FutureFunc closeFunc,
-      VoidCallback onClose,
-      Color backgroundColor = Colors.transparent,
-      WrapWidget warpWidget,
-      Duration duration}) {
+  static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
+    UniqueKey key,
+    String groupKey,
+    bool crossPage = true,
+    bool allowClick = true,
+    bool clickClose = false,
+    bool ignoreContentClick = false,
+    bool onlyOne = false,
+    bool enableKeyboardSafeArea = true,
+    BackButtonBehavior backButtonBehavior,
+    FutureFunc closeFunc,
+    VoidCallback onClose,
+    Color backgroundColor = Colors.transparent,
+    WrapWidget warpWidget,
+    Duration duration}) {
     assert(toastBuilder != null);
+    assert(enableKeyboardSafeArea != null);
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     CancelFunc cancelFunc;
@@ -792,6 +824,7 @@ class BotToast {
         key: key,
         toastBuilder: (_) {
           return KeyboardSafeArea(
+            enable: enableKeyboardSafeArea,
             child: ProxyDispose(disposeCallback: () {
               cache.remove(dismissFunc);
               if (observerProxy != null) {

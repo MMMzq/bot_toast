@@ -26,8 +26,7 @@ void main() {
         Navigator.push(
             ctx,
             MaterialPageRoute(
-                builder: (_) =>
-                    Scaffold(
+                builder: (_) => Scaffold(
                       appBar: AppBar(),
                     )));
       },
@@ -346,20 +345,20 @@ void main() {
                     child: FlatButton(
                       key: ValueKey('test'),
                       onPressed: () {
-                i++;
+                        i++;
                       },
                       child: Text(''),
                     ),
                   ),
             );
           }));
-      await click(tester);
+          await click(tester);
           await tester.tap(find.byKey(ValueKey('test')));
           await tester.tap(find.byKey(ValueKey('test')));
           await tester.tap(find.byKey(ValueKey('test')));
           expect(i, 3);
           ignoreContentClick = true;
-      await click(tester);
+          await click(tester);
           expect(i, 3);
           await tester.tap(find.byKey(ValueKey('test')));
           await tester.tap(find.byKey(ValueKey('test')));

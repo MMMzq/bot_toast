@@ -9,8 +9,8 @@ Widget notificationAnimation(
       child: child,
     );
 
-Widget textAnimation(AnimationController controller, CancelFunc cancelFunc,
-    Widget child) =>
+Widget textAnimation(
+        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     NormalAnimation(
       controller: controller,
       child: child,
