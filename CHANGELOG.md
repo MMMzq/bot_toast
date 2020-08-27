@@ -1,3 +1,6 @@
+## [3.0.4]
+* fix:  The bug that `ProxyDispose.disposeCallback` callback cannot be triggered
+
 ## [3.0.3]
 * feat: add `enableKeyboardSafeArea` option
 
