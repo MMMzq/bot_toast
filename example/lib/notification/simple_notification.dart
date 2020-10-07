@@ -30,6 +30,9 @@ class _SimpleNotificationState extends State<SimpleNotification> {
         onLongPress: () {
           BotToast.showText(text: 'Long press toast');
         },
+        backgroundColor: Colors.red,
+        titleStyle: const TextStyle(color: Colors.white),
+        subTitleStyle: const TextStyle(color: Colors.white),
         onlyOne: onlyOne,
         crossPage: crossPage,
         animationDuration: Duration(milliseconds: animationMilliseconds),
@@ -76,7 +79,6 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 },
                 child: Text("simpleNotification"),
               ),
-
               SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
@@ -113,38 +115,46 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 },
                 title: Text("crossPage: "),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              Center(
+                child: Text('BackButtonBehavior'),
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.none,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
                       onChanged: (value) {
                         setState(() {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: Text('none'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
                       onChanged: (value) {
                         setState(() {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: Text('ignore'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.close,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
                       onChanged: (value) {
                         setState(() {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: Text('close'),
+                    ),
                   )
                 ],
               ),
@@ -191,7 +201,6 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -199,4 +208,3 @@ class _SimpleNotificationState extends State<SimpleNotification> {
     );
   }
 }
-
