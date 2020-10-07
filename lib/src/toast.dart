@@ -69,6 +69,8 @@ class BotToast {
   static CancelFunc showSimpleNotification(
       {@required String title,
       String subTitle,
+      TextStyle titleStyle,
+      TextStyle subTitleStyle,
       WrapAnimation wrapAnimation,
       WrapAnimation wrapToastAnimation = notificationAnimation,
       GestureTapCallback onTap,
@@ -109,8 +111,10 @@ class BotToast {
         onClose: onClose,
         onlyOne: onlyOne,
         crossPage: crossPage,
-        title: (_) => Text(title),
-        subtitle: subTitle == null ? null : (_) => Text(subTitle),
+        title: (_) => Text(title, style: titleStyle),
+        subtitle: subTitle == null
+            ? null
+            : (_) => Text(subTitle, style: subTitleStyle ?? titleStyle),
         trailing: hideCloseButton
             ? null
             : (cancel) => IconButton(
@@ -149,20 +153,20 @@ class BotToast {
       double borderRadius,
       GestureLongPressCallback onLongPress,
       Alignment align = const Alignment(0, -0.99),
-        List<DismissDirection> dismissDirections = const [
-          DismissDirection.horizontal,
-          DismissDirection.up
-        ],
-        BackButtonBehavior backButtonBehavior,
-        Duration duration = const Duration(seconds: 2),
-        Duration animationDuration,
-        Duration animationReverseDuration,
-        EdgeInsetsGeometry contentPadding,
-        VoidCallback onClose,
-        bool enableKeyboardSafeArea = true,
-        bool enableSlideOff = true,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      List<DismissDirection> dismissDirections = const [
+        DismissDirection.horizontal,
+        DismissDirection.up
+      ],
+      BackButtonBehavior backButtonBehavior,
+      Duration duration = const Duration(seconds: 2),
+      Duration animationDuration,
+      Duration animationReverseDuration,
+      EdgeInsetsGeometry contentPadding,
+      VoidCallback onClose,
+      bool enableKeyboardSafeArea = true,
+      bool enableSlideOff = true,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showCustomNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -217,20 +221,20 @@ class BotToast {
       {@required ToastBuilder toastBuilder,
       WrapAnimation wrapAnimation,
       WrapAnimation wrapToastAnimation = notificationAnimation,
-        Alignment align = const Alignment(0, -0.99),
-        List<DismissDirection> dismissDirections = const [
-          DismissDirection.horizontal,
-          DismissDirection.up
-        ],
-        Duration duration = const Duration(seconds: 2),
-        Duration animationDuration,
-        Duration animationReverseDuration,
-        VoidCallback onClose,
-        BackButtonBehavior backButtonBehavior,
-        bool enableKeyboardSafeArea = true,
-        bool enableSlideOff = true,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+      Alignment align = const Alignment(0, -0.99),
+      List<DismissDirection> dismissDirections = const [
+        DismissDirection.horizontal,
+        DismissDirection.up
+      ],
+      Duration duration = const Duration(seconds: 2),
+      Duration animationDuration,
+      Duration animationReverseDuration,
+      VoidCallback onClose,
+      BackButtonBehavior backButtonBehavior,
+      bool enableKeyboardSafeArea = true,
+      bool enableSlideOff = true,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showAnimationWidget(
         crossPage: crossPage,
         allowClick: true,
@@ -242,7 +246,7 @@ class BotToast {
         duration: duration,
         backButtonBehavior: backButtonBehavior,
         animationDuration:
-        animationDuration ?? const Duration(milliseconds: 256),
+            animationDuration ?? const Duration(milliseconds: 256),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -288,21 +292,20 @@ class BotToast {
       Color backgroundColor = Colors.transparent,
       Color contentColor = Colors.black54,
       BorderRadiusGeometry borderRadius =
-      const BorderRadius.all(Radius.circular(8)),
-        TextStyle textStyle = const TextStyle(
-            fontSize: 17, color: Colors.white),
-        AlignmentGeometry align = const Alignment(0, 0.8),
-        EdgeInsetsGeometry contentPadding =
-        const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-        Duration duration = const Duration(seconds: 2),
-        Duration animationDuration,
-        Duration animationReverseDuration,
-        BackButtonBehavior backButtonBehavior,
-        VoidCallback onClose,
-        bool enableKeyboardSafeArea = true,
-        bool clickClose = false,
-        bool crossPage = true,
-        bool onlyOne = true}) {
+          const BorderRadius.all(Radius.circular(8)),
+      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
+      AlignmentGeometry align = const Alignment(0, 0.8),
+      EdgeInsetsGeometry contentPadding =
+          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
+      Duration duration = const Duration(seconds: 2),
+      Duration animationDuration,
+      Duration animationReverseDuration,
+      BackButtonBehavior backButtonBehavior,
+      VoidCallback onClose,
+      bool enableKeyboardSafeArea = true,
+      bool clickClose = false,
+      bool crossPage = true,
+      bool onlyOne = true}) {
     return showCustomText(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -318,8 +321,7 @@ class BotToast {
         ignoreContentClick: true,
         onlyOne: onlyOne,
         align: align,
-        toastBuilder: (_) =>
-            TextToast(
+        toastBuilder: (_) => TextToast(
               contentPadding: contentPadding,
               contentColor: contentColor,
               borderRadius: borderRadius,
@@ -345,21 +347,22 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showCustomText({@required ToastBuilder toastBuilder,
-    WrapAnimation wrapAnimation,
-    WrapAnimation wrapToastAnimation = textAnimation,
-    Alignment align = const Alignment(0, 0.8),
-    Color backgroundColor = Colors.transparent,
-    Duration duration = const Duration(seconds: 2),
-    Duration animationDuration,
-    Duration animationReverseDuration,
-    VoidCallback onClose,
-    BackButtonBehavior backButtonBehavior,
-    bool enableKeyboardSafeArea = true,
-    bool crossPage = true,
-    bool clickClose = false,
-    bool ignoreContentClick = false,
-    bool onlyOne = false}) {
+  static CancelFunc showCustomText(
+      {@required ToastBuilder toastBuilder,
+      WrapAnimation wrapAnimation,
+      WrapAnimation wrapToastAnimation = textAnimation,
+      Alignment align = const Alignment(0, 0.8),
+      Color backgroundColor = Colors.transparent,
+      Duration duration = const Duration(seconds: 2),
+      Duration animationDuration,
+      Duration animationReverseDuration,
+      VoidCallback onClose,
+      BackButtonBehavior backButtonBehavior,
+      bool enableKeyboardSafeArea = true,
+      bool crossPage = true,
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      bool onlyOne = false}) {
     return showAnimationWidget(
         groupKey: textKey,
         clickClose: clickClose,
@@ -373,7 +376,7 @@ class BotToast {
         onClose: onClose,
         duration: duration,
         animationDuration:
-        animationDuration ?? const Duration(milliseconds: 256),
+            animationDuration ?? const Duration(milliseconds: 256),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -478,7 +481,7 @@ class BotToast {
         toastBuilder: toastBuilder,
         backButtonBehavior: backButtonBehavior,
         animationDuration:
-        animationDuration ?? const Duration(milliseconds: 300),
+            animationDuration ?? const Duration(milliseconds: 300),
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -535,18 +538,18 @@ class BotToast {
       BuildContext targetContext,
       Offset target,
       Color backgroundColor = Colors.transparent,
-        double verticalOffset = 0.0,
-        double horizontalOffset = 0.0,
-        Duration duration,
-        Duration animationDuration,
-        Duration animationReverseDuration,
-        PreferDirection preferDirection,
-        VoidCallback onClose,
-        bool ignoreContentClick = false,
-        bool onlyOne = false,
-        bool allowClick = true,
-        bool enableKeyboardSafeArea = true,
-        bool enableSafeArea}) {
+      double verticalOffset = 0.0,
+      double horizontalOffset = 0.0,
+      Duration duration,
+      Duration animationDuration,
+      Duration animationReverseDuration,
+      PreferDirection preferDirection,
+      VoidCallback onClose,
+      bool ignoreContentClick = false,
+      bool onlyOne = false,
+      bool allowClick = true,
+      bool enableKeyboardSafeArea = true,
+      bool enableSafeArea}) {
     assert(verticalOffset >= 0.0, 'must be a positive number');
     assert(horizontalOffset >= 0.0, 'must be a positive number');
     assert(!(targetContext != null && target != null),
@@ -579,12 +582,11 @@ class BotToast {
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
         animationDuration:
-        animationDuration ?? const Duration(milliseconds: 150),
+            animationDuration ?? const Duration(milliseconds: 150),
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) =>
-            KeyboardVisibility(
+        wrapToastAnimation: (controller, cancel, child) => KeyboardVisibility(
               onKeyboardVisibilityChanged: (open) {
                 if (open) {
                   cancel();
@@ -673,8 +675,7 @@ class BotToast {
         ignoreContentClick: ignoreContentClick,
         closeFunc: () => controller?.reverse(),
         duration: duration,
-        warpWidget: (cancel, child) =>
-            ProxyInitState(
+        warpWidget: (cancel, child) => ProxyInitState(
               initStateCallback: () {
                 assert(!controller.isAnimating);
                 controller.forward();
@@ -749,21 +750,22 @@ class BotToast {
   ///如果为[close]则关闭该toast,并且拦截事件停止冒泡
   ///如果为null or [none]则不拦截事件
   ///
-  static CancelFunc showEnhancedWidget({@required ToastBuilder toastBuilder,
-    UniqueKey key,
-    String groupKey,
-    bool crossPage = true,
-    bool allowClick = true,
-    bool clickClose = false,
-    bool ignoreContentClick = false,
-    bool onlyOne = false,
-    bool enableKeyboardSafeArea = true,
-    BackButtonBehavior backButtonBehavior,
-    FutureFunc closeFunc,
-    VoidCallback onClose,
-    Color backgroundColor = Colors.transparent,
-    WrapWidget warpWidget,
-    Duration duration}) {
+  static CancelFunc showEnhancedWidget(
+      {@required ToastBuilder toastBuilder,
+      UniqueKey key,
+      String groupKey,
+      bool crossPage = true,
+      bool allowClick = true,
+      bool clickClose = false,
+      bool ignoreContentClick = false,
+      bool onlyOne = false,
+      bool enableKeyboardSafeArea = true,
+      BackButtonBehavior backButtonBehavior,
+      FutureFunc closeFunc,
+      VoidCallback onClose,
+      Color backgroundColor = Colors.transparent,
+      WrapWidget warpWidget,
+      Duration duration}) {
     assert(toastBuilder != null);
     assert(enableKeyboardSafeArea != null);
 
