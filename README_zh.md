@@ -75,6 +75,7 @@ MaterialApp(
 ```
 or
 ``` dart
+//警告:不要随意调整调用BotToastInit函数的位置
 final botToastBuilder = BotToastInit();  //1.调用BotToastInit
 MaterialApp(
       title: 'BotToast Demo',
