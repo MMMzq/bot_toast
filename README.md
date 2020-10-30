@@ -70,7 +70,8 @@ MaterialApp(
 ```
 or
 ``` dart
-final botToastBuilder = BotToastInit();  //1. call BotToastInit
+//Warning: Don't arbitrarily adjust the position of calling the BotToastInit function 
+final botToastBuilder = BotToastInit();  //1. call BotToastInit 
 MaterialApp(
       title: 'BotToast Demo',
       builder: (context, child) {
