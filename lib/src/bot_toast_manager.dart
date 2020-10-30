@@ -18,14 +18,31 @@ class BotToastManager extends StatefulWidget {
   BotToastManagerState createState() => BotToastManagerState();
 }
 
+class _IndexWidget extends StatelessWidget {
+  final Widget child;
+
+  final int index;
+
+  const _IndexWidget({Key key, this.child, this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}
+
 class BotToastManagerState extends State<BotToastManager> {
-  final Map<String, Map<UniqueKey, Widget>> _map = {};
+  final Map<String, Map<UniqueKey, _IndexWidget>> _map = {};
 
   final Set<UniqueKey> _pending = Set<UniqueKey>();
 
-  List<Widget> get _children => _map.values.fold([], (value, items) {
+  int _nextAddIndex = 0;
+
+  List<_IndexWidget> get _children =>
+      _map.values.fold<List<_IndexWidget>>(<_IndexWidget>[], (value, items) {
         return value..addAll(items.values);
-      });
+      })
+        ..sort((a, b) => a.index.compareTo(b.index));
 
   void insert(String groupKey, UniqueKey key, Widget widget) {
     safeRun(() {
@@ -40,13 +57,16 @@ class BotToastManagerState extends State<BotToastManager> {
       );
 
       widget = ProxyDispose(
-        key: uniqueKey,
         child: widget,
         disposeCallback: () {
           _map[groupKey]?.remove(key);
         },
       );
-      _map[groupKey][key] = widget;
+      _map[groupKey][key] = _IndexWidget(
+        key: uniqueKey,
+        index: ++_nextAddIndex,
+        child: widget,
+      );
       _pending.add(key);
       _update();
     });
