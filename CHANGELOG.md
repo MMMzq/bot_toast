@@ -1,3 +1,10 @@
+## [3.0.5]
+* fix: cancel the use of `nullOk` attribute  
+
+* feat: optimize `toast` display sequence logic 
+
+* feat: add options for users to style titles
+
 ## [3.0.4]
 * fix:  The bug that `ProxyDispose.disposeCallback` callback cannot be triggered
 

@@ -16,15 +16,15 @@ Widget textAnimation(
       child: child,
     );
 
-Widget loadingAnimation(AnimationController controller, CancelFunc cancelFunc,
-    Widget child) =>
+Widget loadingAnimation(
+        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     FadeAnimation(
       controller: controller,
       child: child,
     );
 
-Widget attachedAnimation(AnimationController controller, CancelFunc cancelFunc,
-    Widget child) =>
+Widget attachedAnimation(
+        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     FadeAnimation(
       controller: controller,
       child: child,

@@ -13,10 +13,9 @@ class KeyboardSafeArea extends StatelessWidget {
     if (!enable) {
       return child;
     }
-    MediaQueryData data = MediaQuery.of(context, nullOk: true);
+    MediaQueryData data = MediaQuery.of(context);
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: (data != null ? data.viewInsets.bottom : 0.0)),
+      padding: EdgeInsets.only(bottom: data.viewInsets.bottom),
       child: child,
     );
   }
