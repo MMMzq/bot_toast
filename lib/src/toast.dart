@@ -114,7 +114,7 @@ class BotToast {
         title: (_) => Text(title, style: titleStyle),
         subtitle: subTitle == null
             ? null
-            : (_) => Text(subTitle, style: subTitleStyle ?? titleStyle),
+            : (_) => Text(subTitle, style: subTitleStyle),
         trailing: hideCloseButton
             ? null
             : (cancel) => IconButton(
