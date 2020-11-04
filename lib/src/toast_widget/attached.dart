@@ -117,7 +117,9 @@ Offset positionToastBox(
       case "Left":
         direction += canPlaceRight(extraSpace: targetRect.width)
             ? "Left"
-            : canPlaceLeft(extraSpace: targetRect.width) ? "Right" : "Center";
+            : canPlaceLeft(extraSpace: targetRect.width)
+                ? "Right"
+                : "Center";
         break;
       case "Center":
         direction += "Center";
@@ -125,7 +127,9 @@ Offset positionToastBox(
       case "Right":
         direction += canPlaceLeft(extraSpace: targetRect.width)
             ? "Right"
-            : canPlaceRight(extraSpace: targetRect.width) ? "Left" : "Center";
+            : canPlaceRight(extraSpace: targetRect.width)
+                ? "Left"
+                : "Center";
         break;
     }
   } else {
@@ -135,7 +139,9 @@ Offset positionToastBox(
       case "Top":
         direction += canPlaceBottom(extraSpace: targetRect.height)
             ? "Top"
-            : canPlaceTop(extraSpace: targetRect.height) ? "Bottom" : "Center";
+            : canPlaceTop(extraSpace: targetRect.height)
+                ? "Bottom"
+                : "Center";
         break;
       case "Center":
         direction += "Center";
@@ -143,7 +149,9 @@ Offset positionToastBox(
       case "Bottom":
         direction += canPlaceTop(extraSpace: targetRect.height)
             ? "Bottom"
-            : canPlaceBottom(extraSpace: targetRect.height) ? "Top" : "Center";
+            : canPlaceBottom(extraSpace: targetRect.height)
+                ? "Top"
+                : "Center";
         break;
     }
   }
