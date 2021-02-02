@@ -9,7 +9,7 @@ class ProxyInitState extends StatefulWidget {
   final Widget child;
   final VoidCallback initStateCallback;
 
-  const ProxyInitState({Key key, this.initStateCallback, this.child})
+  const ProxyInitState({Key? key,required this.initStateCallback,required this.child})
       : super(key: key);
 
   @override
@@ -34,12 +34,10 @@ class ProxyDispose extends StatefulWidget {
   final VoidCallback disposeCallback;
 
   const ProxyDispose({
-    Key key,
-    @required this.disposeCallback,
-    @required this.child,
-  })  : assert(child != null),
-        assert(disposeCallback != null),
-        super(key: key);
+    Key? key,
+    required this.disposeCallback,
+    required this.child,
+  })  : super(key: key);
 
   @override
   _ProxyDisposeState createState() => _ProxyDisposeState();

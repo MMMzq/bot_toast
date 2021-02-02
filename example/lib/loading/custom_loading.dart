@@ -59,7 +59,7 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
                         }),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text("me too"),
+                      child: Text("Tap loading toast"),
                     )
                   ],
                 ),
@@ -82,8 +82,11 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
                 onPressed: handleTap,
               ),
             ),
-            Text(
-              "i miss you",
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Loading",
+              ),
             )
           ],
         ),

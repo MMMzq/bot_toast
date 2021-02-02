@@ -5,9 +5,9 @@ class KeyboardVisibility extends StatefulWidget {
   final Widget child;
 
   const KeyboardVisibility(
-      {@required this.onKeyboardVisibilityChanged,
-      @required this.child,
-      Key key})
+      {required this.onKeyboardVisibilityChanged,
+      required this.child,
+      Key? key})
       : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class _KeyboardVisibilityState extends State<KeyboardVisibility>
     with WidgetsBindingObserver {
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
@@ -34,7 +34,7 @@ class _KeyboardVisibilityState extends State<KeyboardVisibility>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 

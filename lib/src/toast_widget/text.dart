@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 //文本提示的Widget
 class TextToast extends StatefulWidget {
   final String text;
-  final EdgeInsetsGeometry contentPadding;
-  final Color contentColor;
-  final BorderRadiusGeometry borderRadius;
-  final TextStyle textStyle;
+  final EdgeInsetsGeometry? contentPadding;
+  final Color? contentColor;
+  final BorderRadiusGeometry? borderRadius;
+  final TextStyle? textStyle;
 
   const TextToast({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
     this.contentPadding,
     this.contentColor,
     this.borderRadius,

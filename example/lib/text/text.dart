@@ -40,9 +40,9 @@ class _TextSampleState extends State<TextSample> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showText(
-                      text: (index++).isOdd
-                          ? "Always together☺"
-                          : "My mind is all about you.😘",
+                      text: (++index).isOdd
+                          ? "Text one"
+                          : "Text two",
                       duration: Duration(seconds: seconds),
                       onlyOne: onlyOne,
                       clickClose: clickClose,

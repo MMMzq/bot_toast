@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class NotificationToast extends StatefulWidget {
   final Widget child;
 
-  final Function slideOffFunc;
+  final Function? slideOffFunc;
 
-  final List<DismissDirection> dismissDirections;
+  final List<DismissDirection>? dismissDirections;
 
   const NotificationToast(
-      {Key key,
-      @required this.child,
-      @required this.slideOffFunc,
+      {Key? key,
+      required this.child,
+      this.slideOffFunc,
       this.dismissDirections})
       : super(key: key);
 
@@ -21,7 +21,7 @@ class NotificationToast extends StatefulWidget {
 
 class _NotificationState extends State<NotificationToast> {
   Future<bool> confirmDismiss(DismissDirection direction) async {
-    widget.slideOffFunc();
+    widget.slideOffFunc?.call();
     return true;
   }
 
@@ -33,8 +33,8 @@ class _NotificationState extends State<NotificationToast> {
 
     if (widget.slideOffFunc != null &&
         widget.dismissDirections != null &&
-        widget.dismissDirections.isNotEmpty) {
-      widget.dismissDirections.forEach((direction) {
+        widget.dismissDirections!.isNotEmpty) {
+      widget.dismissDirections!.forEach((direction) {
         child = Dismissible(
           direction: direction,
           key: key,

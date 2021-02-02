@@ -6,17 +6,16 @@ import 'bot_toast_manager.dart';
 final GlobalKey<BotToastManagerState> _key = GlobalKey<BotToastManagerState>();
 
 BotToastManagerState get botToastManager {
-  assert(_key?.currentState != null);
-  return _key.currentState;
+  assert(_key.currentState != null);
+  return _key.currentState!;
 }
 
 class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
-  BotToastWidgetsBindingObserver._() {
-    _listener = <PopTestFunc>[];
-    WidgetsBinding.instance.addObserver(this);
+  BotToastWidgetsBindingObserver._() : _listener = <PopTestFunc>[] {
+    WidgetsBinding.instance!.addObserver(this);
   }
 
-  List<PopTestFunc> _listener;
+  final List<PopTestFunc> _listener;
 
   static final BotToastWidgetsBindingObserver _singleton =
       BotToastWidgetsBindingObserver._();
@@ -49,7 +48,7 @@ TransitionBuilder BotToastInit() {
 
   //ignore: unnecessary_statements
   BotToastWidgetsBindingObserver._singleton;
-  return (_, Widget child) {
-    return BotToastManager(key: _key, child: child);
+  return (_, Widget? child) {
+    return BotToastManager(key: _key, child: child!);
   };
 }

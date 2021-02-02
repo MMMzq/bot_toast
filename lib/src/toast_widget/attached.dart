@@ -7,15 +7,12 @@ import 'package:flutter/material.dart';
 //使用该类默认是以Offset(0,app导航栏高度)为原点
 class PositionDelegate extends SingleChildLayoutDelegate {
   PositionDelegate(
-      {@required this.target,
-      @required this.verticalOffset,
-      @required this.horizontalOffset,
+      {required this.target,
+      required this.verticalOffset,
+      required this.horizontalOffset,
       this.enableSafeArea = true,
-      PreferDirection preferDirection})
-      : assert(target != null),
-        assert(verticalOffset != null),
-        assert(horizontalOffset != null),
-        this.preferDirection = preferDirection ?? PreferDirection.topCenter;
+      PreferDirection? preferDirection})
+      : this.preferDirection = preferDirection ?? PreferDirection.topCenter;
 
   final bool enableSafeArea;
 
@@ -38,9 +35,9 @@ class PositionDelegate extends SingleChildLayoutDelegate {
       containerRect: Rect.fromLTWH(0, top, size.width, size.height - top),
       toastSize: childSize,
       targetRect: target,
-      verticalOffset: verticalOffset ?? 0,
-      horizontalOffset: horizontalOffset ?? 0,
-      preferDirection: preferDirection ?? PreferDirection.topCenter,
+      verticalOffset: verticalOffset,
+      horizontalOffset: horizontalOffset,
+      preferDirection: preferDirection,
     );
   }
 
@@ -57,10 +54,10 @@ class PositionDelegate extends SingleChildLayoutDelegate {
 //例如:
 //推断出来是topCent方向则horizontalOffset将会没效果,verticalOffset正常使用
 Offset positionToastBox(
-    {@required Size toastSize,
-    @required Rect containerRect,
-    @required Rect targetRect,
-    @required PreferDirection preferDirection,
+    {required Size toastSize,
+    required Rect containerRect,
+    required Rect targetRect,
+    required PreferDirection preferDirection,
     double verticalOffset = 0.0,
     double horizontalOffset = 0.0}) {
   assert(verticalOffset >= 0, 'verticalOffset must be a positive number');
@@ -156,7 +153,7 @@ Offset positionToastBox(
     }
   }
 
-  Offset resultOffset;
+  Offset resultOffset=Offset.zero;
   switch (direction) {
     case "topLeft":
       resultOffset = targetRect.topLeft -

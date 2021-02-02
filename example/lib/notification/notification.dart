@@ -38,8 +38,8 @@ class _NotificationState extends State<Notification> {
                             icon: Icon(Icons.favorite, color: Colors.redAccent),
                             onPressed: cancel,
                           )),
-                      title: (_) => Text('I love u'),
-                      subtitle: (_) => Text("let's be together"),
+                      title: (_) => Text('Notification title'),
+                      subtitle: (_) => Text("Notification subtitle"),
                       trailing: (cancel) => IconButton(
                             icon: Icon(Icons.cancel),
                             onPressed: cancel,

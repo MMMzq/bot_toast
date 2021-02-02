@@ -57,7 +57,7 @@ class _CustomTextState extends State<CustomText> {
                                 ),
                                 onPressed: () {
                                   BotToast.showSimpleNotification(
-                                      title: "Yes, I do!",
+                                      title: "Notification one",
                                       crossPage: crossPage,
                                       closeIcon: Icon(
                                         Icons.favorite,
@@ -68,7 +68,7 @@ class _CustomTextState extends State<CustomText> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text("propose marriage?"),
+                              child: Text("Text one"),
                             ),
                           ],
                         ),

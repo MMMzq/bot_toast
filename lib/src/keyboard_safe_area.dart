@@ -6,7 +6,7 @@ class KeyboardSafeArea extends StatelessWidget {
 
   final bool enable;
 
-  const KeyboardSafeArea({Key key, this.child, this.enable}) : super(key: key);
+  const KeyboardSafeArea({Key? key,required this.child,required this.enable}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

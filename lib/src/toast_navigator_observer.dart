@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BotToastNavigatorObserverProxy {
-  void Function(Route<dynamic> route, Route<dynamic> previousRoute) didPush;
-  void Function(Route<dynamic> newRoute, Route<dynamic> oldRoute) didReplace;
-  void Function(Route<dynamic> route, Route<dynamic> previousRoute) didRemove;
-  void Function(Route<dynamic> route, Route<dynamic> previousRoute) didPop;
+  void Function(Route<dynamic> route, Route<dynamic>? previousRoute)? didPush;
+  void Function(Route<dynamic>? newRoute, Route<dynamic>? oldRoute)? didReplace;
+  void Function(Route<dynamic> route, Route<dynamic>? previousRoute)? didRemove;
+  void Function(Route<dynamic> route, Route<dynamic>? previousRoute)? didPop;
 
   BotToastNavigatorObserverProxy(
       {this.didPush, this.didReplace, this.didRemove, this.didPop});
@@ -53,7 +53,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   }
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
       observerProxy.didPush?.call(route, previousRoute);
@@ -61,7 +61,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   }
 
   @override
-  void didReplace({Route<dynamic> newRoute, Route<dynamic> oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
       observerProxy.didReplace?.call(newRoute, oldRoute);
@@ -69,7 +69,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   }
 
   @override
-  void didRemove(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
       observerProxy.didRemove?.call(route, previousRoute);
@@ -77,7 +77,7 @@ class BotToastNavigatorObserver extends NavigatorObserver {
   }
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final copy = _leavePageCallbacks.toList(growable: false);
     for (BotToastNavigatorObserverProxy observerProxy in copy) {
       observerProxy.didPop?.call(route, previousRoute);

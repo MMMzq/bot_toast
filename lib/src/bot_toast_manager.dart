@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 void safeRun(void Function() callback) {
-  SchedulerBinding.instance.addPostFrameCallback((_) {
+  SchedulerBinding.instance!.addPostFrameCallback((_) {
     callback();
   });
-  SchedulerBinding.instance.ensureVisualUpdate();
+  SchedulerBinding.instance!.ensureVisualUpdate();
 }
 
 class BotToastManager extends StatefulWidget {
   final Widget child;
 
-  const BotToastManager({Key key, this.child}) : super(key: key);
+  const BotToastManager({Key? key, required this.child}) : super(key: key);
 
   @override
   BotToastManagerState createState() => BotToastManagerState();
@@ -23,7 +23,8 @@ class _IndexWidget extends StatelessWidget {
 
   final int index;
 
-  const _IndexWidget({Key key, this.child, this.index}) : super(key: key);
+  const _IndexWidget({Key? key, required this.child, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class BotToastManagerState extends State<BotToastManager> {
           _map[groupKey]?.remove(key);
         },
       );
-      _map[groupKey][key] = _IndexWidget(
+      _map[groupKey]![key] = _IndexWidget(
         key: uniqueKey,
         index: ++_nextAddIndex,
         child: widget,
@@ -90,14 +91,12 @@ class BotToastManagerState extends State<BotToastManager> {
         return;
       }
 
-      _map[groupKey].removeWhere((key, _) => !_pending.contains(key));
+      _map[groupKey]!.removeWhere((key, _) => !_pending.contains(key));
       _update();
 
-      if (_map[groupKey].isNotEmpty) {
-        _map[groupKey].forEach((key, value) {
-          return remove(groupKey, key);
-        });
-      }
+      _map[groupKey]!.forEach((key, value) {
+        return remove(groupKey, key);
+      });
     });
   }
 

@@ -20,8 +20,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   @override
   void initState() {
     BotToast.showSimpleNotification(
-        title: "do you still love me ?",
-        subTitle: "yes!",
+        title: "Notification title",
+        subTitle: "Notification subtitle",
         enableSlideOff: enableSlideOff,
         hideCloseButton: hideCloseButton,
         onTap: () {
@@ -58,8 +58,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
               RaisedButton(
                 onPressed: () {
                   BotToast.showSimpleNotification(
-                      title: "do you still love me ?",
-                      subTitle: "yes!",
+                      title: "Notification title",
+                      subTitle: "Notification subtitle",
                       enableSlideOff: enableSlideOff,
                       hideCloseButton: hideCloseButton,
                       onlyOne: onlyOne,

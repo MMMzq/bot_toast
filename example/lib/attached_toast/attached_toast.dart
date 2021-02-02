@@ -51,7 +51,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     FlatButton.icon(
                       padding: EdgeInsets.all(5),
                       onPressed: (){
-                        BotToast.showSimpleNotification(title: "Let's go travel together.😘");
+                        BotToast.showSimpleNotification(title: "Tap favorite");
                       },
                       label: Text("favorite"),
                       icon: Icon(Icons.favorite,color: Colors.redAccent),
@@ -59,7 +59,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     FlatButton.icon(
                       padding: EdgeInsets.all(5),
                       onPressed: (){
-                        BotToast.showSimpleNotification(title: "Thank you for liking me.😝");
+                        BotToast.showSimpleNotification(title: "Tap bookmark");
                       },
                       label: Text("bookmark"),
                       icon: Icon(Icons.bookmark,color: Colors.redAccent),

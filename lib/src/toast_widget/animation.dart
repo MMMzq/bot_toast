@@ -3,32 +3,19 @@ import 'package:flutter/material.dart';
 
 Widget notificationAnimation(
         AnimationController controller, CancelFunc cancelFunc, Widget child) =>
-    NormalAnimation(
-      reverse: true,
-      controller: controller,
-      child: child,
-    );
+    NormalAnimation(reverse: true, controller: controller, child: child);
 
 Widget textAnimation(
         AnimationController controller, CancelFunc cancelFunc, Widget child) =>
-    NormalAnimation(
-      controller: controller,
-      child: child,
-    );
+    NormalAnimation(controller: controller, child: child);
 
 Widget loadingAnimation(
         AnimationController controller, CancelFunc cancelFunc, Widget child) =>
-    FadeAnimation(
-      controller: controller,
-      child: child,
-    );
+    FadeAnimation(controller: controller, child: child);
 
 Widget attachedAnimation(
         AnimationController controller, CancelFunc cancelFunc, Widget child) =>
-    FadeAnimation(
-      controller: controller,
-      child: child,
-    );
+    FadeAnimation(controller: controller, child: child);
 
 class NormalAnimation extends StatefulWidget {
   final Widget child;
@@ -36,7 +23,10 @@ class NormalAnimation extends StatefulWidget {
   final AnimationController controller;
 
   const NormalAnimation(
-      {Key key, @required this.child, this.reverse = false, this.controller})
+      {Key? key,
+      required this.child,
+      this.reverse = false,
+      required this.controller})
       : assert(child != null),
         super(key: key);
 
@@ -55,10 +45,10 @@ class NormalAnimationState extends State<NormalAnimation>
     end: const Offset(0, 0),
   );
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
-  Animation<double> animation;
+  late final Animation<double> animation;
 
-  Animation<Offset> animationOffset;
-  Animation<double> animationOpacity;
+  late final Animation<Offset> animationOffset;
+  late final Animation<double> animationOpacity;
 
   @override
   void initState() {
@@ -92,10 +82,11 @@ class NormalAnimationState extends State<NormalAnimation>
 
 //淡出淡入动画
 class FadeAnimation extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final AnimationController controller;
 
-  const FadeAnimation({Key key, this.child, this.controller}) : super(key: key);
+  const FadeAnimation({Key? key, this.child, required this.controller})
+      : super(key: key);
 
   @override
   FadeAnimationState createState() => FadeAnimationState();
@@ -104,8 +95,8 @@ class FadeAnimation extends StatefulWidget {
 class FadeAnimationState extends State<FadeAnimation>
     with SingleTickerProviderStateMixin {
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
-  Animation<double> animation;
-  Animation<double> animationOpacity;
+  late final Animation<double> animation;
+  late final Animation<double> animationOpacity;
 
   @override
   void initState() {
