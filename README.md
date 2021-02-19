@@ -49,9 +49,10 @@ Loading|Text|CustomWidget
 ### 🐮Getting started
 
 #### 1. add dependencies into you project pubspec.yaml file
-``` dart
+``` yaml
 dependencies:
-     bot_toast: ^3.0.5
+     bot_toast: ^3.0.5 
+#    bot_toast: ^4.0.0 #null safety
 ```
 
 #### 2. import BotToast lib

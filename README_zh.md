@@ -53,9 +53,10 @@ Loading|Text|CustomWidget
 ### 🐮快速使用
 
 #### 1. pubspec.yaml文件里添加依赖
-``` dart
+``` yaml
 dependencies:
-     bot_toast: ^3.0.5
+     bot_toast: ^3.0.5 
+#    bot_toast: ^4.0.0 #null safety
 ```
 
 #### 2. 导入BotToast库

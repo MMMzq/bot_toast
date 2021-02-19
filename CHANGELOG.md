@@ -1,3 +1,9 @@
+## [4.0.0+1]
+* docs: Update CHANGELOG.md
+
+## [4.0.0]
+* refactor: Migrate to sound null safety 
+
 ## [3.0.5]
 * fix: cancel the use of `nullOk` attribute  
 

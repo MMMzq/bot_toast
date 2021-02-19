@@ -370,9 +370,9 @@ void main() {
 
 // ignore: must_be_immutable
 class TestApp extends StatelessWidget {
-  final VoidCallback callback;
-  final void Function(BuildContext ctx) contextCallback;
-  final Widget child;
+  final VoidCallback? callback;
+  final void Function(BuildContext ctx)? contextCallback;
+  final Widget? child;
 
   TestApp({this.callback, this.child, this.contextCallback});
 
@@ -391,17 +391,15 @@ class TestApp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Builder(
-                builder: (ctx) =>
-                    FlatButton(
-                        key: ValueKey('main'),
-                        onPressed: () async {
-                          callback?.call();
-                          contextCallback?.call(ctx);
-                        },
-                        child: Text(''))),
-            child
-          ]
-            ..removeWhere((test) => test == null),
+                builder: (ctx) => FlatButton(
+                    key: ValueKey('main'),
+                    onPressed: () async {
+                      callback?.call();
+                      contextCallback?.call(ctx);
+                    },
+                    child: Text(''))),
+            if (child != null) child!
+          ],
         ),
       ),
     );
