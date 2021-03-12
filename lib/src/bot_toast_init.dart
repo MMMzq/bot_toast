@@ -23,7 +23,6 @@ class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
   static BotToastWidgetsBindingObserver get singleton => _singleton;
 
   VoidCallback registerPopListener(PopTestFunc popTestFunc) {
-    assert(_listener != null);
     _listener.add(popTestFunc);
     return () {
       _listener.remove(popTestFunc);

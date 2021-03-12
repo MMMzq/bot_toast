@@ -533,7 +533,7 @@ class BotToast {
   static CancelFunc showAttachedWidget(
       {required ToastBuilder attachedBuilder,
       WrapAnimation? wrapAnimation,
-      WrapAnimation wrapToastAnimation = attachedAnimation,
+      WrapAnimation? wrapToastAnimation = attachedAnimation,
       BuildContext? targetContext,
       Offset? target,
       Color backgroundColor = Colors.transparent,
@@ -653,7 +653,7 @@ class BotToast {
     Duration? duration,
     VoidCallback? onClose,
   }) {
-    AnimationController controller = _createAnimationController(
+    AnimationController? controller = _createAnimationController(
         animationDuration,
         reverseDuration: animationReverseDuration);
 
@@ -669,24 +669,27 @@ class BotToast {
         backButtonBehavior: backButtonBehavior,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
-        closeFunc: () => controller.reverse(),
+        closeFunc: () async {
+          await controller?.reverse();
+        },
         duration: duration,
         warpWidget: (cancel, child) => ProxyInitState(
               initStateCallback: () {
-                assert(!controller.isAnimating);
-                controller.forward();
+                assert(!controller!.isAnimating);
+                controller!.forward();
               },
               child: ProxyDispose(
                   disposeCallback: () {
-                    controller.dispose();
+                    controller!.dispose();
+                    controller = null;
                   },
                   child: wrapAnimation != null
-                      ? wrapAnimation(controller, cancel, child)
+                      ? wrapAnimation(controller!, cancel, child)
                       : child),
             ),
         toastBuilder: (cancelFunc) => wrapToastAnimation != null
             ? wrapToastAnimation(
-                controller, cancelFunc, toastBuilder(cancelFunc))
+                controller!, cancelFunc, toastBuilder(cancelFunc))
             : toastBuilder(cancelFunc));
   }
 

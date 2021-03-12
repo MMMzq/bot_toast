@@ -33,9 +33,9 @@ class _IndexWidget extends StatelessWidget {
 }
 
 class BotToastManagerState extends State<BotToastManager> {
-  final Map<String, Map<UniqueKey, _IndexWidget>> _map = {};
+  final Map<String, Map<UniqueKey, _IndexWidget>> _map = <String, Map<UniqueKey, _IndexWidget>>{};
 
-  final Set<UniqueKey> _pending = Set<UniqueKey>();
+  final Set<UniqueKey> _pending = <UniqueKey>{};
 
   int _nextAddIndex = 0;
 
@@ -103,7 +103,6 @@ class BotToastManagerState extends State<BotToastManager> {
   void cleanAll() {
     safeRun(() {
       _map.forEach((groupKey, value) {
-        assert(value != null);
         value.removeWhere((key, _) => !_pending.contains(key));
 
         if (value.isNotEmpty) {
