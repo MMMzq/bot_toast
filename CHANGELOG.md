@@ -1,3 +1,6 @@
+## [4.0.1]
+* fix: #107
+
 ## [4.0.0+1]
 * docs: Update CHANGELOG.md
 
