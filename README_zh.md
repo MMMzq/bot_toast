@@ -92,20 +92,26 @@ MaterialApp(
 
 #### 4. 使用BotToast
 ``` dart
-BotToast.showText(text:"xxxx");  //弹出一个文本框;
+var cancel = BotToast.showText(text:"xxxx");  //弹出一个文本框;
+...
+cancel();  //关闭
 ```
 
 ```dart
-BotToast.showSimpleNotification(title: "init"); //弹出简单通知Toast
+var cancel = BotToast.showSimpleNotification(title: "init"); //弹出简单通知Toast
+...
+cancel();  //关闭
 ```
 
 ```dart
-BotToast.showLoading(); //弹出一个加载动画
+var cancel = BotToast.showLoading(); //弹出一个加载动画
+...
+cancel();  //关闭
 ```
 
 ```dart
 //弹出一个定位Toast
-BotToast.showAttachedWidget(
+var cancel = BotToast.showAttachedWidget(
     attachedBuilder: (_) => Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -117,14 +123,18 @@ BotToast.showAttachedWidget(
         ),
     duration: Duration(seconds: 2),
     target: Offset(520, 520));
+...
+cancel();  //关闭    
 ```
 
 ```dart
 //custom api
-BotToast.showCustomNotification(...)
-BotToast.showCustomText(...)
-BotToast.showCustomLoading(...)
-BotToast.showAnimationWidget(...)
+var cancel = BotToast.showCustomNotification(...)
+var cancel = BotToast.showCustomText(...)
+var cancel = BotToast.showCustomLoading(...)
+var cancel = BotToast.showAnimationWidget(...)
+...
+cancel();  //关闭
 ```
 
 <br>
