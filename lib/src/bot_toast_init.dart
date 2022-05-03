@@ -12,7 +12,7 @@ BotToastManagerState get botToastManager {
 
 class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
   BotToastWidgetsBindingObserver._() : _listener = <PopTestFunc>[] {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   final List<PopTestFunc> _listener;
