@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 void safeRun(void Function() callback) {
-  SchedulerBinding.instance!.addPostFrameCallback((_) {
+  SchedulerBinding.instance.addPostFrameCallback((_) {
     callback();
   });
-  SchedulerBinding.instance!.ensureVisualUpdate();
+  SchedulerBinding.instance.ensureVisualUpdate();
 }
 
 class BotToastManager extends StatefulWidget {
