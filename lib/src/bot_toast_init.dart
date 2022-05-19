@@ -12,7 +12,8 @@ BotToastManagerState get botToastManager {
 
 class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
   BotToastWidgetsBindingObserver._() : _listener = <PopTestFunc>[] {
-    WidgetsBinding.instance.addObserver(this);
+    //Compatible with flutter 3.x
+    (WidgetsBinding.instance as dynamic).addObserver(this);
   }
 
   final List<PopTestFunc> _listener;

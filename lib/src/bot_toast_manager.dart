@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 void safeRun(void Function() callback) {
-  SchedulerBinding.instance.addPostFrameCallback((_) {
+  //Compatible with flutter 3.x
+  final SchedulerBinding instance = SchedulerBinding.instance as dynamic;
+  instance.addPostFrameCallback((_) {
     callback();
   });
-  SchedulerBinding.instance.ensureVisualUpdate();
+  instance.ensureVisualUpdate();
 }
 
 class BotToastManager extends StatefulWidget {
@@ -33,7 +35,8 @@ class _IndexWidget extends StatelessWidget {
 }
 
 class BotToastManagerState extends State<BotToastManager> {
-  final Map<String, Map<UniqueKey, _IndexWidget>> _map = <String, Map<UniqueKey, _IndexWidget>>{};
+  final Map<String, Map<UniqueKey, _IndexWidget>> _map =
+      <String, Map<UniqueKey, _IndexWidget>>{};
 
   final Set<UniqueKey> _pending = <UniqueKey>{};
 

@@ -16,9 +16,13 @@ class KeyboardVisibility extends StatefulWidget {
 
 class _KeyboardVisibilityState extends State<KeyboardVisibility>
     with WidgetsBindingObserver {
+
+  //Compatible with flutter 3.x
+  WidgetsBinding get _instance  => WidgetsBinding.instance as dynamic;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
+    _instance.addObserver(this);
     super.initState();
   }
 
@@ -34,7 +38,7 @@ class _KeyboardVisibilityState extends State<KeyboardVisibility>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    _instance.removeObserver(this);
     super.dispose();
   }
 

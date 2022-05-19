@@ -1,3 +1,6 @@
+## [4.0.2]
+* fix: Support flutter 3.x
+
 ## [4.0.1]
 * fix: #107
 
