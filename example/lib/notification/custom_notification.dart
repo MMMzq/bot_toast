@@ -69,7 +69,7 @@ class _CustomNotificationState extends State<CustomNotification> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showCustomNotification(
                       animationDuration:

@@ -29,7 +29,7 @@ class _LoadingState extends State<Loading> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showLoading(
                       clickClose: clickClose,

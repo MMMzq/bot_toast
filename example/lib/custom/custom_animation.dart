@@ -21,7 +21,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showLoading(
                         allowClick: true,
@@ -33,7 +33,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   },
                   child: const Text('customLoadingAnimation'),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showSimpleNotification(
                         animationDuration: Duration(milliseconds: 200),
@@ -47,7 +47,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   },
                   child: const Text('customNotificationAnimation'),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showText(
                       text: 'this is custom animation ',
@@ -61,7 +61,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   child: const Text('customTextAnimation'),
                 ),
                 Builder(
-                  builder: (context) => RaisedButton(
+                  builder: (context) => ElevatedButton(
                     onPressed: () {
                       BotToast.showAttachedWidget(
                           attachedBuilder: (_) => Card(
@@ -72,8 +72,9 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      FlatButton.icon(
-                                        padding: const EdgeInsets.all(5),
+                                      TextButton.icon(
+                                        style:TextButton.styleFrom(
+                                            padding: EdgeInsets.all(5)),
                                         onPressed: () {
                                           BotToast.showSimpleNotification(
                                               title:
@@ -87,8 +88,9 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                         icon: Icon(Icons.favorite,
                                             color: Colors.redAccent),
                                       ),
-                                      FlatButton.icon(
-                                        padding: const EdgeInsets.all(5),
+                                      TextButton.icon(
+                                        style:TextButton.styleFrom(
+                                            padding: EdgeInsets.all(5)),
                                         onPressed: () {
                                           BotToast.showSimpleNotification(
                                               title:

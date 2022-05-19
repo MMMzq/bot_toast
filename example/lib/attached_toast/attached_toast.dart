@@ -48,17 +48,21 @@ class _AttachedToastState extends State<AttachedToast> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    FlatButton.icon(
-                      padding: EdgeInsets.all(5),
-                      onPressed: (){
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.all(5),
+                      ),
+                      onPressed: () {
                         BotToast.showSimpleNotification(title: "Tap favorite");
                       },
                       label: Text("favorite"),
-                      icon: Icon(Icons.favorite,color: Colors.redAccent),
+                      icon: Icon(Icons.favorite, color: Colors.redAccent),
                     ),
-                    FlatButton.icon(
-                      padding: EdgeInsets.all(5),
-                      onPressed: (){
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.all(5),
+                      ),
+                      onPressed: () {
                         BotToast.showSimpleNotification(title: "Tap bookmark");
                       },
                       label: Text("bookmark"),
@@ -103,7 +107,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 child: Align(
                   alignment: Alignment(buttonAlign, 0),
                   child: Builder(builder: (context) {
-                    return RaisedButton(
+                    return ElevatedButton(
                       onPressed: () {
                         show(context: context);
                       },
@@ -125,7 +129,10 @@ class _AttachedToastState extends State<AttachedToast> {
                   },
                 ),
               ),
-              Text("$preferDirection",style: TextStyle(fontSize: 15),),
+              Text(
+                "$preferDirection",
+                style: TextStyle(fontSize: 15),
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -497,4 +504,3 @@ class _AttachedToastState extends State<AttachedToast> {
     );
   }
 }
-

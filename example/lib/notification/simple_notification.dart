@@ -55,7 +55,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showSimpleNotification(
                       title: "Notification title",

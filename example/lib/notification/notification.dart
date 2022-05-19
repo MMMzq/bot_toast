@@ -29,7 +29,7 @@ class _NotificationState extends State<Notification> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showNotification(
                       leading: (cancel) => SizedBox.fromSize(

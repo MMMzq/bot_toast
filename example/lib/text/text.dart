@@ -37,7 +37,7 @@ class _TextSampleState extends State<TextSample> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showText(
                       text: (++index).isOdd

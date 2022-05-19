@@ -123,7 +123,7 @@ class _CustomLoadingState extends State<CustomLoading> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showCustomLoading(
                       clickClose: clickClose,

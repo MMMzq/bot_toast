@@ -30,7 +30,7 @@ class _CustomTextState extends State<CustomText> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showCustomText(
                     duration: Duration(seconds: seconds),

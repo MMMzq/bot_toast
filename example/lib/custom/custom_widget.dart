@@ -43,19 +43,17 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             title: const Text('this is custom widget'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   cancelFunc();
                   cancel?.call();
                 },
-                highlightColor: const Color(0x55FF8A80),
-                splashColor: const Color(0x99FF8A80),
                 child: const Text(
                   'cancel',
                   style: TextStyle(color: Colors.redAccent),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   cancelFunc();
                   confirm?.call();
@@ -87,7 +85,7 @@ class _CustomWidgetState extends State<CustomWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   showAlertDialog(backButtonBehavior, cancel: () {
                     BotToast.showText(text: 'Click cancel');

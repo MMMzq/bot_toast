@@ -21,6 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[300],
+          onPrimary: Colors.black,
+        ),
+      )),
       builder: BotToastInit(),
       title: 'BotToast Demo',
       navigatorObservers: [BotToastNavigatorObserver()],
@@ -53,7 +60,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -67,7 +74,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -84,7 +91,7 @@ class EnterPage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -107,7 +114,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -121,7 +128,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -147,7 +154,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => Loading()));
@@ -159,7 +166,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -182,7 +189,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -196,7 +203,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => All()));
@@ -212,7 +219,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -226,7 +233,7 @@ class EnterPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
