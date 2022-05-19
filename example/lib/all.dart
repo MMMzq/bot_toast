@@ -10,13 +10,13 @@ class All extends StatefulWidget {
 class _AllState extends State<All> {
   @override
   void initState() {
-    BotToast.showLoading(duration: Duration(seconds: 2));
+    BotToast.showLoading(duration: const Duration(seconds: 2));
     BotToast.showSimpleNotification(title: "init");
     BotToast.showText(text: "init");
     BotToast.showAttachedWidget(
-        attachedBuilder: (_) => Card(
+        attachedBuilder: (_) => const Card(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.favorite,
                   color: Colors.redAccent,
@@ -24,8 +24,8 @@ class _AllState extends State<All> {
               ),
             ),
         enableSafeArea: false,
-        duration: Duration(seconds: 2),
-        target: Offset(52, 0));
+        duration: const Duration(seconds: 2),
+        target: const Offset(52, 0));
 
     super.initState();
   }
@@ -34,22 +34,22 @@ class _AllState extends State<All> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("All"),
+        title: const Text("All"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Divider(),
-              Text("code"),
-              Divider(),
+              const Divider(),
+              const Text("code"),
+              const Divider(),
               Text(
                 _code,
                 textAlign: TextAlign.start,
               ),
-              Divider(),
+              const Divider(),
             ],
           ),
         ),
@@ -58,7 +58,7 @@ class _AllState extends State<All> {
   }
 }
 
-String _code = """
+String _code = '''
   @override
   void initState() {
     BotToast.showLoading(duration: Duration(seconds: 2));
@@ -79,4 +79,4 @@ String _code = """
 
     super.initState();
   }
-""";
+''';

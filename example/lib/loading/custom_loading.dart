@@ -18,7 +18,7 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
   @override
   void initState() {
     animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
 
     animationController.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -43,13 +43,13 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
         onlyOne: true,
         duration: null,
         toastBuilder: (textCancel) => Align(
-              alignment: Alignment(0, 0.8),
+              alignment: const Alignment(0, 0.8),
               child: Card(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.favorite,
                           color: Colors.redAccent,
                         ),
@@ -57,8 +57,8 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
                           widget.cancelFunc();
                           textCancel();
                         }),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text("Tap loading toast"),
                     )
                   ],
@@ -78,12 +78,12 @@ class __CustomLoadWidgetState extends State<_CustomLoadWidget>
             FadeTransition(
               opacity: animationController,
               child: IconButton(
-                icon: Icon(Icons.favorite, color: Colors.redAccent, size: 30),
+                icon: const Icon(Icons.favorite, color: Colors.redAccent, size: 30),
                 onPressed: handleTap,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "Loading",
               ),
@@ -115,10 +115,10 @@ class _CustomLoadingState extends State<CustomLoading> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CustomLoading"),
+        title: const Text("CustomLoading"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -143,7 +143,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                         return _CustomLoadWidget(cancelFunc: cancelFunc);
                       });
                 },
-                child: Text("CustomLoading"),
+                child: const Text("CustomLoading"),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -188,7 +188,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                 ),
               ),
 
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -199,7 +199,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -209,7 +209,7 @@ class _CustomLoadingState extends State<CustomLoading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -219,51 +219,51 @@ class _CustomLoadingState extends State<CustomLoading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),
               SwitchListTile(
                 value: clickClose,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     clickClose = value;
                   });
                 },
-                title: Text("clickClose: "),
+                title: const Text("clickClose: "),
               ),
               SwitchListTile(
                 value: allowClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     allowClick = value;
                   });
                 },
-                title: Text("allowClick: "),
+                title: const Text("allowClick: "),
               ),
               SwitchListTile(
                 value: ignoreContentClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     ignoreContentClick = value;
                   });
                 },
-                title: Text("ignoreContentClick: "),
+                title: const Text("ignoreContentClick: "),
               ),
               SwitchListTile(
                 value: crossPage,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,

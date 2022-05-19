@@ -21,10 +21,10 @@ class _NotificationState extends State<Notification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification"),
+        title: const Text("Notification"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -35,13 +35,13 @@ class _NotificationState extends State<Notification> {
                       leading: (cancel) => SizedBox.fromSize(
                           size: const Size(40, 40),
                           child: IconButton(
-                            icon: Icon(Icons.favorite, color: Colors.redAccent),
+                            icon: const Icon(Icons.favorite, color: Colors.redAccent),
                             onPressed: cancel,
                           )),
-                      title: (_) => Text('Notification title'),
-                      subtitle: (_) => Text("Notification subtitle"),
+                      title: (_) => const Text('Notification title'),
+                      subtitle: (_) => const Text("Notification subtitle"),
                       trailing: (cancel) => IconButton(
-                            icon: Icon(Icons.cancel),
+                            icon: const Icon(Icons.cancel),
                             onPressed: cancel,
                           ),
                       onTap: () {
@@ -61,7 +61,7 @@ class _NotificationState extends State<Notification> {
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds));
                 },
-                child: Text("notification"),
+                child: const Text("notification"),
               ),
               SwitchListTile(
                 value: enableSlideOff,
@@ -70,7 +70,7 @@ class _NotificationState extends State<Notification> {
                     enableSlideOff = value;
                   });
                 },
-                title: Text("enableSlideOff: "),
+                title: const Text("enableSlideOff: "),
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -79,7 +79,7 @@ class _NotificationState extends State<Notification> {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -88,9 +88,9 @@ class _NotificationState extends State<Notification> {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -101,7 +101,7 @@ class _NotificationState extends State<Notification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -111,7 +111,7 @@ class _NotificationState extends State<Notification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -121,7 +121,7 @@ class _NotificationState extends State<Notification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),

@@ -44,29 +44,29 @@ class _AttachedToastState extends State<AttachedToast> {
         attachedBuilder: (cancel) => (Card(
           color: Colors.amber,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     TextButton.icon(
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                       ),
                       onPressed: () {
                         BotToast.showSimpleNotification(title: "Tap favorite");
                       },
-                      label: Text("favorite"),
-                      icon: Icon(Icons.favorite, color: Colors.redAccent),
+                      label: const Text("favorite"),
+                      icon: const Icon(Icons.favorite, color: Colors.redAccent),
                     ),
                     TextButton.icon(
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                       ),
                       onPressed: () {
                         BotToast.showSimpleNotification(title: "Tap bookmark");
                       },
-                      label: Text("bookmark"),
-                      icon: Icon(Icons.bookmark,color: Colors.redAccent),
+                      label: const Text("bookmark"),
+                      icon: const Icon(Icons.bookmark,color: Colors.redAccent),
                     )                  ],
                 ),
               ),
@@ -77,25 +77,25 @@ class _AttachedToastState extends State<AttachedToast> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AttachedToast"),
+        title: const Text("AttachedToast"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               GestureDetector(
-                onTapDown: (details) {
+                onTapDown: (TapDownDetails details) {
                   show(target: details.globalPosition);
                 },
                 child: Card(
-                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
                   color: Colors.black45,
                   child: Container(
                     height: 200,
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       "click me",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
@@ -106,12 +106,12 @@ class _AttachedToastState extends State<AttachedToast> {
                 padding: const EdgeInsets.only(top: 20),
                 child: Align(
                   alignment: Alignment(buttonAlign, 0),
-                  child: Builder(builder: (context) {
+                  child: Builder(builder: (BuildContext context) {
                     return ElevatedButton(
                       onPressed: () {
                         show(context: context);
                       },
-                      child: Text("AttachedToast"),
+                      child: const Text("AttachedToast"),
                     );
                   }),
                 ),
@@ -131,11 +131,11 @@ class _AttachedToastState extends State<AttachedToast> {
               ),
               Text(
                 "$preferDirection",
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               Row(
                 children: <Widget>[
-                  Expanded(
+                  const Expanded(
                     child: SizedBox.shrink(),
                   ),
                   Expanded(
@@ -165,11 +165,11 @@ class _AttachedToastState extends State<AttachedToast> {
                               preferDirection = value;
                             });
                           })),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Spacer(),
                   Expanded(
                       child: Text(
@@ -200,9 +200,9 @@ class _AttachedToastState extends State<AttachedToast> {
                               preferDirection = value;
                             });
                           })),
-                  Spacer(),
-                  Spacer(),
-                  Spacer(),
+                  const Spacer(),
+                  const Spacer(),
+                  const Spacer(),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.rightTop,
@@ -215,7 +215,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Expanded(
                       child: Text(
                     "leftTop",
@@ -242,9 +242,9 @@ class _AttachedToastState extends State<AttachedToast> {
                               preferDirection = value;
                             });
                           })),
-                  Spacer(),
-                  Spacer(),
-                  Spacer(),
+                  const Spacer(),
+                  const Spacer(),
+                  const Spacer(),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.rightCenter,
@@ -257,7 +257,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Expanded(
                       child: Text(
                     "leftCenter",
@@ -284,9 +284,9 @@ class _AttachedToastState extends State<AttachedToast> {
                               preferDirection = value;
                             });
                           })),
-                  Spacer(),
-                  Spacer(),
-                  Spacer(),
+                  const Spacer(),
+                  const Spacer(),
+                  const Spacer(),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.rightBottom,
@@ -299,7 +299,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Expanded(
                       child: Text(
                     "leftBottom",
@@ -317,7 +317,7 @@ class _AttachedToastState extends State<AttachedToast> {
               ),
               Row(
                 children: <Widget>[
-                  Spacer(),
+                  const Spacer(),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.bottomLeft,
@@ -345,11 +345,11 @@ class _AttachedToastState extends State<AttachedToast> {
                               preferDirection = value;
                             });
                           })),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: const <Widget>[
                   Spacer(),
                   Expanded(
                       child: Text(
@@ -371,39 +371,39 @@ class _AttachedToastState extends State<AttachedToast> {
               ),
               SwitchListTile(
                 value: ignoreContentClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     ignoreContentClick = value;
                   });
                 },
-                title: Text("ignoreContentClick: "),
+                title: const Text("ignoreContentClick: "),
               ),
               SwitchListTile(
                 value: onlyOne,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: allowClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     allowClick = value;
                   });
                 },
-                title: Text("allowClick: "),
+                title: const Text("allowClick: "),
               ),
               SwitchListTile(
                 value: enableSafeArea,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     enableSafeArea = value;
                   });
                 },
-                title: Text("enableSafeArea: "),
+                title: const Text("enableSafeArea: "),
               ),
               ListTile(
                 title: Text("duration:   ${second}s"),
@@ -478,7 +478,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,

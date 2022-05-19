@@ -25,7 +25,7 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
                     opacity: controller.value,
                     child: child,
                   ),
-                  child: DecoratedBox(
+                  child: const DecoratedBox(
                     decoration: BoxDecoration(color: Colors.black26),
                     child: SizedBox.expand(),
                   ),
@@ -62,7 +62,7 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
               ),
             ],
           ),
-      animationDuration: Duration(milliseconds: 300));
+      animationDuration: const Duration(milliseconds: 300));
 }
 
 class CustomWidget extends StatefulWidget {
@@ -97,7 +97,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                 },
                 child: const Text('customWidget'),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -108,7 +108,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -118,7 +118,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -128,7 +128,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),

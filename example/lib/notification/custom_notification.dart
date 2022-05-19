@@ -21,7 +21,7 @@ class _CustomWidgetState extends State<_CustomWidget> {
         children: <Widget>[
           Expanded(
             child: IconButton(
-                icon: Icon(Icons.favorite),
+                icon: const Icon(Icons.favorite),
                 color: loveMe ? Colors.redAccent : Colors.grey,
                 onPressed: () {
                   setState(() {
@@ -33,7 +33,7 @@ class _CustomWidgetState extends State<_CustomWidget> {
                 }),
           ),
           IconButton(
-            icon: Icon(Icons.cancel),
+            icon: const Icon(Icons.cancel),
             color: loveMe ? Colors.redAccent : Colors.grey,
             onPressed: widget.cancelFunc,
           )
@@ -61,10 +61,10 @@ class _CustomNotificationState extends State<CustomNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CustomNotification"),
+        title: const Text("CustomNotification"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -87,7 +87,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                       onlyOne: onlyOne,
                       crossPage: crossPage);
                 },
-                child: Text("CustomNotification"),
+                child: const Text("CustomNotification"),
               ),
 
               SwitchListTile(
@@ -97,7 +97,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                     enableSlideOff = value;
                   });
                 },
-                title: Text("enableSlideOff: "),
+                title: const Text("enableSlideOff: "),
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -106,7 +106,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -115,9 +115,9 @@ class _CustomNotificationState extends State<CustomNotification> {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -128,7 +128,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -138,7 +138,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -148,7 +148,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),

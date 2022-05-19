@@ -29,10 +29,10 @@ class _TextSampleState extends State<TextSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TextToast"),
+        title: const Text("TextToast"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -61,7 +61,7 @@ class _TextSampleState extends State<TextSample> {
                       backgroundColor: Color(backgroundColor),
                       contentColor: Color(contentColor));
                 },
-                child: Text("TextToast"),
+                child: const Text("TextToast"),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -105,7 +105,7 @@ class _TextSampleState extends State<TextSample> {
                   },
                 ),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -116,7 +116,7 @@ class _TextSampleState extends State<TextSample> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -126,7 +126,7 @@ class _TextSampleState extends State<TextSample> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -136,7 +136,7 @@ class _TextSampleState extends State<TextSample> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),
@@ -147,7 +147,7 @@ class _TextSampleState extends State<TextSample> {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: clickClose,
@@ -156,7 +156,7 @@ class _TextSampleState extends State<TextSample> {
                     clickClose = value;
                   });
                 },
-                title: Text("clickClose: "),
+                title: const Text("clickClose: "),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -165,7 +165,7 @@ class _TextSampleState extends State<TextSample> {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
               ListTile(
                 title: Text("align:  Alignment(0, $align)"),
@@ -210,7 +210,7 @@ class _TextSampleState extends State<TextSample> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("fontColor:   "),
+                    const Text("fontColor:   "),
                     Container(
                       height: 20,
                       width: 20,
@@ -233,7 +233,7 @@ class _TextSampleState extends State<TextSample> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "background:",
                       overflow: TextOverflow.fade,
                     ),
@@ -259,7 +259,7 @@ class _TextSampleState extends State<TextSample> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("contentColor:   "),
+                    const Text("contentColor:   "),
                     Container(
                       height: 20,
                       width: 20,

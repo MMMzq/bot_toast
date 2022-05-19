@@ -47,10 +47,10 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SimpleNotification"),
+        title: const Text("SimpleNotification"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -77,45 +77,45 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds));
                 },
-                child: Text("simpleNotification"),
+                child: const Text("simpleNotification"),
               ),
               SwitchListTile(
                 value: enableSlideOff,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     enableSlideOff = value;
                   });
                 },
-                title: Text("enableSlideOff: "),
+                title: const Text("enableSlideOff: "),
               ),
               SwitchListTile(
                 value: hideCloseButton,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     hideCloseButton = value;
                   });
                 },
-                title: Text("hideCloseButton: "),
+                title: const Text("hideCloseButton: "),
               ),
               SwitchListTile(
                 value: onlyOne,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: crossPage,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
-              Center(
+              const Center(
                 child: Text('BackButtonBehavior'),
               ),
               Row(
@@ -129,7 +129,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),
+                      title: const Text('none'),
                     ),
                   ),
                   Expanded(
@@ -141,7 +141,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),
+                      title: const Text('ignore'),
                     ),
                   ),
                   Expanded(
@@ -153,7 +153,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),
+                      title: const Text('close'),
                     ),
                   )
                 ],
