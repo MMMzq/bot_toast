@@ -22,15 +22,15 @@ class _CustomTextState extends State<CustomText> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CustomText"),
+        title: const Text("CustomText"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showCustomText(
                     duration: Duration(seconds: seconds),
@@ -45,13 +45,13 @@ class _CustomTextState extends State<CustomText> {
                     animationReverseDuration:
                         Duration(milliseconds: animationReverseMilliseconds),
                     toastBuilder: (_) => Align(
-                      alignment: Alignment(0, 0.8),
+                      alignment: const Alignment(0, 0.8),
                       child: Card(
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.favorite_border,
                                   color: Colors.redAccent,
                                 ),
@@ -59,15 +59,15 @@ class _CustomTextState extends State<CustomText> {
                                   BotToast.showSimpleNotification(
                                       title: "Notification one",
                                       crossPage: crossPage,
-                                      closeIcon: Icon(
+                                      closeIcon: const Icon(
                                         Icons.favorite,
                                         color: Colors.redAccent,
                                       ),
                                       duration: Duration(seconds: seconds));
                                 }),
-                            Padding(
+                            const Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                                  EdgeInsets.symmetric(horizontal: 8),
                               child: Text("Text one"),
                             ),
                           ],
@@ -76,7 +76,7 @@ class _CustomTextState extends State<CustomText> {
                     ),
                   );
                 },
-                child: Text("TextToast"),
+                child: const Text("TextToast"),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -120,7 +120,7 @@ class _CustomTextState extends State<CustomText> {
                   },
                 ),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -131,7 +131,7 @@ class _CustomTextState extends State<CustomText> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -141,7 +141,7 @@ class _CustomTextState extends State<CustomText> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -151,7 +151,7 @@ class _CustomTextState extends State<CustomText> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),
@@ -162,7 +162,7 @@ class _CustomTextState extends State<CustomText> {
                     onlyOne = value;
                   });
                 },
-                title: Text("onlyOne: "),
+                title: const Text("onlyOne: "),
               ),
               SwitchListTile(
                 value: clickClose,
@@ -171,7 +171,7 @@ class _CustomTextState extends State<CustomText> {
                     clickClose = value;
                   });
                 },
-                title: Text("clickClose: "),
+                title: const Text("clickClose: "),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -180,7 +180,7 @@ class _CustomTextState extends State<CustomText> {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
               SwitchListTile(
                 value: ignoreContentClick,
@@ -189,7 +189,7 @@ class _CustomTextState extends State<CustomText> {
                     ignoreContentClick = value;
                   });
                 },
-                title: Text("ignoreContentClick: "),
+                title: const Text("ignoreContentClick: "),
               ),
 
 
@@ -197,7 +197,7 @@ class _CustomTextState extends State<CustomText> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,

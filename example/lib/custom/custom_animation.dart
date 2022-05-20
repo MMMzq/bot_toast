@@ -21,23 +21,23 @@ class _CustomAnimationState extends State<CustomAnimation> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showLoading(
                         allowClick: true,
-                        animationDuration: Duration(milliseconds: 200),
-                        duration: Duration(seconds: 2),
+                        animationDuration: const Duration(milliseconds: 200),
+                        duration: const Duration(seconds: 2),
                         wrapAnimation: (controller, cancel, child) =>
                             CustomOffsetAnimation(
                                 controller: controller, child: child));
                   },
                   child: const Text('customLoadingAnimation'),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showSimpleNotification(
-                        animationDuration: Duration(milliseconds: 200),
-                        duration: Duration(seconds: 2),
+                        animationDuration: const Duration(milliseconds: 200),
+                        duration: const Duration(seconds: 2),
                         wrapToastAnimation: (controller, cancel, child) =>
                             CustomOffsetAnimation(
                                 reverse: true,
@@ -47,7 +47,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   },
                   child: const Text('customNotificationAnimation'),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     BotToast.showText(
                       text: 'this is custom animation ',
@@ -61,7 +61,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   child: const Text('customTextAnimation'),
                 ),
                 Builder(
-                  builder: (context) => RaisedButton(
+                  builder: (context) => ElevatedButton(
                     onPressed: () {
                       BotToast.showAttachedWidget(
                           attachedBuilder: (_) => Card(
@@ -72,8 +72,9 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      FlatButton.icon(
-                                        padding: const EdgeInsets.all(5),
+                                      TextButton.icon(
+                                        style:TextButton.styleFrom(
+                                            padding: const EdgeInsets.all(5)),
                                         onPressed: () {
                                           BotToast.showSimpleNotification(
                                               title:
@@ -84,11 +85,12 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                               minWidth: 70),
                                           child: const Text('favorite'),
                                         ),
-                                        icon: Icon(Icons.favorite,
+                                        icon: const Icon(Icons.favorite,
                                             color: Colors.redAccent),
                                       ),
-                                      FlatButton.icon(
-                                        padding: const EdgeInsets.all(5),
+                                      TextButton.icon(
+                                        style:TextButton.styleFrom(
+                                            padding: const EdgeInsets.all(5)),
                                         onPressed: () {
                                           BotToast.showSimpleNotification(
                                               title:
@@ -99,7 +101,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                               minWidth: 70),
                                           child: const Text('bookmark'),
                                         ),
-                                        icon: Icon(Icons.bookmark,
+                                        icon: const Icon(Icons.bookmark,
                                             color: Colors.redAccent),
                                       )
                                     ],
@@ -112,9 +114,9 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                     controller: controller,
                                     child: child,
                                   ),
-                          animationDuration: Duration(milliseconds: 300),
+                          animationDuration: const Duration(milliseconds: 300),
                           enableSafeArea: false,
-                          duration: Duration(seconds: 2),
+                          duration: const Duration(seconds: 2),
                           targetContext: context);
                     },
                     child: const Text('customAttachedAnimation'),

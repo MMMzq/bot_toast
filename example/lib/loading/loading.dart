@@ -21,15 +21,15 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Loading"),
+        title: const Text("Loading"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   BotToast.showLoading(
                       clickClose: clickClose,
@@ -45,7 +45,7 @@ class _LoadingState extends State<Loading> {
                       ),
                       backgroundColor: Color(backgroundColor));
                 },
-                child: Text("Loading"),
+                child: const Text("Loading"),
               ),
               ListTile(
                 title: Text("duration:   ${seconds}s"),
@@ -89,7 +89,7 @@ class _LoadingState extends State<Loading> {
                   },
                 ),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -100,7 +100,7 @@ class _LoadingState extends State<Loading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -110,7 +110,7 @@ class _LoadingState extends State<Loading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -120,7 +120,7 @@ class _LoadingState extends State<Loading> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),
@@ -131,7 +131,7 @@ class _LoadingState extends State<Loading> {
                     clickClose = value;
                   });
                 },
-                title: Text("clickClose: "),
+                title: const Text("clickClose: "),
               ),
               SwitchListTile(
                 value: allowClick,
@@ -140,7 +140,7 @@ class _LoadingState extends State<Loading> {
                     allowClick = value;
                   });
                 },
-                title: Text("allowClick: "),
+                title: const Text("allowClick: "),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -149,13 +149,13 @@ class _LoadingState extends State<Loading> {
                     crossPage = value;
                   });
                 },
-                title: Text("crossPage: "),
+                title: const Text("crossPage: "),
               ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text("backgroundColor:")),
                     Container(
                       height: 20,
                       width: 20,

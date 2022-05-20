@@ -21,6 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[300],
+          onPrimary: Colors.black,
+        ),
+      )),
       builder: BotToastInit(),
       title: 'BotToast Demo',
       navigatorObservers: [BotToastNavigatorObserver()],
@@ -34,40 +41,40 @@ class EnterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("BotToast"),
+          title: const Text("BotToast"),
           centerTitle: true,
         ),
         body: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: const EdgeInsets.only(top: 30),
               child: Column(children: <Widget>[
-                Text(
+                const Text(
                   "Notification",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => SimpleNotification()));
                           },
-                          child: Text("SimpleNotification"),
+                          child: const Text("SimpleNotification"),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -75,7 +82,7 @@ class EnterPage extends StatelessWidget {
                                     builder: (_) =>
                                         notification.Notification()));
                           },
-                          child: Text("Notification"),
+                          child: const Text("Notification"),
                         ),
                       ),
                     )
@@ -83,52 +90,52 @@ class EnterPage extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: RaisedButton(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => CustomNotification()));
                     },
-                    child: Text("CustomNotification"),
+                    child: const Text("CustomNotification"),
                   ),
                 ),
                 Container(
                   height: 40,
                 ),
-                Text(
+                const Text(
                   "TextToast",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => TextSample()));
                           },
-                          child: Text("TextToast"),
+                          child: const Text("TextToast"),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => CustomText()));
                           },
-                          child: Text("CustomText"),
+                          child: const Text("CustomText"),
                         ),
                       ),
                     )
@@ -137,42 +144,42 @@ class EnterPage extends StatelessWidget {
                 Container(
                   height: 40,
                 ),
-                Text(
+                const Text(
                   "Load",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => Loading()));
                           },
-                          child: Text("Loading"),
+                          child: const Text("Loading"),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => CustomLoading()));
                           },
-                          child: Text("CustomLoading"),
+                          child: const Text("CustomLoading"),
                         ),
                       ),
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   'Other',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
@@ -181,27 +188,27 @@ class EnterPage extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => AttachedToast()));
                           },
-                          child: Text('AttachedToast'),
+                          child: const Text('AttachedToast'),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => All()));
                           },
-                          child: Text("All"),
+                          child: const Text("All"),
                         ),
                       ),
                     ),
@@ -211,8 +218,8 @@ class EnterPage extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -225,8 +232,8 @@ class EnterPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: RaisedButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,

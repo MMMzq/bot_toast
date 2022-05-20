@@ -25,7 +25,7 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
                     opacity: controller.value,
                     child: child,
                   ),
-                  child: DecoratedBox(
+                  child: const DecoratedBox(
                     decoration: BoxDecoration(color: Colors.black26),
                     child: SizedBox.expand(),
                   ),
@@ -43,19 +43,17 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             title: const Text('this is custom widget'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   cancelFunc();
                   cancel?.call();
                 },
-                highlightColor: const Color(0x55FF8A80),
-                splashColor: const Color(0x99FF8A80),
                 child: const Text(
                   'cancel',
                   style: TextStyle(color: Colors.redAccent),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   cancelFunc();
                   confirm?.call();
@@ -64,7 +62,7 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
               ),
             ],
           ),
-      animationDuration: Duration(milliseconds: 300));
+      animationDuration: const Duration(milliseconds: 300));
 }
 
 class CustomWidget extends StatefulWidget {
@@ -87,7 +85,7 @@ class _CustomWidgetState extends State<CustomWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   showAlertDialog(backButtonBehavior, cancel: () {
                     BotToast.showText(text: 'Click cancel');
@@ -99,7 +97,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                 },
                 child: const Text('customWidget'),
               ),
-              Center(child: Text('BackButtonBehavior'),),
+              const Center(child: Text('BackButtonBehavior'),),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -110,7 +108,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('none'),),
+                      title: const Text('none'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
@@ -120,7 +118,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('ignore'),),
+                      title: const Text('ignore'),),
                   ),
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
@@ -130,7 +128,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                           backButtonBehavior = value;
                         });
                       },
-                      title: Text('close'),),
+                      title: const Text('close'),),
                   )
                 ],
               ),
