@@ -1,3 +1,6 @@
+## [4.0.3]
+* feat: Add safe area flag for custom options
+
 ## [4.0.2]
 * fix: Support flutter 3.x
 
