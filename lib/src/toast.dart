@@ -235,7 +235,8 @@ class BotToast {
       bool enableKeyboardSafeArea = true,
       bool enableSlideOff = true,
       bool crossPage = true,
-      bool onlyOne = true}) {
+      bool onlyOne = true,
+      bool useSafeArea = true}) {
     return showAnimationWidget(
         crossPage: crossPage,
         allowClick: true,
@@ -257,7 +258,7 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return SafeArea(child: child);
+          return useSafeArea ? SafeArea(child: child) : child;
         },
         toastBuilder: (cancelFunc) => NotificationToast(
             child: toastBuilder(cancelFunc),
@@ -363,7 +364,8 @@ class BotToast {
       bool crossPage = true,
       bool clickClose = false,
       bool ignoreContentClick = false,
-      bool onlyOne = false}) {
+      bool onlyOne = false,
+      bool useSafeArea = true}) {
     return showAnimationWidget(
         groupKey: textKey,
         clickClose: clickClose,
@@ -387,7 +389,7 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return SafeArea(child: child);
+          return useSafeArea ? SafeArea(child: child) : child;
         },
         toastBuilder: toastBuilder);
   }
@@ -457,23 +459,23 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showCustomLoading({
-    required ToastBuilder toastBuilder,
-    WrapAnimation? wrapAnimation = loadingAnimation,
-    WrapAnimation? wrapToastAnimation,
-    Alignment? align = Alignment.center,
-    BackButtonBehavior? backButtonBehavior,
-    bool clickClose = false,
-    bool allowClick = false,
-    bool ignoreContentClick = false,
-    bool crossPage = false,
-    bool enableKeyboardSafeArea = true,
-    VoidCallback? onClose,
-    Duration? duration,
-    Duration? animationDuration,
-    Duration? animationReverseDuration,
-    Color backgroundColor = Colors.black26,
-  }) {
+  static CancelFunc showCustomLoading(
+      {required ToastBuilder toastBuilder,
+      WrapAnimation? wrapAnimation = loadingAnimation,
+      WrapAnimation? wrapToastAnimation,
+      Alignment? align = Alignment.center,
+      BackButtonBehavior? backButtonBehavior,
+      bool clickClose = false,
+      bool allowClick = false,
+      bool ignoreContentClick = false,
+      bool crossPage = false,
+      bool enableKeyboardSafeArea = true,
+      VoidCallback? onClose,
+      Duration? duration,
+      Duration? animationDuration,
+      Duration? animationReverseDuration,
+      Color backgroundColor = Colors.black26,
+      bool useSafeArea = true}) {
     return showAnimationWidget(
         groupKey: loadKey,
         enableKeyboardSafeArea: enableKeyboardSafeArea,
@@ -490,7 +492,7 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return SafeArea(child: child);
+          return useSafeArea ? SafeArea(child: child) : child;
         },
         onClose: onClose,
         clickClose: clickClose,
