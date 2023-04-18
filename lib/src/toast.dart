@@ -161,6 +161,7 @@ class BotToast {
       Duration? animationDuration,
       Duration? animationReverseDuration,
       EdgeInsetsGeometry? contentPadding,
+      EdgeInsetsGeometry? margin,
       VoidCallback? onClose,
       bool enableKeyboardSafeArea = true,
       bool enableSlideOff = true,
@@ -182,6 +183,7 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         toastBuilder: (cancel) {
           return Card(
+            margin: margin,
             color: backgroundColor,
             shape: borderRadius == null
                 ? null
