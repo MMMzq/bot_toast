@@ -91,6 +91,7 @@ class BotToast {
       bool hideCloseButton = false,
       bool crossPage = true,
       bool onlyOne = true}) {
+
     return showNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
