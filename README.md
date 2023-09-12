@@ -28,6 +28,8 @@ A really easy to use flutter toast library!
 
 - Pure flutter implementation
 
+- Supports global configuration
+
 
 ### 🐼Online Demo
 
@@ -48,19 +50,19 @@ Loading|Text|CustomWidget
 
 ### 🐮Getting started
 
-#### 1. add dependencies into you project pubspec.yaml file
+#### 1. Add dependencies into you project pubspec.yaml file
 ``` yaml
 dependencies:
      bot_toast: ^3.0.5 
 #    bot_toast: ^4.0.0 #null safety
 ```
 
-#### 2. import BotToast lib
+#### 2. Import BotToast Lib
 ``` dart
 import 'package:bot_toast/bot_toast.dart';
 ```
 
-#### 3. initialization BotToast
+#### 3. Initialization BotToast
 ``` dart
 MaterialApp(
       title: 'BotToast Demo',
@@ -85,7 +87,7 @@ MaterialApp(
   )
 ```
 
-#### 4. use BotToast
+#### 4. Use BotToast
 ``` dart
 var cancel = BotToast.showText(text:"xxxx");  //popup a text toast;
 ...
@@ -130,6 +132,25 @@ var cancel = BotToast.showCustomLoading(...)
 var cancel = BotToast.showAnimationWidget(...)
 ...
 cancel();  //close
+```
+
+#### 5. Modify Global Configuration
+
+``` dart
+/// For example: Globally change the animation duration for standard notifications to 1 second.
+BotToast.defaultOption.notification.animationDuration = const Duration(seconds: 1);
+
+/// For more default options, refer to the following configurations:
+/// [BotToast.defaultOption.simpleNotification] corresponds to the default values of [showSimpleNotification].
+/// [BotToast.defaultOption.notification] corresponds to the default values of [showNotification].
+/// [BotToast.defaultOption.customNotification] corresponds to the default values of [showCustomNotification].
+/// [BotToast.defaultOption.text] corresponds to the default values of [showText].
+/// [BotToast.defaultOption.customText] corresponds to the default values of [showCustomText].
+/// [BotToast.defaultOption.loading] corresponds to the default values of [showLoading].
+/// [BotToast.defaultOption.customLoading] corresponds to the default values of [showCustomLoading].
+/// [BotToast.defaultOption.attached] corresponds to the default values of [showAttachedWidget].
+/// [BotToast.defaultOption.animation] corresponds to the default values of [showAnimationWidget].
+/// [BotToast.defaultOption.enhanced] corresponds to the default values of [showEnhancedWidget].
 ```
 
 ### 🐼3.0 version

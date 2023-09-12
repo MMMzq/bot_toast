@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 void showAlertDialog(BackButtonBehavior backButtonBehavior,
-    {VoidCallback cancel,
-    VoidCallback confirm,
-      VoidCallback backgroundReturn}) {
+    {VoidCallback? cancel,
+    VoidCallback? confirm,
+    VoidCallback? backgroundReturn}) {
   BotToast.showAnimationWidget(
       clickClose: false,
       allowClick: false,
@@ -97,38 +97,46 @@ class _CustomWidgetState extends State<CustomWidget> {
                 },
                 child: const Text('customWidget'),
               ),
-              const Center(child: Text('BackButtonBehavior'),),
+              const Center(
+                child: Text('BackButtonBehavior'),
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.none,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('none'),),
+                      title: const Text('none'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('ignore'),),
+                      title: const Text('ignore'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.close,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('close'),),
+                      title: const Text('close'),
+                    ),
                   )
                 ],
               ),
@@ -141,13 +149,11 @@ class _CustomWidgetState extends State<CustomWidget> {
   }
 }
 
-
-
 class CustomOffsetAnimation extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomOffsetAnimation({Key key, this.controller, this.child})
+  const CustomOffsetAnimation({Key? key,required this.controller,required this.child})
       : super(key: key);
 
   @override
@@ -155,10 +161,10 @@ class CustomOffsetAnimation extends StatefulWidget {
 }
 
 class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
-  Tween<Offset> tweenOffset;
-  Tween<double> tweenScale;
+  late Tween<Offset> tweenOffset;
+  late Tween<double> tweenScale;
 
-  Animation<double> animation;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -177,7 +183,7 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
     return AnimatedBuilder(
       child: widget.child,
       animation: widget.controller,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return FractionalTranslation(
             translation: tweenOffset.evaluate(animation),
             child: ClipRect(
@@ -193,4 +199,3 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
     );
   }
 }
-

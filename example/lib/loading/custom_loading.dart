@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class _CustomLoadWidget extends StatefulWidget {
   final CancelFunc cancelFunc;
 
-  const _CustomLoadWidget({Key key, this.cancelFunc}) : super(key: key);
+  const _CustomLoadWidget({Key? key,required this.cancelFunc}) : super(key: key);
 
   @override
   __CustomLoadWidgetState createState() => __CustomLoadWidgetState();
@@ -13,7 +13,7 @@ class _CustomLoadWidget extends StatefulWidget {
 
 class __CustomLoadWidgetState extends State<_CustomLoadWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
@@ -194,9 +194,9 @@ class _CustomLoadingState extends State<CustomLoading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('none'),),
@@ -204,9 +204,9 @@ class _CustomLoadingState extends State<CustomLoading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('ignore'),),
@@ -214,9 +214,9 @@ class _CustomLoadingState extends State<CustomLoading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('close'),),

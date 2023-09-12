@@ -5,15 +5,16 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+// ignore_for_file: prefer_const_constructors,always_specify_types,unused_local_variable
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:bot_toast/src/toast_widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/scheduler.dart';
 
 void main() {
   Future click(WidgetTester tester) async {
-    await tester.tap(find.byKey(ValueKey('main')));
+    await tester.tap(find.byKey(const ValueKey('main')));
     await tester.pump();
     await tester.pump();
     await tester.pump();
@@ -261,17 +262,17 @@ void main() {
       await tester.pumpWidget(TestApp(
         contextCallback: (ctx) async {
           BotToast.showEnhancedWidget(
-              duration: Duration(milliseconds: 10),
+              duration: const Duration(milliseconds: 10),
               clickClose: true,
               toastBuilder: (_) => Text('testText'));
         },
       ));
       await click(tester);
       expect(find.text('testText'), findsOneWidget);
-      await tester.pump(Duration(milliseconds: 5));
+      await tester.pump(const Duration(milliseconds: 5));
       await tester.pump();
       expect(find.text('testText'), findsOneWidget);
-      await tester.pump(Duration(milliseconds: 10));
+      await tester.pump(const Duration(milliseconds: 10));
       await tester.pump();
       expect(find.text('testText'), findsNothing);
     });
@@ -283,9 +284,9 @@ void main() {
         contextCallback: (ctx) async {
           i++;
           BotToast.showEnhancedWidget(
-              duration: Duration(milliseconds: 10),
+              duration: const Duration(milliseconds: 10),
               onlyOne: onlyOne,
-              toastBuilder: (_) => Text('testText'));
+              toastBuilder: (_) => const Text('testText'));
         },
       ));
       await click(tester);
@@ -309,7 +310,7 @@ void main() {
                 clickClose: false,
                 toastBuilder: (_) => Text('testText'));
           },
-          child: FlatButton(
+          child: TextButton(
             key: ValueKey('test'),
             onPressed: () {
               i++;
@@ -342,7 +343,7 @@ void main() {
               toastBuilder: (_) =>
                   Padding(
                     padding: EdgeInsets.all(100),
-                    child: FlatButton(
+                    child: TextButton(
                       key: ValueKey('test'),
                       onPressed: () {
                         i++;
@@ -391,13 +392,13 @@ class TestApp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Builder(
-                builder: (ctx) => FlatButton(
-                    key: ValueKey('main'),
+                builder: (ctx) => TextButton(
+                    key: const ValueKey('main'),
                     onPressed: () async {
                       callback?.call();
                       contextCallback?.call(ctx);
                     },
-                    child: Text(''))),
+                    child: const Text(''))),
             if (child != null) child!
           ],
         ),

@@ -10,6 +10,7 @@ class PositionDelegate extends SingleChildLayoutDelegate {
       {required this.target,
       required this.verticalOffset,
       required this.horizontalOffset,
+      required this.paddingTop,
       this.enableSafeArea = true,
       PreferDirection? preferDirection})
       : this.preferDirection = preferDirection ?? PreferDirection.topCenter;
@@ -20,17 +21,16 @@ class PositionDelegate extends SingleChildLayoutDelegate {
 
   final double verticalOffset;
   final double horizontalOffset;
+  final double paddingTop;
 
   final PreferDirection preferDirection;
 
   @override
-  BoxConstraints getConstraintsForChild(BoxConstraints constraints) =>
-      constraints.loosen();
+  BoxConstraints getConstraintsForChild(BoxConstraints constraints) => constraints.loosen();
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    final double top =
-        enableSafeArea ? MediaQueryData.fromWindow(window).padding.top : 0;
+    final double top = enableSafeArea ? paddingTop : 0;
     return positionToastBox(
       containerRect: Rect.fromLTWH(0, top, size.width, size.height - top),
       toastSize: childSize,
@@ -44,6 +44,7 @@ class PositionDelegate extends SingleChildLayoutDelegate {
   @override
   bool shouldRelayout(PositionDelegate oldDelegate) {
     return target != oldDelegate.target ||
+        paddingTop != oldDelegate.paddingTop ||
         verticalOffset != oldDelegate.verticalOffset ||
         preferDirection != oldDelegate.preferDirection;
   }
@@ -62,11 +63,6 @@ Offset positionToastBox(
     double horizontalOffset = 0.0}) {
   assert(verticalOffset >= 0, 'verticalOffset must be a positive number');
   assert(horizontalOffset >= 0, 'horizontalOffset must be a positive number');
-  assert(containerRect != null);
-  assert(toastSize != null);
-  assert(targetRect != null);
-  assert(verticalOffset != null);
-  assert(preferDirection != null);
   //裁剪
   if (containerRect.overlaps(targetRect)) {
     targetRect = targetRect.intersect(containerRect);
@@ -75,23 +71,19 @@ Offset positionToastBox(
   }
 
   bool canPlaceTop({double extraSpace = 0}) {
-    return toastSize.height + verticalOffset <
-        targetRect.top - containerRect.top + extraSpace;
+    return toastSize.height + verticalOffset < targetRect.top - containerRect.top + extraSpace;
   }
 
   bool canPlaceBottom({double extraSpace = 0}) {
-    return toastSize.height + verticalOffset <
-        containerRect.bottom - targetRect.bottom + extraSpace;
+    return toastSize.height + verticalOffset < containerRect.bottom - targetRect.bottom + extraSpace;
   }
 
   bool canPlaceLeft({double extraSpace = 0}) {
-    return toastSize.width + horizontalOffset <
-        targetRect.left - containerRect.left + extraSpace;
+    return toastSize.width + horizontalOffset < targetRect.left - containerRect.left + extraSpace;
   }
 
   bool canPlaceRight({double extraSpace = 0}) {
-    return toastSize.width + horizontalOffset <
-        containerRect.right - targetRect.right + extraSpace;
+    return toastSize.width + horizontalOffset < containerRect.right - targetRect.right + extraSpace;
   }
 
   String direction;
@@ -108,9 +100,7 @@ Offset positionToastBox(
 
   //判断对齐方向
   if (preferDirection.index <= PreferDirection.bottomRight.index) {
-    switch (_getDirection(preferDirection)
-        .replaceAll("top", "")
-        .replaceAll("bottom", "")) {
+    switch (_getDirection(preferDirection).replaceAll("top", "").replaceAll("bottom", "")) {
       case "Left":
         direction += canPlaceRight(extraSpace: targetRect.width)
             ? "Left"
@@ -130,9 +120,7 @@ Offset positionToastBox(
         break;
     }
   } else {
-    switch (_getDirection(preferDirection)
-        .replaceAll("left", "")
-        .replaceAll("right", "")) {
+    switch (_getDirection(preferDirection).replaceAll("left", "").replaceAll("right", "")) {
       case "Top":
         direction += canPlaceBottom(extraSpace: targetRect.height)
             ? "Top"
@@ -153,7 +141,7 @@ Offset positionToastBox(
     }
   }
 
-  Offset resultOffset=Offset.zero;
+  Offset resultOffset = Offset.zero;
   switch (direction) {
     case "topLeft":
       resultOffset = targetRect.topLeft -
@@ -164,19 +152,14 @@ Offset positionToastBox(
           );
       break;
     case "topCenter":
-      bool rightOverflow =
-          toastSize.width / 2 > containerRect.right - targetRect.topCenter.dx;
-      bool leftOverflow =
-          toastSize.width / 2 > targetRect.topCenter.dx - containerRect.left;
+      bool rightOverflow = toastSize.width / 2 > containerRect.right - targetRect.topCenter.dx;
+      bool leftOverflow = toastSize.width / 2 > targetRect.topCenter.dx - containerRect.left;
       if (rightOverflow && !leftOverflow) {
-        resultOffset = Offset(containerRect.right - toastSize.width,
-            targetRect.top - toastSize.height);
+        resultOffset = Offset(containerRect.right - toastSize.width, targetRect.top - toastSize.height);
       } else if (leftOverflow && !rightOverflow) {
-        resultOffset =
-            Offset(containerRect.left, targetRect.top - toastSize.height);
+        resultOffset = Offset(containerRect.left, targetRect.top - toastSize.height);
       } else {
-        resultOffset = targetRect.topCenter -
-            Offset(toastSize.width / 2, toastSize.height);
+        resultOffset = targetRect.topCenter - Offset(toastSize.width / 2, toastSize.height);
       }
       resultOffset += Offset(0, -verticalOffset);
       break;
@@ -189,17 +172,13 @@ Offset positionToastBox(
           );
       break;
     case "bottomLeft":
-      resultOffset =
-          targetRect.bottomLeft + Offset(horizontalOffset, verticalOffset);
+      resultOffset = targetRect.bottomLeft + Offset(horizontalOffset, verticalOffset);
       break;
     case "bottomCenter":
-      bool rightOverflow =
-          toastSize.width / 2 > containerRect.right - targetRect.topCenter.dx;
-      bool leftOverflow =
-          toastSize.width / 2 > targetRect.topCenter.dx - containerRect.left;
+      bool rightOverflow = toastSize.width / 2 > containerRect.right - targetRect.topCenter.dx;
+      bool leftOverflow = toastSize.width / 2 > targetRect.topCenter.dx - containerRect.left;
       if (rightOverflow && !leftOverflow) {
-        resultOffset =
-            Offset(containerRect.right - toastSize.width, targetRect.bottom);
+        resultOffset = Offset(containerRect.right - toastSize.width, targetRect.bottom);
       } else if (leftOverflow && !rightOverflow) {
         resultOffset = Offset(containerRect.left, targetRect.bottom);
       } else {
@@ -208,20 +187,14 @@ Offset positionToastBox(
       resultOffset += Offset(0, verticalOffset);
       break;
     case "bottomRight":
-      resultOffset = targetRect.bottomRight -
-          Offset(toastSize.width, 0) +
-          Offset(-horizontalOffset, verticalOffset);
+      resultOffset = targetRect.bottomRight - Offset(toastSize.width, 0) + Offset(-horizontalOffset, verticalOffset);
       break;
     case "leftTop":
-      resultOffset = targetRect.topLeft -
-          Offset(toastSize.width, 0) +
-          Offset(-horizontalOffset, verticalOffset);
+      resultOffset = targetRect.topLeft - Offset(toastSize.width, 0) + Offset(-horizontalOffset, verticalOffset);
       break;
     case "leftCenter":
-      bool topOverflow =
-          toastSize.height / 2 > targetRect.centerLeft.dy - containerRect.top;
-      bool bottomOverflow = toastSize.height / 2 >
-          containerRect.bottom - targetRect.centerLeft.dy;
+      bool topOverflow = toastSize.height / 2 > targetRect.centerLeft.dy - containerRect.top;
+      bool bottomOverflow = toastSize.height / 2 > containerRect.bottom - targetRect.centerLeft.dy;
       if (topOverflow && !bottomOverflow) {
         resultOffset = Offset(
           targetRect.left - toastSize.width,
@@ -233,25 +206,19 @@ Offset positionToastBox(
           containerRect.bottom - toastSize.height,
         );
       } else {
-        resultOffset = targetRect.centerLeft -
-            Offset(toastSize.width, toastSize.height / 2);
+        resultOffset = targetRect.centerLeft - Offset(toastSize.width, toastSize.height / 2);
       }
       resultOffset += Offset(-horizontalOffset, 0);
       break;
     case "leftBottom":
-      resultOffset = targetRect.bottomLeft -
-          Offset(toastSize.width, toastSize.height) +
-          Offset(-horizontalOffset, -verticalOffset);
+      resultOffset = targetRect.bottomLeft - Offset(toastSize.width, toastSize.height) + Offset(-horizontalOffset, -verticalOffset);
       break;
     case "rightTop":
-      resultOffset =
-          targetRect.topRight + Offset(horizontalOffset, verticalOffset);
+      resultOffset = targetRect.topRight + Offset(horizontalOffset, verticalOffset);
       break;
     case "rightCenter":
-      bool topOverflow =
-          toastSize.height / 2 > targetRect.centerLeft.dy - containerRect.top;
-      bool bottomOverflow = toastSize.height / 2 >
-          containerRect.bottom - targetRect.centerLeft.dy;
+      bool topOverflow = toastSize.height / 2 > targetRect.centerLeft.dy - containerRect.top;
+      bool bottomOverflow = toastSize.height / 2 > containerRect.bottom - targetRect.centerLeft.dy;
       if (topOverflow && !bottomOverflow) {
         resultOffset = Offset(
           targetRect.right,
@@ -268,9 +235,7 @@ Offset positionToastBox(
       resultOffset += Offset(horizontalOffset, 0);
       break;
     case "rightBottom":
-      resultOffset = targetRect.bottomRight -
-          Offset(0, toastSize.height) +
-          Offset(horizontalOffset, -verticalOffset);
+      resultOffset = targetRect.bottomRight - Offset(0, toastSize.height) + Offset(horizontalOffset, -verticalOffset);
       break;
   }
 

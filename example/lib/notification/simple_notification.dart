@@ -19,6 +19,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
 
   @override
   void initState() {
+    ///全局范围内将标准通知的动画时间修改为 1 秒
+    BotToast.defaultOption.notification.animationDuration=const Duration(seconds: 1);
     BotToast.showSimpleNotification(
         title: "Notification title",
         subTitle: "Notification subtitle",
@@ -124,9 +126,9 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     child: RadioListTile(
                       value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('none'),
@@ -136,9 +138,9 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     child: RadioListTile(
                       value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('ignore'),
@@ -148,9 +150,9 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     child: RadioListTile(
                       value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('close'),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class _CustomWidget extends StatefulWidget {
   final CancelFunc cancelFunc;
 
-  const _CustomWidget({Key key, this.cancelFunc}) : super(key: key);
+  const _CustomWidget({Key? key, required this.cancelFunc}) : super(key: key);
 
   @override
   _CustomWidgetState createState() => _CustomWidgetState();
@@ -89,7 +89,6 @@ class _CustomNotificationState extends State<CustomNotification> {
                 },
                 child: const Text("CustomNotification"),
               ),
-
               SwitchListTile(
                 value: enableSlideOff,
                 onChanged: (value) {
@@ -117,38 +116,46 @@ class _CustomNotificationState extends State<CustomNotification> {
                 },
                 title: const Text("crossPage: "),
               ),
-              const Center(child: Text('BackButtonBehavior'),),
+              const Center(
+                child: Text('BackButtonBehavior'),
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.none,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('none'),),
+                      title: const Text('none'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.ignore,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('ignore'),),
+                      title: const Text('ignore'),
+                    ),
                   ),
                   Expanded(
-                    child: RadioListTile(value: BackButtonBehavior.close,
+                    child: RadioListTile(
+                      value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
-                      title: const Text('close'),),
+                      title: const Text('close'),
+                    ),
                   )
                 ],
               ),
@@ -194,7 +201,6 @@ class _CustomNotificationState extends State<CustomNotification> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -202,5 +208,3 @@ class _CustomNotificationState extends State<CustomNotification> {
     );
   }
 }
-
-

@@ -95,9 +95,9 @@ class _LoadingState extends State<Loading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.none,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('none'),),
@@ -105,9 +105,9 @@ class _LoadingState extends State<Loading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.ignore,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('ignore'),),
@@ -115,9 +115,9 @@ class _LoadingState extends State<Loading> {
                   Expanded(
                     child: RadioListTile(value: BackButtonBehavior.close,
                       groupValue: backButtonBehavior,
-                      onChanged: (value) {
+                      onChanged: (BackButtonBehavior? value) {
                         setState(() {
-                          backButtonBehavior = value;
+                          backButtonBehavior = value!;
                         });
                       },
                       title: const Text('close'),),

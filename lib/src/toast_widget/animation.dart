@@ -27,8 +27,7 @@ class NormalAnimation extends StatefulWidget {
       required this.child,
       this.reverse = false,
       required this.controller})
-      : assert(child != null),
-        super(key: key);
+      : super(key: key);
 
   @override
   NormalAnimationState createState() => NormalAnimationState();

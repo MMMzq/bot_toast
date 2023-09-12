@@ -17,6 +17,8 @@ class BotToastNavigatorObserverProxy {
   }
 }
 
+///If your project has multiple [Navigator] instances, please add the [BotToastNavigatorObserver] to the [Navigator.observers].
+///
 ///如果你项目有多个[Navigator],请将该BotToastNavigatorObserver添加到[Navigator.observers]
 class BotToastNavigatorObserver extends NavigatorObserver {
   static final List<BotToastNavigatorObserverProxy> _leavePageCallbacks = [];
@@ -42,13 +44,11 @@ class BotToastNavigatorObserver extends NavigatorObserver {
       home: XxxxPage(),
     ));
     """);
-    assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.add(botToastNavigatorObserverProxy);
   }
 
   static void unregister(
       BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
-    assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.remove(botToastNavigatorObserverProxy);
   }
 

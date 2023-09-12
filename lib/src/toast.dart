@@ -6,6 +6,8 @@ import 'basis.dart';
 import 'bot_toast_init.dart';
 import 'keyboard_safe_area.dart';
 import 'keyboard_visibility.dart';
+import 'nil.dart';
+import 'option.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
@@ -21,6 +23,11 @@ import 'toast_widget/toast_widget.dart';
 |_________________________________|
  */
 
+/// When generating widgets using the [ToastBuilder] method, please ensure that the generated widget's background does not absorb click events.
+/// For example, [Scaffold] and [Material] widgets will by default occupy the entire parent space and absorb events (even if they are transparent). You can refer to the [material.dart -> _RenderInkFeatures class -> hitTestSelf method] for specific examples.
+/// If you must generate such widgets, consider using [IgnorePointer].
+/// Failure to follow this rule may result in the malfunction of certain features, such as the [allowClick] feature.
+///
 ///[ToastBuilder]方法生成widget时,请确保生成的Widget背景不会吸收点击事件
 ///例如[Scaffold],[Material]都会默认占满整个父空间,
 ///并且会吸收事件(就算透明也是这种情况),具体例子可看[material.dart->_RenderInkFeatures class->hitTestSelf method]
@@ -41,8 +48,57 @@ class BotToast {
     defaultKey: [],
   };
 
-  ///显示简单的通知Toast
+  /// Global default options
+  /// Once these default options are modified, they will take effect globally.
+  /// [Option.simpleNotification] corresponds to the default value of [showSimpleNotification]
+  /// [Option.notification] corresponds to the default value of [showNotification]
+  /// [Option.customNotification] corresponds to the default value of [showCustomNotification]
+  /// [Option.text] corresponds to the default value of [showText]
+  /// [Option.customText] corresponds to the default value of [showCustomText]
+  /// [Option.loading] corresponds to the default value of [showLoading]
+  /// [Option.customLoading] corresponds to the default value of [showCustomLoading]
+  /// [Option.attached] corresponds to the default value of [showAttachedWidget]
+  /// [Option.animation] corresponds to the default value of [showAnimationWidget]
+  /// [Option.enhanced] corresponds to the default value of [showEnhancedWidget]
   ///
+  ///全局默认选项
+  ///一旦修改了该默认选项将会在在全局范围内生效
+  ///[Option.simpleNotification] 对应 [showSimpleNotification] 的默认值
+  ///[Option.notification] 对应 [showNotification] 的默认值
+  ///[Option.customNotification] 对应 [showCustomNotification] 的默认值
+  ///[Option.text] 对应 [showText] 的默认值
+  ///[Option.customText] 对应 [showCustomText] 的默认值
+  ///[Option.loading] 对应 [showLoading] 的默认值
+  ///[Option.customLoading] 对应 [showCustomLoading] 的默认值
+  ///[Option.attached] 对应 [showAttachedWidget] 的默认值
+  ///[Option.animation] 对应 [showAnimationWidget] 的默认值
+  ///[Option.enhanced] 对应 [showEnhancedWidget] 的默认值
+  static final Option defaultOption = Option();
+
+  /// Display a simple notification Toast.
+  /// [title] - Title.
+  /// [subTitle] - Subtitle.
+  /// [closeIcon] - Icon for the close button.
+  /// [enableSlideOff] - Whether sliding to dismiss is enabled.
+  /// [hideCloseButton] - Whether to hide the close button.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [dismissDirections] - Directions in which sliding to dismiss is allowed.
+  /// [onTap] - Callback when the notification Toast is tapped.
+  /// [onLongPress] - Callback when the notification Toast is long-pressed.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is null.
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is [notificationAnimation].
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [onlyOne] - See [showEnhancedWidget.onlyOne].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [backgroundColor] - Defaults to Theme.of(context).cardColor.
+  /// [borderRadius] - Defaults to ThemeData.cardTheme.shape.
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
+  ///
+  ///显示简单的通知Toast
   ///[title] 标题
   ///[subTitle] 副标题
   ///[closeIcon] 关闭按钮的图标
@@ -66,31 +122,58 @@ class BotToast {
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showSimpleNotification(
       {required String title,
-      String? subTitle,
-      TextStyle? titleStyle,
-      TextStyle? subTitleStyle,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = notificationAnimation,
-      GestureTapCallback? onTap,
-      GestureLongPressCallback? onLongPress,
-      Color? backgroundColor,
-      double? borderRadius,
-      Alignment? align = const Alignment(0, -0.99),
-      List<DismissDirection> dismissDirections = const [
-        DismissDirection.horizontal,
-        DismissDirection.up
-      ],
-      Icon? closeIcon,
-      Duration? duration = const Duration(seconds: 2),
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      BackButtonBehavior? backButtonBehavior,
-      VoidCallback? onClose,
-      bool enableKeyboardSafeArea = true,
-      bool enableSlideOff = true,
-      bool hideCloseButton = false,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+      /*String*/ Object? subTitle = nil,
+      TextStyle? titleStyle = nilTextStyle,
+      TextStyle? subTitleStyle = nilTextStyle,
+      WrapAnimation? wrapAnimation = nilWrapAnimation,
+      WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+      GestureTapCallback? onTap = nilVoidCallback,
+      GestureLongPressCallback? onLongPress = nilVoidCallback,
+      Color? backgroundColor = nilColor,
+      /*double*/ Object? borderRadius = nilBackButtonBehavior,
+      Alignment? align = nilAlignment,
+      List<DismissDirection> dismissDirections = nilDismissDirectionList,
+      Icon? closeIcon = nilIcon,
+      Duration? duration = nilDuration,
+      Duration? animationDuration = nilDuration,
+      Duration? animationReverseDuration = nilDuration,
+      BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+      VoidCallback? onClose = nilVoidCallback,
+      /*bool*/ Object enableKeyboardSafeArea = nil,
+      /*bool*/ Object enableSlideOff = nil,
+      /*bool*/ Object hideCloseButton = nil,
+      /*bool*/ Object crossPage = nil,
+      /*bool*/ Object onlyOne = nil}) {
+    var o = defaultOption.simpleNotification;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    align = returnFirstIfNotNil(align, o.align);
+    dismissDirections = returnFirstIfNotNil(dismissDirections, o.dismissDirections);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    borderRadius = returnFirstIfNotNil(borderRadius, o.borderRadius);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    enableSlideOff = returnFirstIfNotNil(enableSlideOff, o.enableSlideOff);
+    onTap = returnFirstIfNotNil(onTap, o.onTap);
+    onLongPress = returnFirstIfNotNil(onLongPress, o.onLongPress);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    titleStyle = returnFirstIfNotNil(titleStyle, o.titleStyle);
+    subTitleStyle = returnFirstIfNotNil(subTitleStyle, o.subTitleStyle);
+
+    final hideCloseButtonV = returnFirstIfNotNilAndCast<bool>(hideCloseButton, o.hideCloseButton);
+    final subTitleV = returnFirstIfNotNilAndCast<String?>(subTitle, o.subTitle);
+    final closeIconV = returnFirstIfNotNilAndCast<Icon?>(closeIcon, o.closeIcon);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, hideCloseButtonV, crossPage, onlyOne]), 'Must be of bool type');
+    assert(isNilOr<double>([borderRadius]), 'Must be of double type');
+    assert(isNilOr<String>([subTitleV]), 'Must be of String type');
+
     return showNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -110,19 +193,32 @@ class BotToast {
         onlyOne: onlyOne,
         crossPage: crossPage,
         title: (_) => Text(title, style: titleStyle),
-        subtitle: subTitle == null
-            ? null
-            : (_) => Text(subTitle, style: subTitleStyle),
-        trailing: hideCloseButton
-            ? null
-            : (cancel) => IconButton(
-                icon: closeIcon ?? const Icon(Icons.cancel),
-                onPressed: cancel));
+        subtitle: subTitleV == null ? null : (_) => Text(subTitleV, style: subTitleStyle),
+        trailing: hideCloseButtonV ? null : (cancel) => IconButton(icon: closeIconV ?? o.closeIcon, onPressed: cancel));
   }
 
-  ///显示一个标准的通知Toast
+  /// Display a standard notification Toast.
+  /// [leading], [title], [subtitle], [trailing], [contentPadding], [margin] - Refer to [ListTile].
+  /// [enableSlideOff] - Whether sliding to dismiss is enabled.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [dismissDirections] - Directions in which sliding to dismiss is allowed.
+  /// [onTap] - Callback when the notification Toast is tapped.
+  /// [onLongPress] - Callback when the notification Toast is long-pressed.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is null.
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is [notificationAnimation].
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [onlyOne] - See [showEnhancedWidget.onlyOne].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [backgroundColor] - Defaults to Theme.of(context).cardColor.
+  /// [borderRadius] - Defaults to ThemeData.cardTheme.shape.
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
-  ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding] 请看[ListTile]
+  ///显示一个标准的通知Toast
+  ///[leading]_[title]_[subtitle]_[trailing]_[contentPadding]_[margin] 请看[ListTile]
   ///[enableSlideOff] 是否能滑动删除
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[dismissDirections] 能进行滑动关闭的方向
@@ -141,32 +237,59 @@ class BotToast {
   ///[borderRadius] defaults to ThemeData.cardTheme.shape
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showNotification(
-      {ToastBuilder? leading,
-      ToastBuilder? title,
-      ToastBuilder? subtitle,
-      ToastBuilder? trailing,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = notificationAnimation,
-      GestureTapCallback? onTap,
-      Color? backgroundColor,
-      double? borderRadius,
-      GestureLongPressCallback? onLongPress,
-      Alignment? align = const Alignment(0, -0.99),
-      List<DismissDirection> dismissDirections = const [
-        DismissDirection.horizontal,
-        DismissDirection.up
-      ],
-      BackButtonBehavior? backButtonBehavior,
-      Duration? duration = const Duration(seconds: 2),
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      EdgeInsetsGeometry? contentPadding,
-      EdgeInsetsGeometry? margin,
-      VoidCallback? onClose,
-      bool enableKeyboardSafeArea = true,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+      {ToastBuilder? leading = nilToastBuilder,
+      ToastBuilder? title = nilToastBuilder,
+      ToastBuilder? subtitle = nilToastBuilder,
+      ToastBuilder? trailing = nilToastBuilder,
+      WrapAnimation? wrapAnimation = nilWrapAnimation,
+      WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+      GestureTapCallback? onTap = nilVoidCallback,
+      Color? backgroundColor = nilColor,
+      /*double*/ Object? borderRadius = nil,
+      GestureLongPressCallback? onLongPress = nilVoidCallback,
+      Alignment? align = nilAlignment,
+      List<DismissDirection> dismissDirections = nilDismissDirectionList,
+      BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+      Duration? duration = nilDuration,
+      Duration? animationDuration = nilDuration,
+      Duration? animationReverseDuration = nilDuration,
+      EdgeInsetsGeometry? contentPadding = nilEdgeInsets,
+      EdgeInsetsGeometry? margin = nilEdgeInsets,
+      VoidCallback? onClose = nilVoidCallback,
+      /*bool*/ Object enableKeyboardSafeArea = nil,
+      /*bool*/ Object enableSlideOff = nil,
+      /*bool*/ Object crossPage = nil,
+      /*bool*/ Object onlyOne = nil}) {
+    var o = defaultOption.notification;
+
+    leading = returnFirstIfNotNil(leading, o.leading);
+    title = returnFirstIfNotNil(title, o.title);
+    subtitle = returnFirstIfNotNil(subtitle, o.subtitle);
+    trailing = returnFirstIfNotNil(trailing, o.trailing);
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    onTap = returnFirstIfNotNil(onTap, o.onTap);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    onLongPress = returnFirstIfNotNil(onLongPress, o.onLongPress);
+    align = returnFirstIfNotNil(align, o.align);
+    dismissDirections = returnFirstIfNotNil(dismissDirections, o.dismissDirections);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    contentPadding = returnFirstIfNotNil(contentPadding, o.contentPadding);
+    margin = returnFirstIfNotNil(margin, o.contentPadding);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    enableSlideOff = returnFirstIfNotNil(enableSlideOff, o.enableSlideOff);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+
+    final borderRadiusV = returnFirstIfNotNilAndCast<double?>(borderRadius, o.borderRadius);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne]), 'Must be of bool type');
+    assert(isNilOr<double>([borderRadiusV]), 'Must be of double type');
+
     return showCustomNotification(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -185,10 +308,10 @@ class BotToast {
           return Card(
             margin: margin,
             color: backgroundColor,
-            shape: borderRadius == null
+            shape: borderRadiusV == null
                 ? null
                 : RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(borderRadius),
+                    borderRadius: BorderRadius.circular(borderRadiusV),
                   ),
             child: ListTile(
                 onTap: onTap,
@@ -202,8 +325,23 @@ class BotToast {
         });
   }
 
-  ///显示一个自定义的通知Toast
+  /// Display a custom notification Toast.
+  /// [toastBuilder] - Builder function to generate the Widget to be displayed.
+  /// [enableSlideOff] - Whether sliding to dismiss is enabled.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [dismissDirections] - Directions in which sliding to dismiss is allowed.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is null.
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is [notificationAnimation].
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [onlyOne] - See [showEnhancedWidget.onlyOne].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
+  ///显示一个自定义的通知Toast
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[enableSlideOff] 是否能滑动删除
   ///[align] ToastContent区域在MainContent区域的对齐
@@ -220,23 +358,40 @@ class BotToast {
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showCustomNotification(
       {required ToastBuilder toastBuilder,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = notificationAnimation,
-      Alignment? align = const Alignment(0, -0.99),
-      List<DismissDirection> dismissDirections = const [
-        DismissDirection.horizontal,
-        DismissDirection.up
-      ],
-      Duration? duration = const Duration(seconds: 2),
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      VoidCallback? onClose,
-      BackButtonBehavior? backButtonBehavior,
-      bool enableKeyboardSafeArea = true,
-      bool enableSlideOff = true,
-      bool crossPage = true,
-      bool onlyOne = true,
-      bool useSafeArea = true}) {
+      WrapAnimation? wrapAnimation = nilWrapAnimation,
+      WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+      Alignment? align = nilAlignment,
+      List<DismissDirection> dismissDirections = nilDismissDirectionList,
+      Duration? duration = nilDuration,
+      Duration? animationDuration = nilDuration,
+      Duration? animationReverseDuration = nilDuration,
+      VoidCallback? onClose = nilVoidCallback,
+      BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+      /*bool*/ Object enableKeyboardSafeArea = nil,
+      /*bool*/ Object enableSlideOff = nil,
+      /*bool*/ Object crossPage = nil,
+      /*bool*/ Object onlyOne = nil,
+      /*bool*/ Object useSafeArea = nil}) {
+    var o = defaultOption.customNotification;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    align = returnFirstIfNotNil(align, o.align);
+    dismissDirections = returnFirstIfNotNil(dismissDirections, o.dismissDirections);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
+    enableSlideOff = returnFirstIfNotNil(enableSlideOff, o.enableSlideOff);
+
+    final animationDurationV = returnFirstIfNotNilAndCast<Duration?>(animationDuration, o.animationDuration);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne, useSafeArea]), 'Must be of bool type');
+
     return showAnimationWidget(
         crossPage: crossPage,
         allowClick: true,
@@ -247,8 +402,7 @@ class BotToast {
         onClose: onClose,
         duration: duration,
         backButtonBehavior: backButtonBehavior,
-        animationDuration:
-            animationDuration ?? const Duration(milliseconds: 256),
+        animationDuration: animationDurationV ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -258,17 +412,34 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return useSafeArea ? SafeArea(child: child) : child;
+          return useSafeArea == true ? SafeArea(child: child) : child;
         },
         toastBuilder: (cancelFunc) => NotificationToast(
-            child: toastBuilder(cancelFunc),
-            dismissDirections: dismissDirections,
-            slideOffFunc: enableSlideOff ? cancelFunc : null),
+            child: toastBuilder(cancelFunc), dismissDirections: dismissDirections, slideOffFunc: enableSlideOff == true ? cancelFunc : null),
         groupKey: notificationKey);
   }
 
-  ///显示一个标准文本Toast
+  /// Display a standard text Toast.
+  /// [text] - The text to be displayed.
+  /// [contentColor] - Background color of the ToastContent area.
+  /// [borderRadius] - BorderRadius of the ToastContent area.
+  /// [textStyle] - Text style.
+  /// [contentPadding] - Padding of the ToastContent area.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is null.
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is [textAnimation].
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [backgroundColor] - See [showEnhancedWidget.backgroundColor].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [onlyOne] - See [showEnhancedWidget.onlyOne].
+  /// [clickClose] - See [showEnhancedWidget.clickClose].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
+  ///显示一个标准文本Toast
   ///[text] 需要显示的文本
   ///[contentColor] ToastContent区域背景颜色
   ///[borderRadius] ToastContent区域圆角
@@ -287,27 +458,48 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showText(
-      {required String text,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = textAnimation,
-      Color backgroundColor = Colors.transparent,
-      Color contentColor = Colors.black54,
-      BorderRadiusGeometry borderRadius =
-          const BorderRadius.all(Radius.circular(8)),
-      TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white),
-      AlignmentGeometry? align = const Alignment(0, 0.8),
-      EdgeInsetsGeometry contentPadding =
-          const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7),
-      Duration? duration = const Duration(seconds: 2),
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      BackButtonBehavior? backButtonBehavior,
-      VoidCallback? onClose,
-      bool enableKeyboardSafeArea = true,
-      bool clickClose = false,
-      bool crossPage = true,
-      bool onlyOne = true}) {
+  static CancelFunc showText({
+    required String text,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    Color backgroundColor = nilColor,
+    Color contentColor = nilColor,
+    BorderRadiusGeometry borderRadius = nilBorderRadius,
+    TextStyle textStyle = nilTextStyle,
+    AlignmentGeometry? align = nilAlignment,
+    EdgeInsetsGeometry contentPadding = nilEdgeInsets,
+    Duration? duration = nilDuration,
+    Duration? animationDuration = nilDuration,
+    Duration? animationReverseDuration = nilDuration,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    VoidCallback? onClose = nilVoidCallback,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object onlyOne = nil,
+  }) {
+    var o = defaultOption.text;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    contentColor = returnFirstIfNotNil(contentColor, o.contentColor);
+    borderRadius = returnFirstIfNotNil(borderRadius, o.borderRadius);
+    textStyle = returnFirstIfNotNil(textStyle, o.textStyle);
+    align = returnFirstIfNotNil(align, o.align);
+    contentPadding = returnFirstIfNotNil(contentPadding, o.contentPadding);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, onlyOne]), 'Must be of bool type');
+
     return showCustomText(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -332,8 +524,24 @@ class BotToast {
             ));
   }
 
-  ///显示一个自定义的文本Toast
+  /// Display a custom text Toast.
+  /// [toastBuilder] - A builder function that generates the widget to be displayed.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is null.
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is [textAnimation].
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [ignoreContentClick] - See [showEnhancedWidget.ignoreContentClick].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [onlyOne] - See [showEnhancedWidget.onlyOne].
+  /// [clickClose] - See [showEnhancedWidget.clickClose].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [backgroundColor] - See [showEnhancedWidget.backgroundColor].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
+  ///显示一个自定义的文本Toast
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为null
@@ -349,23 +557,44 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showCustomText(
-      {required ToastBuilder toastBuilder,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = textAnimation,
-      AlignmentGeometry? align = const Alignment(0, 0.8),
-      Color backgroundColor = Colors.transparent,
-      Duration? duration = const Duration(seconds: 2),
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      VoidCallback? onClose,
-      BackButtonBehavior? backButtonBehavior,
-      bool enableKeyboardSafeArea = true,
-      bool crossPage = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      bool useSafeArea = true}) {
+  static CancelFunc showCustomText({
+    required ToastBuilder toastBuilder,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    AlignmentGeometry? align = nilAlignment,
+    Color backgroundColor = nilColor,
+    Duration? duration = nilDuration,
+    Duration? animationDuration = nilDuration,
+    Duration? animationReverseDuration = nilDuration,
+    VoidCallback? onClose = nilVoidCallback,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object ignoreContentClick = nil,
+    /*bool*/ Object onlyOne = nil,
+    /*bool*/ Object useSafeArea = nil,
+  }) {
+    var o = defaultOption.customText;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    align = returnFirstIfNotNil(align, o.align);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    ignoreContentClick = returnFirstIfNotNil(ignoreContentClick, o.ignoreContentClick);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, onlyOne, ignoreContentClick, useSafeArea]), 'Must be of bool type');
+
     return showAnimationWidget(
         groupKey: textKey,
         clickClose: clickClose,
@@ -378,8 +607,7 @@ class BotToast {
         backButtonBehavior: backButtonBehavior,
         onClose: onClose,
         duration: duration,
-        animationDuration:
-            animationDuration ?? const Duration(milliseconds: 256),
+        animationDuration: animationDuration ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -389,13 +617,27 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return useSafeArea ? SafeArea(child: child) : child;
+          return useSafeArea == true ? SafeArea(child: child) : child;
         },
         toastBuilder: toastBuilder);
   }
 
-  ///显示一个标准的加载Toast
+  /// Display a standard loading Toast.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is [loadingAnimation].
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is null.
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [allowClick] - See [showEnhancedWidget.allowClick].
+  /// [clickClose] - See [showEnhancedWidget.clickClose].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [backgroundColor] - See [showEnhancedWidget.backgroundColor].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
+  ///显示一个标准的加载Toast
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为[loadingAnimation]
   ///[wrapToastAnimation] 请看[showAnimationWidget.wrapToastAnimation],默认值为null
@@ -410,20 +652,38 @@ class BotToast {
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
   static CancelFunc showLoading({
-    WrapAnimation? wrapAnimation = loadingAnimation,
-    WrapAnimation? wrapToastAnimation,
-    Alignment align = Alignment.center,
-    BackButtonBehavior? backButtonBehavior,
-    bool crossPage = true,
-    bool clickClose = false,
-    bool allowClick = false,
-    bool enableKeyboardSafeArea = true,
-    VoidCallback? onClose,
-    Duration? duration,
-    Duration? animationDuration,
-    Duration? animationReverseDuration,
-    Color backgroundColor = Colors.black26,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    Alignment align = nilAlignment,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object allowClick = nil,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    VoidCallback? onClose = nilVoidCallback,
+    Duration? duration = nilDuration,
+    Duration? animationDuration = nilDuration,
+    Duration? animationReverseDuration = nilDuration,
+    Color backgroundColor = nilColor,
   }) {
+    var o = defaultOption.loading;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    align = returnFirstIfNotNil(align, o.align);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, allowClick]), 'Must be of bool type');
+
     return showCustomLoading(
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: wrapToastAnimation,
@@ -442,8 +702,24 @@ class BotToast {
         backgroundColor: backgroundColor);
   }
 
-  ///显示一个自定义的加载Toast
+  /// Display a custom loading Toast.
+  /// [toastBuilder] - Builder function to generate the widget to display.
+  /// [align] - Alignment of the ToastContent area within the MainContent area.
+  /// [wrapAnimation] - See [showAnimationWidget.wrapAnimation], default value is [loadingAnimation].
+  /// [wrapToastAnimation] - See [showAnimationWidget.wrapToastAnimation], default value is null.
+  /// [animationDuration] - See [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] - See [showAnimationWidget.animationReverseDuration].
+  /// [ignoreContentClick] - See [showEnhancedWidget.ignoreContentClick].
+  /// [duration] - See [showEnhancedWidget.duration].
+  /// [allowClick] - See [showEnhancedWidget.allowClick].
+  /// [clickClose] - See [showEnhancedWidget.clickClose].
+  /// [crossPage] - See [showEnhancedWidget.crossPage].
+  /// [backgroundColor] - See [showEnhancedWidget.backgroundColor].
+  /// [onClose] - See [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] - See [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] - See [showEnhancedWidget.enableKeyboardSafeArea].
   ///
+  ///显示一个自定义的加载Toast
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[align] ToastContent区域在MainContent区域的对齐
   ///[wrapAnimation] 请看[showAnimationWidget.wrapAnimation],默认值为[loadingAnimation]
@@ -459,30 +735,50 @@ class BotToast {
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[backButtonBehavior] 请看[showEnhancedWidget.backButtonBehavior]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showCustomLoading(
-      {required ToastBuilder toastBuilder,
-      WrapAnimation? wrapAnimation = loadingAnimation,
-      WrapAnimation? wrapToastAnimation,
-      Alignment? align = Alignment.center,
-      BackButtonBehavior? backButtonBehavior,
-      bool clickClose = false,
-      bool allowClick = false,
-      bool ignoreContentClick = false,
-      bool crossPage = false,
-      bool enableKeyboardSafeArea = true,
-      VoidCallback? onClose,
-      Duration? duration,
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      Color backgroundColor = Colors.black26,
-      bool useSafeArea = true}) {
+  static CancelFunc showCustomLoading({
+    required ToastBuilder toastBuilder,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    Alignment? align = nilAlignment,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object allowClick = nil,
+    /*bool*/ Object ignoreContentClick = nil,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    VoidCallback? onClose = nilVoidCallback,
+    Duration? duration = nilDuration,
+    Duration? animationDuration = nilDuration,
+    Duration? animationReverseDuration = nilDuration,
+    Color backgroundColor = nilColor,
+    /*bool*/ Object useSafeArea = nil,
+  }) {
+    var o = defaultOption.customLoading;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    align = returnFirstIfNotNil(align, o.align);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
+    ignoreContentClick = returnFirstIfNotNil(ignoreContentClick, o.ignoreContentClick);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, allowClick, ignoreContentClick, useSafeArea]), 'Must be of bool type');
+
     return showAnimationWidget(
         groupKey: loadKey,
         enableKeyboardSafeArea: enableKeyboardSafeArea,
         toastBuilder: toastBuilder,
         backButtonBehavior: backButtonBehavior,
-        animationDuration:
-            animationDuration ?? const Duration(milliseconds: 300),
+        animationDuration: animationDuration ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
         wrapToastAnimation: (controller, cancel, child) {
@@ -492,7 +788,7 @@ class BotToast {
           if (align != null) {
             child = Align(alignment: align, child: child);
           }
-          return useSafeArea ? SafeArea(child: child) : child;
+          return useSafeArea == true ? SafeArea(child: child) : child;
         },
         onClose: onClose,
         clickClose: clickClose,
@@ -504,16 +800,38 @@ class BotToast {
         backgroundColor: backgroundColor);
   }
 
-  ///此方法一般使用在dispose里面,防止因为开发人员没有主动去关闭,或者是请求api时的出现异常
-  ///导致CancelFunc方法没有执行到等等,导致用户点击不了app
+  ///This method is generally used in `dispose` to ensure that the Toast is closed properly.
+  ///It prevents scenarios where the developer forgets to close it manually or if there's an API request error that prevents the `CancelFunc` from executing.
+  ///This ensures that the user can interact with the app normally.
+  ///此方法一般使用在dispose里面,防止因为开发人员没有主动去关闭,或者是请求api时的出现异常导致CancelFunc方法没有执行到等等,导致用户点击不了app
   static void closeAllLoading() {
     //以此方式移除将不会触发关闭动画
     removeAll(loadKey);
   }
 
+  /// Displays a positioned Toast.
+  /// This method can display the Toast around a given Widget (usually a Button) or at a specific offset.
+  /// [attachedBuilder] is the builder function to generate the Widget to be displayed.
+  /// [targetContext] is the target Widget (usually a button). It's usually wrapped in a [Builder] to obtain the BuildContext.
+  /// [target] is the target [Offset]. The offset is calculated relative to the top-left corner of the screen.
+  /// You can either use [target] or [targetContext], not both.
+  /// [verticalOffset] is the vertical offset, and it depends on [preferDirection]. It applies in different directions based on the direction.
+  /// [horizontalOffset] is the horizontal offset and depends on [preferDirection]. It applies in different directions based on the direction.
+  /// [preferDirection] is the preferred direction. If space allows, it will prefer to display in that direction.
+  /// [enableSafeArea] If true, the toast ensures it doesn't display over the app status bar (it means it's safe); false otherwise.
+  /// [wrapAnimation] Please refer to [showAnimationWidget.wrapAnimation]. Default value is null.
+  /// [wrapToastAnimation] Please refer to [showAnimationWidget.wrapToastAnimation]. Default value is [attachedAnimation].
+  /// [animationDuration] Please refer to [showAnimationWidget.animationDuration].
+  /// [animationReverseDuration] Please refer to [showAnimationWidget.animationReverseDuration].
+  /// [duration] Please refer to [showEnhancedWidget.duration].
+  /// [ignoreContentClick] Please refer to [showEnhancedWidget.ignoreContentClick].
+  /// [onlyOne] Please refer to [showEnhancedWidget.onlyOne].
+  /// [allowClick] Please refer to [showEnhancedWidget.allowClick].
+  /// [onClose] Please refer to [showEnhancedWidget.onClose].
+  /// [enableKeyboardSafeArea] Please refer to [showEnhancedWidget.enableKeyboardSafeArea].
+  ///
   ///显示一个定位Toast
   ///该方法可以在某个Widget(一般是Button)或者给定一个offset周围显示
-  ///
   ///[attachedBuilder] 生成需要显示的Widget的builder函数
   ///[targetContext] 目标Widget(一般是一个按钮),使用上一般会使用[Builder]包裹,来获取到BuildContext
   ///[target] 目标[Offset],该偏移是以屏幕左上角为原点来计算的
@@ -532,42 +850,61 @@ class BotToast {
   ///[allowClick] 请看[showEnhancedWidget.allowClick]
   ///[onClose] 请看[showEnhancedWidget.onClose]
   ///[enableKeyboardSafeArea] 请看[showEnhancedWidget.enableKeyboardSafeArea]
-  static CancelFunc showAttachedWidget(
-      {required ToastBuilder attachedBuilder,
-      WrapAnimation? wrapAnimation,
-      WrapAnimation? wrapToastAnimation = attachedAnimation,
-      BuildContext? targetContext,
-      Offset? target,
-      Color backgroundColor = Colors.transparent,
-      double verticalOffset = 0.0,
-      double horizontalOffset = 0.0,
-      Duration? duration,
-      Duration? animationDuration,
-      Duration? animationReverseDuration,
-      PreferDirection? preferDirection,
-      VoidCallback? onClose,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      bool allowClick = true,
-      bool enableKeyboardSafeArea = true,
-      bool enableSafeArea = true}) {
-    assert(verticalOffset >= 0.0, 'must be a positive number');
-    assert(horizontalOffset >= 0.0, 'must be a positive number');
-    assert(!(targetContext != null && target != null),
-        'targetContext and target cannot coexist');
-    assert(targetContext != null || target != null,
-        'targetContext and target must exist one');
+  static CancelFunc showAttachedWidget({
+    required ToastBuilder attachedBuilder,
+    BuildContext? targetContext,
+    Offset? target,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    Color backgroundColor = nilColor,
+    /*double*/ Object verticalOffset = nil,
+    /*double*/ Object horizontalOffset = nil,
+    Duration? duration = nilDuration,
+    Duration? animationDuration = nilDuration,
+    Duration? animationReverseDuration = nilDuration,
+    PreferDirection? preferDirection = nilPreferDirection,
+    VoidCallback? onClose = nilVoidCallback,
+    /*bool*/ Object ignoreContentClick = nil,
+    /*bool*/ Object onlyOne = nil,
+    /*bool*/ Object allowClick = nil,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    /*bool*/ Object enableSafeArea = nil,
+  }) {
+    var o = defaultOption.attached;
+
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    preferDirection = returnFirstIfNotNil(preferDirection, o.preferDirection);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    ignoreContentClick = returnFirstIfNotNil(ignoreContentClick, o.ignoreContentClick);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    enableSafeArea = returnFirstIfNotNil(enableSafeArea, o.enableSafeArea);
+
+    final verticalOffsetV = returnFirstIfNotNilAndCast<double>(verticalOffset, o.verticalOffset);
+    final horizontalOffsetV = returnFirstIfNotNilAndCast<double>(horizontalOffset, o.horizontalOffset);
+
+    assert(verticalOffsetV >= 0.0, 'must be a positive number');
+    assert(verticalOffsetV >= 0.0, 'must be a positive number');
+    assert(!(targetContext != null && target != null), 'targetContext and target cannot coexist');
+    assert(targetContext != null || target != null, 'targetContext and target must exist one');
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, enableSafeArea, allowClick, ignoreContentClick]), 'Must be of bool type');
+    assert(isNilOr<double>([verticalOffsetV, horizontalOffsetV]), 'Must be of bool type');
 
     Rect targetRect;
     if (target == null) {
       RenderObject renderObject = targetContext!.findRenderObject()!;
       if (renderObject is RenderBox) {
         final position = renderObject.localToGlobal(Offset.zero);
-        targetRect = Rect.fromLTWH(position.dx, position.dy,
-            renderObject.size.width, renderObject.size.height);
+        targetRect = Rect.fromLTWH(position.dx, position.dy, renderObject.size.width, renderObject.size.height);
       } else {
-        throw Exception(
-            'context.findRenderObject() return result must be RenderBox class');
+        throw Exception('context.findRenderObject() return result must be RenderBox class');
       }
     } else {
       targetRect = Rect.fromLTWH(target.dx, target.dy, 0, 0); //点矩形
@@ -582,8 +919,7 @@ class BotToast {
         enableKeyboardSafeArea: enableKeyboardSafeArea,
         backgroundColor: backgroundColor,
         ignoreContentClick: ignoreContentClick,
-        animationDuration:
-            animationDuration ?? const Duration(milliseconds: 150),
+        animationDuration: animationDuration ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
@@ -593,20 +929,51 @@ class BotToast {
                   cancel();
                 }
               },
-              child: CustomSingleChildLayout(
-                  delegate: PositionDelegate(
-                      target: targetRect,
-                      verticalOffset: verticalOffset,
-                      horizontalOffset: horizontalOffset,
-                      enableSafeArea: enableSafeArea,
-                      preferDirection: preferDirection),
-                  child: wrapToastAnimation != null
-                      ? wrapToastAnimation(controller, cancel, child)
-                      : child),
+              child: Builder(
+                builder: (context) {
+                  return CustomSingleChildLayout(
+                      delegate: PositionDelegate(
+                          target: targetRect,
+                          paddingTop: MediaQuery.of(context).padding.top,
+                          verticalOffset: verticalOffsetV,
+                          horizontalOffset: horizontalOffsetV,
+                          enableSafeArea: enableSafeArea == true,
+                          preferDirection: preferDirection),
+                      child: wrapToastAnimation != null ? wrapToastAnimation(controller, cancel, child) : child);
+                }
+              ),
             ),
         toastBuilder: attachedBuilder);
   }
 
+  /// Displays a Toast that uses Animation.
+  /// For usage, refer to:
+  /// [BotToast.showCustomNotification]
+  /// [BotToast.showCustomText]
+  /// [BotToast.showCustomLoading]
+  /// [BotToast.showAttachedWidget]
+  ///
+  /// [toastBuilder] is the builder function to generate the Widget to be displayed.
+  /// [animationDuration] is the duration of the forward animation, which is equivalent to [AnimationController.duration]. It's recommended not to exceed [duration].
+  /// [animationReverseDuration] is the duration of the reverse animation, which is equivalent to [AnimationController.reverseDuration].
+  ///
+  /// [wrapAnimation] wraps the animation of the MainContent area and can be used for custom animations. If null, it indicates no animation is needed. Using this function does not necessarily require using animations; it can also perform additional widget wrapping.
+  ///
+  /// [wrapToastAnimation] wraps the animation of the ToastContent area and can be used for custom animations. If null, it indicates no animation is needed. Using this function does not necessarily require using animations; it can also perform additional widget wrapping.
+  ///
+  /// [key] Please refer to [showEnhancedWidget.key].
+  /// [groupKey] Please refer to [showEnhancedWidget.groupKey].
+  /// [crossPage] Please refer to [showEnhancedWidget.crossPage].
+  /// [allowClick] Please refer to [showEnhancedWidget.allowClick].
+  /// [clickClose] Please refer to [showEnhancedWidget.clickClose].
+  /// [ignoreContentClick] Please refer to [showEnhancedWidget.ignoreContentClick].
+  /// [onlyOne] Please refer to [showEnhancedWidget.onlyOne].
+  /// [backgroundColor] Please refer to [showEnhancedWidget.backgroundColor].
+  /// [duration] Please refer to [showEnhancedWidget.duration].
+  /// [onClose] Please refer to [showEnhancedWidget.onClose].
+  /// [backButtonBehavior] Please refer to [showEnhancedWidget.backButtonBehavior].
+  /// [enableKeyboardSafeArea] Please refer to [showEnhancedWidget.enableKeyboardSafeArea].
+  ///
   ///显示使用了Animation的Toast
   ///使用请看:
   ///[BotToast.showCustomNotification]
@@ -639,25 +1006,41 @@ class BotToast {
   static CancelFunc showAnimationWidget({
     required ToastBuilder toastBuilder,
     required Duration animationDuration,
-    Duration? animationReverseDuration,
-    WrapAnimation? wrapAnimation,
-    WrapAnimation? wrapToastAnimation,
-    BackButtonBehavior? backButtonBehavior,
+    Duration? animationReverseDuration = nilDuration,
+    WrapAnimation? wrapAnimation = nilWrapAnimation,
+    WrapAnimation? wrapToastAnimation = nilWrapAnimation,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object allowClick = nil,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object ignoreContentClick = nil,
+    /*bool*/ Object onlyOne = nil,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    Color backgroundColor = nilColor,
+    Duration? duration = nilDuration,
+    VoidCallback? onClose = nilVoidCallback,
     UniqueKey? key,
     String? groupKey,
-    bool crossPage = true,
-    bool allowClick = true,
-    bool clickClose = false,
-    bool ignoreContentClick = false,
-    bool onlyOne = false,
-    bool enableKeyboardSafeArea = true,
-    Color backgroundColor = Colors.transparent,
-    Duration? duration,
-    VoidCallback? onClose,
   }) {
-    AnimationController? controller = _createAnimationController(
-        animationDuration,
-        reverseDuration: animationReverseDuration);
+    var o = defaultOption.animation;
+
+    animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
+    wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
+    wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    ignoreContentClick = returnFirstIfNotNil(ignoreContentClick, o.ignoreContentClick);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    duration = returnFirstIfNotNil(duration, o.duration);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
+
+    AnimationController? controller = _createAnimationController(animationDuration, reverseDuration: animationReverseDuration);
 
     return showEnhancedWidget(
         allowClick: allowClick,
@@ -685,14 +1068,10 @@ class BotToast {
                     controller!.dispose();
                     controller = null;
                   },
-                  child: wrapAnimation != null
-                      ? wrapAnimation(controller!, cancel, child)
-                      : child),
+                  child: wrapAnimation != null ? wrapAnimation(controller!, cancel, child) : child),
             ),
-        toastBuilder: (cancelFunc) => wrapToastAnimation != null
-            ? wrapToastAnimation(
-                controller!, cancelFunc, toastBuilder(cancelFunc))
-            : toastBuilder(cancelFunc));
+        toastBuilder: (cancelFunc) =>
+            wrapToastAnimation != null ? wrapToastAnimation(controller!, cancelFunc, toastBuilder(cancelFunc)) : toastBuilder(cancelFunc));
   }
 
   /*区域图
@@ -708,6 +1087,48 @@ class BotToast {
    |_________________________________|
    */
 
+  /// Displays an enhanced Toast with many built-in features such as automatic timing closure, auto-closure on screen tap, and closure upon leaving the current Route.
+  /// Core method, for detailed usage, refer to:
+  /// [BotToast.showAnimationWidget]
+  ///
+  /// [toastBuilder] is the builder function to generate the Widget to be displayed.
+  ///
+  /// [key] represents a credential for this Toast. With this key, you can remove the Widget defined by the current key using [remove].
+  ///
+  /// [groupKey] represents a group key, mainly used for [removeAll] and [remove].
+  ///
+  /// [crossPage] displays across pages. If true, this Toast will appear across multiple Routes.
+  /// If false, it will automatically close when the current Route changes, for example, [Navigator.push] - [Navigator.pop].
+  ///
+  /// [allowClick] determines whether normal clicking to trigger events is allowed while this Toast is displayed.
+  ///
+  /// [clickClose] determines whether the Toast should automatically close when the screen is tapped to trigger an event.
+  ///
+  /// [ignoreContentClick] determines whether to ignore the ToastContext area.
+  /// When this parameter is true, user clicks within the ToastContext area will be able to reach the Page normally,
+  /// in other words, it's transparent (even if the Toast background color is not transparent).
+  /// If false, it behaves the opposite way.
+  ///
+  /// [onlyOne] indicates whether only one Toast should exist within the same group at the same time. Groups are distinguished by [groupKey].
+  ///
+  /// [closeFunc] is a function mainly intended to perform actions before closing the Toast, such as triggering [AnimationController] to start and waiting for the animation to complete before closing.
+  ///
+  /// [backgroundColor] is the background color of the MainContent area.
+  ///
+  /// [wrapWidget] is a wrapping function that can be used to wrap the MainContent area. For example, [showCustomLoading] wraps an animation
+  /// to give the MainContent area animation.
+  ///
+  /// [duration] is the duration of the Toast. If null, it won't close automatically. If not null, it will automatically close after the specified time.
+  ///
+  /// [onClose] is called when the Toast is closed.
+  ///
+  /// [enableKeyboardSafeArea] determines whether to enable the keyboard safe area to prevent the keyboard from covering the Toast.
+  ///
+  /// [backButtonBehavior] defines the behavior when the physical back button (on Android or equivalent) is pressed. Note that this is not the back button on the navigation bar.
+  /// If [ignore], it intercepts the back event.
+  /// If [close], it closes the toast and intercepts the event, stopping it from propagating.
+  /// If null or [none], it doesn't intercept the event.
+  ///
   ///显示一个增强Toast,该方法可以让Toast自带很多特性,例如定时关闭,点击屏幕自动关闭,离开当前Route关闭等等
   ///核心方法,详情使用请看:
   ///[BotToast.showAnimationWidget]
@@ -750,24 +1171,42 @@ class BotToast {
   ///如果为[close]则关闭该toast,并且拦截事件停止冒泡
   ///如果为null or [none]则不拦截事件
   ///
-  static CancelFunc showEnhancedWidget(
-      {required ToastBuilder toastBuilder,
-      UniqueKey? key,
-      String? groupKey,
-      bool crossPage = true,
-      bool allowClick = true,
-      bool clickClose = false,
-      bool ignoreContentClick = false,
-      bool onlyOne = false,
-      bool enableKeyboardSafeArea = true,
-      BackButtonBehavior? backButtonBehavior,
-      FutureFunc? closeFunc,
-      VoidCallback? onClose,
-      Color backgroundColor = Colors.transparent,
-      WrapWidget? warpWidget,
-      Duration? duration}) {
+  static CancelFunc showEnhancedWidget({
+    required ToastBuilder toastBuilder,
+    UniqueKey? key,
+    String? groupKey,
+    /*bool*/ Object crossPage = nil,
+    /*bool*/ Object allowClick = nil,
+    /*bool*/ Object clickClose = nil,
+    /*bool*/ Object ignoreContentClick = nil,
+    /*bool*/ Object onlyOne = nil,
+    /*bool*/ Object enableKeyboardSafeArea = nil,
+    BackButtonBehavior? backButtonBehavior = nilBackButtonBehavior,
+    FutureFunc? closeFunc = nilFutureFunc,
+    VoidCallback? onClose = nilVoidCallback,
+    Color backgroundColor = nilColor,
+    WrapWidget? warpWidget = nilWrapWidget,
+    Duration? duration = nilDuration,
+  }) {
     // ignore: unnecessary_null_comparison
     assert(enableKeyboardSafeArea != null);
+
+    var o = defaultOption.enhanced;
+
+    crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
+    allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
+    clickClose = returnFirstIfNotNil(clickClose, o.clickClose);
+    ignoreContentClick = returnFirstIfNotNil(ignoreContentClick, o.ignoreContentClick);
+    onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
+    enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
+    backButtonBehavior = returnFirstIfNotNil(backButtonBehavior, o.backButtonBehavior);
+    closeFunc = returnFirstIfNotNil(closeFunc, o.closeFunc);
+    onClose = returnFirstIfNotNil(onClose, o.onClose);
+    backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
+    warpWidget = returnFirstIfNotNil(warpWidget, o.warpWidget);
+    duration = returnFirstIfNotNil(duration, o.duration);
+
+    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     late final CancelFunc cancelFunc;
@@ -777,9 +1216,8 @@ class BotToast {
     };
 
     //onlyOne 功能
-    final List<CancelFunc> cache =
-        (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
-    if (onlyOne) {
+    final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
+    if (onlyOne == true) {
       final clone = cache.toList();
       cache.clear();
       clone.forEach((cancel) {
@@ -799,7 +1237,7 @@ class BotToast {
 
     //跨页自动关闭
     BotToastNavigatorObserverProxy? observerProxy;
-    if (!crossPage) {
+    if (!(crossPage == true)) {
       observerProxy = BotToastNavigatorObserverProxy.all(dismissFunc);
       BotToastNavigatorObserver.register(observerProxy);
     }
@@ -807,13 +1245,11 @@ class BotToast {
     //拦截点击返回事件
     VoidCallback? unRegisterFunc;
     if (backButtonBehavior == BackButtonBehavior.ignore) {
-      unRegisterFunc =
-          BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
+      unRegisterFunc = BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
         return true;
       });
     } else if (backButtonBehavior == BackButtonBehavior.close) {
-      unRegisterFunc =
-          BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
+      unRegisterFunc = BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
         dismissFunc();
         unRegisterFunc?.call();
         unRegisterFunc = null;
@@ -826,7 +1262,7 @@ class BotToast {
         key: key,
         toastBuilder: (_) {
           return KeyboardSafeArea(
-            enable: enableKeyboardSafeArea,
+            enable: enableKeyboardSafeArea == true,
             child: ProxyDispose(disposeCallback: () {
               cache.remove(dismissFunc);
               if (observerProxy != null) {
@@ -836,29 +1272,24 @@ class BotToast {
               onClose?.call();
               unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
-              final TextStyle textStyle =
-                  Theme.of(context).textTheme.bodyText2!;
+              final TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
               Widget child = DefaultTextStyle(
                   style: textStyle,
                   child: Stack(children: <Widget>[
                     Listener(
-                      onPointerDown: clickClose ? (_) => dismissFunc() : null,
-                      behavior: allowClick
-                          ? HitTestBehavior.translucent
-                          : HitTestBehavior.opaque,
+                      onPointerDown: clickClose == true ? (_) => dismissFunc() : null,
+                      behavior: allowClick == true ? HitTestBehavior.translucent : HitTestBehavior.opaque,
                       child: const SizedBox.expand(),
                     ),
                     IgnorePointer(
                       child: Container(color: backgroundColor),
                     ),
                     IgnorePointer(
-                      ignoring: ignoreContentClick,
+                      ignoring: ignoreContentClick == true,
                       child: toastBuilder(dismissFunc),
                     )
                   ]));
-              return warpWidget != null
-                  ? warpWidget(dismissFunc, child)
-                  : child;
+              return warpWidget != null ? warpWidget(dismissFunc, child) : child;
             })),
           );
         });
@@ -866,15 +1297,20 @@ class BotToast {
     return dismissFunc;
   }
 
-  ///显示一个Widget在屏幕上,该Widget可以跨多个页面存在
+  /// Displays a Widget on the screen that can persist across multiple pages.
+  /// [toastBuilder] is the builder function to generate the Widget to be displayed.
+  /// [key] represents a credential for this Toast. With this key, you can remove the Widget defined by the current key using [remove].
+  /// [groupKey] represents a group key, mainly used for [removeAll] and [remove].
+  /// [CancelFunc] is the close function, and actively calling it will close this Toast.
+  /// This is a core method.
   ///
+  ///显示一个Widget在屏幕上,该Widget可以跨多个页面存在
   ///[toastBuilder] 生成需要显示的Widget的builder函数
   ///[key] 代表此Toast的一个凭证,凭此key可以删除当前key所定义的Widget,[remove]
   ///[groupKey] 代表分组的key,主要用于[removeAll]和[remove]
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///这是个核心方法
-  static CancelFunc showWidget(
-      {required ToastBuilder toastBuilder, UniqueKey? key, String? groupKey}) {
+  static CancelFunc showWidget({required ToastBuilder toastBuilder, UniqueKey? key, String? groupKey}) {
     final gk = groupKey ?? defaultKey;
     final uniqueKey = key ?? UniqueKey();
     final CancelFunc cancelFunc = () {
@@ -897,11 +1333,7 @@ class BotToast {
     botToastManager.cleanAll();
   }
 
-  static AnimationController _createAnimationController(Duration duration,
-      {Duration? reverseDuration}) {
-    return AnimationController(
-        vsync: TickerProviderImpl(),
-        duration: duration,
-        reverseDuration: reverseDuration);
+  static AnimationController _createAnimationController(Duration duration, {Duration? reverseDuration}) {
+    return AnimationController(vsync: TickerProviderImpl(), duration: duration, reverseDuration: reverseDuration);
   }
 }

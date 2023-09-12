@@ -31,6 +31,8 @@ BotToast 🤖
 
 - 纯flutter实现
 
+- 支持全局配置
+
 
 
 ### 🐼在线demo
@@ -139,6 +141,25 @@ cancel();  //关闭
 
 <br>
 
+#### 5. 修改全局配置
+  
+``` dart
+///例如：全局修改标准通知的动画时间为 1 秒。
+BotToast.defaultOption.notification.animationDuration=const Duration(seconds: 1);
+
+///更多默认选项参考下述配置
+///[BotToast.defaultOption.simpleNotification] 对应 [showSimpleNotification] 的默认值
+///[BotToast.defaultOption.notification] 对应 [showNotification] 的默认值
+///[BotToast.defaultOption.customNotification] 对应 [showCustomNotification] 的默认值
+///[BotToast.defaultOption.text] 对应 [showText] 的默认值
+///[BotToast.defaultOption.customText] 对应 [showCustomText] 的默认值
+///[BotToast.defaultOption.loading] 对应 [showLoading] 的默认值
+///[BotToast.defaultOption.customLoading] 对应 [showCustomLoading] 的默认值
+///[BotToast.defaultOption.attached] 对应 [showAttachedWidget] 的默认值
+///[BotToast.defaultOption.animation] 对应 [showAnimationWidget] 的默认值
+///[BotToast.defaultOption.enhanced] 对应 [showEnhancedWidget] 的默认值
+```
+
 ### 🐼3.0版本
 
 #### 主要改动:
@@ -186,7 +207,7 @@ MaterialApp(
 <br>
 
 ###  📃主要Api文档
-[主要Api文档](API.md)
+[主要Api文档](API_zh.md)
 
 
 
