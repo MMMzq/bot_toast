@@ -8,8 +8,8 @@ class AttachedToast extends StatefulWidget {
 }
 
 class _AttachedToastState extends State<AttachedToast> {
-  BuildContext targetContext;
-  Offset target;
+  // BuildContext targetContext;
+  // Offset target;
   double verticalOffset = 0;
   double horizontalOffset = 0;
   int second = 4;
@@ -24,7 +24,7 @@ class _AttachedToastState extends State<AttachedToast> {
 
   double buttonAlign = 0;
 
-  CancelFunc show({BuildContext context, Offset target}) {
+  CancelFunc show({BuildContext? context, Offset? target}) {
     return BotToast.showAttachedWidget(
         target: target,
         targetContext: context,
@@ -142,27 +142,27 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.topLeft,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.topCenter,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.topRight,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   const Spacer(),
@@ -195,9 +195,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftTop,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   const Spacer(),
@@ -207,9 +207,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightTop,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                 ],
@@ -237,9 +237,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftCenter,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   const Spacer(),
@@ -249,9 +249,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightCenter,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                 ],
@@ -279,9 +279,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.leftBottom,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   const Spacer(),
@@ -291,9 +291,9 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.rightBottom,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                 ],
@@ -322,27 +322,27 @@ class _AttachedToastState extends State<AttachedToast> {
                       child: Radio(
                           value: PreferDirection.bottomLeft,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.bottomCenter,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   Expanded(
                       child: Radio(
                           value: PreferDirection.bottomRight,
                           groupValue: preferDirection,
-                          onChanged: (PreferDirection value) {
+                          onChanged: (PreferDirection? value) {
                             setState(() {
-                              preferDirection = value;
+                              preferDirection = value!;
                             });
                           })),
                   const Spacer(),
