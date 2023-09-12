@@ -44,13 +44,11 @@ class BotToastNavigatorObserver extends NavigatorObserver {
       home: XxxxPage(),
     ));
     """);
-    assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.add(botToastNavigatorObserverProxy);
   }
 
   static void unregister(
       BotToastNavigatorObserverProxy botToastNavigatorObserverProxy) {
-    assert(botToastNavigatorObserverProxy != null);
     _leavePageCallbacks.remove(botToastNavigatorObserverProxy);
   }
 

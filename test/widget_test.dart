@@ -392,12 +392,12 @@ class TestApp extends StatelessWidget {
           children: <Widget>[
             Builder(
                 builder: (ctx) => TextButton(
-                    key: ValueKey('main'),
+                    key: const ValueKey('main'),
                     onPressed: () async {
                       callback?.call();
                       contextCallback?.call(ctx);
                     },
-                    child: Text(''))),
+                    child: const Text(''))),
             if (child != null) child!
           ],
         ),
