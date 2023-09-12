@@ -33,6 +33,11 @@ class BackButtonBehavior {
 
   final int index;
   final String name;
+
+  @override
+  String toString() {
+    return 'BackButtonBehavior.$name';
+  }
 }
 
 //请不要调整顺序!!
@@ -56,4 +61,9 @@ class PreferDirection {
 
   final int index;
   final String name;
+
+  @override
+  String toString() {
+    return 'PreferDirection.$name';
+  }
 }
