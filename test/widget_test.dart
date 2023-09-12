@@ -309,7 +309,7 @@ void main() {
                 clickClose: false,
                 toastBuilder: (_) => Text('testText'));
           },
-          child: FlatButton(
+          child: TextButton(
             key: ValueKey('test'),
             onPressed: () {
               i++;
@@ -342,7 +342,7 @@ void main() {
               toastBuilder: (_) =>
                   Padding(
                     padding: EdgeInsets.all(100),
-                    child: FlatButton(
+                    child: TextButton(
                       key: ValueKey('test'),
                       onPressed: () {
                         i++;
@@ -391,7 +391,7 @@ class TestApp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Builder(
-                builder: (ctx) => FlatButton(
+                builder: (ctx) => TextButton(
                     key: ValueKey('main'),
                     onPressed: () async {
                       callback?.call();

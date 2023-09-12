@@ -1,31 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'basis.dart';
-import 'toast_widget/animation.dart';
+import 'toast_widget/toast_widget.dart';
 
-class Option<T> {
-  final T v;
-
-  Option(this.v);
+class Option {
+  SimpleNotificationOption simpleNotification = SimpleNotificationOption();
+  NotificationOption notification = NotificationOption();
+  CustomNotificationOption customNotification = CustomNotificationOption();
+  TextOption text = TextOption();
+  CustomTextOption customText = CustomTextOption();
+  LoadingOption loading = LoadingOption();
+  CustomLoadingOption customLoading = CustomLoadingOption();
+  AttachedOption attached = AttachedOption();
+  AnimationOption animation = AnimationOption();
+  EnhancedOption enhanced = EnhancedOption();
 }
 
-typedef OptionFunc<T> = void Function(T);
-typedef DefaultOptionFunc<T> = T Function();
+class SimpleNotificationOption {
+  Object? subTitle;
+
+  TextStyle? titleStyle;
+
+  TextStyle? subTitleStyle;
+
+  WrapAnimation? wrapAnimation;
+
+  WrapAnimation? wrapToastAnimation;
+
+  GestureTapCallback? onTap;
+
+  GestureLongPressCallback? onLongPress;
+
+  Color? backgroundColor;
+
+  Object? borderRadius;
+
+  Alignment? align = const Alignment(0, -0.99);
+
+  List<DismissDirection> dismissDirections = [DismissDirection.horizontal, DismissDirection.up];
+
+  Icon closeIcon = const Icon(Icons.cancel);
+
+  Duration? duration = const Duration(seconds: 2);
+
+  Duration? animationDuration;
+
+  Duration? animationReverseDuration;
+
+  BackButtonBehavior? backButtonBehavior;
+
+  VoidCallback? onClose;
+
+  Object enableKeyboardSafeArea = true;
+
+  Object enableSlideOff = true;
+
+  Object crossPage = false;
+
+  Object onlyOne = true;
+
+  Object hideCloseButton = true;
+}
 
 class NotificationOption {
-  static DefaultOptionFunc<NotificationOption> defaultFunc = () {
-    return NotificationOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<NotificationOption> f) {
-    NotificationOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  NotificationOption._();
-
   ToastBuilder? leading;
   ToastBuilder? title;
   ToastBuilder? subtitle;
@@ -51,27 +88,12 @@ class NotificationOption {
 }
 
 class CustomNotificationOption {
-  static DefaultOptionFunc<CustomNotificationOption> defaultFunc = () {
-    return CustomNotificationOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<CustomNotificationOption> f) {
-    CustomNotificationOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  CustomNotificationOption._();
-
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation = notificationAnimation;
   Alignment? align = const Alignment(0, -0.99);
-  List<DismissDirection> dismissDirections = const [
-    DismissDirection.horizontal,
-    DismissDirection.up
-  ];
+  List<DismissDirection> dismissDirections = const [DismissDirection.horizontal, DismissDirection.up];
   Duration? duration = const Duration(seconds: 2);
-  Duration? animationDuration;
+  Duration animationDuration = const Duration(milliseconds: 256);
   Duration? animationReverseDuration;
   VoidCallback? onClose;
   BackButtonBehavior? backButtonBehavior;
@@ -83,28 +105,14 @@ class CustomNotificationOption {
 }
 
 class TextOption {
-  static DefaultOptionFunc<TextOption> defaultFunc = () {
-    return TextOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<TextOption> f) {
-    TextOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  TextOption._();
-
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation = textAnimation;
   Color backgroundColor = Colors.transparent;
   Color contentColor = Colors.black54;
-  BorderRadiusGeometry borderRadius =
-      const BorderRadius.all(Radius.circular(8));
+  BorderRadiusGeometry borderRadius = const BorderRadius.all(Radius.circular(8));
   TextStyle textStyle = const TextStyle(fontSize: 17, color: Colors.white);
   AlignmentGeometry? align = const Alignment(0, 0.8);
-  EdgeInsetsGeometry contentPadding =
-      const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7);
+  EdgeInsetsGeometry contentPadding = const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 7);
   Duration? duration = const Duration(seconds: 2);
   Duration? animationDuration;
   Duration? animationReverseDuration;
@@ -117,24 +125,12 @@ class TextOption {
 }
 
 class CustomTextOption {
-  static DefaultOptionFunc<CustomTextOption> defaultFunc = () {
-    return CustomTextOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<CustomTextOption> f) {
-    CustomTextOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  CustomTextOption._();
-
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation = textAnimation;
   AlignmentGeometry? align = const Alignment(0, 0.8);
   Color backgroundColor = Colors.transparent;
   Duration? duration = const Duration(seconds: 2);
-  Duration? animationDuration;
+  Duration animationDuration = const Duration(milliseconds: 256);
   Duration? animationReverseDuration;
   VoidCallback? onClose;
   BackButtonBehavior? backButtonBehavior;
@@ -147,18 +143,6 @@ class CustomTextOption {
 }
 
 class LoadingOption {
-  static DefaultOptionFunc<LoadingOption> defaultFunc = () {
-    return LoadingOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<LoadingOption> f) {
-    LoadingOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  LoadingOption._();
-
   WrapAnimation? wrapAnimation = loadingAnimation;
   WrapAnimation? wrapToastAnimation;
   Alignment align = Alignment.center;
@@ -175,18 +159,6 @@ class LoadingOption {
 }
 
 class CustomLoadingOption {
-  static DefaultOptionFunc<CustomLoadingOption> defaultFunc = () {
-    return CustomLoadingOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<CustomLoadingOption> f) {
-    CustomLoadingOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  CustomLoadingOption._();
-
   WrapAnimation? wrapAnimation = loadingAnimation;
   WrapAnimation? wrapToastAnimation;
   Alignment? align = Alignment.center;
@@ -198,32 +170,20 @@ class CustomLoadingOption {
   bool enableKeyboardSafeArea = true;
   VoidCallback? onClose;
   Duration? duration;
-  Duration? animationDuration;
+  Duration animationDuration = const Duration(milliseconds: 300);
   Duration? animationReverseDuration;
   Color backgroundColor = Colors.black26;
   bool useSafeArea = true;
 }
 
 class AttachedOption {
-  static DefaultOptionFunc<AttachedOption> defaultFunc = () {
-    return AttachedOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<AttachedOption> f) {
-    AttachedOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  AttachedOption._();
-
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation = attachedAnimation;
   Color backgroundColor = Colors.transparent;
   double verticalOffset = 0.0;
   double horizontalOffset = 0.0;
   Duration? duration;
-  Duration? animationDuration;
+  Duration animationDuration = const Duration(milliseconds: 150);
   Duration? animationReverseDuration;
   PreferDirection? preferDirection;
   VoidCallback? onClose;
@@ -235,18 +195,6 @@ class AttachedOption {
 }
 
 class AnimationOption {
-  static DefaultOptionFunc<AnimationOption> defaultFunc = () {
-    return AnimationOption._();
-  };
-
-  static void modifyDefaultOption(OptionFunc<AnimationOption> f) {
-    AnimationOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
-  AnimationOption._();
-
   Duration? animationReverseDuration;
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation;
@@ -265,16 +213,6 @@ class AnimationOption {
 }
 
 class EnhancedOption {
-  static DefaultOptionFunc<EnhancedOption> defaultFunc = () {
-    return EnhancedOption();
-  };
-
-  static void modifyDefaultOption(OptionFunc<EnhancedOption> f) {
-    EnhancedOption o = defaultFunc();
-    f(o);
-    defaultFunc = () => o;
-  }
-
   UniqueKey? key;
   String? groupKey;
   bool crossPage = true;
