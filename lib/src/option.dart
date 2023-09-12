@@ -17,7 +17,7 @@ class Option {
 }
 
 class SimpleNotificationOption {
-  Object? subTitle;
+  String? subTitle;
 
   TextStyle? titleStyle;
 
@@ -25,7 +25,7 @@ class SimpleNotificationOption {
 
   WrapAnimation? wrapAnimation;
 
-  WrapAnimation? wrapToastAnimation;
+  WrapAnimation? wrapToastAnimation=notificationAnimation;
 
   GestureTapCallback? onTap;
 
@@ -33,7 +33,7 @@ class SimpleNotificationOption {
 
   Color? backgroundColor;
 
-  Object? borderRadius;
+  double? borderRadius;
 
   Alignment? align = const Alignment(0, -0.99);
 
@@ -51,15 +51,15 @@ class SimpleNotificationOption {
 
   VoidCallback? onClose;
 
-  Object enableKeyboardSafeArea = true;
+  bool enableKeyboardSafeArea = true;
 
-  Object enableSlideOff = true;
+  bool enableSlideOff = true;
 
-  Object crossPage = false;
+  bool crossPage = false;
 
-  Object onlyOne = true;
+  bool onlyOne = true;
 
-  Object hideCloseButton = true;
+  bool hideCloseButton = true;
 }
 
 class NotificationOption {
