@@ -53,8 +53,7 @@ Loading|Text|CustomWidget
 #### 1. Add dependencies into you project pubspec.yaml file
 ``` yaml
 dependencies:
-     bot_toast: ^3.0.5 
-#    bot_toast: ^4.0.0 #null safety
+   bot_toast: ^4.1.0 #null safety
 ```
 
 #### 2. Import BotToast Lib
