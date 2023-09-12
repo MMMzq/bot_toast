@@ -1,3 +1,7 @@
+## [4.1.0]
+* feat: Support global configuration
+* docs: Add English API documentation and English comments
+
 ## [4.0.4]
 * feat: Added margin param to showNotification
 
