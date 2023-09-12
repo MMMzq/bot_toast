@@ -929,14 +929,19 @@ class BotToast {
                   cancel();
                 }
               },
-              child: CustomSingleChildLayout(
-                  delegate: PositionDelegate(
-                      target: targetRect,
-                      verticalOffset: verticalOffsetV,
-                      horizontalOffset: horizontalOffsetV,
-                      enableSafeArea: enableSafeArea == true,
-                      preferDirection: preferDirection),
-                  child: wrapToastAnimation != null ? wrapToastAnimation(controller, cancel, child) : child),
+              child: Builder(
+                builder: (context) {
+                  return CustomSingleChildLayout(
+                      delegate: PositionDelegate(
+                          target: targetRect,
+                          paddingTop: MediaQuery.of(context).padding.top,
+                          verticalOffset: verticalOffsetV,
+                          horizontalOffset: horizontalOffsetV,
+                          enableSafeArea: enableSafeArea == true,
+                          preferDirection: preferDirection),
+                      child: wrapToastAnimation != null ? wrapToastAnimation(controller, cancel, child) : child);
+                }
+              ),
             ),
         toastBuilder: attachedBuilder);
   }
