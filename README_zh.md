@@ -57,8 +57,7 @@ Loading|Text|CustomWidget
 #### 1. pubspec.yaml文件里添加依赖
 ``` yaml
 dependencies:
-     bot_toast: ^3.0.5 
-#    bot_toast: ^4.0.0 #null safety
+    bot_toast: ^4.1.0 #null safety
 ```
 
 #### 2. 导入BotToast库
