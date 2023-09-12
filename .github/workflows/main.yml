@@ -51,7 +51,7 @@ jobs:
 
       - name: Setup flutter
         run: |
-          git clone https://github.com/flutter/flutter.git -b master --depth 1
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1
           ./flutter/bin/flutter doctor
           ./flutter/bin/flutter --version
 
