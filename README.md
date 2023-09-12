@@ -6,15 +6,15 @@ A really easy to use flutter toast library!
 
 ### Language: English | [中文简体](README_zh.md)
 
-* [🐲Overview](#Overview)
-* [🐼Online Demo](#Online-Demo)
-* [🐳Example](#Example)
-* [🐺Renderings](#Renderings)
-* [🐮Getting started](#Getting-started) 
-* [🐼3.0 version](#30-version)
-* [📃Documentation](#Documentation) 
+* [Overview](#Overview)
+* [Online Demo](#Online-Demo)
+* [Example](#Example)
+* [Renderings](#Renderings)
+* [Getting started](#Getting-started) 
+* [3.0 version](#30-version)
+* [Documentation](#Documentation) 
 
-###  🐲Overview
+###  Overview
 
 - In the true sense of Toast, you can call it whenever you need it, without any restrictions! 
 
@@ -29,14 +29,14 @@ A really easy to use flutter toast library!
 - Supports global configuration
 
 
-### 🐼Online Demo
+### Online Demo
 
 **[Online demo](https://mmmzq.github.io/bot_toast/#/)** (Web effects may be biased, the actual effect is subject to the mobile phone)
 
-### 🐳Example
+### Example
 **[Sample project](example)**
 
-### 🐺Renderings
+### Renderings
 
 Notification|Attached|CustomAnimation
 --------|-------|--------
@@ -46,7 +46,7 @@ Loading|Text|CustomWidget
 --------|-------|----------
 ![Loading](doc/gif/loading.gif)|![Text](doc/gif/text.gif)|![CustomWidget](doc/gif/custom_widget.gif)
 
-### 🐮Getting started
+### Getting started
 
 #### 1. Add dependencies into you project pubspec.yaml file
 ``` yaml
@@ -150,7 +150,7 @@ BotToast.defaultOption.notification.animationDuration = const Duration(seconds: 
 /// [BotToast.defaultOption.enhanced] corresponds to the default values of [showEnhancedWidget].
 ```
 
-### 🐼3.0 version
+### 3.0 version
 
 #### Major changes:
 
@@ -185,8 +185,8 @@ MaterialApp(
 <br>
 
 
-###  📃Documentation
-[Documentation](API.md)
+###  Documentation
+[API Documentation](API.md)
 
 
 
