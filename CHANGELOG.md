@@ -1,3 +1,6 @@
+## [4.0.4]
+* feat: Added margin param to showNotification
+
 ## [4.0.3]
 * feat: Add safe area flag for custom options
 

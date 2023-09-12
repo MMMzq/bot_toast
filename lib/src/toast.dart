@@ -234,6 +234,7 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         toastBuilder: (cancel) {
           return Card(
+            margin: margin,
             color: backgroundColor,
             shape: borderRadiusV == null
                 ? null
