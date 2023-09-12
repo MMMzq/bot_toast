@@ -3,7 +3,7 @@ description: A really easy to use flutter toast library.Easy to use and feature 
 homepage: https://github.com/MMMzq/bot_toast
 email: vivask770@163.com
 
-version: 4.1.0
+version: 4.1.1
 
 environment:
   sdk: ^2.12.0
