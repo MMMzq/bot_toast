@@ -136,7 +136,7 @@ class CustomAnimationWidget extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomAnimationWidget({Key key, this.controller, this.child})
+  const CustomAnimationWidget({Key? key,required this.controller,required this.child})
       : super(key: key);
 
   @override
@@ -150,7 +150,7 @@ class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
   );
 
   static final Tween<double> tweenScale = Tween<double>(begin: 0.7, end: 1.0);
-  Animation<double> animation;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -164,7 +164,7 @@ class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
     return AnimatedBuilder(
       child: widget.child,
       animation: animation,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Transform.translate(
           offset: tweenOffset.evaluate(animation),
           child: Transform.scale(
@@ -186,7 +186,7 @@ class CustomOffsetAnimation extends StatefulWidget {
   final bool reverse;
 
   const CustomOffsetAnimation(
-      {Key key, this.controller, this.child, this.reverse = false})
+      {Key? key,required this.controller,required this.child, this.reverse = false})
       : super(key: key);
 
   @override
@@ -194,9 +194,9 @@ class CustomOffsetAnimation extends StatefulWidget {
 }
 
 class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
-  Tween<Offset> tweenOffset;
+  late Tween<Offset> tweenOffset;
 
-  Animation<double> animation;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -214,7 +214,7 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
     return AnimatedBuilder(
       child: widget.child,
       animation: widget.controller,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return FractionalTranslation(
             translation: tweenOffset.evaluate(animation),
             child: Opacity(
@@ -230,7 +230,7 @@ class CustomAttachedAnimation extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomAttachedAnimation({Key key, this.controller, this.child})
+  const CustomAttachedAnimation({Key? key,required this.controller,required this.child})
       : super(key: key);
 
   @override
@@ -239,7 +239,7 @@ class CustomAttachedAnimation extends StatefulWidget {
 }
 
 class _CustomAttachedAnimationState extends State<CustomAttachedAnimation> {
-  Animation<double> animation;
+  late Animation<double> animation;
   static final Tween<Offset> tweenOffset = Tween<Offset>(
     begin: const Offset(0, 40),
     end: const Offset(0, 0),
@@ -257,7 +257,7 @@ class _CustomAttachedAnimationState extends State<CustomAttachedAnimation> {
     return AnimatedBuilder(
       child: widget.child,
       animation: widget.controller,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return ClipRect(
           child: Align(
             heightFactor: animation.value,
