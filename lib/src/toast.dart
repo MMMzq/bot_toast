@@ -1272,7 +1272,7 @@ class BotToast {
               onClose?.call();
               unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
-              final TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+              final TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
               Widget child = DefaultTextStyle(
                   style: textStyle,
                   child: Stack(children: <Widget>[
