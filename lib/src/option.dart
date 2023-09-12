@@ -80,6 +80,7 @@ class NotificationOption {
   Duration? animationDuration;
   Duration? animationReverseDuration;
   EdgeInsetsGeometry? contentPadding;
+  EdgeInsetsGeometry? margin;
   VoidCallback? onClose;
   bool enableKeyboardSafeArea = true;
   bool enableSlideOff = true;

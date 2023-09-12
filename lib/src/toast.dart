@@ -11,7 +11,6 @@ import 'option.dart';
 import 'toast_navigator_observer.dart';
 import 'toast_widget/toast_widget.dart';
 
-
 /*区域图
   _________________________________
 |          MainContent            |
@@ -184,6 +183,7 @@ class BotToast {
       Duration? animationDuration = nilDuration,
       Duration? animationReverseDuration = nilDuration,
       EdgeInsetsGeometry? contentPadding = nilEdgeInsets,
+      EdgeInsetsGeometry? margin = nilEdgeInsets,
       VoidCallback? onClose = nilVoidCallback,
       /*bool*/ Object enableKeyboardSafeArea = nil,
       /*bool*/ Object enableSlideOff = nil,
@@ -207,6 +207,7 @@ class BotToast {
     animationDuration = returnFirstIfNotNil(animationDuration, o.animationDuration);
     animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
     contentPadding = returnFirstIfNotNil(contentPadding, o.contentPadding);
+    margin = returnFirstIfNotNil(margin, o.contentPadding);
     onClose = returnFirstIfNotNil(onClose, o.onClose);
     enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
     enableSlideOff = returnFirstIfNotNil(enableSlideOff, o.enableSlideOff);
@@ -958,7 +959,6 @@ class BotToast {
     duration = returnFirstIfNotNil(duration, o.duration);
 
     assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
-
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     late final CancelFunc cancelFunc;
