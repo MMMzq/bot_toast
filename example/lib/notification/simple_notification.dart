@@ -19,6 +19,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
 
   @override
   void initState() {
+    ///全局范围内将标准通知的动画时间修改为 1 秒
+    BotToast.defaultOption.notification.animationDuration=const Duration(seconds: 1);
     BotToast.showSimpleNotification(
         title: "Notification title",
         subTitle: "Notification subtitle",
