@@ -42,29 +42,29 @@ jobs:
           file: lcov.info
           flags: unittests
 
-  build-web:
+  # build-web:
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v1
+  #   steps:
+  #     - uses: actions/checkout@v1
 
-      - name: Setup flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable --depth 1
-          ./flutter/bin/flutter doctor
-          ./flutter/bin/flutter --version
+  #     - name: Setup flutter
+  #       run: |
+  #         git clone https://github.com/flutter/flutter.git -b stable --depth 1
+  #         ./flutter/bin/flutter doctor
+  #         ./flutter/bin/flutter --version
 
-      - name: Enable web
-        run: ./flutter/bin/flutter config --enable-web
+  #     - name: Enable web
+  #       run: ./flutter/bin/flutter config --enable-web
 
-      - name: Build web
-        run: cd example && ../flutter/bin/flutter build web && cd ..
+  #     - name: Build web
+  #       run: cd example && ../flutter/bin/flutter build web && cd ..
 
-      - name: Deploy web To GH-Page
-        if: github.event_name=='release' && github.event.action=='published'
-        uses: peaceiris/actions-gh-pages@v2.4.0
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./example/build/web/
+  #     - name: Deploy web To GH-Page
+  #       if: github.event_name=='release' && github.event.action=='published'
+  #       uses: peaceiris/actions-gh-pages@v2.4.0
+  #       env:
+  #         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
+  #         PUBLISH_BRANCH: gh-pages
+  #         PUBLISH_DIR: ./example/build/web/
