@@ -1,3 +1,6 @@
+## [4.1.2]
+* fix: Fix the problem of nil judgment error
+
 ## [4.1.1]
 * fix: Delete unused packages
 * fix: Using bodyMedium instead of bodyText2

@@ -7,47 +7,57 @@ import 'package:flutter/widgets.dart';
 
 import 'basis.dart';
 
-class _Object extends Object {
+abstract class Nil {
+  @override
+  int get hashCode => identityHashCode(this);
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == runtimeType && other.hashCode == hashCode;
+  }
+}
+
+class _Object extends Object with Nil {
   const _Object() : super();
 }
 
-class _Icon extends Icon {
+class _Icon extends Icon with Nil {
   const _Icon() : super(null);
 }
 
-class _Duration extends Duration {
+class _Duration extends Duration with Nil {
   const _Duration() : super();
 }
 
-class _BackButtonBehavior extends BackButtonBehavior {
+class _BackButtonBehavior extends BackButtonBehavior with Nil {
   const _BackButtonBehavior() : super(0, '');
 }
 
-class _PreferDirection extends PreferDirection {
+class _PreferDirection extends PreferDirection with Nil {
   const _PreferDirection() : super(0, '');
 }
 
-class _TextStyle extends TextStyle {
+class _TextStyle extends TextStyle with Nil {
   const _TextStyle() : super();
 }
 
-class _Color extends Color {
+class _Color extends Color with Nil {
   const _Color() : super(0);
 }
 
-class _Alignment extends Alignment {
+class _Alignment extends Alignment with Nil {
   const _Alignment() : super(0, 0);
 }
 
-class _EdgeInsets extends EdgeInsets {
+class _EdgeInsets extends EdgeInsets with Nil {
   const _EdgeInsets() : super.all(0);
 }
 
-class _BorderRadius extends BorderRadius {
+class _BorderRadius extends BorderRadius with Nil {
   const _BorderRadius() : super.only();
 }
 
-class _List<E> implements List<E> {
+class _List<E> with Nil implements List<E> {
   const _List();
 
   @override
