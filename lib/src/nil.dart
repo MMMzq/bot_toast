@@ -380,5 +380,5 @@ R returnFirstIfNotNilAndCast<R>(Object? v1, Object? v2) {
 }
 
 bool isNilOr<T>(List<Object?> list) {
-  return list.every((element) => element == nil || list is T || list is T?);
+  return list.every((element) => isNil(element) || element is T || element is T?);
 }
