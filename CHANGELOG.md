@@ -8,7 +8,7 @@
 * fix: Delete unused packages
 * fix: Using bodyMedium instead of bodyText2
 
-* ## [4.1.0]
+## [4.1.0]
 * feat: Support global configuration
 * docs: Add English API documentation and English comments
 
