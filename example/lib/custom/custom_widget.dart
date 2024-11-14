@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 void showAlertDialog(BackButtonBehavior backButtonBehavior,
     {VoidCallback? cancel,
@@ -12,7 +11,7 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
       onlyOne: true,
       crossPage: true,
       backButtonBehavior: backButtonBehavior,
-      wrapToastAnimation: (controller, cancel, child) => Stack(
+      wrapToastAnimation: (AnimationController controller, cancel, Widget child) => Stack(
             children: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -21,15 +20,15 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
                 },
                 //The DecoratedBox here is very important,he will fill the entire parent component
                 child: AnimatedBuilder(
-                  builder: (_, child) => Opacity(
+                  builder: (_, Widget? child) => Opacity(
                     opacity: controller.value,
                     child: child,
                   ),
+                  animation: controller,
                   child: const DecoratedBox(
                     decoration: BoxDecoration(color: Colors.black26),
                     child: SizedBox.expand(),
                   ),
-                  animation: controller,
                 ),
               ),
               CustomOffsetAnimation(
@@ -66,8 +65,10 @@ void showAlertDialog(BackButtonBehavior backButtonBehavior,
 }
 
 class CustomWidget extends StatefulWidget {
+  const CustomWidget({Key? key}) : super(key: key);
+
   @override
-  _CustomWidgetState createState() => _CustomWidgetState();
+  State<CustomWidget> createState() => _CustomWidgetState();
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
@@ -153,11 +154,11 @@ class CustomOffsetAnimation extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomOffsetAnimation({Key? key,required this.controller,required this.child})
+  const CustomOffsetAnimation({required this.controller, required this.child, Key? key})
       : super(key: key);
 
   @override
-  _CustomOffsetAnimationState createState() => _CustomOffsetAnimationState();
+  State<CustomOffsetAnimation> createState() => _CustomOffsetAnimationState();
 }
 
 class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
@@ -181,7 +182,6 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      child: widget.child,
       animation: widget.controller,
       builder: (BuildContext context, Widget? child) {
         return FractionalTranslation(
@@ -190,12 +190,13 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
               child: Transform.scale(
                 scale: tweenScale.evaluate(animation),
                 child: Opacity(
-                  child: child,
                   opacity: animation.value,
+                  child: child,
                 ),
               ),
             ));
       },
+      child: widget.child,
     );
   }
 }

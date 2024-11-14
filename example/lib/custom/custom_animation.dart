@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/material.dart';
 
 class CustomAnimation extends StatefulWidget {
+  const CustomAnimation({Key? key}) : super(key: key);
+
   @override
-  _CustomAnimationState createState() => _CustomAnimationState();
+  State<CustomAnimation> createState() => _CustomAnimationState();
 }
 
 class _CustomAnimationState extends State<CustomAnimation> {
@@ -27,7 +29,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                         allowClick: true,
                         animationDuration: const Duration(milliseconds: 200),
                         duration: const Duration(seconds: 2),
-                        wrapAnimation: (controller, cancel, child) =>
+                        wrapAnimation: (AnimationController controller, cancel, Widget child) =>
                             CustomOffsetAnimation(
                                 controller: controller, child: child));
                   },
@@ -38,7 +40,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                     BotToast.showSimpleNotification(
                         animationDuration: const Duration(milliseconds: 200),
                         duration: const Duration(seconds: 2),
-                        wrapToastAnimation: (controller, cancel, child) =>
+                        wrapToastAnimation: (AnimationController controller, cancel, Widget child) =>
                             CustomOffsetAnimation(
                                 reverse: true,
                                 controller: controller,
@@ -51,7 +53,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   onPressed: () {
                     BotToast.showText(
                       text: 'this is custom animation ',
-                      wrapToastAnimation: (controller, cancel, Widget child) =>
+                      wrapToastAnimation: (AnimationController controller, cancel, Widget child) =>
                           CustomAnimationWidget(
                         controller: controller,
                         child: child,
@@ -61,7 +63,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                   child: const Text('customTextAnimation'),
                 ),
                 Builder(
-                  builder: (context) => ElevatedButton(
+                  builder: (BuildContext context) => ElevatedButton(
                     onPressed: () {
                       BotToast.showAttachedWidget(
                           attachedBuilder: (_) => Card(
@@ -109,7 +111,7 @@ class _CustomAnimationState extends State<CustomAnimation> {
                                 ),
                               ),
                           wrapToastAnimation:
-                              (controller, cancel, Widget child) =>
+                              (AnimationController controller, cancel, Widget child) =>
                                   CustomAttachedAnimation(
                                     controller: controller,
                                     child: child,
@@ -136,11 +138,11 @@ class CustomAnimationWidget extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomAnimationWidget({Key? key,required this.controller,required this.child})
+  const CustomAnimationWidget({required this.controller, required this.child, Key? key})
       : super(key: key);
 
   @override
-  _CustomAnimationWidgetState createState() => _CustomAnimationWidgetState();
+  State<CustomAnimationWidget> createState() => _CustomAnimationWidgetState();
 }
 
 class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
@@ -162,7 +164,6 @@ class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      child: widget.child,
       animation: animation,
       builder: (BuildContext context, Widget? child) {
         return Transform.translate(
@@ -170,12 +171,13 @@ class _CustomAnimationWidgetState extends State<CustomAnimationWidget> {
           child: Transform.scale(
             scale: tweenScale.evaluate(animation),
             child: Opacity(
-              child: child,
               opacity: animation.value,
+              child: child,
             ),
           ),
         );
       },
+      child: widget.child,
     );
   }
 }
@@ -186,11 +188,11 @@ class CustomOffsetAnimation extends StatefulWidget {
   final bool reverse;
 
   const CustomOffsetAnimation(
-      {Key? key,required this.controller,required this.child, this.reverse = false})
+      {required this.controller, required this.child, Key? key, this.reverse = false})
       : super(key: key);
 
   @override
-  _CustomOffsetAnimationState createState() => _CustomOffsetAnimationState();
+  State<CustomOffsetAnimation> createState() => _CustomOffsetAnimationState();
 }
 
 class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
@@ -212,7 +214,6 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      child: widget.child,
       animation: widget.controller,
       builder: (BuildContext context, Widget? child) {
         return FractionalTranslation(
@@ -222,6 +223,7 @@ class _CustomOffsetAnimationState extends State<CustomOffsetAnimation> {
               child: child,
             ));
       },
+      child: widget.child,
     );
   }
 }
@@ -230,11 +232,11 @@ class CustomAttachedAnimation extends StatefulWidget {
   final AnimationController controller;
   final Widget child;
 
-  const CustomAttachedAnimation({Key? key,required this.controller,required this.child})
+  const CustomAttachedAnimation({required this.controller, required this.child, Key? key})
       : super(key: key);
 
   @override
-  _CustomAttachedAnimationState createState() =>
+  State<CustomAttachedAnimation> createState() =>
       _CustomAttachedAnimationState();
 }
 
@@ -255,7 +257,6 @@ class _CustomAttachedAnimationState extends State<CustomAttachedAnimation> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      child: widget.child,
       animation: widget.controller,
       builder: (BuildContext context, Widget? child) {
         return ClipRect(
@@ -269,6 +270,7 @@ class _CustomAttachedAnimationState extends State<CustomAttachedAnimation> {
           ),
         );
       },
+      child: widget.child,
     );
   }
 }

@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/material.dart';
 
 class All extends StatefulWidget {
+  const All({Key? key}) : super(key: key);
+
   @override
-  _AllState createState() => _AllState();
+  State<All> createState() => _AllState();
 }
 
 class _AllState extends State<All> {
   @override
   void initState() {
     BotToast.showLoading(duration: const Duration(seconds: 2));
-    BotToast.showSimpleNotification(title: "init");
-    BotToast.showText(text: "init");
+    BotToast.showSimpleNotification(title: 'init');
+    BotToast.showText(text: 'init');
     BotToast.showAttachedWidget(
         attachedBuilder: (_) => const Card(
               child: Padding(
@@ -34,7 +35,7 @@ class _AllState extends State<All> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All"),
+        title: const Text('All'),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 20),
@@ -43,7 +44,7 @@ class _AllState extends State<All> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Divider(),
-              const Text("code"),
+              const Text('code'),
               const Divider(),
               Text(
                 _code,

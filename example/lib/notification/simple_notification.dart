@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SimpleNotification extends StatefulWidget {
+  const SimpleNotification({Key? key}) : super(key: key);
+
   @override
-  _SimpleNotificationState createState() => _SimpleNotificationState();
+  State<SimpleNotification> createState() => _SimpleNotificationState();
 }
 
 class _SimpleNotificationState extends State<SimpleNotification> {
@@ -22,8 +24,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
     ///全局范围内将标准通知的动画时间修改为 1 秒
     BotToast.defaultOption.notification.animationDuration=const Duration(seconds: 1);
     BotToast.showSimpleNotification(
-        title: "Notification title",
-        subTitle: "Notification subtitle",
+        title: 'Notification title',
+        subTitle: 'Notification subtitle',
         enableSlideOff: enableSlideOff,
         hideCloseButton: hideCloseButton,
         onTap: () {
@@ -49,7 +51,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SimpleNotification"),
+        title: const Text('SimpleNotification'),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 50),
@@ -60,8 +62,8 @@ class _SimpleNotificationState extends State<SimpleNotification> {
               ElevatedButton(
                 onPressed: () {
                   BotToast.showSimpleNotification(
-                      title: "Notification title",
-                      subTitle: "Notification subtitle",
+                      title: 'Notification title',
+                      subTitle: 'Notification subtitle',
                       enableSlideOff: enableSlideOff,
                       hideCloseButton: hideCloseButton,
                       onlyOne: onlyOne,
@@ -79,7 +81,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                           Duration(milliseconds: animationReverseMilliseconds),
                       duration: Duration(seconds: seconds));
                 },
-                child: const Text("simpleNotification"),
+                child: const Text('simpleNotification'),
               ),
               SwitchListTile(
                 value: enableSlideOff,
@@ -88,7 +90,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     enableSlideOff = value;
                   });
                 },
-                title: const Text("enableSlideOff: "),
+                title: const Text('enableSlideOff: '),
               ),
               SwitchListTile(
                 value: hideCloseButton,
@@ -97,7 +99,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     hideCloseButton = value;
                   });
                 },
-                title: const Text("hideCloseButton: "),
+                title: const Text('hideCloseButton: '),
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -106,7 +108,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     onlyOne = value;
                   });
                 },
-                title: const Text("onlyOne: "),
+                title: const Text('onlyOne: '),
               ),
               SwitchListTile(
                 value: crossPage,
@@ -115,7 +117,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                     crossPage = value;
                   });
                 },
-                title: const Text("crossPage: "),
+                title: const Text('crossPage: '),
               ),
               const Center(
                 child: Text('BackButtonBehavior'),
@@ -161,7 +163,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 ],
               ),
               ListTile(
-                title: Text("duration:   ${seconds}s"),
+                title: Text('duration:   ${seconds}s'),
                 trailing: CupertinoSlider(
                   min: 1,
                   max: 20,
@@ -175,7 +177,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
                 ),
               ),
               ListTile(
-                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                title: Text('animationDuration:   ${animationMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -190,7 +192,7 @@ class _SimpleNotificationState extends State<SimpleNotification> {
               ),
               ListTile(
                 title: Text(
-                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                    'animationReverseDuration:   ${animationReverseMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,

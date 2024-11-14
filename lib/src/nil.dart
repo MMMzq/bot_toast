@@ -145,7 +145,7 @@ class _List<E> with Nil implements List<E> {
   void fillRange(int start, int end, [E? fillValue]) {}
 
   @override
-  E firstWhere(bool test(E element), {E orElse()?}) {
+  E firstWhere(bool Function(E element) test, {E Function()? orElse}) {
     throw UnimplementedError();
   }
 
@@ -208,7 +208,7 @@ class _List<E> with Nil implements List<E> {
   }
 
   @override
-  E lastWhere(bool test(E element), {E orElse()?}) {
+  E lastWhere(bool Function(E element) test, {E Function()? orElse}) {
     throw UnimplementedError();
   }
 
@@ -265,7 +265,7 @@ class _List<E> with Nil implements List<E> {
   E get single => throw UnimplementedError();
 
   @override
-  E singleWhere(bool test(E element), {E orElse()?}) {
+  E singleWhere(bool Function(E element) test, {E Function()? orElse}) {
     throw UnimplementedError();
   }
 
@@ -280,7 +280,7 @@ class _List<E> with Nil implements List<E> {
   }
 
   @override
-  void sort([int compare(E a, E b)?]) {}
+  void sort([int Function(E a, E b)? compare]) {}
 
   @override
   List<E> sublist(int start, [int? end]) {
@@ -318,16 +318,16 @@ class _List<E> with Nil implements List<E> {
   }
 }
 
-const _Object nil = _Object();
-const _Icon nilIcon = _Icon();
-const _Duration nilDuration = _Duration();
-const _BackButtonBehavior nilBackButtonBehavior = _BackButtonBehavior();
-const _PreferDirection nilPreferDirection = _PreferDirection();
-const _TextStyle nilTextStyle = _TextStyle();
-const _Color nilColor = _Color();
-const _Alignment nilAlignment = _Alignment();
-const _EdgeInsets nilEdgeInsets = _EdgeInsets();
-const _BorderRadius nilBorderRadius = _BorderRadius();
+const nil = _Object();
+const nilIcon = _Icon();
+const nilDuration = _Duration();
+const nilBackButtonBehavior = _BackButtonBehavior();
+const nilPreferDirection = _PreferDirection();
+const nilTextStyle = _TextStyle();
+const nilColor = _Color();
+const nilAlignment = _Alignment();
+const nilEdgeInsets = _EdgeInsets();
+const nilBorderRadius = _BorderRadius();
 const List<DismissDirection> nilDismissDirectionList = _List();
 
 Widget nilWrapAnimation(AnimationController _, CancelFunc __, Widget ___) => const Placeholder();

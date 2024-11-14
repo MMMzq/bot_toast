@@ -1,20 +1,17 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-Widget notificationAnimation(
-        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
+import '../../bot_toast.dart';
+
+Widget notificationAnimation(AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     NormalAnimation(reverse: true, controller: controller, child: child);
 
-Widget textAnimation(
-        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
+Widget textAnimation(AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     NormalAnimation(controller: controller, child: child);
 
-Widget loadingAnimation(
-        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
+Widget loadingAnimation(AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     FadeAnimation(controller: controller, child: child);
 
-Widget attachedAnimation(
-        AnimationController controller, CancelFunc cancelFunc, Widget child) =>
+Widget attachedAnimation(AnimationController controller, CancelFunc cancelFunc, Widget child) =>
     FadeAnimation(controller: controller, child: child);
 
 class NormalAnimation extends StatefulWidget {
@@ -22,19 +19,14 @@ class NormalAnimation extends StatefulWidget {
   final bool reverse;
   final AnimationController controller;
 
-  const NormalAnimation(
-      {Key? key,
-      required this.child,
-      this.reverse = false,
-      required this.controller})
+  const NormalAnimation({required this.child, required this.controller, Key? key, this.reverse = false})
       : super(key: key);
 
   @override
   NormalAnimationState createState() => NormalAnimationState();
 }
 
-class NormalAnimationState extends State<NormalAnimation>
-    with SingleTickerProviderStateMixin {
+class NormalAnimationState extends State<NormalAnimation> with SingleTickerProviderStateMixin {
   static final Tween<Offset> reverseTweenOffset = Tween<Offset>(
     begin: const Offset(0, -40),
     end: const Offset(0, 0),
@@ -51,11 +43,9 @@ class NormalAnimationState extends State<NormalAnimation>
 
   @override
   void initState() {
-    animation =
-        CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    animation = CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
 
-    animationOffset =
-        (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
+    animationOffset = (widget.reverse ? reverseTweenOffset : tweenOffset).animate(animation);
     animationOpacity = tweenOpacity.animate(animation);
 
     super.initState();
@@ -65,7 +55,7 @@ class NormalAnimationState extends State<NormalAnimation>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.controller,
-      builder: (_, child) {
+      builder: (_, Widget? child) {
         return Transform.translate(
           offset: animationOffset.value,
           child: Opacity(
@@ -84,23 +74,20 @@ class FadeAnimation extends StatefulWidget {
   final Widget? child;
   final AnimationController controller;
 
-  const FadeAnimation({Key? key, this.child, required this.controller})
-      : super(key: key);
+  const FadeAnimation({required this.controller, Key? key, this.child}) : super(key: key);
 
   @override
   FadeAnimationState createState() => FadeAnimationState();
 }
 
-class FadeAnimationState extends State<FadeAnimation>
-    with SingleTickerProviderStateMixin {
+class FadeAnimationState extends State<FadeAnimation> with SingleTickerProviderStateMixin {
   static final Tween<double> tweenOpacity = Tween<double>(begin: 0, end: 1);
   late final Animation<double> animation;
   late final Animation<double> animationOpacity;
 
   @override
   void initState() {
-    animation =
-        CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
+    animation = CurvedAnimation(parent: widget.controller, curve: Curves.decelerate);
 
     animationOpacity = tweenOpacity.animate(animation);
 

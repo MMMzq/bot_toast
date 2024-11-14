@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AttachedToast extends StatefulWidget {
+  const AttachedToast({Key? key}) : super(key: key);
+
   @override
-  _AttachedToastState createState() => _AttachedToastState();
+  State<AttachedToast> createState() => _AttachedToastState();
 }
 
 class _AttachedToastState extends State<AttachedToast> {
@@ -53,9 +55,9 @@ class _AttachedToastState extends State<AttachedToast> {
                         padding: const EdgeInsets.all(5),
                       ),
                       onPressed: () {
-                        BotToast.showSimpleNotification(title: "Tap favorite");
+                        BotToast.showSimpleNotification(title: 'Tap favorite');
                       },
-                      label: const Text("favorite"),
+                      label: const Text('favorite'),
                       icon: const Icon(Icons.favorite, color: Colors.redAccent),
                     ),
                     TextButton.icon(
@@ -63,9 +65,9 @@ class _AttachedToastState extends State<AttachedToast> {
                         padding: const EdgeInsets.all(5),
                       ),
                       onPressed: () {
-                        BotToast.showSimpleNotification(title: "Tap bookmark");
+                        BotToast.showSimpleNotification(title: 'Tap bookmark');
                       },
-                      label: const Text("bookmark"),
+                      label: const Text('bookmark'),
                       icon: const Icon(Icons.bookmark,color: Colors.redAccent),
                     )                  ],
                 ),
@@ -77,7 +79,7 @@ class _AttachedToastState extends State<AttachedToast> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("AttachedToast"),
+        title: const Text('AttachedToast'),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 20),
@@ -96,7 +98,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     height: 200,
                     alignment: Alignment.center,
                     child: const Text(
-                      "click me",
+                      'click me',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
@@ -111,13 +113,13 @@ class _AttachedToastState extends State<AttachedToast> {
                       onPressed: () {
                         show(context: context);
                       },
-                      child: const Text("AttachedToast"),
+                      child: const Text('AttachedToast'),
                     );
                   }),
                 ),
               ),
               ListTile(
-                title: Text("buttonAlign: $buttonAlign"),
+                title: Text('buttonAlign: $buttonAlign'),
                 trailing: CupertinoSlider(
                   min: -1,
                   max: 1,
@@ -130,7 +132,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ),
               ),
               Text(
-                "$preferDirection",
+                '$preferDirection',
                 style: const TextStyle(fontSize: 15),
               ),
               Row(
@@ -168,22 +170,22 @@ class _AttachedToastState extends State<AttachedToast> {
                   const Spacer(),
                 ],
               ),
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   Spacer(),
                   Expanded(
                       child: Text(
-                    "topLeft",
+                    'topLeft',
                     textAlign: TextAlign.center,
                   )),
                   Expanded(
                       child: Text(
-                    "topCenter",
+                    'topCenter',
                     textAlign: TextAlign.center,
                   )),
                   Expanded(
                       child: Text(
-                    "topRight",
+                    'topRight',
                     textAlign: TextAlign.center,
                   )),
                   Spacer(),
@@ -214,11 +216,11 @@ class _AttachedToastState extends State<AttachedToast> {
                           })),
                 ],
               ),
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   Expanded(
                       child: Text(
-                    "leftTop",
+                    'leftTop',
                     textAlign: TextAlign.center,
                   )),
                   Spacer(),
@@ -226,7 +228,7 @@ class _AttachedToastState extends State<AttachedToast> {
                   Spacer(),
                   Expanded(
                       child: Text(
-                    "rightTop",
+                    'rightTop',
                     textAlign: TextAlign.center,
                   )),
                 ],
@@ -256,11 +258,11 @@ class _AttachedToastState extends State<AttachedToast> {
                           })),
                 ],
               ),
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   Expanded(
                       child: Text(
-                    "leftCenter",
+                    'leftCenter',
                     textAlign: TextAlign.center,
                   )),
                   Spacer(),
@@ -268,7 +270,7 @@ class _AttachedToastState extends State<AttachedToast> {
                   Spacer(),
                   Expanded(
                       child: Text(
-                    "rightCenter",
+                    'rightCenter',
                     textAlign: TextAlign.center,
                   )),
                 ],
@@ -298,11 +300,11 @@ class _AttachedToastState extends State<AttachedToast> {
                           })),
                 ],
               ),
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   Expanded(
                       child: Text(
-                    "leftBottom",
+                    'leftBottom',
                     textAlign: TextAlign.center,
                   )),
                   Spacer(),
@@ -310,7 +312,7 @@ class _AttachedToastState extends State<AttachedToast> {
                   Spacer(),
                   Expanded(
                       child: Text(
-                    "rightBottom",
+                    'rightBottom',
                     textAlign: TextAlign.center,
                   )),
                 ],
@@ -348,22 +350,22 @@ class _AttachedToastState extends State<AttachedToast> {
                   const Spacer(),
                 ],
               ),
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   Spacer(),
                   Expanded(
                       child: Text(
-                    "bottomLeft",
+                    'bottomLeft',
                     textAlign: TextAlign.center,
                   )),
                   Expanded(
                       child: Text(
-                    "bottomCenter",
+                    'bottomCenter',
                     textAlign: TextAlign.center,
                   )),
                   Expanded(
                       child: Text(
-                    "bottomRight",
+                    'bottomRight',
                     textAlign: TextAlign.center,
                   )),
                   Spacer(),
@@ -376,7 +378,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     ignoreContentClick = value;
                   });
                 },
-                title: const Text("ignoreContentClick: "),
+                title: const Text('ignoreContentClick: '),
               ),
               SwitchListTile(
                 value: onlyOne,
@@ -385,7 +387,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     onlyOne = value;
                   });
                 },
-                title: const Text("onlyOne: "),
+                title: const Text('onlyOne: '),
               ),
               SwitchListTile(
                 value: allowClick,
@@ -394,7 +396,7 @@ class _AttachedToastState extends State<AttachedToast> {
                     allowClick = value;
                   });
                 },
-                title: const Text("allowClick: "),
+                title: const Text('allowClick: '),
               ),
               SwitchListTile(
                 value: enableSafeArea,
@@ -403,10 +405,10 @@ class _AttachedToastState extends State<AttachedToast> {
                     enableSafeArea = value;
                   });
                 },
-                title: const Text("enableSafeArea: "),
+                title: const Text('enableSafeArea: '),
               ),
               ListTile(
-                title: Text("duration:   ${second}s"),
+                title: Text('duration:   ${second}s'),
                 trailing: CupertinoSlider(
                   min: 1,
                   max: 20,
@@ -419,7 +421,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ),
               ),
               ListTile(
-                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                title: Text('animationDuration:   ${animationMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -434,7 +436,7 @@ class _AttachedToastState extends State<AttachedToast> {
               ),
               ListTile(
                 title: Text(
-                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                    'animationReverseDuration:   ${animationReverseMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -448,7 +450,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 ),
               ),
               ListTile(
-                title: Text("verticalOffset:   ${verticalOffset.toString()}"),
+                title: Text('verticalOffset:   ${verticalOffset.toString()}'),
                 trailing: CupertinoSlider(
                   min: 0,
                   max: 40,
@@ -462,7 +464,7 @@ class _AttachedToastState extends State<AttachedToast> {
               ),
               ListTile(
                 title:
-                    Text("horizontalOffset:   ${horizontalOffset.toString()}"),
+                    Text('horizontalOffset:   ${horizontalOffset.toString()}'),
                 trailing: CupertinoSlider(
                   min: 0,
                   max: 40,
@@ -478,7 +480,7 @@ class _AttachedToastState extends State<AttachedToast> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text('backgroundColor:')),
                     Container(
                       height: 20,
                       width: 20,

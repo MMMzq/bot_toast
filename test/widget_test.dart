@@ -191,7 +191,7 @@ void main() {
     testWidgets('enhancedWidget crossPage=false', (WidgetTester tester) async {
       await tester.pumpWidget(TestApp(
         contextCallback: (ctx) async {
-          Navigator.push(
+          await Navigator.push(
               ctx,
               MaterialPageRoute(
                   builder: (_) =>
@@ -215,7 +215,7 @@ void main() {
     testWidgets('enhancedWidget crossPage=true', (WidgetTester tester) async {
       await tester.pumpWidget(TestApp(
         contextCallback: (ctx) async {
-          Navigator.push(
+          await Navigator.push(
               ctx,
               MaterialPageRoute(
                   builder: (_) =>
@@ -375,14 +375,16 @@ class TestApp extends StatelessWidget {
   final void Function(BuildContext ctx)? contextCallback;
   final Widget? child;
 
-  TestApp({this.callback, this.child, this.contextCallback});
+  const TestApp({Key? key, this.callback, this.child, this.contextCallback}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BotToast Demo',
-      builder: BotToastInit(),
+      builder: (_, Widget? child) {
+        return BotToastBuilder(child: child!);
+      },
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData(
         primarySwatch: Colors.blue,

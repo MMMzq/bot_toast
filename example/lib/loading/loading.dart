@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatefulWidget {
+  const Loading({Key? key}) : super(key: key);
+
   @override
-  _LoadingState createState() => _LoadingState();
+  State<Loading> createState() => _LoadingState();
 }
 
 class _LoadingState extends State<Loading> {
@@ -21,7 +23,7 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Loading"),
+        title: const Text('Loading'),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 10),
@@ -45,10 +47,10 @@ class _LoadingState extends State<Loading> {
                       ),
                       backgroundColor: Color(backgroundColor));
                 },
-                child: const Text("Loading"),
+                child: const Text('Loading'),
               ),
               ListTile(
-                title: Text("duration:   ${seconds}s"),
+                title: Text('duration:   ${seconds}s'),
                 trailing: CupertinoSlider(
                   min: 1,
                   max: 20,
@@ -61,7 +63,7 @@ class _LoadingState extends State<Loading> {
                 ),
               ),
               ListTile(
-                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                title: Text('animationDuration:   ${animationMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -76,7 +78,7 @@ class _LoadingState extends State<Loading> {
               ),
               ListTile(
                 title: Text(
-                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                    'animationReverseDuration:   ${animationReverseMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -126,36 +128,36 @@ class _LoadingState extends State<Loading> {
               ),
               SwitchListTile(
                 value: clickClose,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     clickClose = value;
                   });
                 },
-                title: const Text("clickClose: "),
+                title: const Text('clickClose: '),
               ),
               SwitchListTile(
                 value: allowClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     allowClick = value;
                   });
                 },
-                title: const Text("allowClick: "),
+                title: const Text('allowClick: '),
               ),
               SwitchListTile(
                 value: crossPage,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     crossPage = value;
                   });
                 },
-                title: const Text("crossPage: "),
+                title: const Text('crossPage: '),
               ),
               ListTile(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text('backgroundColor:')),
                     Container(
                       height: 20,
                       width: 20,

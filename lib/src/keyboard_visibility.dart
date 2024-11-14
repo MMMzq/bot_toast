@@ -4,21 +4,16 @@ class KeyboardVisibility extends StatefulWidget {
   final void Function(bool open) onKeyboardVisibilityChanged;
   final Widget child;
 
-  const KeyboardVisibility(
-      {required this.onKeyboardVisibilityChanged,
-      required this.child,
-      Key? key})
+  const KeyboardVisibility({required this.onKeyboardVisibilityChanged, required this.child, Key? key})
       : super(key: key);
 
   @override
-  _KeyboardVisibilityState createState() => _KeyboardVisibilityState();
+  State<KeyboardVisibility> createState() => _KeyboardVisibilityState();
 }
 
-class _KeyboardVisibilityState extends State<KeyboardVisibility>
-    with WidgetsBindingObserver {
-
+class _KeyboardVisibilityState extends State<KeyboardVisibility> with WidgetsBindingObserver {
   //Compatible with flutter 3.x
-  WidgetsBinding get _instance  => WidgetsBinding.instance as dynamic;
+  WidgetsBinding get _instance => WidgetsBinding.instance as dynamic;
 
   @override
   void initState() {

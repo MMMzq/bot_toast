@@ -40,12 +40,12 @@ class BotToast {
   static const String attachedKey = '_attachedKey';
   static const String defaultKey = '_defaultKey';
 
-  static final Map<String, List<CancelFunc>> cacheCancelFunc = {
-    textKey: [],
-    notificationKey: [],
-    loadKey: [],
-    attachedKey: [],
-    defaultKey: [],
+  static final Map<String, List<CancelFunc>> cacheCancelFunc = <String, List<CancelFunc>>{
+    textKey: <CancelFunc>[],
+    notificationKey: <CancelFunc>[],
+    loadKey: <CancelFunc>[],
+    attachedKey: <CancelFunc>[],
+    defaultKey: <CancelFunc>[],
   };
 
   /// Global default options
@@ -144,7 +144,7 @@ class BotToast {
       /*bool*/ Object hideCloseButton = nil,
       /*bool*/ Object crossPage = nil,
       /*bool*/ Object onlyOne = nil}) {
-    var o = defaultOption.simpleNotification;
+    final SimpleNotificationOption o = defaultOption.simpleNotification;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -166,13 +166,14 @@ class BotToast {
     titleStyle = returnFirstIfNotNil(titleStyle, o.titleStyle);
     subTitleStyle = returnFirstIfNotNil(subTitleStyle, o.subTitleStyle);
 
-    final hideCloseButtonV = returnFirstIfNotNilAndCast<bool>(hideCloseButton, o.hideCloseButton);
-    final subTitleV = returnFirstIfNotNilAndCast<String?>(subTitle, o.subTitle);
-    final closeIconV = returnFirstIfNotNilAndCast<Icon?>(closeIcon, o.closeIcon);
+    final bool hideCloseButtonV = returnFirstIfNotNilAndCast<bool>(hideCloseButton, o.hideCloseButton);
+    final String? subTitleV = returnFirstIfNotNilAndCast<String?>(subTitle, o.subTitle);
+    final Icon? closeIconV = returnFirstIfNotNilAndCast<Icon?>(closeIcon, o.closeIcon);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, hideCloseButtonV, crossPage, onlyOne]), 'Must be of bool type');
-    assert(isNilOr<double>([borderRadius]), 'Must be of double type');
-    assert(isNilOr<String>([subTitleV]), 'Must be of String type');
+    assert(isNilOr<bool>(<Object?>[enableKeyboardSafeArea, enableSlideOff, hideCloseButtonV, crossPage, onlyOne]),
+        'Must be of bool type');
+    assert(isNilOr<double>(<Object?>[borderRadius]), 'Must be of double type');
+    assert(isNilOr<String>(<Object?>[subTitleV]), 'Must be of String type');
 
     return showNotification(
         wrapAnimation: wrapAnimation,
@@ -260,7 +261,7 @@ class BotToast {
       /*bool*/ Object enableSlideOff = nil,
       /*bool*/ Object crossPage = nil,
       /*bool*/ Object onlyOne = nil}) {
-    var o = defaultOption.notification;
+    final NotificationOption o = defaultOption.notification;
 
     leading = returnFirstIfNotNil(leading, o.leading);
     title = returnFirstIfNotNil(title, o.title);
@@ -285,10 +286,11 @@ class BotToast {
     crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
     onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
 
-    final borderRadiusV = returnFirstIfNotNilAndCast<double?>(borderRadius, o.borderRadius);
+    final double? borderRadiusV = returnFirstIfNotNilAndCast<double?>(borderRadius, o.borderRadius);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne]), 'Must be of bool type');
-    assert(isNilOr<double>([borderRadiusV]), 'Must be of double type');
+    assert(
+        isNilOr<bool>(<Object?>[enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne]), 'Must be of bool type');
+    assert(isNilOr<double>(<Object?>[borderRadiusV]), 'Must be of double type');
 
     return showCustomNotification(
         wrapAnimation: wrapAnimation,
@@ -372,7 +374,7 @@ class BotToast {
       /*bool*/ Object crossPage = nil,
       /*bool*/ Object onlyOne = nil,
       /*bool*/ Object useSafeArea = nil}) {
-    var o = defaultOption.customNotification;
+    final CustomNotificationOption o = defaultOption.customNotification;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -388,9 +390,10 @@ class BotToast {
     useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
     enableSlideOff = returnFirstIfNotNil(enableSlideOff, o.enableSlideOff);
 
-    final animationDurationV = returnFirstIfNotNilAndCast<Duration?>(animationDuration, o.animationDuration);
+    final Duration? animationDurationV = returnFirstIfNotNilAndCast<Duration?>(animationDuration, o.animationDuration);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne, useSafeArea]), 'Must be of bool type');
+    assert(isNilOr<bool>(<Object?>[enableKeyboardSafeArea, enableSlideOff, crossPage, onlyOne, useSafeArea]),
+        'Must be of bool type');
 
     return showAnimationWidget(
         crossPage: crossPage,
@@ -405,7 +408,7 @@ class BotToast {
         animationDuration: animationDurationV ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) {
+        wrapToastAnimation: (AnimationController controller, cancel, Widget child) {
           if (wrapToastAnimation != null) {
             child = wrapToastAnimation(controller, cancel, child);
           }
@@ -415,7 +418,9 @@ class BotToast {
           return useSafeArea == true ? SafeArea(child: child) : child;
         },
         toastBuilder: (cancelFunc) => NotificationToast(
-            child: toastBuilder(cancelFunc), dismissDirections: dismissDirections, slideOffFunc: enableSlideOff == true ? cancelFunc : null),
+            dismissDirections: dismissDirections,
+            slideOffFunc: enableSlideOff == true ? cancelFunc : null,
+            child: toastBuilder(cancelFunc)),
         groupKey: notificationKey);
   }
 
@@ -478,7 +483,7 @@ class BotToast {
     /*bool*/ Object crossPage = nil,
     /*bool*/ Object onlyOne = nil,
   }) {
-    var o = defaultOption.text;
+    final TextOption o = defaultOption.text;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -498,7 +503,7 @@ class BotToast {
     crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
     onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, onlyOne]), 'Must be of bool type');
+    assert(isNilOr<bool>(<Object?>[enableKeyboardSafeArea, clickClose, crossPage, onlyOne]), 'Must be of bool type');
 
     return showCustomText(
         wrapAnimation: wrapAnimation,
@@ -575,7 +580,7 @@ class BotToast {
     /*bool*/ Object onlyOne = nil,
     /*bool*/ Object useSafeArea = nil,
   }) {
-    var o = defaultOption.customText;
+    final CustomTextOption o = defaultOption.customText;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -593,7 +598,10 @@ class BotToast {
     onlyOne = returnFirstIfNotNil(onlyOne, o.onlyOne);
     useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, onlyOne, ignoreContentClick, useSafeArea]), 'Must be of bool type');
+    assert(
+        isNilOr<bool>(
+            <Object?>[enableKeyboardSafeArea, clickClose, crossPage, onlyOne, ignoreContentClick, useSafeArea]),
+        'Must be of bool type');
 
     return showAnimationWidget(
         groupKey: textKey,
@@ -610,7 +618,7 @@ class BotToast {
         animationDuration: animationDuration ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) {
+        wrapToastAnimation: (AnimationController controller, cancel, Widget child) {
           if (wrapToastAnimation != null) {
             child = wrapToastAnimation(controller, cancel, child);
           }
@@ -666,7 +674,7 @@ class BotToast {
     Duration? animationReverseDuration = nilDuration,
     Color backgroundColor = nilColor,
   }) {
-    var o = defaultOption.loading;
+    final LoadingOption o = defaultOption.loading;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -682,7 +690,7 @@ class BotToast {
     animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
     backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, allowClick]), 'Must be of bool type');
+    assert(isNilOr<bool>(<Object?>[enableKeyboardSafeArea, clickClose, crossPage, allowClick]), 'Must be of bool type');
 
     return showCustomLoading(
         wrapAnimation: wrapAnimation,
@@ -753,7 +761,7 @@ class BotToast {
     Color backgroundColor = nilColor,
     /*bool*/ Object useSafeArea = nil,
   }) {
-    var o = defaultOption.customLoading;
+    final CustomLoadingOption o = defaultOption.customLoading;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -771,7 +779,10 @@ class BotToast {
     backgroundColor = returnFirstIfNotNil(backgroundColor, o.backgroundColor);
     useSafeArea = returnFirstIfNotNil(useSafeArea, o.useSafeArea);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, clickClose, crossPage, allowClick, ignoreContentClick, useSafeArea]), 'Must be of bool type');
+    assert(
+        isNilOr<bool>(
+            <Object?>[enableKeyboardSafeArea, clickClose, crossPage, allowClick, ignoreContentClick, useSafeArea]),
+        'Must be of bool type');
 
     return showAnimationWidget(
         groupKey: loadKey,
@@ -781,7 +792,7 @@ class BotToast {
         animationDuration: animationDuration ?? o.animationDuration,
         animationReverseDuration: animationReverseDuration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) {
+        wrapToastAnimation: (AnimationController controller, cancel, Widget child) {
           if (wrapToastAnimation != null) {
             child = wrapToastAnimation(controller, cancel, child);
           }
@@ -870,7 +881,7 @@ class BotToast {
     /*bool*/ Object enableKeyboardSafeArea = nil,
     /*bool*/ Object enableSafeArea = nil,
   }) {
-    var o = defaultOption.attached;
+    final AttachedOption o = defaultOption.attached;
 
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
     wrapToastAnimation = returnFirstIfNotNil(wrapToastAnimation, o.wrapToastAnimation);
@@ -886,22 +897,23 @@ class BotToast {
     enableKeyboardSafeArea = returnFirstIfNotNil(enableKeyboardSafeArea, o.enableKeyboardSafeArea);
     enableSafeArea = returnFirstIfNotNil(enableSafeArea, o.enableSafeArea);
 
-    final verticalOffsetV = returnFirstIfNotNilAndCast<double>(verticalOffset, o.verticalOffset);
-    final horizontalOffsetV = returnFirstIfNotNilAndCast<double>(horizontalOffset, o.horizontalOffset);
+    final double verticalOffsetV = returnFirstIfNotNilAndCast<double>(verticalOffset, o.verticalOffset);
+    final double horizontalOffsetV = returnFirstIfNotNilAndCast<double>(horizontalOffset, o.horizontalOffset);
 
     assert(verticalOffsetV >= 0.0, 'must be a positive number');
     assert(verticalOffsetV >= 0.0, 'must be a positive number');
     assert(!(targetContext != null && target != null), 'targetContext and target cannot coexist');
     assert(targetContext != null || target != null, 'targetContext and target must exist one');
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, enableSafeArea, allowClick, ignoreContentClick]), 'Must be of bool type');
-    assert(isNilOr<double>([verticalOffsetV, horizontalOffsetV]), 'Must be of bool type');
+    assert(isNilOr<bool>(<Object?>[enableKeyboardSafeArea, onlyOne, enableSafeArea, allowClick, ignoreContentClick]),
+        'Must be of bool type');
+    assert(isNilOr<double>(<Object?>[verticalOffsetV, horizontalOffsetV]), 'Must be of bool type');
 
     Rect targetRect;
     if (target == null) {
-      RenderObject renderObject = targetContext!.findRenderObject()!;
+      final RenderObject renderObject = targetContext!.findRenderObject()!;
       if (renderObject is RenderBox) {
-        final position = renderObject.localToGlobal(Offset.zero);
+        final Offset position = renderObject.localToGlobal(Offset.zero);
         targetRect = Rect.fromLTWH(position.dx, position.dy, renderObject.size.width, renderObject.size.height);
       } else {
         throw Exception('context.findRenderObject() return result must be RenderBox class');
@@ -923,25 +935,23 @@ class BotToast {
         animationReverseDuration: animationReverseDuration,
         duration: duration,
         wrapAnimation: wrapAnimation,
-        wrapToastAnimation: (controller, cancel, child) => KeyboardVisibility(
-              onKeyboardVisibilityChanged: (open) {
+        wrapToastAnimation: (AnimationController controller, cancel, Widget child) => KeyboardVisibility(
+              onKeyboardVisibilityChanged: (bool open) {
                 if (open) {
                   cancel();
                 }
               },
-              child: Builder(
-                builder: (context) {
-                  return CustomSingleChildLayout(
-                      delegate: PositionDelegate(
-                          target: targetRect,
-                          paddingTop: MediaQuery.of(context).padding.top,
-                          verticalOffset: verticalOffsetV,
-                          horizontalOffset: horizontalOffsetV,
-                          enableSafeArea: enableSafeArea == true,
-                          preferDirection: preferDirection),
-                      child: wrapToastAnimation != null ? wrapToastAnimation(controller, cancel, child) : child);
-                }
-              ),
+              child: Builder(builder: (BuildContext context) {
+                return CustomSingleChildLayout(
+                    delegate: PositionDelegate(
+                        target: targetRect,
+                        paddingTop: MediaQuery.of(context).padding.top,
+                        verticalOffset: verticalOffsetV,
+                        horizontalOffset: horizontalOffsetV,
+                        enableSafeArea: enableSafeArea == true,
+                        preferDirection: preferDirection),
+                    child: wrapToastAnimation != null ? wrapToastAnimation(controller, cancel, child) : child);
+              }),
             ),
         toastBuilder: attachedBuilder);
   }
@@ -1022,7 +1032,7 @@ class BotToast {
     UniqueKey? key,
     String? groupKey,
   }) {
-    var o = defaultOption.animation;
+    final AnimationOption o = defaultOption.animation;
 
     animationReverseDuration = returnFirstIfNotNil(animationReverseDuration, o.animationReverseDuration);
     wrapAnimation = returnFirstIfNotNil(wrapAnimation, o.wrapAnimation);
@@ -1038,9 +1048,13 @@ class BotToast {
     duration = returnFirstIfNotNil(duration, o.duration);
     onClose = returnFirstIfNotNil(onClose, o.onClose);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
+    assert(
+        isNilOr<bool>(
+            <Object?>[enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]),
+        'Must be of bool type');
 
-    AnimationController? controller = _createAnimationController(animationDuration, reverseDuration: animationReverseDuration);
+    AnimationController? controller =
+        _createAnimationController(animationDuration, reverseDuration: animationReverseDuration);
 
     return showEnhancedWidget(
         allowClick: allowClick,
@@ -1058,7 +1072,7 @@ class BotToast {
           await controller?.reverse();
         },
         duration: duration,
-        warpWidget: (cancel, child) => ProxyInitState(
+        warpWidget: (cancel, Widget child) => ProxyInitState(
               initStateCallback: () {
                 assert(!controller!.isAnimating);
                 controller!.forward();
@@ -1070,8 +1084,9 @@ class BotToast {
                   },
                   child: wrapAnimation != null ? wrapAnimation(controller!, cancel, child) : child),
             ),
-        toastBuilder: (cancelFunc) =>
-            wrapToastAnimation != null ? wrapToastAnimation(controller!, cancelFunc, toastBuilder(cancelFunc)) : toastBuilder(cancelFunc));
+        toastBuilder: (cancelFunc) => wrapToastAnimation != null
+            ? wrapToastAnimation(controller!, cancelFunc, toastBuilder(cancelFunc))
+            : toastBuilder(cancelFunc));
   }
 
   /*区域图
@@ -1191,7 +1206,7 @@ class BotToast {
     // ignore: unnecessary_null_comparison
     assert(enableKeyboardSafeArea != null);
 
-    var o = defaultOption.enhanced;
+    final EnhancedOption o = defaultOption.enhanced;
 
     crossPage = returnFirstIfNotNil(crossPage, o.crossPage);
     allowClick = returnFirstIfNotNil(allowClick, o.allowClick);
@@ -1206,23 +1221,26 @@ class BotToast {
     warpWidget = returnFirstIfNotNil(warpWidget, o.warpWidget);
     duration = returnFirstIfNotNil(duration, o.duration);
 
-    assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
+    assert(
+        isNilOr<bool>(
+            <Object?>[enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]),
+        'Must be of bool type');
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
     late final CancelFunc cancelFunc;
-    final CancelFunc dismissFunc = () async {
+    void dismissFunc() async {
       await closeFunc?.call();
       cancelFunc();
-    };
+    }
 
     //onlyOne 功能
-    final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= []);
+    final List<CancelFunc> cache = (cacheCancelFunc[groupKey ?? defaultKey] ??= <CancelFunc>[]);
     if (onlyOne == true) {
-      final clone = cache.toList();
+      final List<CancelFunc> clone = cache.toList();
       cache.clear();
-      clone.forEach((cancel) {
+      for (CancelFunc cancel in clone) {
         cancel();
-      });
+      }
     }
     cache.add(dismissFunc);
 
@@ -1273,7 +1291,7 @@ class BotToast {
               unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
               final TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-              Widget child = DefaultTextStyle(
+              final Widget child = DefaultTextStyle(
                   style: textStyle,
                   child: Stack(children: <Widget>[
                     Listener(
@@ -1311,11 +1329,11 @@ class BotToast {
   ///[CancelFunc] 关闭函数,主动调用将会关闭此Toast
   ///这是个核心方法
   static CancelFunc showWidget({required ToastBuilder toastBuilder, UniqueKey? key, String? groupKey}) {
-    final gk = groupKey ?? defaultKey;
-    final uniqueKey = key ?? UniqueKey();
-    final CancelFunc cancelFunc = () {
+    final String gk = groupKey ?? defaultKey;
+    final UniqueKey uniqueKey = key ?? UniqueKey();
+    void cancelFunc() {
       remove(uniqueKey, gk);
-    };
+    }
 
     botToastManager.insert(gk, uniqueKey, toastBuilder(cancelFunc));
     return cancelFunc;

@@ -9,8 +9,8 @@ class TextToast extends StatefulWidget {
   final TextStyle? textStyle;
 
   const TextToast({
-    Key? key,
     required this.text,
+    Key? key,
     this.contentPadding,
     this.contentColor,
     this.borderRadius,
@@ -27,8 +27,7 @@ class TextToastState extends State<TextToast> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
-            constraints:
-                constraints.copyWith(maxWidth: constraints.biggest.width * 0.6),
+            constraints: constraints.copyWith(maxWidth: constraints.biggest.width * 0.6),
             padding: widget.contentPadding,
             decoration: BoxDecoration(
               color: widget.contentColor,

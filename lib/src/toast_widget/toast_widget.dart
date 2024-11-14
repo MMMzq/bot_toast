@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 export 'animation.dart';
 export 'attached.dart';
 export 'loading.dart';
@@ -9,11 +10,10 @@ class ProxyInitState extends StatefulWidget {
   final Widget child;
   final VoidCallback initStateCallback;
 
-  const ProxyInitState({Key? key,required this.initStateCallback,required this.child})
-      : super(key: key);
+  const ProxyInitState({required this.initStateCallback, required this.child, Key? key}) : super(key: key);
 
   @override
-  _ProxyInitStateState createState() => _ProxyInitStateState();
+  State<ProxyInitState> createState() => _ProxyInitStateState();
 }
 
 class _ProxyInitStateState extends State<ProxyInitState> {
@@ -34,13 +34,13 @@ class ProxyDispose extends StatefulWidget {
   final VoidCallback disposeCallback;
 
   const ProxyDispose({
-    Key? key,
     required this.disposeCallback,
     required this.child,
-  })  : super(key: key);
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _ProxyDisposeState createState() => _ProxyDisposeState();
+  State<ProxyDispose> createState() => _ProxyDisposeState();
 }
 
 class _ProxyDisposeState extends State<ProxyDispose> {

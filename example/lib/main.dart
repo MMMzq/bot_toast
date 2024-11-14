@@ -8,40 +8,45 @@ import 'custom/custom_widget.dart';
 import 'loading/custom_loading.dart';
 import 'loading/loading.dart';
 import 'notification/custom_notification.dart';
-import 'notification/simple_notification.dart';
 import 'notification/notification.dart' as notification;
+import 'notification/simple_notification.dart';
 import 'text/custom_text.dart';
 import 'text/text.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
           elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          primary: Colors.grey[300],
-          onPrimary: Colors.black,
+          foregroundColor: Colors.black, backgroundColor: Colors.grey[300],
         ),
       )),
-      builder: BotToastInit(),
+      builder: (_, Widget? child) {
+        return BotToastBuilder(child: child!);
+      },
       title: 'BotToast Demo',
-      navigatorObservers: [BotToastNavigatorObserver()],
-      home: EnterPage(),
+      navigatorObservers: <NavigatorObserver>[BotToastNavigatorObserver()],
+      home: const EnterPage(),
     );
   }
 }
 
 class EnterPage extends StatelessWidget {
+  const EnterPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("BotToast"),
+          title: const Text('BotToast'),
           centerTitle: true,
         ),
         body: Align(
@@ -51,7 +56,7 @@ class EnterPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 30),
               child: Column(children: <Widget>[
                 const Text(
-                  "Notification",
+                  'Notification',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 const Divider(),
@@ -65,9 +70,9 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => SimpleNotification()));
+                                    builder: (_) => const SimpleNotification()));
                           },
-                          child: const Text("SimpleNotification"),
+                          child: const Text('SimpleNotification'),
                         ),
                       ),
                     ),
@@ -80,9 +85,9 @@ class EnterPage extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) =>
-                                        notification.Notification()));
+                                        const notification.Notification()));
                           },
-                          child: const Text("Notification"),
+                          child: const Text('Notification'),
                         ),
                       ),
                     )
@@ -96,16 +101,16 @@ class EnterPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => CustomNotification()));
+                              builder: (_) => const CustomNotification()));
                     },
-                    child: const Text("CustomNotification"),
+                    child: const Text('CustomNotification'),
                   ),
                 ),
                 Container(
                   height: 40,
                 ),
                 const Text(
-                  "TextToast",
+                  'TextToast',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 const Divider(),
@@ -119,9 +124,9 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => TextSample()));
+                                    builder: (_) => const TextSample()));
                           },
-                          child: const Text("TextToast"),
+                          child: const Text('TextToast'),
                         ),
                       ),
                     ),
@@ -133,9 +138,9 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => CustomText()));
+                                    builder: (_) => const CustomText()));
                           },
-                          child: const Text("CustomText"),
+                          child: const Text('CustomText'),
                         ),
                       ),
                     )
@@ -145,7 +150,7 @@ class EnterPage extends StatelessWidget {
                   height: 40,
                 ),
                 const Text(
-                  "Load",
+                  'Load',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 const Divider(),
@@ -157,9 +162,9 @@ class EnterPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => Loading()));
+                                MaterialPageRoute(builder: (_) => const Loading()));
                           },
-                          child: const Text("Loading"),
+                          child: const Text('Loading'),
                         ),
                       ),
                     ),
@@ -171,9 +176,9 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => CustomLoading()));
+                                    builder: (_) => const CustomLoading()));
                           },
-                          child: const Text("CustomLoading"),
+                          child: const Text('CustomLoading'),
                         ),
                       ),
                     ),
@@ -194,7 +199,7 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => AttachedToast()));
+                                    builder: (_) => const AttachedToast()));
                           },
                           child: const Text('AttachedToast'),
                         ),
@@ -206,9 +211,9 @@ class EnterPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => All()));
+                                MaterialPageRoute(builder: (_) => const All()));
                           },
-                          child: const Text("All"),
+                          child: const Text('All'),
                         ),
                       ),
                     ),
@@ -224,7 +229,7 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => CustomAnimation()));
+                                    builder: (_) => const CustomAnimation()));
                           },
                           child: const Text('CustomAnimation'),
                         ),
@@ -238,7 +243,7 @@ class EnterPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => CustomWidget()));
+                                    builder: (_) => const CustomWidget()));
                           },
                           child: const Text('CustomWidget'),
                         ),

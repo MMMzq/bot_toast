@@ -25,7 +25,7 @@ class SimpleNotificationOption {
 
   WrapAnimation? wrapAnimation;
 
-  WrapAnimation? wrapToastAnimation=notificationAnimation;
+  WrapAnimation? wrapToastAnimation = notificationAnimation;
 
   GestureTapCallback? onTap;
 
@@ -37,7 +37,7 @@ class SimpleNotificationOption {
 
   Alignment? align = const Alignment(0, -0.99);
 
-  List<DismissDirection> dismissDirections = [DismissDirection.horizontal, DismissDirection.up];
+  List<DismissDirection> dismissDirections = <DismissDirection>[DismissDirection.horizontal, DismissDirection.up];
 
   Icon closeIcon = const Icon(Icons.cancel);
 
@@ -74,7 +74,7 @@ class NotificationOption {
   double? borderRadius;
   GestureLongPressCallback? onLongPress;
   Alignment? align = const Alignment(0, -0.99);
-  List<DismissDirection> dismissDirections = const [DismissDirection.horizontal, DismissDirection.up];
+  List<DismissDirection> dismissDirections = const <DismissDirection>[DismissDirection.horizontal, DismissDirection.up];
   BackButtonBehavior? backButtonBehavior;
   Duration? duration = const Duration(seconds: 2);
   Duration? animationDuration;
@@ -92,7 +92,7 @@ class CustomNotificationOption {
   WrapAnimation? wrapAnimation;
   WrapAnimation? wrapToastAnimation = notificationAnimation;
   Alignment? align = const Alignment(0, -0.99);
-  List<DismissDirection> dismissDirections = const [DismissDirection.horizontal, DismissDirection.up];
+  List<DismissDirection> dismissDirections = const <DismissDirection>[DismissDirection.horizontal, DismissDirection.up];
   Duration? duration = const Duration(seconds: 2);
   Duration animationDuration = const Duration(milliseconds: 256);
   Duration? animationReverseDuration;

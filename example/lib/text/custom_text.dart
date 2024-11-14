@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatefulWidget {
+  const CustomText({Key? key}) : super(key: key);
+
   @override
-  _CustomTextState createState() => _CustomTextState();
+  State<CustomText> createState() => _CustomTextState();
 }
 
 class _CustomTextState extends State<CustomText> {
@@ -22,7 +24,7 @@ class _CustomTextState extends State<CustomText> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("CustomText"),
+        title: const Text('CustomText'),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 10),
@@ -57,7 +59,7 @@ class _CustomTextState extends State<CustomText> {
                                 ),
                                 onPressed: () {
                                   BotToast.showSimpleNotification(
-                                      title: "Notification one",
+                                      title: 'Notification one',
                                       crossPage: crossPage,
                                       closeIcon: const Icon(
                                         Icons.favorite,
@@ -68,7 +70,7 @@ class _CustomTextState extends State<CustomText> {
                             const Padding(
                               padding:
                                   EdgeInsets.symmetric(horizontal: 8),
-                              child: Text("Text one"),
+                              child: Text('Text one'),
                             ),
                           ],
                         ),
@@ -76,10 +78,10 @@ class _CustomTextState extends State<CustomText> {
                     ),
                   );
                 },
-                child: const Text("TextToast"),
+                child: const Text('TextToast'),
               ),
               ListTile(
-                title: Text("duration:   ${seconds}s"),
+                title: Text('duration:   ${seconds}s'),
                 trailing: CupertinoSlider(
                   min: 1,
                   max: 20,
@@ -92,7 +94,7 @@ class _CustomTextState extends State<CustomText> {
                 ),
               ),
               ListTile(
-                title: Text("animationDuration:   ${animationMilliseconds}ms"),
+                title: Text('animationDuration:   ${animationMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -107,7 +109,7 @@ class _CustomTextState extends State<CustomText> {
               ),
               ListTile(
                 title: Text(
-                    "animationReverseDuration:   ${animationReverseMilliseconds}ms"),
+                    'animationReverseDuration:   ${animationReverseMilliseconds}ms'),
                 trailing: CupertinoSlider(
                   min: 100,
                   max: 1000,
@@ -157,39 +159,39 @@ class _CustomTextState extends State<CustomText> {
               ),
               SwitchListTile(
                 value: onlyOne,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     onlyOne = value;
                   });
                 },
-                title: const Text("onlyOne: "),
+                title: const Text('onlyOne: '),
               ),
               SwitchListTile(
                 value: clickClose,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     clickClose = value;
                   });
                 },
-                title: const Text("clickClose: "),
+                title: const Text('clickClose: '),
               ),
               SwitchListTile(
                 value: crossPage,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     crossPage = value;
                   });
                 },
-                title: const Text("crossPage: "),
+                title: const Text('crossPage: '),
               ),
               SwitchListTile(
                 value: ignoreContentClick,
-                onChanged: (value) {
+                onChanged: (bool value) {
                   setState(() {
                     ignoreContentClick = value;
                   });
                 },
-                title: const Text("ignoreContentClick: "),
+                title: const Text('ignoreContentClick: '),
               ),
 
 
@@ -197,7 +199,7 @@ class _CustomTextState extends State<CustomText> {
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const Expanded(child: Text("backgroundColor:")),
+                    const Expanded(child: Text('backgroundColor:')),
                     Container(
                       height: 20,
                       width: 20,
