@@ -367,6 +367,22 @@ void main() {
           expect(i, 3);
     });
   });
+
+  // Regression test for https://github.com/MMMzq/bot_toast/issues/181
+  // On Flutter Web, microtask scheduling can cause closeAllLoading() to run
+  // before cancelFunc is initialized, leading to a LateInitializationError.
+  testWidgets('showLoading closeAllLoading race condition (issue #181)', (WidgetTester tester) async {
+    await tester.pumpWidget(TestApp());
+
+    // Show loading and immediately close it before the widget is built.
+    BotToast.showLoading();
+    // Simulate the web race: close before the widget frame is rendered.
+    BotToast.closeAllLoading();
+
+    // Should not throw; pump to process any pending frames.
+    await tester.pump();
+    await tester.pump();
+  });
 }
 
 // ignore: must_be_immutable

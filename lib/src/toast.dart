@@ -1209,10 +1209,18 @@ class BotToast {
     assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
-    late final CancelFunc cancelFunc;
+    // On Flutter Web, microtask scheduling can cause dismissFunc to be called
+    // before cancelFunc is assigned, leading to a LateInitializationError.
+    // Using a nullable variable + a flag safely handles this race condition.
+    CancelFunc? cancelFunc;
+    bool _dismissedBeforeInit = false;
     final CancelFunc dismissFunc = () async {
       await closeFunc?.call();
-      cancelFunc();
+      if (cancelFunc != null) {
+        cancelFunc();
+      } else {
+        _dismissedBeforeInit = true;
+      }
     };
 
     //onlyOne 功能
@@ -1293,6 +1301,12 @@ class BotToast {
             })),
           );
         });
+
+    // If dismissFunc was called before cancelFunc was assigned (race condition
+    // on Flutter Web), call cancelFunc immediately now that it is initialized.
+    if (_dismissedBeforeInit) {
+      cancelFunc();
+    }
 
     return dismissFunc;
   }
