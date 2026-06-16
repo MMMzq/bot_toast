@@ -1260,19 +1260,37 @@ class BotToast {
       BotToastNavigatorObserver.register(observerProxy);
     }
 
-    //拦截点击返回事件
+    //拦截点击返回事件 (intercept the system back button)
+    //In a Router-based app (e.g. go_router) the root BackButtonDispatcher
+    //consumes the back event before any WidgetsBindingObserver, so the legacy
+    //didPopRoute path never runs. When [backButtonDispatcher] is provided we
+    //register a priority child dispatcher so the topmost toast handles back
+    //first; otherwise we fall back to the WidgetsBindingObserver path used by
+    //Navigator-based apps.
     VoidCallback? unRegisterFunc;
-    if (backButtonBehavior == BackButtonBehavior.ignore) {
-      unRegisterFunc = BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
-        return true;
-      });
-    } else if (backButtonBehavior == BackButtonBehavior.close) {
-      unRegisterFunc = BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
-        dismissFunc();
-        unRegisterFunc?.call();
-        unRegisterFunc = null;
-        return true;
-      });
+    if (backButtonBehavior == BackButtonBehavior.ignore || backButtonBehavior == BackButtonBehavior.close) {
+      final bool closeOnBack = backButtonBehavior == BackButtonBehavior.close;
+      final BackButtonDispatcher? rootDispatcher = botToastBackButtonDispatcher;
+      if (rootDispatcher != null) {
+        final ChildBackButtonDispatcher childDispatcher = rootDispatcher.createChildBackButtonDispatcher();
+        Future<bool> handlePop() async {
+          if (closeOnBack) {
+            dismissFunc();
+          }
+          return true;
+        }
+
+        childDispatcher.addCallback(handlePop);
+        childDispatcher.takePriority();
+        unRegisterFunc = () => childDispatcher.removeCallback(handlePop);
+      } else {
+        unRegisterFunc = BotToastWidgetsBindingObserver.singleton.registerPopListener(() {
+          if (closeOnBack) {
+            dismissFunc();
+          }
+          return true;
+        });
+      }
     }
 
     cancelFunc = showWidget(

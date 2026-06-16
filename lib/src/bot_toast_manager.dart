@@ -15,7 +15,12 @@ void safeRun(void Function() callback) {
 class BotToastManager extends StatefulWidget {
   final Widget child;
 
-  const BotToastManager({required this.child, Key? key}) : super(key: key);
+  /// The app's root [BackButtonDispatcher], used so toasts shown with a
+  /// `close`/`ignore` [BackButtonBehavior] can take priority over the host
+  /// [Router] for the system back button. May be null.
+  final BackButtonDispatcher? backButtonDispatcher;
+
+  const BotToastManager({required this.child, this.backButtonDispatcher, Key? key}) : super(key: key);
 
   @override
   BotToastManagerState createState() => BotToastManagerState();

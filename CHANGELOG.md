@@ -1,3 +1,9 @@
+## [5.0.0]
+* feat: `BotToastBuilder` accepts the app's root `BackButtonDispatcher` so toasts shown with `BackButtonBehavior.close`/`ignore` take priority over the host `Router` (e.g. go_router) for the system back button
+* fix: `BackButtonBehavior` now works in `Router`-based apps, where the root dispatcher previously consumed the back event before BotToast's `WidgetsBindingObserver`
+* BREAKING: `BotToastBuilder` now takes a `builder` (`WidgetBuilder`) instead of `child`
+* chore: raise minimum SDK to Dart 2.17 / Flutter 3.0
+
 ## [4.1.3]
 * fix: Modify Assertion Logic
 

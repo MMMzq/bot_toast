@@ -10,6 +10,10 @@ BotToastManagerState get botToastManager {
   return _key.currentState!;
 }
 
+/// The app's root [BackButtonDispatcher] supplied via [BotToastBuilder], or
+/// null if none was provided (or the manager is not mounted yet).
+BackButtonDispatcher? get botToastBackButtonDispatcher => _key.currentState?.widget.backButtonDispatcher;
+
 class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
   BotToastWidgetsBindingObserver._() : _listener = <PopTestFunc>[] {
     //Compatible with flutter 3.x
@@ -44,10 +48,19 @@ class BotToastWidgetsBindingObserver with WidgetsBindingObserver {
 }
 
 class BotToastBuilder extends StatelessWidget {
-  final Widget child;
+  final WidgetBuilder builder;
+
+  /// The app's root [BackButtonDispatcher] (e.g. `router.backButtonDispatcher`).
+  ///
+  /// Supplying it lets toasts shown with a `close`/`ignore` [BackButtonBehavior]
+  /// take priority over the host [Router] for the system back button. When null,
+  /// BotToast falls back to a [WidgetsBindingObserver] (sufficient for
+  /// `Navigator`-based apps).
+  final BackButtonDispatcher? backButtonDispatcher;
 
   const BotToastBuilder({
-    required this.child,
+    required this.builder,
+    this.backButtonDispatcher,
     super.key,
   });
 
@@ -58,7 +71,8 @@ class BotToastBuilder extends StatelessWidget {
 
     return BotToastManager(
       key: _key,
-      child: child,
+      backButtonDispatcher: backButtonDispatcher,
+      child: Builder(builder: builder),
     );
   }
 }

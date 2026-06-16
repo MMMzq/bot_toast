@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
       )),
       builder: (_, Widget? child) {
-        return BotToastBuilder(child: child!);
+        return BotToastBuilder(builder: (_) => child!);
       },
       title: 'BotToast Demo',
       navigatorObservers: <NavigatorObserver>[BotToastNavigatorObserver()],

@@ -383,7 +383,7 @@ class TestApp extends StatelessWidget {
     return MaterialApp(
       title: 'BotToast Demo',
       builder: (_, Widget? child) {
-        return BotToastBuilder(child: child!);
+        return BotToastBuilder(builder: (ctx) => child!);
       },
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData(
