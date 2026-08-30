@@ -1042,7 +1042,8 @@ class BotToast {
 
     AnimationController? controller = _createAnimationController(animationDuration, reverseDuration: animationReverseDuration);
 
-    return showEnhancedWidget(
+    try {
+      return showEnhancedWidget(
         allowClick: allowClick,
         clickClose: clickClose,
         groupKey: groupKey,
@@ -1071,7 +1072,15 @@ class BotToast {
                   child: wrapAnimation != null ? wrapAnimation(controller!, cancel, child) : child),
             ),
         toastBuilder: (cancelFunc) =>
-            wrapToastAnimation != null ? wrapToastAnimation(controller!, cancelFunc, toastBuilder(cancelFunc)) : toastBuilder(cancelFunc));
+            wrapToastAnimation != null ? wrapToastAnimation(controller!, cancelFunc, toastBuilder(cancelFunc)) : toastBuilder(cancelFunc),
+      );
+    } catch (_) {
+      //The toast never mounted, so the [ProxyDispose] that owns the controller
+      //never runs. Dispose it here instead of leaking it and its Ticker.
+      controller?.dispose();
+      controller = null;
+      rethrow;
+    }
   }
 
   /*区域图

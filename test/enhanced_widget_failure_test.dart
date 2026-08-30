@@ -11,6 +11,7 @@
 // ignore_for_file: always_specify_types
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -87,5 +88,45 @@ void main() {
 
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the animation controller is disposed when showWidget fails',
+      (WidgetTester tester) async {
+    // `showAnimationWidget` creates the controller before delegating, and the
+    // only thing that disposes it is a `ProxyDispose` inside the toast — which
+    // never mounts when the toast fails.
+    expect(kFlutterMemoryAllocationsEnabled, isTrue,
+        reason: 'this test relies on object lifecycle events');
+
+    await pumpAppWithoutInit(tester);
+
+    int created = 0;
+    int disposed = 0;
+    void onObjectEvent(ObjectEvent event) {
+      if (event.object is! AnimationController) {
+        return;
+      }
+      if (event is ObjectCreated) {
+        created++;
+      } else if (event is ObjectDisposed) {
+        disposed++;
+      }
+    }
+
+    FlutterMemoryAllocations.instance.addListener(onObjectEvent);
+    addTearDown(
+        () => FlutterMemoryAllocations.instance.removeListener(onObjectEvent));
+
+    expect(
+      () => BotToast.showAnimationWidget(
+        duration: const Duration(milliseconds: 10),
+        animationDuration: const Duration(milliseconds: 1),
+        toastBuilder: (_) => const Text('toast'),
+      ),
+      throwsA(isNotNull),
+    );
+
+    expect(created, 1);
+    expect(disposed, created);
   });
 }
