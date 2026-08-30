@@ -1209,10 +1209,13 @@ class BotToast {
     assert(isNilOr<bool>([enableKeyboardSafeArea, onlyOne, clickClose, allowClick, ignoreContentClick, crossPage]), 'Must be of bool type');
 
     //由于cancelFunc一开始是为空的,所以在赋值之前需要在闭包里使用
-    late final CancelFunc cancelFunc;
+    //It stays nullable on purpose: if [showWidget] throws, it is never assigned,
+    //and a `late` variable would turn that into an uncatchable
+    //LateInitializationError the next time [dismissFunc] runs.
+    CancelFunc? cancelFunc;
     final CancelFunc dismissFunc = () async {
       await closeFunc?.call();
-      cancelFunc();
+      cancelFunc?.call();
     };
 
     //onlyOne 功能
@@ -1257,20 +1260,26 @@ class BotToast {
       });
     }
 
-    cancelFunc = showWidget(
+    //Releases everything [dismissFunc] was registered with above.
+    void unregisterDismissFunc() {
+      cache.remove(dismissFunc);
+      if (observerProxy != null) {
+        BotToastNavigatorObserver.unregister(observerProxy);
+      }
+      timer?.cancel();
+      unRegisterFunc?.call();
+    }
+
+    try {
+      cancelFunc = showWidget(
         groupKey: groupKey,
         key: key,
         toastBuilder: (_) {
           return KeyboardSafeArea(
             enable: enableKeyboardSafeArea == true,
             child: ProxyDispose(disposeCallback: () {
-              cache.remove(dismissFunc);
-              if (observerProxy != null) {
-                BotToastNavigatorObserver.unregister(observerProxy);
-              }
-              timer?.cancel();
+              unregisterDismissFunc();
               onClose?.call();
-              unRegisterFunc?.call();
             }, child: Builder(builder: (BuildContext context) {
               final TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
               Widget child = DefaultTextStyle(
@@ -1292,7 +1301,16 @@ class BotToast {
               return warpWidget != null ? warpWidget(dismissFunc, child) : child;
             })),
           );
-        });
+        },
+      );
+    } catch (_) {
+      //The toast never made it onto the screen, so [ProxyDispose] will never
+      //run its cleanup. Undo the registrations here instead, otherwise the
+      //timer or the navigator observer would later invoke a [dismissFunc]
+      //whose [cancelFunc] was never assigned.
+      unregisterDismissFunc();
+      rethrow;
+    }
 
     return dismissFunc;
   }
