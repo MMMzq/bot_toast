@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Notification extends StatefulWidget {
   @override

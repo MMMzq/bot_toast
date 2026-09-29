@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:bot_toast/bot_toast.dart';
 
 class CustomAnimation extends StatefulWidget {

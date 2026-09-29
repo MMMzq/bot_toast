@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 //加载提示的Widget
 class LoadingWidget extends StatelessWidget {

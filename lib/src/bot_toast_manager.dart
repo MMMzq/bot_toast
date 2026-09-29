@@ -1,5 +1,5 @@
 import 'package:bot_toast/src/toast_widget/toast_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 
 void safeRun(void Function() callback) {
